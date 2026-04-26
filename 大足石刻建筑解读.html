@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>大足石刻 · 四维解读 | 世界石窟艺术最后丰碑</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/大足石刻.jpg" title="大足石刻" alt="大足石刻千手观音">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 千年雕凿</div>
+        <div class="dim-tab" data-tab="art">🎨 艺术瑰宝</div>
+        <div class="dim-tab" data-tab="culture">🎪 三教融合</div>
+        <div class="dim-tab" data-tab="value">🌟 世界遗产</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>大足石刻 · 世界石窟艺术最后丰碑</h3>
+            <p class="text"><strong>传奇：</strong>大足石刻位于重庆市大足区境内，是唐、宋时期开凿的摩崖石刻造像群，是中国晚期石窟艺术的杰出代表，被誉为"世界石窟艺术史上最后的丰碑"。石刻始凿于初唐永徽年间（650-655年），兴盛于晚唐、五代、两宋，延续至明清，历时1200余年。现存造像5万余尊，铭文10万余字，分布在宝顶山、北山、南山、石门山、石篆山等75处，其中以宝顶山、北山摩崖造像最为集中，规模最为宏大。1999年，大足石刻被联合国教科文组织列入《世界遗产名录》，是中国继敦煌莫高窟之后第二个列入世界遗产名录的石窟。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>宝顶山石刻：</strong>大足石刻的核心，由宋代高僧赵智凤于南宋淳熙至淳祐年间（1174-1252年）主持开凿，历时70余年。石刻分布在马蹄形山湾内，长500米，造像近万尊，以佛教题材为主，儒、道造像并存。最著名的有"六道轮回图""华严三圣像""千手观音""释迦涅槃圣迹图""父母恩重经变相"等。宝顶山石刻是中国唯一一座有总体构思、内容连贯、图文并茂的大型石窟。</li>
+                <li><strong>北山石刻：</strong>开凿于唐景福元年（892年）至南宋绍兴年间，历时250多年。造像近万尊，集中在长300多米的佛湾崖壁上。北山石刻以观音造像最为精美，有"中国观音造像陈列馆"之称。最著名的有"转轮经藏窟""数珠手观音""水月观音""如意珠观音"等。北山石刻艺术价值极高，展现了晚唐至宋代300多年间石窟艺术风格的演变。</li>
+                <li><strong>千手观音：</strong>位于宝顶山大佛湾南崖，是宝顶山石刻的精华。造像凿于南宋，高7.7米，宽12.5米，观音结跏趺坐，头戴宝冠，面容慈祥。最奇特的是观音有1007只手，每只手心有一只眼睛，手握法器，如孔雀开屏般展开，金碧辉煌，令人叹为观止。这是中国现存最大、最完整的千手观音石刻，2008-2015年进行了历时8年的抢救性修复。</li>
+                <li><strong>释迦涅槃圣迹图：</strong>位于宝顶山大佛湾，是大足石刻最大的造像。卧佛全长31米，头北脚南，面西背东，右胁而卧。佛像仅刻半身，下半身隐入岩中，有"意到笔伏"之妙。佛前有十余尊弟子像，表情悲戚，形态各异。卧佛上方刻有"九龙浴太子"图，下方刻有"释迦降生"等佛传故事。整组造像气势恢宏，是中国石窟艺术中最大的卧佛造像之一。</li>
+                <li><strong>六道轮回图：</strong>位于宝顶山大佛湾，是佛教哲学的形象图解。轮图直径2.7米，中心坐一修行者，从心际发出六道毫光，将轮分为六道：天道、人道、阿修罗道、地狱道、饿鬼道、畜生道。轮外刻有"十二因缘"图，阐述生死轮回的因果。六道轮回图构思巧妙，雕刻精细，是佛教石刻艺术的珍品。</li>
+                <li><strong>父母恩重经变相：</strong>位于宝顶山大佛湾，是儒家孝道思想的石刻表现。全图分11组，从"怀胎守护恩"到"究竟怜悯恩"，生动描绘了父母养育子女的艰辛过程。每组有雕像、有颂词，图文并茂。这组造像将佛教的"报恩"思想与儒家的"孝道"观念融为一体，体现了宋代儒释融合的特点。</li>
+                <li><strong>三教合一造像：</strong>大足石刻是儒、释、道三教融合的见证。石篆山石刻有孔子、老子、释迦牟尼同龛造像；石门山石刻有玉皇、孔子、佛陀同在一山。这种三教融合的现象，在中国石窟艺术中极为罕见，反映了两宋时期三教合流的社会思潮。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>春秋最佳（3-5月，9-11月），气候宜人。夏季较热，但石窟内阴凉。建议安排1-2天。宝顶山石刻开放时间：8:30-17:00，北山石刻：8:30-17:30。每年农历二月十九、六月十九、九月十九观音诞辰，有朝拜活动。</li>
+                <li><strong>游览顺序：</strong>建议先游览宝顶山石刻（核心区，需3-4小时），后游览北山石刻（需2-3小时）。宝顶山游览路线：大佛湾→小佛湾→圣寿寺→博物馆。北山游览路线：佛湾→多宝塔→二佛寺。如时间充裕，可游览南山、石门山、石篆山石刻。</li>
+                <li><strong>深度体验：</strong>清晨在宝顶山观日出，感受千年石刻的庄严；跟随专业讲解员，了解石刻背后的佛教故事和雕刻技艺；参观大足石刻博物馆，系统了解石刻历史；学习拓片制作，体验传统技艺；观看《天下大足》实景演出，感受石刻文化；品尝大足特色美食，如邮亭鲫鱼、三驱甜粑等；住大足城区，夜游滨河公园。</li>
+                <li><strong>摄影建议：</strong>千手观音全景与细节，释迦涅槃像的宏伟，六道轮回图的构图，观音造像的慈祥面容，石刻与光影的结合，博物馆文物特写，三教合一造像的独特。建议使用广角镜头拍摄全景，微距镜头捕捉雕刻细节。侧光可增强石刻的立体感，阴天柔和光线适合拍摄色彩。禁止使用闪光灯，以免损伤石刻。</li>
+            </ul>
+            <p><strong>交通信息：</strong>大足石刻位于重庆市大足区。从重庆市区出发：①汽车：在陈家坪、菜园坝、龙头寺汽车站乘大巴到大足汽车站，车程1.5小时；②高铁：在重庆西站乘高铁到大足南站，车程30分钟，转乘公交到景区。自驾：经渝蓉高速到大足出口。景区内有电瓶车。宝顶山石刻距大足城区15公里，北山石刻在城区内。距重庆市区80公里，车程1.5小时。建议与重庆市区、大足龙水湖组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">石刻</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 大足印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 千年雕凿 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>千年雕凿 · 唐宋风华</h3>
+            <p class="text"><strong>初唐开创：</strong>大足石刻始于初唐。唐永徽年间（650-655年），昌州刺史韦君靖在龙岗山（今北山）开凿佛像，开启了北山石刻的序幕。韦君靖是昌州（大足古称）刺史，为保境安民，在北山建永昌寨，并在寨内凿龛造像。现北山第245号龛"韦君靖像"就是为纪念他而刻。初唐时期，大足石刻受中原石窟艺术影响，风格古朴。</p>
+            <p class="text"><strong>晚唐五代：</strong>晚唐、五代是大足石刻的发展期。唐景福元年（892年），昌州刺史韦君靖的继任者继续在北山开凿。这一时期的造像风格从唐代的丰满庄严向宋代的清秀典雅过渡。代表作品有北山第5号龛"毗沙门天王"、第9号龛"千手观音"、第10号龛"释迦牟尼佛"等。五代时期，中原战乱，四川相对安定，石窟艺术得以延续。</p>
+            <p class="text"><strong>两宋鼎盛：</strong>宋代是大足石刻的鼎盛时期。①北山石刻：北宋时期继续开凿，出现了"转轮经藏窟"等精品；②宝顶山石刻：南宋淳熙至淳祐年间（1174-1252年），高僧赵智凤主持开凿，历时70余年，形成了完整的佛教密宗道场；③其他石刻：南山、石门山、石篆山等地的石刻也多开凿于宋代。宋代石刻题材丰富，雕刻精湛，艺术价值极高。</p>
+            <p class="text"><strong>明清延续：</strong>明清时期，大足石刻仍有零星开凿，但规模不大。明代主要在北山、宝顶山增补造像。清代以维修为主。这一时期，大足石刻逐渐被世人遗忘，直到20世纪初才重新发现。明清时期的造像艺术水平不及唐宋，但反映了佛教在民间的延续。</p>
+            <p class="text"><strong>重新发现：</strong>20世纪初，大足石刻重新被世人认识。①1940年，梁思成、刘敦桢等学者考察大足石刻，首次向学术界介绍；②1945年，杨家骆、顾颉刚、马衡等学者组团考察，出版《大足石刻考察团报告》；③1961年，北山、宝顶山石刻被列为全国重点文物保护单位；④1980年代，开始系统调查、保护；⑤1999年，列入《世界遗产名录》。大足石刻从此走向世界。</p>
+            <p class="text"><strong>保护修复：</strong>大足石刻得到科学保护。①日常维护：建立监测系统，防止风化、渗水等病害；②工程保护：对危岩体进行加固，建设保护性建筑；③修复工程：2008-2015年，对千手观音进行历时8年的抢救性修复；④研究展示：成立大足石刻研究院，出版《大足石刻全集》；⑤合理利用：发展文化旅游，让石刻"活"起来。大足石刻的保护经验，为石质文物保护提供了借鉴。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 艺术瑰宝 爱心: 🎨 -->
+    <div class="dim-content" id="art-content" data-dim="art">
+        <div class="word">
+            <h3>艺术瑰宝 · 雕刻巅峰</h3>
+            <p class="text"><strong>雕刻技法：</strong>大足石刻雕刻技法精湛。①圆雕：用于主体造像，立体感强；②高浮雕：用于主要人物，凸出壁面；③浅浮雕：用于背景、装饰；④线刻：用于衣纹、图案；⑤镂雕：用于千手观音的手、法器。工匠们根据岩质、题材、位置选择不同技法，使石刻既有整体气势，又有细节之美。</p>
+            <p class="text"><strong>艺术风格：</strong>大足石刻艺术风格独特。①唐代风格：北山早期造像，丰满庄严，有盛唐气象；②宋代风格：宝顶山、北山晚期造像，清秀典雅，生活气息浓厚；③地方风格：融合巴蜀文化，人物形象更接近当地民众；④世俗风格：造像更加人性化，佛教人物有人的情感。大足石刻是中国石窟艺术从神性向人性转变的典范。</p>
+            <p class="text"><strong>构图布局：</strong>大足石刻构图巧妙。①整体布局：宝顶山石刻有总体规划，内容连贯，图文并茂；②龛窟设计：根据岩壁形状设计龛窟，与环境协调；③人物组合：主次分明，对称均衡；④图文结合：雕像与经文、赞词结合，便于理解。大足石刻是"石窟艺术的百科全书"。</p>
+            <p class="text"><strong>人物塑造：</strong>大足石刻人物塑造生动。①佛陀：庄严慈祥，有超然物外之态；②菩萨：温婉秀丽，有悲悯众生之情；③罗汉：个性鲜明，有喜怒哀乐之容；④世俗人物：生活气息浓厚，有浓郁的地方特色。特别是"父母恩重经变相"中的父母形象，完全是中国普通百姓的写照。</p>
+            <p class="text"><strong>装饰艺术：</strong>大足石刻装饰丰富。①服饰：衣纹流畅，质感真实，有"曹衣出水"之妙；②法器：雕刻精细，种类繁多；③背景：有山石、流水、云气、建筑等；④纹样：有莲花、卷草、璎珞、宝相等。装饰既美化造像，又深化主题。</p>
+            <p class="text"><strong>色彩运用：</strong>大足石刻原有彩绘，现多已脱落，但从残留痕迹可见当初风采。①主色调：以红、绿、蓝、金为主；②着色方法：平涂、晕染、贴金等；③色彩意义：金色象征佛光，红色象征吉祥，绿色象征生机。石刻博物馆有复原彩绘模型，再现了石刻的本来面貌。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="art"><span class="like-icon">🎨</span><span class="like-count">0</span><span class="like-btn-text">艺术</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="art">💬 艺术鉴赏</button><div class="comment-list" id="comment-list-art" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 三教融合 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>三教融合 · 文化交融</h3>
+            <p class="text"><strong>佛教文化：</strong>大足石刻以佛教题材为主。①显宗：有释迦佛、阿弥陀佛、药师佛、观音、地藏、文殊、普贤等；②密宗：宝顶山石刻是佛教密宗道场，有"六道轮回""曼荼罗"等密宗题材；③禅宗：有"牧牛图"等禅宗公案；④净土宗：有"西方净土变"等。大足石刻反映了宋代佛教各宗派的融合。</p>
+            <p class="text"><strong>儒家思想：</strong>大足石刻融入儒家思想。①孝道："父母恩重经变相"是儒家孝道的石刻表现；②忠义：有"关羽像""二十四孝图"等；③礼仪：造像布局体现尊卑有序；④教育：图文结合，有教化功能。大足石刻是佛教中国化、世俗化的体现。</p>
+            <p class="text"><strong>道教文化：</strong>大足石刻有道教造像。①南山石刻：主要是道教造像，有三清、四御、三百大帝等；②石门山石刻：有玉皇、老君、三官等；③三教合一：石篆山有孔子、老子、佛陀同龛。道教造像风格与佛教不同，更具神秘色彩。</p>
+            <p class="text"><strong>民间信仰：</strong>大足石刻反映民间信仰。①地方神：有"川主""土主""药王"等；②自然神：有"雷公""电母""风伯""雨师"等；③行业神：有"鲁班""杜康"等。这些造像反映了宋代民间信仰的多样性。</p>
+            <p class="text"><strong>社会生活：</strong>大足石刻是宋代社会生活的缩影。①生产：有"牧牛图""耕作图"等；②生活：有"宴饮图""市井图"等；③娱乐：有"杂技图""音乐图"等；④风俗：有"婚嫁图""丧葬图"等。这些造像是研究宋代社会史的珍贵资料。</p>
+            <p class="text"><strong>文化交流：</strong>大足石刻是文化交流的产物。①中原文化：受洛阳龙门、大同云冈影响；②巴蜀文化：融入地方特色；③西藏文化：有密宗元素；④南亚文化：有印度、尼泊尔风格。大足石刻是多元文化交融的结晶。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">融合</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 世界遗产 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>世界遗产 · 人类瑰宝</h3>
+            <p class="text"><strong>历史价值：</strong>大足石刻是唐宋历史的见证。①艺术史：代表中国晚期石窟艺术的最高成就；②宗教史：反映佛教中国化、三教合流的过程；③社会史：展现宋代社会生活、民间信仰；④技术史：体现古代雕刻技艺的高超水平。大足石刻是研究唐宋历史文化的"石质史书"。</p>
+            <p class="text"><strong>艺术价值：</strong>大足石刻是世界石窟艺术的瑰宝。①审美价值：造像精美，技艺高超，是雕塑艺术的典范；②独创价值：有总体规划，内容连贯，图文并茂，是世界石窟艺术中的孤例；③风格价值：展现了中国石窟艺术从唐代到宋代的风格演变；④题材价值：题材丰富，儒释道三教融合，独具特色。大足石刻是"世界石窟艺术史上最后的丰碑"。</p>
+            <p class="text"><strong>科学价值：</strong>大足石刻蕴含丰富的科学技术。①地质科学：岩石性质、风化机理研究；②材料科学：彩绘颜料、金箔工艺研究；③保护科学：石质文物保护技术；④环境科学：石刻与环境的关系研究。大足石刻是研究石质文物保护的实验室。</p>
+            <p class="text"><strong>文化价值：</strong>大足石刻是中华文化的重要载体。①佛教文化：佛教中国化的实物见证；②儒家文化：孝道思想的艺术表现；③道教文化：道教神仙体系的形象展示；④民间文化：民俗信仰的生动记录。大足石刻是中华文化多元一体、兼容并蓄的体现。</p>
+            <p class="text"><strong>教育价值：</strong>大足石刻是爱国主义教育、传统文化教育的重要基地。①历史教育：了解唐宋历史、石窟艺术；②艺术教育：学习雕刻技艺、审美鉴赏；③道德教育：弘扬孝道、向善等传统美德；④科学教育：学习文物保护知识。每年有大量学生前来研学。</p>
+            <p class="text"><strong>保护与传承：</strong>大足石刻得到科学保护。①法律保护：1961年列为全国重点文物保护单位，1999年列入《世界遗产名录》；②规划保护：编制《大足石刻保护规划》，划定保护区、建设控制地带；③工程保护：对危岩体加固，建设保护性建筑；④研究展示：成立大足石刻研究院，出版《大足石刻全集》；⑤合理利用：发展文化旅游，让文物"活"起来；⑥社区参与：与当地社区合作，共同保护。大足石刻的保护经验，为世界文化遗产保护提供了中国方案。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 大足石刻千年雕凿，三教融合艺术巅峰 | 五重维度·五种灵韵爱心，点赞评论共话世界遗产</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（大足石刻独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        art: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        art: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('dazu_rock_carvings_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('dazu_rock_carvings_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('dazu_rock_carvings_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('dazu_rock_carvings_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对大足石刻的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的大足石刻感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "大足访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

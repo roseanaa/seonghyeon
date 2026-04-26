@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>凤凰古城 · 四维解读 | 边城风情 · 湘西明珠</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/凤凰古城.jpg" title="凤凰古城" alt="凤凰古城沱江吊脚楼">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 千年古城</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 建筑特色</div>
+        <div class="dim-tab" data-tab="culture">🎪 湘西风情</div>
+        <div class="dim-tab" data-tab="value">🌟 边城价值</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>凤凰古城 · 湘西明珠</h3>
+            <p class="text"><strong>传奇：</strong>凤凰古城位于湖南省湘西土家族苗族自治州凤凰县沱江之畔，始建于明嘉靖三十五年（1556年），是湘西土家族苗族文化的发祥地之一，被誉为"中国最美丽的小城"。古城依山傍水，沱江穿城而过，红色砂岩砌成的城墙、古老的城楼、临江的吊脚楼、悠长的青石板街，构成了一幅水墨山水画。2001年被列为国家历史文化名城，2012年被评为国家4A级旅游景区，是沈从文《边城》的原型地。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>沱江泛舟：</strong>乘小船在沱江上漂流，是体验凤凰古城的最佳方式。从北门码头出发，顺流而下，经过虹桥、万名塔、吊脚楼群、万寿宫，全程约30分钟。清晨薄雾笼罩，傍晚灯火初上，是沱江最美的时刻。"舟行碧波上，人在画中游"，是凤凰最诗意的体验。</li>
+                <li><strong>虹桥风雨楼：</strong>位于古城中心，横跨沱江，是凤凰的标志性建筑。始建于明洪武七年（1374年），为三孔石拱桥，桥上建有两层木结构楼阁，原名"卧虹桥"，后改称"虹桥"。二楼为茶楼，可俯瞰沱江全景。桥上有沈从文、黄永玉等名家题字。</li>
+                <li><strong>沈从文故居：</strong>位于中营街10号，清代建筑，四合院结构，占地约600平方米。1902年，沈从文在此出生并度过童年。故居陈列有沈从文生平照片、手稿、著作等。院内有沈从文汉白玉雕像，墙上刻有其名言："一个士兵要不战死沙场，便是回到故乡。"</li>
+                <li><strong>东门城楼：</strong>又称"升恒门"，古城四座城门中唯一保存完好的一座。始建于清康熙五十四年（1715年），为重檐歇山顶，高11米，城门宽3.5米。城楼上有瞭望口、炮眼，是古代军事防御设施。登楼可俯瞰古城全景。</li>
+                <li><strong>杨家祠堂：</strong>位于古城东北角，是凤凰城内保存最完好的祠堂。建于清道光十六年（1836年），为杨氏家族宗祠，四合院结构，有戏台、天井、正殿、厢房等。现为湘西民俗博物馆，展示土家族苗族服饰、银饰、织锦等。</li>
+                <li><strong>熊希龄故居：</strong>位于文星街8号，是"民国第一任民选总理"熊希龄的出生地。清代建筑，四合院结构，占地800平方米。故居陈列熊希龄生平事迹、照片、手迹等。熊希龄（1870-1937年），字秉三，曾创办香山慈幼院，致力于慈善事业。</li>
+                <li><strong>万名塔：</strong>位于沱江北岸，原为明代"字纸炉"，用于焚烧有字纸张，以示对文化的尊重。1985年重建为七层六角砖塔，高21米，每层有塔檐翘角，悬挂铜铃。夜晚灯火辉煌，倒映沱江，是摄影爱好者喜爱的取景点。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，春秋最佳（3-5月，9-11月）。建议游玩2-3天。清晨（6:00-8:00）和傍晚（17:00-20:00）是最佳游览时间，可避开旅游团，感受古城的宁静。夜晚的沱江夜景不容错过。农历四月八苗族"跳花节"、六月六土家族"晒龙袍"、端午节赛龙舟是重要节庆。</li>
+                <li><strong>游览顺序：</strong>第一天：沈从文故居→熊希龄故居→古城博物馆→杨家祠堂→东门城楼→虹桥风雨楼→沱江泛舟→万名塔→夜游古城。第二天：奇梁洞→南方长城→山江苗寨。第三天：老洞苗寨或德夯苗寨。</li>
+                <li><strong>深度体验：</strong>清晨在沱江边散步，看妇女洗衣、老人晨练；在江边茶馆品茶，读沈从文《边城》；租苗族服饰拍照，体验民族风情；晚上看《边城》大型实景演出；泡江边酒吧，听民谣；逛夜市，尝特色小吃；住江边吊脚楼客栈，听沱江水声入眠。</li>
+                <li><strong>摄影建议：</strong>沱江晨雾与吊脚楼，虹桥夜景与倒影，万名塔与沱江构图，古城小巷与青石板，苗族银饰与服饰特写，民俗活动与节庆场景。建议使用广角镜头拍摄全景，长焦镜头捕捉人物和细节。清晨和傍晚光线柔和，适合拍摄。雨后的石板路反光效果佳。</li>
+            </ul>
+            <p><strong>交通信息：</strong>凤凰古城位于湘西州凤凰县。①火车：到吉首站或怀化站，转乘汽车到凤凰（车程1-1.5小时）；②高铁：到怀化南站，转乘汽车；③飞机：到铜仁凤凰机场（距古城30公里，车程40分钟）或张家界荷花机场（转汽车3小时）；④自驾：经包茂高速、杭瑞高速到凤凰出口。古城内步行游览，外围景点可乘出租车或旅游车。建议与张家界、芙蓉镇、德夯苗寨组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">古城</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 凤凰印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 千年古城 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>千年古城 · 边城往事</h3>
+            <p class="text"><strong>秦汉时期：</strong>凤凰在秦汉时期属黔中郡，是"五溪蛮"（苗族、土家族先民）聚居地。汉高祖五年（前202年），设辰阳县。东汉建武年间（25-56年），伏波将军马援征"五溪蛮"，在凤凰一带驻军。唐代，属锦州、溪州。五代时，彭氏土司统治湘西，凤凰为"五溪酋长"地。</p>
+            <p class="text"><strong>明代建城：</strong>明洪武七年（1374年），朝廷在沱江设"镇溪千户所"。嘉靖三十五年（1556年），为防御苗民起义，朝廷拨款筑城，始建凤凰城。万历四十三年（1615年），朝廷在湘西修筑"苗疆边墙"（即南方长城），凤凰成为军事重镇。天启二年（1622年），升为"凤凰营"，驻兵五千。</p>
+            <p class="text"><strong>清代发展：</strong>清康熙三十九年（1700年），朝廷在凤凰设"镇筸镇"，为全国六十二镇之一。康熙四十三年（1704年），移辰沅靖道驻镇筸。乾隆五十二年（1787年），升为"凤凰厅"，直属辰沅永靖兵备道。清代，凤凰是湘西的政治、军事、经济中心，有"滇黔咽喉，楚蜀门户"之称。</p>
+            <p class="text"><strong>民国时期：</strong>民国二年（1913年），改凤凰厅为凤凰县。民国时期，凤凰涌现出许多杰出人物：①熊希龄（1870-1937年），民国第一任民选总理；②沈从文（1902-1988年），著名作家；③黄永玉（1924-），著名画家；④陈渠珍（1882-1952年），"湘西王"。这些人物使凤凰名声大振。</p>
+            <p class="text"><strong>新中国成立后：</strong>1950年，凤凰和平解放。1957年，湘西土家族苗族自治州成立，凤凰属之。1980年代，随着沈从文作品重新被重视，凤凰开始受到关注。1990年代，旅游业起步。2001年，被列为国家历史文化名城。2012年，评为国家4A级景区。现年接待游客超过1000万人次。</p>
+            <p class="text"><strong>名人辈出：</strong>凤凰虽地处偏远，但文风鼎盛，人才辈出。①政治人物：熊希龄（总理）、田应诏（湘西镇守使）、陈渠珍（湘西王）；②文化名人：沈从文（作家）、黄永玉（画家）、萧纪美（院士）；③军事将领：田兴恕（贵州提督）、郑国鸿（定海总兵）。据统计，清代凤凰出过提督5人、总兵8人、副将14人，民国时期出将军34人，故有"将军之乡"美誉。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑特色 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑特色 · 吊脚楼群</h3>
+            <p class="text"><strong>总体布局：</strong>凤凰古城占地约10平方公里，古城核心区1.8平方公里。古城背靠南华山，面临沱江，形成"山、水、城"一体格局。城内以东西向的中山路、东正街、文星街和南北向的虹桥路、老营哨、回龙阁为骨架，连接众多小巷。城外有城墙、城楼、护城河（沱江），体现了古代军事防御思想。</p>
+            <p class="text"><strong>吊脚楼：</strong>凤凰建筑的最大特色是临沱江的吊脚楼群。①结构：多为穿斗式木结构，用木柱支撑，悬挑出江面，故称"吊脚"；②功能：下层为支柱（防潮、防洪），中层居住，上层储物；③材料：木柱、木板、青瓦；④装饰：雕花门窗、栏杆、悬鱼、惹草。吊脚楼依山就势，层层叠叠，是苗族、土家族干栏式建筑的典型代表。</p>
+            <p class="text"><strong>城墙城楼：</strong>古城原有城墙2000余米，设东、西、南、北四座城门，现仅存东门（升恒门）和北门（璧辉门）及部分城墙。城墙用红砂岩砌筑，高6米，顶宽3米。城楼为重檐歇山顶，铺小青瓦，有瞭望口、炮眼。城墙、城楼与沱江构成完整的防御体系。</p>
+            <p class="text"><strong>虹桥风雨楼：</strong>虹桥是古城中心，始建于明洪武七年（1374年）。①桥体：三孔石拱桥，长112米，宽8米；②桥廊：两层木结构楼阁，重檐歇山顶，小青瓦；③功能：下层为商铺，上层为茶楼、观景台；④装饰：雕花门窗、彩绘、匾额。虹桥既是交通要道，又是商业中心、观景胜地。</p>
+            <p class="text"><strong>祠堂庙宇：</strong>古城内有众多祠堂、庙宇。①杨家祠堂：四合院结构，有戏台、天井、正殿；②文庙：供奉孔子，是古代学宫；③天王庙：供奉杨泗将军（水神）；④万寿宫：江西商人会馆，现为黄永玉艺术馆。这些建筑体现了多元文化融合。</p>
+            <p class="text"><strong>街巷特色：</strong>古城街巷纵横，青石板铺就。①主街：宽4-6米，两旁为商铺；②小巷：宽1-3米，幽深曲折；③石阶：连接高低错落的街巷；④排水：有完善的排水系统，雨不积水。街巷名称多与历史相关，如中营街（明代军营）、文星街（文人聚居）、老营哨（军事哨所）。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 湘西风情 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>湘西风情 · 民族融合</h3>
+            <p class="text"><strong>苗族文化：</strong>凤凰是苗族聚居地，苗族人口占50%以上。①服饰：妇女穿大襟衣、百褶裙，戴银饰（银冠、银项圈、银手镯）；②节日：四月八"跳花节"、六月六"苗年"、赶秋节等；③歌舞：苗族鼓舞、接龙舞、芦笙舞；④工艺：银饰锻造、刺绣、蜡染。古城有苗族博物馆，展示苗族历史文化。</p>
+            <p class="text"><strong>土家族文化：</strong>土家族是凤凰另一主要民族。①服饰：妇女穿左襟大褂，滚花边，头缠布帕；②节日：六月六"晒龙袍"、过年"摆手节"；③歌舞：摆手舞、毛古斯舞、打溜子；④建筑：吊脚楼、转角楼。土家族与苗族长期杂居，文化相互影响。</p>
+            <p class="text"><strong>沈从文与《边城》：</strong>沈从文（1902-1988年），凤凰人，现代著名作家。其代表作《边城》以湘西为背景，描写茶峒小镇翠翠的爱情故事，展现湘西的自然美、人性美。小说中的茶峒以凤凰为原型，沱江、渡船、白塔等元素均取自凤凰。沈从文笔下的湘西，使凤凰成为"文学故乡"。</p>
+            <p class="text"><strong>黄永玉艺术：</strong>黄永玉（1924-），凤凰人，著名画家。其画作融合中西，风格独特。在凤凰建有"黄永玉艺术馆"，展出其书画、雕塑作品。黄永玉为凤凰设计了许多标志性景观，如"万名塔""沱江跳岩"等。他的题字、绘画，为古城增添了艺术气息。</p>
+            <p class="text"><strong>民俗活动：</strong>凤凰民俗活动丰富多彩。①赶场：每逢农历三、八日，周边村民到古城赶集，交易土特产；②对歌：苗族青年在沱江边对歌，表达爱慕；③巫傩文化：有傩戏、傩舞、傩技，表现驱邪祈福；④民间绝技：上刀山、下火海、捞油锅等。这些活动体现了湘西的神秘文化。</p>
+            <p class="text"><strong>特色美食：</strong>凤凰美食独具特色。①血粑鸭：用鸭血和糯米制成血粑，与鸭肉同炖；②腊肉：湘西腊肉，烟熏而成，风味独特；③酸汤鱼：苗族传统菜，酸辣开胃；④姜糖：凤凰特产，用生姜、红糖制成；⑤米豆腐：用大米制成，配以酸辣调料。古城内有众多餐馆、小吃摊，可品尝地道湘西味。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">风情</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 边城价值 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>边城价值 · 文化遗产</h3>
+            <p class="text"><strong>历史文化价值：</strong>凤凰古城是湘西历史的活化石。①军事史：明清军事重镇，南方长城的重要节点；②建筑史：保存完好的明清建筑群，吊脚楼建筑的典范；③民族史：苗族、土家族文化的集中展示地；④文学史：沈从文《边城》的原型地，中国现代文学的重要场景。凤凰是研究中国西南地区历史、文化、民族、建筑的宝贵遗产。</p>
+            <p class="text"><strong>建筑价值：</strong>凤凰古城建筑是中国传统建筑的珍贵实例。①独特性：吊脚楼建筑群，适应山地水文环境；②完整性：古城格局、街巷、建筑保存完好；③科学性：木结构技术、防洪技术、排水系统等，体现古代工匠智慧；④艺术性：建筑与自然和谐，形成"山水城"一体景观。凤凰是"活着的古城"，居民仍在其中生活。</p>
+            <p class="text"><strong>文学艺术价值：</strong>凤凰是文学艺术的圣地。①文学：沈从文《边城》《湘行散记》等作品，使凤凰成为"文学凤凰"；②美术：黄永玉等画家的作品，展现湘西风情；③影视：《边城》《湘西剿匪记》《乌龙山剿匪记》等影视作品，传播湘西文化；④音乐：苗族飞歌、土家族山歌，是民族音乐的瑰宝。凤凰是文艺创作的源泉。</p>
+            <p class="text"><strong>旅游价值：</strong>凤凰是中国最受欢迎的旅游目的地之一。①景观价值："中国最美丽的小城"，沱江风光、古城风貌独具魅力；②体验价值：民俗体验、美食体验、休闲体验丰富；③经济价值：旅游业带动当地经济发展，年旅游收入数十亿元；④品牌价值："凤凰"已成为中国古镇旅游的代表品牌。</p>
+            <p class="text"><strong>社会价值：</strong>凤凰在当代社会具有多重价值。①民族团结：苗族、土家族、汉族和谐共处，是民族团结的典范；②文化传承：保护传承少数民族文化；③乡村振兴：旅游业带动农村发展；④教育功能：是爱国主义教育基地、传统文化教育基地。凤凰是展示中国多元文化的窗口。</p>
+            <p class="text"><strong>保护与开发：</strong>凤凰古城面临保护与开发的双重挑战。①法律保护：2001年列为国家历史文化名城，2006年列为全国重点文物保护单位；②规划保护：编制《凤凰古城保护规划》，划定保护区、建设控制区；③工程保护：对古建筑进行维修加固，整治沱江水环境；④旅游管理：控制游客数量，规范商业行为；⑤社区参与：鼓励居民参与保护，保持古城活力；⑥可持续发展：平衡保护与开发，实现可持续发展。凤凰的保护经验，为古镇保护提供了借鉴。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 凤凰古城湘西明珠，边城风情文学故乡 | 五重维度·五种灵韵爱心，点赞评论共话沱江烟雨</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（凤凰古城独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('fenghuang_gucheng_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('fenghuang_gucheng_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('fenghuang_gucheng_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('fenghuang_gucheng_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对凤凰古城的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的凤凰古城感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "凤凰访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

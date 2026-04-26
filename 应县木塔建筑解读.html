@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>应县木塔 · 四维解读 | 千年木塔 · 天下奇观</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <div class="pic">
+        <img src="./image/应县木塔.jpg" title="应县木塔" alt="应县木塔全景">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 历史传承</div>
+        <div class="dim-tab" data-tab="structure">🏗️ 木构奇迹</div>
+        <div class="dim-tab" data-tab="religion">🪷 佛寺胜迹</div>
+        <div class="dim-tab" data-tab="value">🌟 国宝价值</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>应县木塔 · 千年木构</h3>
+            <p class="text"><strong>传奇：</strong>世界现存最高、最古老的木结构楼阁式佛塔，被誉为"世界三大奇塔"之一（与意大利比萨斜塔、巴黎埃菲尔铁塔齐名）。始建于辽清宁二年（1056年），金明昌六年（1195年）增修完毕，距今已近千年。全塔高67.31米，底层直径30.27米，呈平面八角形，纯木结构，无钉无铆，堪称中国古代木构建筑的巅峰之作。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul><li><strong>木塔结构：</strong>外观五层六檐，实为九层（明五暗四），采用"叉柱造"和"缠柱造"相结合的独特构造。全塔使用红松木料3000立方米，重约2600吨，54种斗拱，480朵，被誉为"斗拱博物馆"。</li><li><strong>匾额题记：</strong>木塔悬挂历代帝王、名臣、书法家题写的匾额54方，最珍贵的是三层"释迦塔"大匾，为金代原物，书法遒劲。还有明成祖朱棣"峻极神工"、明武宗"天下奇观"等御笔。</li><li><strong>佛像雕塑：</strong>各层供奉佛像，底层为11米高的释迦牟尼坐像，体态丰腴，面相慈祥，为辽代彩塑珍品。二层以上有四方佛、八大菩萨等。</li><li><strong>佛牙舍利：</strong>1974年维修时，在四层主佛像内发现佛牙舍利两颗，经鉴定为释迦牟尼佛灵牙，是佛教圣物。</li><li><strong>辽代壁画：</strong>底层内墙有辽代壁画，内容为佛像、飞天、供养人等，虽经后代重绘，仍保留辽代风格。</li><li><strong>抗震奇迹：</strong>历经千年，遭遇地震40多次，其中7次6级以上强震，炮击200余发，仍巍然屹立，其抗震性能堪称世界奇迹。</li></ul>
+            <p><strong>参观攻略：</strong></p>
+            <ul><li><strong>最佳时间：</strong>5-10月，夏秋最佳。建议上午前往，光线适合拍照。冬季雪后木塔别具韵味。</li><li><strong>游览顺序：</strong>绕塔三周（从不同角度观察）→进一层瞻仰大佛→细看匾额题记→参观木塔模型展→登塔（目前只开放至二层）。建议游览2-3小时。</li><li><strong>专业看点：</strong>注意观察斗拱的复杂结构、柱子的侧脚和生起、梁架的"叉柱造"、屋顶的"推山"做法。绕塔时可看到木塔明显倾斜（二层以上向东北倾斜15度）。</li><li><strong>摄影建议：</strong>清晨或傍晚光线柔和时拍摄全景，绕塔拍摄不同角度的斗拱特写，近距离拍摄匾额细节，利用广角镜头表现木塔的雄伟。</li></ul>
+            <p><strong>交通信息：</strong>位于山西省朔州市应县西北佛宫寺内。从大同出发，乘大巴约1.5小时；从太原出发，乘火车到应县站，再打车前往。建议与云冈石窟、悬空寺组成晋北古建游。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">木塔</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 木塔印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 历史传承 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>历史传承 · 辽代遗珍</h3>
+            <p class="text"><strong>建造背景：</strong>应县木塔的建造与辽代皇室崇佛密切相关。辽兴宗耶律宗真、道宗耶律洪基都是虔诚的佛教徒，在各地广建佛寺佛塔。应县（辽代称应州）是辽代西京大同的南大门，战略地位重要，建塔既有礼佛祈福之意，也有军事瞭望功能。</p>
+            <p class="text"><strong>建造年代：</strong>据塔内现存碑刻和题记，木塔始建于辽清宁二年（1056年），由田和尚奉敕募建。金明昌六年（1195年）增修完毕，历时139年。这种"跨朝代"建造在中国古建中极为罕见，也解释了木塔为何融合了辽、金两代的建筑风格。</p>
+            <p class="text"><strong>建造目的：</strong>一说为萧太后（萧绰）所建，庆祝其父萧思温封为燕王；一说为辽兴宗为皇后萧挞里所建；一说为辽道宗为纪念其父母（兴宗和仁懿皇后）所建。从塔内发现的佛牙舍利看，木塔很可能是辽代皇家供养佛舍利的圣地。</p>
+            <p class="text"><strong>历代修缮：</strong>元至正年间、明正德三年、清康熙六十一年、乾隆三十一年、光绪年间均有修缮。1926年军阀混战，木塔中弹200余发，受损严重但仍未倒塌。新中国成立后，进行多次维修，1974-1981年、1991-1998年进行大规模落架维修，解决倾斜问题。2011年启动为期十年的全面加固工程。</p>
+            <p class="text"><strong>发现与研究：</strong>1933年，中国营造学社梁思成、莫宗江等考察应县木塔，首次科学测绘，撰写《山西应县佛宫寺辽释迦木塔》。梁思成赞叹："这塔真是一个独一无二的伟大作品。不见此塔，不知木构的可能性到了什么程度。"</p>
+            <p class="text"><strong>保护现状：</strong>1961年被列为第一批全国重点文物保护单位。由于年代久远，加上历代不当维修，木塔出现严重倾斜（二层以上东北倾斜15度，西南下沉22厘米）。目前采取严格控制游客数量、禁止登临高层等措施，并开展科学保护和修复研究。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 木构奇迹 爱心: 🏗️ -->
+    <div class="dim-content" id="structure-content" data-dim="structure">
+        <div class="word">
+            <h3>木构奇迹 · 斗拱博物馆</h3>
+            <p class="text"><strong>结构体系：</strong>应县木塔采用"殿阁型"与"楼阁型"结合的结构。外观五层六檐（明层五层，暗层四层，实为九层），平面八角形，底层重檐，以上各层单檐。全塔采用"叉柱造"与"缠柱造"相结合的独特构造：上层柱脚插入下层斗拱中（叉柱造），同时用枋木将柱子缠连（缠柱造），形成柔性连接，抗震性能极佳。</p>
+            <p class="text"><strong>斗拱体系：</strong>全塔使用斗拱54种，480朵，是中国古建筑中使用斗拱种类最多的建筑，被誉为"斗拱博物馆"。斗拱不仅起装饰作用，更是重要的结构构件：①传递荷载：将屋檐重量均匀传递到柱子上。②增加出檐：使屋檐深远（最大出檐3.6米），保护墙体。③抗震减震：斗拱的榫卯连接有一定弹性，可消减地震能量。</p>
+            <p class="text"><strong>抗震设计：</strong>木塔历经40多次地震（包括元大德七年8级地震、明天启六年7级地震）而不倒，其抗震秘密在于：①双层套筒结构：内外两圈柱子形成筒体，类似现代高层建筑的"筒中筒"结构。②柔性连接：斗拱、榫卯有一定活动余地，可消能减震。③侧脚生起：柱子向内倾斜（侧脚），由明间向梢间逐渐升高（生起），形成向心趋势。④暗层刚性层：四个暗层实为结构加强层，类似现代建筑的圈梁。</p>
+            <p class="text"><strong>用材科学：</strong>全塔使用红松木料3000立方米，重约2600吨。红松材质轻而坚韧，耐腐蚀。木料经过特殊处理：①自然阴干：避免开裂变形。②桐油浸泡：防虫防腐。③榫卯连接：不用一钉一铆，全部靠榫卯咬合。④"银锭扣"加固：关键部位用铁制"银锭扣"加固。</p>
+            <p class="text"><strong>基础处理：</strong>塔基为夯土台，深2米，上铺石条。基础下为砂土层，遇震可产生"液化"效应，消耗地震能量。这种"以柔克刚"的抗震理念，与现代隔震技术不谋而合。</p>
+            <p class="text"><strong>倾斜原因：</strong>木塔二层以上向东北倾斜15度，主要原因是：①历代不当维修，拆除斜撑，削弱结构。②民国时期炮击，部分构件损坏。③地基不均匀沉降。目前采取钢架支撑、化学加固等措施，防止倾斜加剧。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="structure"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">构法</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="structure">💬 木构智慧</button><div class="comment-list" id="comment-list-structure" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 佛寺胜迹 爱心: 🪷 -->
+    <div class="dim-content" id="religion-content" data-dim="religion">
+        <div class="word">
+            <h3>佛寺胜迹 · 辽代佛教</h3>
+            <p class="text"><strong>佛宫寺布局：</strong>应县木塔是佛宫寺的主体建筑，原寺院规模宏大，有山门、钟鼓楼、天王殿、大雄宝殿、配殿等，现仅存木塔和山门。寺院布局为典型的辽代佛寺"前塔后殿"格局，塔位于寺院中轴线前端，是礼佛的焦点。</p>
+            <p class="text"><strong>佛像配置：</strong>木塔各层供奉不同佛像，体现"华严宗"的教义。一层：释迦牟尼坐像，高11米，为辽代彩塑珍品。二层：坛座方形，上置一佛四菩萨。三层：四方佛，面向四方。四层：一佛二弟子二菩萨。五层：毗卢遮那佛（法身佛）。这种配置象征从"释迦佛"到"法身佛"的修行次第。</p>
+            <p class="text"><strong>佛牙舍利：</strong>1974年维修时，在四层主佛像胸腹部位发现银盒，内藏佛牙舍利两颗。经赵朴初、巨赞法师等鉴定，为释迦牟尼佛灵牙。同时还发现辽代刻经、写经、木板套色绢质佛像等珍贵文物。佛牙舍利的发现，证明木塔是辽代皇家供养佛舍利的圣地。</p>
+            <p class="text"><strong>辽代壁画：</strong>一层内墙有辽代壁画，高4米，总面积304平方米。内容为佛像、菩萨、飞天、供养人等。壁画采用"铁线描"技法，线条刚劲有力，色彩以红、绿、青为主，虽经后代重绘，仍保留辽代风格。是研究辽代佛教绘画的重要资料。</p>
+            <p class="text"><strong>佛教典籍：</strong>木塔内发现大量辽代刻经、写经，包括《妙法莲华经》《大方广佛华严经》《金刚般若波罗蜜经》等。经卷用黄麻纸或硬黄纸，楷书工整，有的还用金银泥书写，极为珍贵。这些佛经为研究辽代佛教、印刷术、书法提供了实物资料。</p>
+            <p class="text"><strong>匾额文化：</strong>木塔悬挂历代匾额54方，多为帝王、名臣、书法家所题。最珍贵的是三层"释迦塔"大匾，为金代原物，书法遒劲。其他重要匾额：明成祖朱棣"峻极神工"、明武宗"天下奇观"、清康熙"万古观瞻"、清乾隆"永镇金城"等。这些匾额不仅是书法艺术珍品，也记录了木塔的历史地位。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="religion"><span class="like-icon">🪷</span><span class="like-count">0</span><span class="like-btn-text">佛光</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="religion">💬 佛教艺术</button><div class="comment-list" id="comment-list-religion" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 国宝价值 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>国宝价值 · 世界瑰宝</h3>
+            <p class="text"><strong>建筑史价值：</strong>应县木塔是世界现存最高、最古老的木结构楼阁式建筑，比意大利比萨斜塔早117年，比巴黎埃菲尔铁塔早832年。其结构之复杂、技术之高超、保存之完好，在世界建筑史上绝无仅有，是研究中国古代木构建筑技术的"活化石"。</p>
+            <p class="text"><strong>结构科学价值：</strong>木塔的抗震性能堪称奇迹，为现代抗震设计提供了宝贵启示。其"柔性结构"、"以柔克刚"的设计理念，双层套筒结构，斗拱的消能减震作用，都与现代抗震理论不谋而合。美国地震工程专家称其为"世界建筑抗震的典范"。</p>
+            <p class="text"><strong>艺术史价值：</strong>木塔集建筑、雕塑、绘画、书法艺术于一体。建筑造型雄伟庄重，斗拱繁复精巧；佛像雕塑庄严慈祥，体现辽代艺术风格；壁画线条流畅，色彩鲜明；匾额书法各体兼备，名家荟萃。是一座综合性的艺术宝库。</p>
+            <p class="text"><strong>宗教史价值：</strong>木塔是辽代佛教鼎盛的实物见证。佛牙舍利的发现，证明其是皇家供养佛舍利的圣地。塔内佛像配置体现华严宗教义，壁画、佛经反映辽代佛教信仰。是研究辽代佛教、民族文化融合的重要资料。</p>
+            <p class="text"><strong>文化象征：</strong>应县木塔与长城、故宫一样，已成为中华文明的象征。梁思成评价："这塔真是一个独一无二的伟大作品。不见此塔，不知木构的可能性到了什么程度。"它代表了中国古代工匠的智慧和创造力，体现了中华民族"天人合一"的哲学思想。</p>
+            <p class="text"><strong>保护挑战：</strong>木塔目前面临严重倾斜，二层以上东北倾斜15度，西南下沉22厘米。倾斜原因复杂，包括结构老化、历代不当维修、地基沉降等。保护工作面临两难：加固可能改变原结构，不加固可能倒塌。目前采取"最小干预"原则，利用现代科技监测、研究，寻找最佳保护方案。</p>
+            <p class="text"><strong>世界遗产潜力：</strong>应县木塔已列入《中国世界文化遗产预备名单》。联合国教科文组织专家考察后认为，木塔符合世界文化遗产的全部标准。如果申报成功，将成为继长城、故宫、莫高窟之后，又一代表中国建筑成就的世界遗产。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">国宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 玲珑杰构耸苍穹，千载木塔傲世雄 | 五重维度·五种灵韵爱心，点赞评论共话千年木构</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（应县木塔独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        structure: 0,
+        religion: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        structure: [],
+        religion: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('yingxian_muta_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('yingxian_muta_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('yingxian_muta_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('yingxian_muta_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对应县木塔的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的应县木塔感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "木塔访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

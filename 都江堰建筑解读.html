@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>都江堰 · 四维解读 | 千年水利 · 天府之源</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/都江堰.jpg" title="都江堰" alt="都江堰水利工程全景">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 千年治水</div>
+        <div class="dim-tab" data-tab="engineering">🏗️ 水利工程</div>
+        <div class="dim-tab" data-tab="culture">🎪 天府文化</div>
+        <div class="dim-tab" data-tab="value">🌟 世界遗产</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>都江堰 · 世界水利文化的鼻祖</h3>
+            <p class="text"><strong>传奇：</strong>都江堰位于四川省成都市都江堰市城西，坐落在成都平原西部的岷江上，始建于秦昭王末年（约公元前256～前251年），是蜀郡太守李冰父子在前人鳖灵开凿的基础上组织修建的大型水利工程，由鱼嘴、飞沙堰、宝瓶口三大主体工程和百丈堤、人字堤等附属工程构成，两千多年来一直发挥着防洪灌溉的作用，使成都平原成为"水旱从人，不知饥馑"的天府之国。都江堰是全世界迄今为止年代最久、唯一留存、仍在一直使用、以无坝引水为特征的宏大水利工程，凝聚着中国古代劳动人民勤劳、勇敢、智慧的结晶。2000年被联合国教科文组织列入《世界文化遗产名录》，是全球最伟大的水利工程之一。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>鱼嘴分水堤：</strong>都江堰的第一道工程，因形似鱼嘴而得名。位于岷江江心，将岷江分为内江和外江。内江引水灌溉，外江排洪排沙。鱼嘴利用"凹岸取水，凸岸排沙"的原理，实现"四六分水"（丰水期内江40%，外江60%；枯水期内江60%，外江40%），自动调节水量。鱼嘴用竹笼装卵石垒砌，长约80米，宽约40米，高约10米，历经两千多年仍坚固如初。</li>
+                <li><strong>飞沙堰溢洪道：</strong>都江堰的第二道工程，位于鱼嘴下方约700米处。堰宽240米，高2.15米，是内江的泄洪道和排沙道。当内江水量超过宝瓶口流量上限时，多余的水从飞沙堰顶溢入外江，确保成都平原不受洪灾。同时利用弯道环流原理，将水中携带的沙石从堰顶抛入外江，实现"正面取水，侧面排沙"。飞沙堰设计精巧，被誉为"自动水门"。</li>
+                <li><strong>宝瓶口引水口：</strong>都江堰的第三道工程，是控制内江进水的咽喉。原为玉垒山伸向岷江的山脊，李冰率众用"火攻水浇"的方法，历时8年凿开宽20米、高40米、长80米的缺口，形似瓶口，故名"宝瓶口"。宝瓶口控制进水量，使多余江水从飞沙堰排走。口内江水奔腾而下，灌溉成都平原。宝瓶口是都江堰工程的"总开关"。</li>
+                <li><strong>二王庙：</strong>纪念李冰父子的祠庙，位于玉垒山麓。始建于东汉，现存建筑为清代重建。庙依山而建，层层叠起，主殿供奉李冰父子像。庙内有"深淘滩，低作堰""遇湾截角，逢正抽心"等治水格言石刻。每年清明节举行放水节，祭祀李冰父子。二王庙是都江堰的精神象征。</li>
+                <li><strong>安澜索桥：</strong>横跨内外江的古桥，始建于宋代，原名"珠浦桥"，明末毁于战火。清嘉庆八年（1803年）重建，改今名。桥长261米，宽3米，用竹索、木板建成，是中国古代五大古桥之一。走在索桥上，摇摇晃晃，可俯瞰都江堰全貌。民间有"夫妻桥上走，恩爱到白头"之说。</li>
+                <li><strong>伏龙观：</strong>位于离堆公园内，传说李冰在此降伏孽龙。观内有李冰石像、飞龙鼎等文物。李冰石像于1974年在外江出土，高2.9米，重4.5吨，为东汉石刻，是中国现存最早的圆雕石像。观前平台是观赏宝瓶口的最佳位置，江水奔腾，气势磅礴。</li>
+                <li><strong>离堆公园：</strong>位于宝瓶口下，是李冰开凿玉垒山形成的孤堆。公园占地90余亩，古木参天，亭台楼阁，有"天府源""堰功道""清溪园"等景点。堰功道两侧立有历代治水功臣雕像。公园内还有张松银杏，树龄1700余年，为成都平原最古老的银杏树。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，最佳游览时间为3-11月。夏季（6-8月）水量充沛，可观赏奔腾江水；秋季（9-11月）天高气爽，景色宜人。建议上午游览，光线适宜。每年清明节（4月5日前后）举行放水节，再现古法截流、祭祀、放水仪式，热闹非凡。都江堰开放时间：8:00-18:00（夏季至18:30）。</li>
+                <li><strong>游览顺序：</strong>景区大门→伏龙观（观宝瓶口）→飞沙堰→鱼嘴（步行或乘电瓶车）→安澜索桥→二王庙→玉垒山→玉垒阁（俯瞰全景）→松茂古道→西街（古镇）。建议安排3-4小时。</li>
+                <li><strong>深度体验：</strong>清晨在玉垒阁观都江堰全景与日出；上午跟随专业讲解员，了解三大工程的科学原理；中午在古镇品尝川菜，感受"天府美食"；下午参观都江堰水利工程博物馆，了解治水历史；傍晚在岷江边散步，感受"江水润天府"的意境；观看《道解都江堰》实景演出，了解水利文化；住古镇民宿，体验慢生活；参加放水节祭祀活动，感受传统文化。</li>
+                <li><strong>摄影建议：</strong>都江堰全景（从玉垒阁拍摄），鱼嘴分水的瞬间，飞沙堰溢洪的动感，宝瓶口江水的奔腾，安澜索桥上的人文，二王庙建筑与山势，伏龙观的文物特写，离堆公园的古木亭台。建议使用广角镜头拍摄全景，长焦镜头捕捉水利工程细节。清晨和傍晚光线柔和，适合拍摄。使用慢门可拍出江水丝绸般的效果。</li>
+            </ul>
+            <p><strong>交通信息：</strong>都江堰位于成都市都江堰市公园路。从成都出发：①高铁：成都犀浦站乘高铁到都江堰站/离堆公园站，车程30分钟；②汽车：茶店子客运站乘大巴到都江堰客运中心，车程1小时；③自驾：经成灌高速到都江堰出口。景区内有电瓶车。距成都市区50公里，车程1小时；距青城山15公里，车程20分钟。建议与青城山、街子古镇、熊猫谷组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">水利</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 都江堰印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 千年治水 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>千年治水 · 李冰之功</h3>
+            <p class="text"><strong>修建背景：</strong>战国时期，成都平原饱受岷江水患。岷江发源于岷山，水流湍急，夏秋洪水泛滥，冬春水少成旱。古蜀国开明王朝曾开凿玉垒山，但未能根治水患。秦昭王时，蜀郡太守李冰到任后，决心治理岷江。他吸取前人经验，经过实地勘察，提出"分流导江，筑堰引水"的治水方略。公元前256年，李冰率众开始修建都江堰。</p>
+            <p class="text"><strong>修建过程：</strong>都江堰工程历时8年。①开凿宝瓶口：用"火攻水浇"法，先烧热岩石，再浇冷水，使岩石爆裂，历时8年凿开玉垒山；②修建鱼嘴：在江心用竹笼装卵石垒砌分水堤；③修建飞沙堰：在鱼嘴下游用竹笼卵石修建溢洪道。工程动用民工数十万，克服了材料、技术、资金等重重困难。李冰之子李二郎协助父亲，负责具体施工。传说李冰化身为牛，与江神搏斗，最终降服水患。</p>
+            <p class="text"><strong>治水原理：</strong>李冰总结出系统的治水理论。①"深淘滩，低作堰"：每年冬季对河床深挖，保持足够水深；飞沙堰不宜过高，保证泄洪；②"遇湾截角，逢正抽心"：河道转弯处截去凸岸，减轻冲刷；顺直河段疏浚河心，保持主流；③"乘势利导，因时制宜"：利用水势，顺应自然，不同季节采取不同措施。这些原则至今仍是水利工程的经典。</p>
+            <p class="text"><strong>历代维护：</strong>都江堰建成后，历代都有维护。①汉代：文翁"穿湔江口，溉灌繁田"；②三国：诸葛亮设"堰官"，专司维护；③唐代：高俭、章仇兼琼等整修；④宋代：赵不忧制定"岁修制度"；⑤元代：吉当普首次用铁石加固；⑥明代：施千祥铸铁牛镇水；⑦清代：丁宝桢大修，恢复旧制。两千多年来，都江堰始终得到精心维护。</p>
+            <p class="text"><strong>近代发展：</strong>民国时期，都江堰开始现代化改造。1936年，建成外江节制闸；1952年，建成内江节制闸；1974年，建成外江闸；1992年，建成工业引水拦水闸；2002年，实施灌区续建配套工程。现代工程与传统工程结合，使都江堰灌溉面积从古代的300万亩扩大到现在的1134万亩。</p>
+            <p class="text"><strong>世界遗产：</strong>2000年，都江堰被联合国教科文组织列入《世界文化遗产名录》。世界遗产委员会评价："都江堰是世界上最古老、唯一留存、仍在使用的无坝引水工程，体现了中国古代水利工程的高超技术，是人类创造精神的杰作。"都江堰是中国人民智慧与勇气的象征。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 水利工程 爱心: 🏗️ -->
+    <div class="dim-content" id="engineering-content" data-dim="engineering">
+        <div class="word">
+            <h3>水利工程 · 科学典范</h3>
+            <p class="text"><strong>鱼嘴分水原理：</strong>鱼嘴利用流体力学原理。①凹岸取水：内江位于凹岸，水流较深，可多引水；外江位于凸岸，水流较浅，利于排沙；②四六分水：丰水期（夏秋）外江流量占60%，内江占40%，保证防洪；枯水期（冬春）内江占60%，外江占40%，保证灌溉；③自动调节：无需人工干预，根据水位自动调节。鱼嘴是世界上最古老的"自动分水器"。</p>
+            <p class="text"><strong>飞沙堰排沙原理：</strong>飞沙堰利用弯道环流原理。①位置：位于内江弯道末端；②原理：水流在弯道产生环流，表层水流向凹岸（内江），底层水流向凸岸（飞沙堰）；③效果：泥沙在底层，被环流抛向飞沙堰，排入外江；④数据：可排走内江70-80%的泥沙。飞沙堰是世界上最古老的"自动排沙器"。</p>
+            <p class="text"><strong>宝瓶口控水原理：</strong>宝瓶口利用瓶颈效应。①宽度：口宽20米，限制进水量；②功能：当内江水位升高时，进水量增加有限，多余水量从飞沙堰溢出；③安全：保证进入成都平原的水量不超过安全值；④灌溉：通过宝瓶口，江水进入灌溉渠系。宝瓶口是都江堰的"总阀门"。</p>
+            <p class="text"><strong>岁修制度：</strong>都江堰有严格的维护制度。①时间：每年霜降（10月23日前后）至立春（2月4日前后）；②内容：深淘滩（疏浚河床）、低作堰（修复飞沙堰）、修堤岸、补缺口；③工具：竹笼、杩槎、竹笆、卵石等传统材料；④仪式：清明节举行放水仪式。岁修制度保证了都江堰两千年不废。</p>
+            <p class="text"><strong>杩槎截流：</strong>岁修时用杩槎截流。①结构：用三根木桩绑成三角架，多个三角架连成排，中间填土石；②优点：就地取材，施工简单，拆除方便；③使用：截流时放下杩槎，形成临时水坝；放水时砍断绑绳，杩槎散开。杩槎是中国古代水利的智慧结晶。</p>
+            <p class="text"><strong>竹笼卵石：</strong>都江堰主要建筑材料。①竹笼：用竹编成长笼，直径0.5-0.8米，长3-10米；②卵石：装入岷江卵石；③优点：柔韧性好，适应地基变形；透水性好，减小水压；就地取材，成本低廉；④使用：用于鱼嘴、飞沙堰、堤岸。竹笼卵石技术至今仍在水利工程中使用。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="engineering"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">工程</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="engineering">💬 科学智慧</button><div class="comment-list" id="comment-list-engineering" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 天府文化 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>天府文化 · 水利文明</h3>
+            <p class="text"><strong>祭祀文化：</strong>都江堰有悠久的祭祀传统。①二王庙祭祀：历代官员、百姓祭祀李冰父子；②放水节：清明举行截流、祭祀、放水仪式；③川主信仰：李冰被尊为"川主"，建川主庙祭祀；④水神崇拜：祭祀江神、龙王，祈求风调雨顺。祭祀活动传承治水精神，凝聚民心。</p>
+            <p class="text"><strong>放水节：</strong>都江堰最重要的民俗活动。①时间：清明节；②历史：始于宋代，已有千年；③仪式：祭祀李冰→砍杩槎放水→开水典礼→分水仪式；④内容：有傩戏、歌舞、集市等活动；⑤意义：庆祝春耕开始，祈求丰收。放水节是国家级非物质文化遗产。</p>
+            <p class="text"><strong>水利歌谣：</strong>民间流传大量水利歌谣。①"深淘滩，低作堰"：岁修要诀；②"遇湾截角，逢正抽心"：河道治理原则；③"分四六，平潦旱"：分水原理；④"挖河沙，堆堤岸"：施工方法。歌谣通俗易懂，便于传播。</p>
+            <p class="text"><strong>饮食文化：</strong>都江堰孕育了川西饮食。①水利宴：以岷江鱼为主要食材；②川菜：得益于都江堰灌溉，物产丰富，川菜得以发展；③茶馆文化：成都平原茶馆众多，得益于水源充足；④小吃：夫妻肺片、龙抄手、担担面等，都离不开都江堰的水。</p>
+            <p class="text"><strong>文学艺术：</strong>都江堰是文学艺术的源泉。①诗歌：李白、杜甫、陆游等留下诗篇；②绘画：有《都江堰图》《岷江胜概图》等；③戏剧：有川剧《李冰治水》；④影视：有纪录片《都江堰》、电视剧《李冰》等。都江堰是艺术家创作的灵感。</p>
+            <p class="text"><strong>水文化：</strong>都江堰形成独特的水文化。①哲学：体现"道法自然""天人合一"思想；②伦理：体现"为民造福""勇于担当"精神；③审美：体现"刚柔相济""动静结合"美感；④教育：体现"尊重科学""实事求是"态度。水文化是中华文化的重要组成部分。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">文明</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 世界遗产 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>世界遗产 · 人类瑰宝</h3>
+            <p class="text"><strong>历史价值：</strong>都江堰是中华文明史的见证。①水利史：是世界水利史的活化石；②科技史：体现古代科技的最高成就；③社会史：反映古代社会生产、生活；④文化史：体现中华文化的智慧。都江堰是"活着的历史"。</p>
+            <p class="text"><strong>科学价值：</strong>都江堰蕴含丰富的科学原理。①水力学：利用弯道环流、凹岸取水等原理；②工程学：竹笼卵石、杩槎截流等技术；③生态学：实现人、水、自然和谐；④管理学：岁修制度、分工协作等管理方法。都江堰是古代科学的典范。</p>
+            <p class="text"><strong>文化价值：</strong>都江堰是中华文化的瑰宝。①哲学价值：体现"道法自然""天人合一"；②伦理价值：体现"为民造福""勇于担当"；③审美价值：工程与自然完美结合；④教育价值：是爱国主义、科学精神教育的基地。都江堰是中华文化的重要符号。</p>
+            <p class="text"><strong>实用价值：</strong>都江堰仍在发挥巨大作用。①灌溉：灌溉成都平原1134万亩农田；②防洪：保护成都平原免受洪水灾害；③供水：为成都等城市提供生活用水；④发电：利用水资源发电；⑤旅游：年接待游客数百万人次。都江堰是"活着的世界遗产"。</p>
+            <p class="text"><strong>世界影响：</strong>都江堰对世界水利产生深远影响。①技术传播：竹笼卵石等技术传到日本、朝鲜等地；②理念影响："道法自然"理念影响现代生态水利；③教育意义：成为世界水利工程教育的典范；④文化交流：吸引各国学者、游客前来学习参观。都江堰是世界水利的"教科书"。</p>
+            <p class="text"><strong>保护与传承：</strong>都江堰得到科学保护。①法律保护：1982年列为全国重点文物保护单位，2000年列入《世界遗产名录》；②规划保护：编制保护规划，划定保护区、建设控制地带；③工程保护：定期岁修，保持工程完好；④研究展示：建立博物馆，开展科学研究；⑤合理利用：发展生态旅游，传承水利文化；⑥社区参与：当地群众参与保护，形成保护合力。都江堰的保护经验，为世界遗产保护提供了中国智慧。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 都江堰千年水利，天府之源润泽古今 | 五重维度·五种灵韵爱心，点赞评论共话治水智慧</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（都江堰独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        engineering: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        engineering: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('dujiangyan_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('dujiangyan_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('dujiangyan_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('dujiangyan_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对都江堰的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的都江堰感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "都江堰访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

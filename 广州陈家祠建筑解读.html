@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>广州陈家祠 · 四维解读 | 岭南建筑明珠 · 陈家书院</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/广州陈家祠.jpg" title="广州陈家祠" alt="陈家祠石雕与屋顶装饰">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 百年祠堂</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 建筑三绝</div>
+        <div class="dim-tab" data-tab="culture">🎪 岭南文化</div>
+        <div class="dim-tab" data-tab="value">🌟 艺术宝库</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>广州陈家祠 · 岭南建筑明珠</h3>
+            <p class="text"><strong>传奇：</strong>广州陈家祠，又称"陈氏书院"，位于广州市荔湾区中山七路，始建于清光绪十四年（1888年），光绪二十年（1894年）落成，是广东现存规模最大、保存最完好、装饰最精美的祠堂式建筑，被誉为"岭南建筑艺术明珠"。原是广东省七十二县陈姓族人捐资合建的宗族祠书院，是广东省各地陈氏宗族子弟赴省城应考、诉讼、议事等事务的临时居所。1988年被列为全国重点文物保护单位，2002年被评为"新世纪羊城八景"之一，2017年被评为国家一级博物馆。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>主体建筑：</strong>陈家祠坐北朝南，占地1.5万平方米，建筑面积6400平方米。建筑平面呈方形，为"三进三路九堂两厢杪"布局，包括前座、中座、后座三进，每进之间有天井相隔，廊庑穿插。主体建筑有首进头门、中进聚贤堂、后进祖堂，两侧有东斋、西斋等。整座建筑规模宏大，布局严谨。</li>
+                <li><strong>石雕艺术：</strong>陈家祠石雕堪称岭南石雕之最。头门前的一对石鼓，高2.55米，直径1.4米，用整块青石雕成，鼓面雕有"三阳开泰""五福临门"等图案。石栏杆、石柱础、石台阶等处均有精美雕刻，题材包括历史故事、神话传说、花鸟鱼虫等，刀法娴熟，栩栩如生。</li>
+                <li><strong>木雕艺术：</strong>陈家祠木雕数量多、题材广、工艺精。首进头门的木雕屏风，高5米，宽4.5米，雕有"渔樵耕读""竹林七贤"等场景。聚贤堂的屏门、花罩、梁架等处木雕更为精美，采用浮雕、圆雕、透雕等多种技法，金漆彩绘，富丽堂皇。</li>
+                <li><strong>砖雕艺术：</strong>陈家祠砖雕主要集中在墙面、墀头、檐下。首进东、西厢房的山墙上各有六幅大型砖雕，每幅高2米，宽4.8米，内容有"刘庆伏狼驹""梁山聚义"等历史故事。砖雕采用东莞优质青砖，雕刻深度达5-6层，立体感强。</li>
+                <li><strong>陶塑脊饰：</strong>陈家祠屋顶有11条石湾陶塑脊饰，总长165米。脊饰内容多为历史故事、神话传说，如"群仙祝寿""郭子仪祝寿"等。人物众多，场面宏大，施以黄、绿、宝蓝、褐、白等釉色，历经百年风雨仍鲜艳如初。</li>
+                <li><strong>灰塑装饰：</strong>陈家祠灰塑遍布屋脊、山墙、檐廊，总面积约2500平方米。题材有"福禄寿三星""八仙过海""松鹤延年"等，采用彩色灰塑，色彩鲜艳，立体感强。灰塑不怕日晒雨淋，是岭南建筑特色装饰。</li>
+                <li><strong>铁铸装饰：</strong>陈家祠的铁铸装饰独具特色。首进头门的四扇铁铸通花栏板，高2.25米，宽0.93米，铸有"麒麟玉书""龙戏珠"等图案。聚贤堂月台的铁铸栏板，铸有"三羊启泰""金玉满堂"等吉祥图案。这些铁铸构件体现了广东冶铸工艺的高超水平。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，春秋最佳（9-11月，3-5月）。建议上午9:00-11:00参观，光线适宜，游客较少。避开周末和节假日高峰期。农历春节、元宵、端午、中秋等传统节日，陈家祠有特别展览和民俗活动。</li>
+                <li><strong>游览顺序：</strong>正门（头门）→首进庭院（欣赏石雕、砖雕）→聚贤堂（主体建筑，观赏木雕、陶塑）→后进祖堂（陈氏祖先牌位）→东斋、西斋（常设展览）→后花园。建议安排2-3小时。</li>
+                <li><strong>深度体验：</strong>清晨参观，避开人流，静静欣赏建筑细节；跟随专业讲解员，了解"三雕两塑一铸"艺术特色；参加陈家祠"非遗体验"活动，学习广彩、广绣、榄雕等传统工艺；在茶室品茶，感受岭南园林韵味；观看《陈家祠》纪录片，了解建筑历史；购买陈家祠文创产品，如书签、明信片、工艺品等。</li>
+                <li><strong>摄影建议：</strong>陈家祠全景（从正门或高处拍摄），石雕、木雕、砖雕、陶塑、灰塑、铁铸的特写，建筑与光影的结合，庭院与廊庑的构图，建筑细节的对称美。建议使用广角镜头拍摄建筑全景，微距镜头捕捉雕刻细节。侧光可增强立体感，阴天柔和光线适合拍摄色彩。</li>
+            </ul>
+            <p><strong>交通信息：</strong>陈家祠位于广州市荔湾区中山七路恩龙里34号。地铁1号线、8号线"陈家祠"站D出口直达。公交85、88、104、107、109、114、125、128、193、204、233、250、260、268、286、旅游1线、旅游2线等到"陈家祠"站。距广州站3公里，车程10分钟；距广州南站15公里，车程30分钟；距白云机场30公里，车程50分钟。周边有荔枝湾、上下九步行街、沙面、永庆坊等景点。建议与西关大屋、荔湾博物馆组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">祠堂</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 陈家祠印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 百年祠堂 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>百年祠堂 · 陈氏书院</h3>
+            <p class="text"><strong>筹建背景：</strong>清光绪年间，广东省内陈姓族人众多，但无统一的宗族祠书院。光绪十四年（1888年），广东新会县举人陈昌朝、陈宗询等倡议，联合广东省内72县陈姓族人，在广州集资兴建"陈氏书院"，作为各地陈姓子弟赴省城参加科举考试、办理诉讼、议事联谊的场所。这一倡议得到各地陈姓族人响应，共募集白银20余万两。</p>
+            <p class="text"><strong>建设过程：</strong>光绪十四年（1888年）四月，陈氏书院动工兴建。聘请当时广州最著名的建筑师黎巨川主持设计，集结全省能工巧匠施工。建筑材料精选各地优质材料：石料来自肇庆端溪，木材来自南洋，砖瓦来自东莞，陶塑来自佛山石湾。工程历时6年，光绪二十年（1894年）落成。共建有大小厅堂、厢房、斋舍、廊庑等19座建筑。</p>
+            <p class="text"><strong>功能演变：</strong>陈氏书院建成后，主要功能有：①宗族联谊：各地陈姓族人聚会、祭祖；②科举服务：为陈姓子弟提供住宿、学习场所；③议事仲裁：处理族内纠纷、诉讼；④慈善公益：救济贫困族人。清末科举废除后，书院功能逐渐转变。民国时期，曾作为学校、工厂、难民收容所。</p>
+            <p class="text"><strong>保护历程：</strong>1950年，广州市政府接管陈氏书院。1957年，进行大规模维修。1959年，辟为"广东民间工艺馆"，收藏展示广东民间工艺品。1988年，被列为全国重点文物保护单位。1994年，更名为"广东民间工艺博物馆（陈家祠）"。2002年，进行全面维修，历时三年。2017年，被评为国家一级博物馆。</p>
+            <p class="text"><strong>建筑特色：</strong>陈氏书院是岭南祠堂建筑的典范。①布局：采用"三进三路九堂两厢杪"的典型广府祠堂布局；②结构：抬梁与穿斗混合式木构架，青砖墙，花岗岩石脚；③装饰：集"三雕（石雕、木雕、砖雕）两塑（陶塑、灰塑）一铸（铁铸）"于一体，是广东民间装饰艺术的集大成者；④功能：既是祠堂，又是书院，体现"祠学合一"的特色。</p>
+            <p class="text"><strong>文化意义：</strong>陈氏书院是广东陈氏宗族文化的象征。①宗族文化：体现"慎终追远"的儒家思想；②科举文化：反映清代科举制度在广东的影响；③建筑文化：代表岭南建筑艺术的最高成就；④工艺文化：展示广东民间工艺的精湛技艺。陈氏书院是研究广东社会、文化、建筑、艺术的重要实物。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑三绝 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑三绝 · 三雕两塑一铸</h3>
+            <p class="text"><strong>总体布局：</strong>陈家祠坐北朝南，采用典型的广府祠堂布局。①三进：前座（头门）、中座（聚贤堂）、后座（祖堂）；②三路：中路为主轴线建筑，东西两路为厢房、斋舍；③九堂：包括头门、聚贤堂、祖堂及两侧厅堂；④两厢杪：东西两侧的厢房。整组建筑以聚贤堂为中心，左右对称，前后呼应，形成严谨有序的空间序列。</p>
+            <p class="text"><strong>石雕艺术：</strong>陈家祠石雕主要集中在头门、月台、廊庑等处。①石鼓：头门前一对，高2.55米，为广东现存最大的祠堂石鼓；②石栏杆：聚贤堂月台石栏杆，长13.5米，雕有"三羊启泰""金玉满堂"等图案；③石柱础：形式多样，有鼓形、方形、八角形等，雕刻精美；④石台阶：垂带石雕有狮子、麒麟等瑞兽。石雕采用端溪青石，质地细腻，适合精细雕刻。</p>
+            <p class="text"><strong>木雕艺术：</strong>陈家祠木雕数量达千件之多。①屏门：首进头门四扇木雕屏门，高5米，采用镂空雕、浮雕相结合；②梁架：聚贤堂梁架施以金漆木雕，富丽堂皇；③花罩：各厅堂之间的花罩，雕有葡萄、松鼠等，寓意"多子多福"；④挂落：廊庑挂落雕有梅兰竹菊等文人题材。木雕选用南洋坤甸木、东京木等优质木材，耐腐防虫。</p>
+            <p class="text"><strong>砖雕艺术：</strong>陈家祠砖雕是岭南砖雕的代表作。①大型砖雕：首进东、西厢房山墙上各六幅，每幅有数十个人物，场面宏大；②墀头砖雕：建筑转角处的墀头，雕有狮子、花篮等；③檐下砖雕：在檐下位置，雕有博古、花卉等图案。砖雕采用东莞青砖，雕刻深度达5-6层，立体感极强，被称为"挂线砖雕"。</p>
+            <p class="text"><strong>陶塑脊饰：</strong>陈家祠陶塑脊饰由佛山石湾文如璧、宝玉荣等店号制作。①题材：多为历史故事、神话传说，如"群仙祝寿""郭子仪祝寿""六国大封相"等；②工艺：采用贴塑技法，人物、景物分层粘贴，立体感强；③釉色：以黄、绿、宝蓝为主，间以褐、白等色，鲜艳夺目；④规模：11条脊饰总长165米，人物上千个，是广东现存规模最大的陶塑脊饰群。</p>
+            <p class="text"><strong>灰塑铁铸：</strong>①灰塑：遍布屋脊、山墙、檐廊，题材有祥禽瑞兽、花卉果木、山水人物等，采用彩色灰塑，不怕日晒雨淋；②铁铸：首进头门铁铸通花栏板，聚贤堂月台铁铸栏板，工艺精湛，是广东铁铸艺术的精品。灰塑、铁铸与石雕、木雕、砖雕、陶塑共同构成陈家祠装饰艺术的"五绝"。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 岭南文化 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>岭南文化 · 工艺宝库</h3>
+            <p class="text"><strong>宗族文化：</strong>陈家祠是广东陈氏宗族文化的集中体现。①祭祀文化：后进祖堂供奉陈氏祖先牌位，体现"慎终追远"的儒家思想；②族谱文化：收藏各地陈氏族谱，记录陈氏源流、迁徙、世系；③联谊文化：为各地陈姓族人提供聚会、交流场所；④教育文化：为陈姓子弟提供学习、应试服务。陈家祠是广东宗族社会的缩影。</p>
+            <p class="text"><strong>科举文化：</strong>陈家祠与清代科举制度密切相关。①功能：为陈姓子弟提供科举考试的住宿、学习场所；②装饰：建筑装饰中有"渔樵耕读""状元及第"等科举题材；③人物：陈姓族人中多有科举及第者，如陈昌朝、陈伯陶等；④影响：反映了科举制度在广东的深远影响。陈家祠是研究广东科举文化的重要实物。</p>
+            <p class="text"><strong>民间工艺：</strong>陈家祠是广东民间工艺的博物馆。①展览：广东民间工艺博物馆收藏有陶瓷、刺绣、雕刻、漆器等各类工艺品上万件；②工艺：包括广彩、广绣、牙雕、玉雕、木雕、石雕、砖雕、灰塑、陶塑、剪纸等；③传承：展示广东传统工艺的制作工艺、历史发展、艺术特色；④交流：举办各类工艺展览、学术研讨、技艺传承活动。</p>
+            <p class="text"><strong>民俗文化：</strong>陈家祠是广州民俗活动的重要场所。①节庆：春节、元宵、端午、中秋等传统节日，举办灯会、庙会、展览等活动；②非遗：展示广府非遗项目，如粤剧、广东音乐、醒狮等；③体验：开设非遗体验课，让游客亲身体验传统工艺；④研究：开展民俗文化研究，出版相关著作。陈家祠是广州民俗文化的活态展示馆。</p>
+            <p class="text"><strong>建筑文化：</strong>陈家祠是岭南建筑文化的代表作。①布局：典型广府祠堂布局，体现礼制思想；②结构：穿斗与抬梁结合，适应岭南气候；③装饰："三雕两塑一铸"，集民间装饰艺术之大成；④环境：建筑与庭院结合，形成宜人空间。陈家祠被誉为"岭南建筑艺术的教科书"。</p>
+            <p class="text"><strong>现代传承：</strong>陈家祠在当代得到有效保护和传承。①博物馆：1959年辟为广东民间工艺博物馆，收藏、研究、展示民间工艺；②教育：开设社会教育课程，传承传统文化；③旅游：成为广州重要旅游景点，年接待游客百万人次；④文创：开发陈家祠文创产品，让传统文化走进现代生活；⑤研究：成立陈家祠研究中心，开展建筑、艺术、历史研究。陈家祠是传统文化现代转型的成功范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">岭南</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 艺术宝库 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>艺术宝库 · 岭南瑰宝</h3>
+            <p class="text"><strong>历史价值：</strong>陈家祠是晚清广东社会历史的见证。①社会史：反映清代广东宗族社会的组织、功能、活动；②建筑史：代表晚清广府祠堂建筑的最高成就；③工艺史：展示晚清广东民间工艺的发展水平；④文化史：体现岭南文化的特色和内涵。陈家祠是研究晚清广东历史、社会、文化、艺术的"活化石"。</p>
+            <p class="text"><strong>艺术价值：</strong>陈家祠是岭南建筑艺术的巅峰之作。①建筑艺术：布局严谨，结构科学，装饰精美，是建筑艺术的典范；②雕刻艺术：石雕、木雕、砖雕技艺精湛，题材丰富，是雕刻艺术的宝库；③雕塑艺术：陶塑、灰塑造型生动，色彩艳丽，是雕塑艺术的杰作；④装饰艺术：集多种装饰手法于一体，和谐统一，是装饰艺术的集大成者。陈家祠被誉为"岭南建筑艺术的明珠"。</p>
+            <p class="text"><strong>科学价值：</strong>陈家祠蕴含丰富的科学技术。①建筑科学：木结构、砖石结构技术，适应岭南湿热气候；②材料科学：石材、木材、砖瓦、陶土等材料的选用和处理技术；③工艺科学：雕刻、塑作、铸造等工艺技术；④保护科学：古建筑保护、修复技术。陈家祠是研究传统建筑科学技术的宝贵实例。</p>
+            <p class="text"><strong>文化价值：</strong>陈家祠是岭南文化的重要载体。①宗族文化：体现中国传统的宗族观念、家族制度；②科举文化：反映科举制度在广东的实施和影响；③民俗文化：展示广府地区的民俗风情、生活习惯；④工艺文化：传承广东民间工艺技艺、审美观念。陈家祠是岭南文化的"百科全书"。</p>
+            <p class="text"><strong>社会价值：</strong>陈家祠在当代社会具有多重价值。①教育价值：是爱国主义教育基地、传统文化教育基地；②旅游价值：是广州重要的文化旅游景点，年接待游客百万人次；③研究价值：是建筑、艺术、历史、民俗等多学科研究的重要对象；④文化价值：是广州城市文化名片，增强文化自信。陈家祠是广州的文化地标和精神象征。</p>
+            <p class="text"><strong>保护与传承：</strong>陈家祠得到科学保护。①法律保护：1988年列为全国重点文物保护单位；②规划保护：编制《陈家祠保护规划》，划定保护范围、建设控制地带；③工程保护：1957年、2002年两次大规模维修，恢复历史原貌；④日常维护：建立专业维护团队，定期检查、保养；⑤研究展示：成立陈家祠研究中心，出版《陈家祠》《岭南建筑艺术明珠》等著作；⑥活态传承：举办展览、讲座、体验活动，让文物"活"起来。陈家祠的保护经验，为古建筑保护提供了成功范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 广州陈家祠岭南明珠，三雕两塑建筑奇观 | 五重维度·五种灵韵爱心，点赞评论共话广府文化</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（广州陈家祠独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('guangzhou_chenjiaci_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('guangzhou_chenjiaci_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('guangzhou_chenjiaci_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('guangzhou_chenjiaci_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对陈家祠的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的陈家祠感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "陈家祠访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>龙门石窟 · 四维解读 | 东方石刻艺术宝库</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/洛阳龙门石窟.jpg" title="洛阳龙门石窟" alt="龙门石窟卢舍那大佛与伊河风光">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 千年开凿</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 艺术宝库</div>
+        <div class="dim-tab" data-tab="culture">🎪 皇家气象</div>
+        <div class="dim-tab" data-tab="value">🌟 世界遗产</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>龙门石窟 · 东方石刻艺术宝库</h3>
+            <p class="text"><strong>传奇：</strong>龙门石窟位于河南省洛阳市洛龙区伊河两岸的龙门山与香山上，是世界上造像最多、规模最大的石刻艺术宝库。与莫高窟、云冈石窟、麦积山石窟并称"中国四大石窟"。始凿于北魏孝文帝迁都洛阳前后（约493年），历经东魏、西魏、北齐、隋、唐、五代、宋等朝代连续大规模营造达400余年，形成南北长达1公里的石窟群。现存窟龛2345个，造像10万余尊，碑刻题记2800余品。2000年被联合国教科文组织列入《世界遗产名录》。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>奉先寺：</strong>龙门石窟规模最大、艺术最精湛的摩崖造像群，建于唐咸亨三年至上元二年（672-675年）。主佛卢舍那大佛高17.14米，头高4米，耳长1.9米，面容丰满秀丽，双目宁静含蓄，嘴角微露笑意，是唐代雕塑艺术的最高成就。两侧有弟子、菩萨、天王、力士等造像，形成一个完整的佛国世界。</li>
+                <li><strong>宾阳三洞：</strong>北魏宣武帝为其父孝文帝、母文昭皇后祈福而开凿，历时24年（500-523年）。中洞主佛释迦牟尼高8.4米，面容清瘦，衣纹流畅，体现北魏"秀骨清像"风格。南北两洞为唐代续凿。洞内浮雕精美，有"维摩诘经变""佛本生故事""帝后礼佛图"等。</li>
+                <li><strong>古阳洞：</strong>开凿最早、内容最丰富的洞窟，始凿于北魏太和年间（477-499年）。主佛释迦牟尼高7.82米，两侧有胁侍菩萨、弟子。洞内四壁及窟顶雕满佛龛，有丰富的造像题记，著名的"龙门二十品"有十九品在此洞。</li>
+                <li><strong>莲花洞：</strong>因窟顶雕有一朵巨大的莲花而得名，开凿于北魏晚期。莲花直径3.6米，中心有莲蓬，外有三层莲瓣，是北魏石雕莲花中的精品。洞内佛龛雕刻精致，有飞天、供养人等浮雕。</li>
+                <li><strong>万佛洞：</strong>唐代洞窟，因洞内刻有15000尊小佛像而得名。主佛阿弥陀佛高5.65米，面相丰满圆润。南北两壁刻满小佛，每尊高仅4厘米。窟顶有精美的飞天浮雕。</li>
+                <li><strong>药方洞：</strong>开凿于北魏晚期，唐代、宋代均有续凿。洞内刻有140多个药方，涉及内科、外科、妇科、儿科、五官科等，是中国现存最早的石刻药方，是研究古代医药学的重要资料。</li>
+                <li><strong>看经寺：</strong>唐代洞窟，以29尊罗汉浮雕著称。罗汉高约1.8米，神态各异，形象逼真，是中国现存最早、最完整的罗汉群像，是研究唐代佛教艺术和雕塑艺术的重要资料。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，春秋最佳（4-5月，9-10月）。建议上午参观，光线从东面照来，适合拍摄西山石窟。夏季炎热，注意防晒；冬季寒冷，注意保暖。每年牡丹花会期间（4月）游客最多。</li>
+                <li><strong>游览顺序：</strong>西山入口→潜溪寺→宾阳三洞→摩崖三佛龛→万佛洞→莲花洞→奉先寺→古阳洞→药方洞→东山石窟→香山寺→白园。建议安排3-4小时。</li>
+                <li><strong>深度体验：</strong>清晨游览，避开人流，享受宁静；在奉先寺前静坐，感受卢舍那大佛的慈悲与庄严；细观"龙门二十品"书法艺术；参观东山石窟，从对岸回望西山全景；夜游龙门（如开放），灯光下的石窟别有韵味；参加石窟艺术讲座，深入了解文化内涵。</li>
+                <li><strong>摄影建议：</strong>奉先寺卢舍那大佛全景与特写，宾阳中洞北魏造像，古阳洞佛龛细节，莲花洞窟顶莲花，万佛洞小佛群像，伊河对岸的西山全景，石窟与伊河倒影。建议使用广角镜头拍摄全景，长焦镜头捕捉雕刻细节。侧光最能表现石雕的质感。</li>
+            </ul>
+            <p><strong>交通信息：</strong>龙门石窟位于洛阳市洛龙区龙门中街13号。公交53路、60路、67路、71路、81路、99路等可达"龙门石窟"站。从洛阳火车站乘81路公交直达，车程40分钟；从洛阳龙门高铁站乘67路公交直达，车程15分钟。景区内有电瓶车往返于西山、东山、香山寺、白园之间。周边有关林、白马寺、洛阳博物馆等景点，建议组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">石窟</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 龙门印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 千年开凿 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>千年开凿 · 皇家工程</h3>
+            <p class="text"><strong>北魏开凿：</strong>北魏太和十八年（494年），孝文帝迁都洛阳，佛教中心随之南移。龙门石窟的开凿始于这一时期，首先是古阳洞的开凿。北魏时期开凿的主要洞窟有古阳洞、宾阳三洞、莲花洞、石窟寺等。这一时期的造像具有"秀骨清像"的特点，佛、菩萨身材修长，面容清瘦，衣纹流畅，体现南朝士大夫的审美。</p>
+            <p class="text"><strong>东魏西魏：</strong>北魏分裂为东魏、西魏后，龙门石窟开凿减少，但仍有续凿。东魏天平年间（534-537年），在宾阳南洞、北洞续凿。西魏时期，开凿规模较小。这一时期的造像承袭北魏风格，但艺术水平有所下降。</p>
+            <p class="text"><strong>北齐隋代：</strong>北齐时期，佛教艺术发生变化，造像趋向丰满圆润。隋代统一后，龙门石窟开凿复兴。开皇十五年（595年），在宾阳南洞雕阿弥陀佛像。大业年间（605-618年），在古阳洞、宾阳洞续凿。隋代造像风格承前启后，为唐代艺术的繁荣奠定了基础。</p>
+            <p class="text"><strong>唐代鼎盛：</strong>唐代是龙门石窟开凿的鼎盛时期，三分之二以上的洞窟开凿于此时。唐太宗、高宗、武则天时期，国力强盛，佛教兴盛，龙门石窟得到大规模开凿。奉先寺、万佛洞、看经寺、惠简洞、极南洞等均为唐代所凿。唐代造像丰满圆润，表情生动，体现大唐气象。武则天时期，为建奉先寺，"助脂粉钱二万贯"，并亲自主持开光仪式。</p>
+            <p class="text"><strong>五代至宋：</strong>五代时期，战乱频繁，龙门石窟开凿基本停止。宋代，佛教禅宗盛行，石窟开凿转向摩崖造像和重修。宋真宗、仁宗时期，对部分洞窟进行彩绘、贴金。金代，在极南洞等处续凿。此后，龙门石窟大规模开凿结束。</p>
+            <p class="text"><strong>近代保护：</strong>清末民初，龙门石窟遭严重破坏，大量佛头、浮雕被盗卖海外。1936年，民国政府成立"龙门保管所"，开始保护工作。1961年，被列为全国重点文物保护单位。1971年，周恩来总理批示拨款维修奉先寺。2000年，被列入《世界遗产名录》。2007年，成立龙门石窟研究院，开展科学保护与研究。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 艺术宝库 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>艺术宝库 · 石刻精华</h3>
+            <p class="text"><strong>石窟形制：</strong>龙门石窟的窟形多样。①穹窿顶窟：如古阳洞、宾阳中洞，顶部呈穹窿形，象征天穹；②平顶窟：如莲花洞，顶部平整，雕刻莲花等图案；③仿木构窟：如奉先寺，窟檐仿木构建筑，有斗拱、椽、瓦等；④摩崖造像：直接在崖壁上开龛造像，无窟室。这些不同的窟形，反映了不同时期的建筑风格和宗教理念。</p>
+            <p class="text"><strong>雕刻技法：</strong>龙门石窟的雕刻技法高超。①圆雕：佛像、菩萨、弟子等主体造像采用圆雕，立体感强；②浮雕：佛本生故事、经变画、供养人、飞天等采用浮雕，有高浮雕、浅浮雕之分；③线刻：衣纹、花纹、题记等采用线刻，线条流畅；④透雕：莲花、华盖等采用透雕，玲珑剔透。不同技法结合，使造像层次丰富，栩栩如生。</p>
+            <p class="text"><strong>造像风格演变：</strong>龙门石窟的造像风格经历明显演变。①北魏：秀骨清像，佛、菩萨身材修长，面容清瘦，嘴角微翘，神情超脱，衣纹繁复，体现南朝士族审美；②东魏西魏：承袭北魏风格，但趋于呆板；③北齐：开始向丰满转变；④隋代：承前启后，既有北魏遗风，又开唐代先声；⑤唐代：丰满圆润，佛、菩萨面相丰腴，表情生动，衣纹简洁，体现大唐的自信与开放。这种演变反映了社会审美和佛教观念的变化。</p>
+            <p class="text"><strong>卢舍那大佛艺术：</strong>奉先寺卢舍那大佛是龙门石窟的艺术高峰。①面相：丰颐秀目，嘴角微翘，笑容含蓄，既庄严又慈祥；②眼神：双目俯视，与礼佛者视线相接，体现佛的慈悲；③手势：右手施无畏印，表示拔除痛苦；左手施与愿印，表示给予快乐；④衣纹：简洁流畅，薄衣贴体，体现"曹衣出水"风格；⑤比例：头与身比例协调，符合唐代审美。大佛的艺术成就，代表了唐代雕塑的最高水平。</p>
+            <p class="text"><strong>碑刻书法：</strong>龙门石窟现存碑刻题记2800余品，是书法艺术的宝库。①"龙门二十品"：选自北魏时期的20方造像题记，是魏碑书法的代表作，包括《始平公造像记》《孙秋生造像记》《杨大眼造像记》等；②唐代题记：有褚遂良、颜真卿、柳公权等名家风格；③药方洞石刻：刻有140多个药方，是医学与书法的结合。这些碑刻是研究书法史、文字学、历史学的重要资料。</p>
+            <p class="text"><strong>彩绘与贴金：</strong>石窟造像原均有彩绘和贴金，现多已脱落，但残存部分仍可见当年辉煌。①彩绘：用矿物颜料，有红、绿、蓝、金等色，表现肌肤、服饰、背景等；②贴金：在佛像面部、手部贴金箔，象征佛的金身；③现状：由于自然风化和人为破坏，大部分彩绘、贴金已脱落，仅少数洞窟有残存。现通过科学手段，正在研究恢复原貌。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 艺术传承</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 皇家气象 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>皇家气象 · 佛教中心</h3>
+            <p class="text"><strong>皇家开凿：</strong>龙门石窟是典型的皇家石窟。①北魏：孝文帝开凿古阳洞，宣武帝为父母开凿宾阳三洞；②唐代：唐高宗、武则天开凿奉先寺，武则天"助脂粉钱二万贯"；③其他：唐中宗、睿宗、玄宗等也开凿洞窟。皇家开凿的特点是规模大、艺术精、位置显要。奉先寺卢舍那大佛据传是依照武则天容貌雕刻，体现"皇帝即佛"的观念。</p>
+            <p class="text"><strong>佛教宗派：</strong>龙门石窟反映各佛教宗派的兴衰。①北魏：流行禅宗、净土宗，造像多禅定印、说法印；②唐代：密宗、华严宗盛行，奉先寺卢舍那大佛是华严宗教主，万佛洞反映净土信仰；③宋代：禅宗为主，造像减少，摩崖题记增多。不同宗派的教义，通过造像题材、布局、手势等表现出来。</p>
+            <p class="text"><strong>社会供养：</strong>除皇家外，贵族、官僚、僧尼、百姓也参与开凿。①贵族：如长乐王丘穆陵亮夫人为亡子开凿古阳洞龛；②官僚：如杨大眼将军开凿"杨大眼造像龛"；③僧尼：如慧成法师开凿古阳洞；④百姓：结社集资开凿小龛。这些供养人造像，反映了不同阶层对佛教的信仰和支持。</p>
+            <p class="text"><strong>文化交流：</strong>龙门石窟是中外文化交流的见证。①印度影响：早期造像有犍陀罗、秣菟罗艺术痕迹；②西域影响：通过丝绸之路传入的西域艺术元素；③中原化：外来艺术与中原传统结合，形成中国特色。如卢舍那大佛，既有印度佛像的庄严，又有中原人物的温和，是文化融合的典范。</p>
+            <p class="text"><strong>文学艺术：</strong>龙门石窟是文学艺术创作的源泉。①诗歌：李白、白居易、元稹等唐代诗人游览龙门，留下诗篇；②绘画：历代画家以龙门为题材创作；③现代：电影、电视剧、舞蹈、音乐等艺术形式，表现龙门文化。龙门石窟成为中华文化的符号。</p>
+            <p class="text"><strong>节庆活动：</strong>龙门石窟有丰富的节庆活动。①佛诞日：农历四月初八，举办浴佛法会；②元宵节：举办灯会，石窟夜景迷人；③牡丹花会：四月牡丹盛开，游客如织；④国际文化旅游节：每年举办，有学术研讨、艺术表演、文物展览等。这些活动传承了龙门文化。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">气象</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 世界遗产 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>世界遗产 · 人类瑰宝</h3>
+            <p class="text"><strong>世界遗产价值：</strong>2000年11月，龙门石窟被联合国教科文组织列入《世界遗产名录》。世界遗产委员会评价："龙门地区的石窟和佛龛展现了中国北魏晚期至唐代（493-907年）期间，最具规模和最为优秀的造型艺术。这些详实描述佛教宗教题材的艺术作品，代表了中国石刻艺术的最高峰。"龙门石窟符合世界遗产标准：①代表人类创造性天才的杰作；②在一定时期内对建筑艺术、纪念物艺术、城镇规划或景观设计方面的发展产生重大影响；③能为一种已消逝的文明或文化传统提供独特的见证；④可作为一种建筑或建筑群或景观的杰出范例。</p>
+            <p class="text"><strong>历史价值：</strong>龙门石窟是400多年佛教史的实物记录。①佛教史：反映了佛教从北魏到宋代的传播、发展、演变；②艺术史：展示了中国石刻艺术从北魏"秀骨清像"到唐代"丰满圆润"的风格演变；③社会史：通过供养人题记，反映了不同时期的社会结构、宗教信仰、经济状况；④中外交流史：体现了印度、中亚艺术与中国传统的融合。龙门石窟是研究中国历史、文化、艺术、宗教的百科全书。</p>
+            <p class="text"><strong>艺术价值：</strong>龙门石窟是中国石刻艺术的巅峰。①雕塑艺术：10万余尊造像，造型精美，技艺高超，代表了中国古代雕塑的最高水平；②建筑艺术：2345个窟龛，形制多样，是研究古代建筑的重要资料；③书法艺术：2800余品碑刻题记，涵盖篆、隶、楷、行、草各体，是书法艺术的宝库；④绘画艺术：浮雕中的经变画、佛本生故事等，是研究古代绘画的珍贵资料。龙门石窟是综合性艺术博物馆。</p>
+            <p class="text"><strong>科学价值：</strong>龙门石窟蕴含丰富的科学智慧。①地质学：石窟开凿在石灰岩上，研究岩石性质、风化机理；②工程学：古代工匠的开凿技术、支撑结构、排水系统等；③材料学：彩绘颜料、贴金材料的成分、工艺；④环境科学：石窟保护与自然环境的关系；⑤医学：药方洞石刻，是古代医药学的重要资料。现代科学可从龙门石窟中汲取营养。</p>
+            <p class="text"><strong>社会价值：</strong>龙门石窟在当代社会具有多重价值。①教育价值：是爱国主义教育基地、传统文化教育基地，每年接待数百万学生；②旅游价值：是国家5A级旅游景区，年接待游客数百万人次，带动地方经济发展；③研究价值：是考古学、艺术史、宗教学、历史学的研究对象；④精神价值：是佛教信众的朝圣地，普通游客的精神家园；⑤国际交流：是中华文化的重要名片，许多外国政要、友人参观龙门石窟。</p>
+            <p class="text"><strong>保护与传承：</strong>龙门石窟得到科学保护和合理利用。①法律保护：1961年列为全国重点文物保护单位；②规划保护：编制《龙门石窟保护规划》，划定保护区、缓冲区；③工程保护：实施石窟加固、防水、防风化等工程，如2002年奉先寺加固工程；④科技保护：利用三维扫描、数字建模、环境监测等技术，进行科学保护；⑤研究展示：成立龙门石窟研究院，出版《龙门石窟研究》等著作；⑥活态传承：开展文化创意、数字展示、研学旅行等活动，让文物"活"起来。龙门石窟的保护经验，为世界文化遗产保护提供了范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 龙门石窟千年佛国，石刻艺术万世流芳 | 五重维度·五种灵韵爱心，点赞评论共话东方宝库</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（洛阳龙门石窟独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('luoyang_longmen_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('luoyang_longmen_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('luoyang_longmen_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('luoyang_longmen_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对龙门石窟的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的龙门石窟感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "龙门访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

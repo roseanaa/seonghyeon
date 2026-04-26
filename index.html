@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>古建图鉴 · 华夏营造 | 四维解读东方木构史诗</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #fef9ec;  /* 暖黄色底色基调，古雅温和 */
+            font-family: 'Inter', 'Segoe UI', 'Noto Serif SC', 'PingFang SC', system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            color: #2c2418;
+            scroll-behavior: smooth;
+        }
+
+        /* 导航栏 */
+        .navigation {
+            background: rgba(251, 244, 224, 0.96);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(210, 180, 140, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 200;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .brand {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .brand-icon { font-size: 2.2rem; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.1)); }
+        .brand-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #8B4513, #C47E3A, #7A3E19);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.8rem;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            font-weight: 550;
+            font-size: 1.05rem;
+            color: #4a3120;
+            padding: 0.4rem 0;
+            transition: 0.2s;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2.5px;
+            background: #c87b3a;
+            transition: width 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .nav-links li a:hover::after,
+        .nav-links li a.active::after {
+            width: 100%;
+        }
+
+        .nav-links li a.active {
+            color: #b9571f;
+            font-weight: 650;
+        }
+
+        @media (max-width: 880px) {
+            .nav-container { flex-direction: column; gap: 1rem; padding: 1rem 1.5rem; }
+            .nav-links { gap: 1.6rem; flex-wrap: wrap; justify-content: center; }
+            .brand-text { font-size: 1.5rem; }
+        }
+
+        /* 英雄区域 */
+        .hero-banner {
+            background: #fff7eb;
+            padding: 2.8rem 2rem 1.8rem;
+            text-align: center;
+            border-bottom: 1px solid #f2e2ce;
+        }
+        .hero-banner h1 { font-size: 3.2rem; font-weight: 700; color: #412e1c; letter-spacing: 4px; }
+        .hero-banner .subhead { font-size: 1.2rem; max-width: 800px; margin: 0.8rem auto 0; color: #6f4e2e; font-style: italic; }
+        .dimension-badge {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 1.8rem auto 0.5rem;
+        }
+        .dimension-badge span {
+            background: #e9dbcd;
+            padding: 8px 28px;
+            border-radius: 60px;
+            font-weight: 500;
+            color: #8b4b26;
+            font-size: 0.9rem;
+        }
+
+        /* 轮播区 */
+        .carousel { margin: 30px auto 50px; max-width: 1400px; padding: 0 20px; }
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 48px;
+            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.28);
+            background: #2a1f12;
+        }
+        .carousel-slides { display: flex; transition: transform 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+        .carousel-slide-item { flex: 0 0 100%; position: relative; cursor: pointer; }
+        .carousel-slide-item img {
+            width: 100%;
+            height: 560px;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.92) contrast(1.05);
+        }
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0.2) 70%, transparent);
+            color: white;
+            padding: 2rem 2rem 1.5rem;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        .slide-caption h3 { font-size: 2rem; font-weight: 700; margin-bottom: 6px; }
+        .slide-caption p { font-size: 0.95rem; opacity: 0.9; max-width: 80%; margin-top: 5px; }
+        .slide-caption .dimension-subtext {
+            font-size: 12px;
+            margin-top: 8px;
+            color: #f7e5cc;
+            background: rgba(0,0,0,0.4);
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 30px;
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(30, 20, 15, 0.5);
+            backdrop-filter: blur(8px);
+            border: none;
+            width: 52px;
+            height: 52px;
+            border-radius: 60px;
+            color: #fff3e6;
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .carousel-btn:hover { background: #bd7a42; }
+        .prev { left: 28px; }
+        .next { right: 28px; }
+        .carousel-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            z-index: 10;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: rgba(255,235,210,0.7);
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .dot.active { background: #f3b36b; width: 32px; }
+
+        /* 四维卡片 */
+        .analysis-entry { max-width: 1200px; margin: 20px auto 20px; padding: 0 24px; }
+        .dimension-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .dimension-card {
+            text-decoration: none;
+            transition: all 0.25s ease;
+            background: #fffaf2;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.03);
+            border: 1px solid #f0e2d2;
+            cursor: pointer;
+            display: block;
+        }
+        .dimension-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 28px -10px rgba(0,0,0,0.12);
+            border-color: #e2cfbb;
+        }
+        .dimension-inner { padding: 20px 18px; text-align: center; }
+        .dimension-icon { font-size: 32px; margin-bottom: 12px; }
+        .dimension-card h4 { margin: 0 0 8px; font-size: 1.35rem; font-weight: 700; color: #c26d2e; }
+        .dimension-desc { font-size: 13px; color: #6b4c2c; line-height: 1.45; margin: 6px 0 10px; }
+        .dimension-hint { font-size: 12px; font-weight: 500; margin-top: 12px; opacity: 0.8; }
+        @media (max-width: 860px) { .dimension-grid { grid-template-columns: repeat(2,1fr); gap: 16px; } }
+        @media (max-width: 540px) { .dimension-grid { grid-template-columns: 1fr; } }
+
+        /* 博客互动卡片 */
+        .blog-feed { max-width: 1100px; margin: 45px auto; }
+        .post-card {
+            background: #ffffffea;
+            border-radius: 44px;
+            margin-bottom: 40px;
+            overflow: hidden;
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #f1e3d5;
+        }
+        .post-card:hover { transform: translateY(-5px); box-shadow: 0 30px 45px -12px rgba(0, 0, 0, 0.15); }
+        .post-header { padding: 28px 36px 8px; }
+        .post-title { font-size: 1.9rem; font-weight: 800; color: #2c2418; letter-spacing: -0.2px; }
+        .post-meta { display: flex; gap: 24px; color: #b87a48; font-size: 0.85rem; margin: 8px 0 10px; }
+        .post-content { padding: 0 36px 20px; font-size: 1.03rem; line-height: 1.65; color: #3b2e20; }
+        .post-tags { padding: 0 36px 12px; display: flex; gap: 12px; }
+        .tag { background: #f2e5d9; padding: 5px 18px; border-radius: 50px; font-size: 0.75rem; font-weight: 500; color: #aa6f3c; }
+        .interaction-bar {
+            padding: 14px 36px 20px;
+            border-top: 2px solid #f7eadb;
+            display: flex;
+            gap: 36px;
+            background: #fffef7;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 520;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #7c5a3a;
+            cursor: pointer;
+            padding: 8px 20px;
+            border-radius: 44px;
+            transition: 0.2s;
+        }
+        .action-btn i { font-size: 1.3rem; }
+        .action-btn:hover { background: #ecdccd; color: #bc6f2c; }
+        .liked { color: #d9510e; background: #ffefe3; }
+        .comments-section { padding: 0 36px 28px; background: #fffcf5; border-top: 1px solid #eedbcb; display: none; }
+        .comment-list { max-height: 280px; overflow-y: auto; margin-top: 18px; }
+        .comment-item { background: #fff5eb; margin: 12px 0; padding: 14px 20px; border-radius: 32px; }
+        .comment-name { font-weight: 700; color: #b4652c; margin-right: 12px; }
+        .comment-time { font-size: 0.7rem; color: #b58658; }
+        .add-comment { display: flex; gap: 16px; margin-top: 20px; }
+        .add-comment input { flex:1; padding: 14px 20px; border-radius: 48px; border: 1px solid #e1cdb7; background: white; font-size: 0.9rem; }
+        .add-comment button { background: #b96f38; border: none; padding: 0 32px; border-radius: 48px; color: white; font-weight: 600; cursor: pointer; }
+        .follow-btn.active { background: #c68f59; color: white; }
+
+        /* 推荐及底部区块 */
+        .rec-block {
+            background: #fff3e4;
+            border-radius: 64px;
+            padding: 48px 40px;
+            margin: 30px auto 60px;
+            max-width: 1200px;
+        }
+        .rec-title { font-size: 2rem; font-weight: 700; display: flex; align-items: center; gap: 16px; margin-bottom: 32px; color: #42321f; }
+        .rec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; }
+        .rec-card {
+            background: #ffffff;
+            border-radius: 32px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.25s;
+            box-shadow: 0 12px 20px -8px rgba(0, 0, 0, 0.08);
+        }
+        .rec-card:hover { transform: translateY(-8px); box-shadow: 0 24px 32px -8px rgba(0, 0, 0, 0.15); }
+        .rec-card img { width: 100%; height: 180px; object-fit: cover; }
+        .rec-card h4 { padding: 18px 20px 6px; font-size: 1.2rem; font-weight: 700; }
+        .rec-card p { padding: 0 20px 22px; color: #8e6d47; }
+
+        .bottom-section {
+            background: #fef6ea;
+            margin: 48px auto;
+            border-radius: 64px;
+            max-width: 1280px;
+            padding: 40px 30px;
+        }
+        .block-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 32px;
+            margin-top: 32px;
+        }
+        .block-item {
+            background: white;
+            border-radius: 40px;
+            padding: 28px 24px;
+            transition: 0.2s;
+            border: 1px solid #f5e2d0;
+        }
+        .block-item:hover { background: #fffbef; transform: translateY(-4px); }
+        .block-text h4 a {
+            font-size: 1.6rem;
+            text-decoration: none;
+            color: #c26d2e;
+            font-weight: 700;
+        }
+        .block-text p { margin-top: 10px; color: #916e45; }
+        .block-text ul { margin-top: 18px; list-style: none; }
+        .block-text li { padding: 6px 0; font-size: 0.9rem; color: #5f452c; display: flex; gap: 8px; align-items: center; }
+        .block-text li i { color: #c28648; width: 20px; }
+        footer {
+            text-align: center;
+            padding: 36px;
+            color: #bf956b;
+            border-top: 1px solid #e8d5c2;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 720px) {
+            .carousel-slide-item img { height: 360px; }
+            .slide-caption h3 { font-size: 1.4rem; }
+            .slide-caption p { max-width: 100%; font-size: 0.8rem; }
+            .post-title { font-size: 1.4rem; }
+            .hero-banner h1 { font-size: 2rem; }
+            .interaction-bar { gap: 20px; }
+        }
+        @keyframes popHeart { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
+        .liked i { animation: popHeart 0.25s ease; }
+    </style>
+</head>
+<body>
+
+<div class="navigation">
+    <div class="nav-container">
+        <div class="brand" id="backToHomeBtn">
+            <span class="brand-icon">⛩️</span>
+            <span class="brand-text">华夏古建 · 营造图鉴</span>
+        </div>
+        <ul class="nav-links">
+        <li><a id="navHome" class="active"><i class="fas fa-scroll"></i> 行旅札记</a></li>
+        <li><a id="navRegion" href="./地域风华.html" target="_blank"><i class="fas fa-mountain"></i> 地域风华</a></li>
+        <li><a id="navCraft" href="./匠心营造.html" target="_blank"><i class="fas fa-drafting-compass"></i> 匠心营造</a></li>
+        <li><a id="navMaterial" href="./木石春秋.html" target="_blank"><i class="fas fa-tree"></i> 木石春秋</a></li>
+        <li><a id="navFunction" href="./功用流芳.html" target="_blank"><i class="fas fa-landmark"></i> 功用流芳</a></li>
+    </ul>
+    </div>
+</div>
+
+<!-- 首页主内容容器 -->
+<!-- 首页主内容容器 -->
+<div id="mainHomeContainer">
+    <div class="hero-banner">
+        <h1>行旅札记 · 古建巡礼</h1>
+        <div class="subhead">从紫禁城到布达拉宫，从徽州天井到玉门雄关 —— 四维解读中国古建筑的永恒史诗</div>
+        <div class="dimension-badge">
+            <a href="./地域风华.html" target="_blank" style="text-decoration: none;"><span>🏔️ 地域风华</span></a>
+            <a href="./匠心营造.html" target="_blank" style="text-decoration: none;"><span>🪚 匠心营造</span></a>
+            <a href="./木石春秋.html" target="_blank" style="text-decoration: none;"><span>🪵 木石春秋</span></a>
+            <a href="./功用流芳.html" target="_blank" style="text-decoration: none;"><span>🏛️ 功用流芳</span></a>
+        </div>
+    </div>
+
+    <div class="carousel">
+        <div class="carousel-container">
+            <div class="carousel-slides">
+                <div class="carousel-slide-item" data-link="北京故宫建筑解读.html"><img src="./image/北京故宫.jpg" alt="北京故宫"><div class="slide-caption"><h3>北京故宫 · 紫垣气象</h3><p>紫禁城中轴气象，六百年皇家宫殿</p><div class="dimension-subtext">地域：北地｜匠心：宫廷规制｜木石：木构梁柱｜功用：皇权礼制</div></div></div>
+                <div class="carousel-slide-item" data-link="徽州民居建筑解读.html"><img src="./image/徽州.jpg" alt="徽州古建"><div class="slide-caption"><h3>徽州古韵 · 水墨江南</h3><p>粉墙黛瓦马头墙，四水归堂岁月长</p><div class="dimension-subtext">地域：江南｜匠心：砖木雕刻｜木石：青砖黛瓦｜功用：民居家族</div></div></div>
+                <div class="carousel-slide-item" data-link="玉门关建筑解读.html"><img src="./image/玉门关.jpg" alt="玉门关"><div class="slide-caption"><h3>玉门关 · 关山月明</h3><p>羌笛何须怨杨柳，春风不度玉门关</p><div class="dimension-subtext">地域：西域｜匠心：夯土筑城｜木石：黄土石基｜功用：关隘防御</div></div></div>
+                <div class="carousel-slide-item" data-link="布达拉宫建筑解读.html"><img src="./image/布达拉宫.jpg" alt="布达拉宫"><div class="slide-caption"><h3>布达拉宫 · 天上宫阙</h3><p>世界屋脊的明珠，藏式建筑巅峰</p><div class="dimension-subtext">地域：高原｜匠心：藏式营造｜木石：石木混合｜功用：宗教宫殿</div></div></div>
+            </div>
+            <button class="carousel-btn prev">❮</button>
+            <button class="carousel-btn next">❯</button>
+            <div class="carousel-dots"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        </div>
+    </div>
+
+    <div class="analysis-entry">
+        <h3 style="text-align: center; font-size: 24px; margin-bottom: 10px;"><span id="current-building-name">北京故宫</span> · 四维解读</h3>
+        <p style="text-align: center; color: #916e45; margin-bottom: 25px;">以下维度，从不同视角解构文化密码，点击卡片深度探索</p>
+        <div class="dimension-grid" id="dimension-grid-container"></div>
+        <p style="text-align: center; font-size: 13px; color: #b28254; margin-top: 20px;">提示：点击任意维度卡片，查看该维度下的详细解读。</p>
+    </div>
+
+    <div class="blog-feed">
+        <!-- 三篇完整游记，互动功能在js中绑定 -->
+        <div class="post-card" data-post-id="0">
+            <div class="post-header"><div class="post-title">🏮 紫禁城 · 雪落宫墙，一眼千年</div><div class="post-meta"><span><i class="far fa-calendar-alt"></i> 甲辰年腊月·吉日</span><span><i class="fas fa-map-marker-alt"></i> 北京 · 故宫博物院</span><span>📖 撰文｜古建走陵人</span></div></div>
+            <div class="post-content"><p>“飞檐托起苍穹，脊兽镇守光阴。” 从中轴线太和殿的金砖墁地到东西六宫的幽深巷陌，木构梁架与斗拱层叠出皇家威仪。雪后初霁，光灑琉璃，红墙映雪，是为华夏营造之巅。</p></div>
+            <div class="post-tags"><span class="tag">#故宫雪景</span><span class="tag">#中轴线</span><span class="tag">#大木作</span></div>
+            <div class="interaction-bar"><button class="action-btn like-btn"><i class="far fa-heart"></i> <span class="like-count">342</span></button><button class="action-btn comment-toggle"><i class="far fa-comment"></i> 评论 <span class="comment-count">27</span></button><button class="action-btn collect-btn"><i class="far fa-bookmark"></i> 藏录</button><button class="action-btn follow-btn"><i class="far fa-bell"></i> 关注作者</button></div>
+            <div class="comments-section"><div class="comment-list"></div><div class="add-comment"><input class="comment-input" placeholder="落笔留下你的故宫印象…"><button class="submit-comment">敬呈</button></div></div>
+        </div>
+        <div class="post-card" data-post-id="1">
+            <div class="post-header"><div class="post-title">🌙 徽州 · 粉墙黛瓦间的四水归堂</div><div class="post-meta"><span><i class="far fa-calendar-alt"></i> 新安三月</span><span><i class="fas fa-map-marker-alt"></i> 黄山 · 西递宏村</span></div></div>
+            <div class="post-content"><p>“一生痴绝处，无梦到徽州。” 天井下光影流转，砖、木、石三雕讲述渔樵耕读。马头墙高低错落，如琴键般谱写江南儒商的家国情怀。夜宿百年老宅，听雨打芭蕉。</p></div>
+            <div class="post-tags"><span class="tag">#徽派建筑</span><span class="tag">#江南民居</span><span class="tag">#木雕瑰宝</span></div>
+            <div class="interaction-bar"><button class="action-btn like-btn"><i class="far fa-heart"></i> <span class="like-count">198</span></button><button class="action-btn comment-toggle"><i class="far fa-comment"></i> 评论 <span class="comment-count">19</span></button><button class="action-btn collect-btn"><i class="far fa-bookmark"></i> 藏录</button><button class="action-btn follow-btn"><i class="far fa-bell"></i> 关注作者</button></div>
+            <div class="comments-section"><div class="comment-list"></div><div class="add-comment"><input class="comment-input" placeholder="徽州记忆 · 与君共叙"><button class="submit-comment">敬呈</button></div></div>
+        </div>
+        <div class="post-card" data-post-id="2">
+            <div class="post-header"><div class="post-title">🏜️ 玉门关 · 汉时明月照我还</div><div class="post-meta"><span><i class="far fa-calendar-alt"></i> 丝路仲夏</span><span><i class="fas fa-map-marker-alt"></i> 敦煌 · 汉长城遗址</span></div></div>
+            <div class="post-content"><p>“黄河远上白云间，一片孤城万仞山。” 夯土版筑的城垣历经两千年风沙，依旧傲然挺立。站在此处，仿佛听见驼铃与戍卒的羌笛。日落残阳如血，历史苍茫感扑面而来。</p></div>
+            <div class="post-tags"><span class="tag">#玉门关</span><span class="tag">#河西走廊</span><span class="tag">#夯土史诗</span></div>
+            <div class="interaction-bar"><button class="action-btn like-btn"><i class="far fa-heart"></i> <span class="like-count">416</span></button><button class="action-btn comment-toggle"><i class="far fa-comment"></i> 评论 <span class="comment-count">52</span></button><button class="action-btn collect-btn"><i class="far fa-bookmark"></i> 藏录</button><button class="action-btn follow-btn"><i class="far fa-bell"></i> 关注作者</button></div>
+            <div class="comments-section"><div class="comment-list"></div><div class="add-comment"><input class="comment-input" placeholder="大漠情怀 · 静待君言"><button class="submit-comment">敬呈</button></div></div>
+        </div>
+    </div>
+</div>
+
+<div class="rec-block">
+    <div class="rec-title">
+        <i class="fas fa-search"></i> 旅迹· 探索华夏古建
+        <span style="font-size: 1rem; margin-left: 20px; font-weight: normal; color: #8b7355;">
+            搜索省份，发现该地古建筑瑰宝
+        </span>
+    </div>
+    
+    <!-- 搜索框 -->
+<div class="search-container" style="margin-bottom: 30px; text-align: center;">
+    <div style="position: relative; max-width: 500px; margin: 0 auto;">
+        <input type="text" id="provinceSearch" 
+               placeholder="请输入省份名称，如：北京、安徽、山西..." 
+               style="width: 100%; padding: 16px 24px; font-size: 1rem; 
+                      border: 2px solid #e0c7a8; border-radius: 50px; 
+                      background: #fffaf2; color: #5c452c;
+                      outline: none; transition: all 0.3s;">
+        <button id="searchBtn" 
+                style="position: absolute; right: 6px; top: 6px; 
+                       background: #c87b3a; border: none; color: white; 
+                       padding: 10px 24px; border-radius: 50px; 
+                       cursor: pointer; font-weight: bold;">
+            搜索
+        </button>
+    </div>
+    <div style="margin-top: 15px; font-size: 0.9rem; color: #a8885e;">
+        <i class="fas fa-lightbulb"></i> 提示：支持搜索"故宫"、"徽州"等关键词
+    </div>
+</div>
+
+<!-- 默认推荐展示（搜索前显示） -->
+    <div id="defaultRecommendations">
+        <p style="text-align: center; color: #9c734b; margin-bottom: 30px;">
+            <i class="fas fa-map-marked-alt"></i> 从以下热门省份开始探索：
+        </p>
+        <div id="search-results" class="rec-grid"> <!-- 关键：class改成 rec-grid -->
+        <!-- 搜索结果会用JS动态添加到这里，结构会和下面三个推荐卡片一样 -->
+        </div>
+        <div class="province-tags" style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 30px;">
+            <button class="province-tag" data-province="北京">北京</button>
+            <button class="province-tag" data-province="安徽">安徽</button>
+            <button class="province-tag" data-province="甘肃">甘肃</button>
+            <button class="province-tag" data-province="西藏">西藏</button>
+            <button class="province-tag" data-province="山西">山西</button>
+            <button class="province-tag" data-province="陕西">陕西</button>
+            <button class="province-tag" data-province="江苏">江苏</button>
+            <button class="province-tag" data-province="浙江">浙江</button>
+        </div>
+        
+        <div class="rec-grid">
+            <!-- 原有推荐卡片 -->
+            <div class="rec-card" onclick="window.open('./北京故宫建筑解读.html','_blank')">
+                <img src="./image/北京故宫.jpg" alt="故宫"><h4>故宫 · 营造密码</h4><p>太和殿的榫卯与礼制</p>
+            </div>
+            <div class="rec-card" onclick="window.open('./徽州民居建筑解读.html','_blank')">
+                <img src="./image/徽州.jpg" alt="徽州"><h4>徽州 · 三雕绝艺</h4><p>砖木石上的文心匠意</p>
+            </div>
+            <div class="rec-card" onclick="window.open('./布达拉宫建筑解读.html','_blank')">
+                <img src="./image/布达拉宫.jpg" alt="布达拉"><h4>布达拉宫 · 山巅圣殿</h4><p>藏式地杖与阿嘎土传奇</p>
+            </div>
+            <div class="province-card" onclick="searchProvince('山西')">
+                <div style="background: linear-gradient(135deg, #8b4513, #c47e3a); height: 180px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-archway" style="font-size: 4rem; color: rgba(255,255,255,0.8);"></i>
+                </div>
+                <h4>探索更多省份</h4>
+                <p>点击探索山西、陕西、江苏等地古建筑</p>
+            </div>
+        </div>
+    </div>
+
+<!-- 搜索结果展示区域 (默认隐藏) -->
+<div id="searchResults" style="display: none;">
+    <h3 id="resultTitle" style="color: #8b5a2b; margin-bottom: 25px; 
+                 border-left: 4px solid #c87b3a; padding-left: 15px;"></h3>
+    <div id="resultsGrid" class="rec-grid"></div>
+</div>
+</div>
+
+<div class="bottom-section">
+    <h3 style="font-size: 2rem; text-align: center; font-weight: 700; color:#412e1c;">四维解读 · 横向对比华夏营造智慧</h3>
+    <p style="text-align: center; margin-top: 10px; color: #9c734b;">系统对比故宫 / 徽州民居 / 玉门关 / 布达拉宫 在同一维度下的迥异表达</p>
+    <div class="block-list">
+        <div class="block-item"><div class="block-text"><h4><a href="#" class="dimension-example">🏔️ 地域风华</a></h4><p>北地礼制 · 江南雅逸 · 西域边塞 · 高原圣殿</p><ul><li><i class="fas fa-archway"></i> 故宫 · 中轴威仪</li><li><i class="fas fa-water"></i> 徽州 · 枕山环水</li><li><i class="fas fa-mountain"></i> 玉门关 · 大漠孤城</li><li><i class="fas fa-snowflake"></i> 布达拉宫 · 红山宫堡</li></ul></div></div>
+        <div class="block-item"><div class="block-text"><h4><a href="#" class="dimension-example">🪚 匠心营造</a></h4><p>官式则例 · 民间机巧 · 夯土版筑 · 藏式砌筑</p><ul><li><i class="fas fa-cubes"></i> 故宫斗拱层叠</li><li><i class="fas fa-carving"></i> 徽州三雕绝伦</li><li><i class="fas fa-axe"></i> 玉门关版筑技术</li><li><i class="fas fa-church"></i> 布达拉宫边玛墙</li></ul></div></div>
+        <div class="block-item"><div class="block-text"><h4><a href="#" class="dimension-example">🪵 木石春秋</a></h4><p>楠木金柱 · 青砖黛瓦 · 黄土芦苇 · 花岗岩殿基</p><ul><li><i class="fas fa-tree"></i> 故宫 · 金丝楠木梁</li><li><i class="fas fa-brick"></i> 徽州 · 黟县青石</li><li><i class="fas fa-mound"></i> 玉门关 · 砂砾黏土</li><li><i class="fas fa-gem"></i> 布达拉宫 · 花岗岩墙垣</li></ul></div></div>
+        <div class="block-item"><div class="block-text"><h4><a href="#" class="dimension-example">🏛️ 功用流芳</a></h4><p>礼制朝仪 · 家族安居 · 戍边防御 · 政教合一</p><ul><li><i class="fas fa-crown"></i> 故宫 · 皇权象征</li><li><i class="fas fa-home"></i> 徽州 · 聚族而居</li><li><i class="fas fa-shield-alt"></i> 玉门关 · 扼守丝路</li><li><i class="fas fa-pray"></i> 布达拉宫 · 冬宫与信仰</li></ul></div></div>
+    </div>
+</div>
+
+<footer>© 华夏古建图鉴 · 行旅者共创社区 | 以匠心致传承，以脚步写史诗</footer>
+
+<script>
+   // 搜索功能
+function searchProvince(keyword) {
+    const searchInput = document.getElementById('provinceSearch');
+    if (keyword) {
+        searchInput.value = keyword;
+    }
+    
+    const keywordLower = searchInput.value.trim().toLowerCase();
+    if (!keywordLower) {
+        alert('请输入搜索内容');
+        return;
+    }
+    
+    // 获取DOM元素
+    const resultsGrid = document.getElementById('resultsGrid');
+    const resultTitle = document.getElementById('resultTitle');
+    const searchResults = document.getElementById('searchResults');
+    const defaultRec = document.getElementById('defaultRecommendations');
+    
+    // 清空之前的结果
+    resultsGrid.innerHTML = '';
+
+    // 1. 首先精确匹配省份
+    let matchedProvince = null;
+    for (const province of provinceBuildings) {
+        if (province.name.toLowerCase().includes(keywordLower)) {
+            matchedProvince = province;
+            break;
+        }
+    }
+    
+    // 2. 如果没有精确匹配省份，尝试模糊搜索建筑名称
+    if (!matchedProvince) {
+        const allResults = [];
+        for (const province of provinceBuildings) {
+            for (const building of province.buildings) {
+                if (building.title.toLowerCase().includes(keywordLower) || 
+                    building.description.toLowerCase().includes(keywordLower)) {
+                    allResults.push({...building, province: province.name});
+                }
+            }
+        }
+        
+        if (allResults.length > 0) {
+            searchResults.style.display = 'block';
+            defaultRec.style.display = 'none';
+            resultTitle.innerHTML = `<i class="fas fa-search"></i> 找到与"${keywordLower}"相关的${allResults.length}个结果`;
+            
+            allResults.forEach(building => {
+                const card = document.createElement('div');
+                card.className = 'rec-card';
+                card.innerHTML = `
+                    <img src="${building.image}" alt="${building.title}">
+                    <h4>${building.title}</h4>
+                    <p>${building.description}</p>
+                `;
+                card.addEventListener('click', () => {
+                    if (building.link) {
+                        window.open(building.link, '_blank');
+                    }
+                });
+                resultsGrid.appendChild(card);
+            });
+            // 滚动到搜索结果位置
+            searchResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            return;
+        }
+    }
+    
+    // 3. 显示精确匹配的省份结果
+    if (matchedProvince) {
+        searchResults.style.display = 'block';
+        defaultRec.style.display = 'none';
+        resultTitle.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${matchedProvince.name} · 古建筑瑰宝 (${matchedProvince.buildings.length}处)`;
+        
+        matchedProvince.buildings.forEach(building => {
+            const card = document.createElement('div');
+            card.className = 'rec-card';
+            card.innerHTML = `
+                <img src="${building.image}" alt="${building.title}">
+                <h4>${building.title}</h4>
+                <p>${building.description}</p>
+            `;
+            card.addEventListener('click', () => {
+                if (building.link) {
+                    window.open(building.link, '_blank');
+                }
+            });
+            resultsGrid.appendChild(card);
+        });
+    } else {
+        // 没有搜索结果
+        searchResults.style.display = 'block';
+        defaultRec.style.display = 'none';
+        resultTitle.innerHTML = `<i class="fas fa-exclamation-circle"></i> 未找到与"${keywordLower}"相关的结果`;
+        resultsGrid.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #8b7355;">
+                <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
+                <p style="font-size: 1.2rem;">试试搜索：北京、安徽、甘肃、山西、陕西、江苏、浙江、四川等</p>
+                <button onclick="resetSearch()" style="margin-top: 20px; padding: 10px 30px; 
+                        background: #f5e9d9; border: none; border-radius: 30px; 
+                        color: #8b5a2b; cursor: pointer; font-weight: bold;">
+                    返回推荐
+                </button>
+            </div>
+        `;
+    }
+    
+    // 滚动到搜索结果位置
+    searchResults.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+    // 建筑四维数据
+const buildingList = [
+    { name: "北京故宫", regionDesc: "紫禁城中轴气象，六百年皇家宫殿", craftDesc: "宫廷规制，皇家营造技艺", materialDesc: "木构梁柱，北方皇家用材", functionDesc: "皇权礼制，帝王政治中心" },
+    { name: "徽州古韵", regionDesc: "粉墙黛瓦马头墙，江南水乡民居", craftDesc: "砖木雕刻，徽州三雕工艺", materialDesc: "青砖黛瓦，白墙墨瓦搭配", functionDesc: "家族聚居，宗法社会缩影" },
+    { name: "玉门关", regionDesc: "羌笛何须怨杨柳，春风不度玉门关", craftDesc: "夯土筑城，西域防御工事", materialDesc: "黄土石基，就地取材建造", functionDesc: "关隘防御，丝绸之路咽喉" },
+    { name: "布达拉宫", regionDesc: "世界屋脊的明珠，高原宗教建筑", craftDesc: "藏式营造，平顶碉楼结构", materialDesc: "石木混合，高原适应材料", functionDesc: "宗教宫殿，政教合一中心" }
+];
+
+// 在buildingList数组后面添加provinceBuildings数组
+const provinceBuildings = [
+    { 
+        name: "北京", 
+        buildings: [
+            { title: "故宫", description: "明清皇家宫殿，世界文化遗产", image: "./image/北京故宫.jpg", link: "./北京故宫建筑解读.html" },
+            { title: "天坛", description: "明清帝王祭天建筑群", image: "./image/天坛.jpg", link: "./天坛建筑解读.html" },
+            { title: "颐和园", description: "清代皇家园林典范", image: "./image/颐和园.jpg", link: "./颐和园建筑解读.html" }
+        ]
+    },
+    { 
+        name: "天津", 
+        buildings: [
+            { title: "独乐寺", description: "辽代木构建筑，中国三大辽代寺院之一", image: "./image/独乐寺.jpg", link: "./独乐寺建筑解读.html" },
+            { title: "天津古文化街", description: "清代商业街巷，中西合璧风格", image: "./image/天津古文化街.jpg", link: "./天津古文化街建筑解读.html" }
+        ]
+    },
+    { 
+        name: "河北", 
+        buildings: [
+            { title: "承德避暑山庄", description: "清代皇家园林，外八庙建筑群", image: "./image/承德避暑山庄.jpg", link: "./承德避暑山庄建筑解读.html" },
+            { title: "山海关", description: "明长城东端起点，天下第一关", image: "./image/山海关.jpg", link: "./山海关建筑解读.html" }
+        ]
+    },
+    { 
+        name: "山西", 
+        buildings: [
+            { title: "平遥古城", description: "明清县城完整样本，世界文化遗产", image: "./image/平遥古城.jpg", link: "./平遥古城建筑解读.html" },
+            { title: "悬空寺", description: "恒山悬空古寺，三教合一建筑", image: "./image/悬空寺.jpg", link: "./悬空寺建筑解读.html" },
+            { title: "应县木塔", description: "世界最高木塔，辽代木构杰作", image: "./image/应县木塔.jpg", link: "./应县木塔建筑解读.html" }
+        ]
+    },
+    { 
+        name: "内蒙古", 
+        buildings: [
+            { title: "成吉思汗陵", description: "蒙古族帝王陵寝，蒙古包式建筑", image: "./image/成吉思汗陵.jpg", link: "./成吉思汗陵建筑解读.html" },
+            { title: "五当召", description: "藏传佛教寺庙，内蒙古最大的寺院", image: "./image/五当召.jpg", link: "./五当召建筑解读.html" }
+        ]
+    },
+    { 
+        name: "辽宁", 
+        buildings: [
+            { title: "沈阳故宫", description: "清初皇家宫殿，满汉建筑风格融合", image: "./image/沈阳故宫.jpg", link: "./沈阳故宫建筑解读.html" },
+            { title: "兴城古城", description: "明代卫城，保存最完整的古城之一", image: "./image/兴城古城.jpg", link: "./兴城古城建筑解读.html" }
+        ]
+    },
+    { 
+        name: "吉林", 
+        buildings: [
+            { title: "长白山古建筑群", description: "满族祭祀建筑，自然与人文结合", image: "./image/长白山古建筑群.jpg", link: "./长白山古建筑群建筑解读.html" },
+            { title: "集安高句丽王城", description: "高句丽王朝遗迹，世界文化遗产", image: "./image/集安高句丽王城.jpg", link: "./集安高句丽王城建筑解读.html" },
+            { title: "吉林文庙", description: "中国四大文庙之一，清代建筑群", image: "./image/吉林文庙.jpg", link: "./吉林文庙建筑解读.html" }
+        ]
+    },
+    { 
+        name: "黑龙江", 
+        buildings: [
+            { title: "瑷珲古城", description: "清代边防重镇，中俄边境古城", image: "./image/瑷珲古城.jpg", link: "./瑷珲古城建筑解读.html" }
+        ]
+    },
+    { 
+        name: "上海", 
+        buildings: [
+            { title: "豫园", description: "明代江南园林，海派建筑代表", image: "./image/豫园.jpg", link: "./豫园建筑解读.html" },
+        ]
+    },
+    { 
+        name: "江苏", 
+        buildings: [
+            { title: "拙政园", description: "苏州园林代表，明代园林艺术", image: "./image/拙政园.jpg", link: "./苏州园林建筑解读.html" },
+            { title: "金山寺", description: "镇江名刹，水陆法会发源地", image: "./image/金山寺.jpg", link: "./金山寺建筑解读.html" },
+            { title: "南京夫子庙", description: "儒家文化建筑群，六朝古都风貌", image: "./image/南京夫子庙.jpg", link: "./南京夫子庙建筑解读.html" }
+        ]
+    },
+    { 
+        name: "浙江", 
+        buildings: [
+            { title: "雷峰塔", description: "杭州西湖标志性建筑，吴越国时期", image: "./image/雷峰塔.jpg", link: "./雷峰塔建筑解读.html" }
+        ]
+    },
+    { 
+        name: "安徽", 
+        buildings: [
+            { title: "徽派建筑", description: "徽派民居代表，世界文化遗产", image: "./image/徽州.jpg", link: "./徽州民居建筑解读.html" },
+        ]
+    },
+    { 
+        name: "福建", 
+        buildings: [
+            { title: "福建土楼", description: "客家民居，世界文化遗产", image: "./image/福建土楼.jpg", link: "./福建土楼建筑解读.html" },
+            { title: "泉州开元寺", description: "海上丝绸之路重要建筑", image: "./image/泉州开元寺.jpg", link: "./泉州开元寺建筑解读.html" }
+        ]
+    },
+    { 
+        name: "江西", 
+        buildings: [
+            { title: "滕王阁", description: "江南三大名楼之一，唐代风格重建", image: "./image/滕王阁.jpg", link: "./滕王阁建筑解读.html" }
+        ]
+    },
+    { 
+        name: "山东", 
+        buildings: [
+            { title: "曲阜孔庙", description: "儒家建筑典范，世界文化遗产", image: "./image/曲阜孔庙.jpg", link: "./曲阜孔庙建筑解读.html" },
+            { title: "岱庙", description: "泰山最大古建筑群，历代帝王祭祀场所", image: "./image/岱庙.jpg", link: "./岱庙建筑解读.html" }
+        ]
+    },
+    { 
+        name: "河南", 
+        buildings: [
+            { title: "少林寺", description: "禅宗祖庭建筑群，中国功夫发源地", image: "./image/少林寺.jpg", link: "./少林寺建筑解读.html" },
+            { title: "洛阳龙门石窟", description: "佛教石窟艺术，石刻建筑瑰宝", image: "./image/洛阳龙门石窟.jpg", link: "./洛阳龙门石窟建筑解读.html" }
+        ]
+    },
+    { 
+        name: "湖北", 
+        buildings: [
+            { title: "武当山金顶", description: "道教建筑精华，铜铸鎏金殿堂", image: "./image/武当山金顶.jpg", link: "./武当山金顶建筑解读.html" },
+            { title: "黄鹤楼", description: "江南三大名楼之一，唐代诗楼", image: "./image/黄鹤楼.jpg", link: "./黄鹤楼建筑解读.html" }
+        ]
+    },
+    { 
+        name: "湖南", 
+        buildings: [
+            { title: "岳阳楼", description: "江南三大名楼之一，宋代建筑风格", image: "./image/岳阳楼.jpg", link: "./岳阳楼建筑解读.html" },
+            { title: "凤凰古城", description: "湘西土家族苗族建筑，沱江吊脚楼", image: "./image/凤凰古城.jpg", link: "./凤凰古城建筑解读.html" }
+        ]
+    },
+    { 
+        name: "广东", 
+        buildings: [
+            { title: "开平碉楼", description: "中西合璧的民居建筑，世界文化遗产", image: "./image/开平碉楼.jpg", link: "./开平碉楼建筑解读.html" },
+            { title: "广州陈家祠", description: "清代宗祠建筑，岭南建筑艺术", image: "./image/广州陈家祠.jpg", link: "./广州陈家祠建筑解读.html" }
+        ]
+    },
+    { 
+        name: "广西", 
+        buildings: [
+            { title: "桂林靖江王府", description: "明代藩王府邸，山水间的皇城", image: "./image/桂林靖江王府.jpg", link: "./桂林靖江王府建筑解读.html" },
+            { title: "程阳风雨桥", description: "侗族木构建筑，廊桥艺术", image: "./image/程阳风雨桥.jpg", link: "./程阳风雨桥建筑解读.html" }
+        ]
+    },
+    { 
+        name: "海南", 
+        buildings: [
+            { title: "海口骑楼老街", description: "南洋风格建筑，海南商业老街", image: "./image/海口骑楼老街.jpg", link: "./海口骑楼老街建筑解读.html" },
+            { title: "三亚南山寺", description: "现代佛教寺院，山海之间", image: "./image/三亚南山寺.jpg", link: "./三亚南山寺建筑解读.html" }
+        ]
+    },
+    { 
+        name: "重庆", 
+        buildings: [
+            { title: "大足石刻", description: "唐宋石窟艺术，世界文化遗产", image: "./image/大足石刻.jpg", link: "./大足石刻建筑解读.html" },
+            { title: "重庆湖广会馆", description: "清代会馆建筑，移民文化见证", image: "./image/重庆湖广会馆.jpg", link: "./重庆湖广会馆建筑解读.html" }
+        ]
+    },
+    { 
+        name: "四川", 
+        buildings: [
+            { title: "峨眉山金顶", description: "佛教名山标志性建筑，华藏寺建筑群", image: "./image/峨眉山金顶.jpg", link: "./峨眉山金顶建筑解读.html" },
+            { title: "都江堰", description: "古代水利工程，世界文化遗产", image: "./image/都江堰.jpg", link: "./都江堰建筑解读.html" }
+        ]
+    },
+    { 
+        name: "贵州", 
+        buildings: [
+            { title: "西江千户苗寨", description: "苗族木结构吊脚楼群", image: "./image/西江千户苗寨.jpg", link: "./西江千户苗寨建筑解读.html" },
+        ]
+    },
+    { 
+        name: "云南", 
+        buildings: [
+            { title: "丽江古城", description: "纳西族建筑风格，世界文化遗产", image: "./image/丽江古城.jpg", link: "./丽江古城建筑解读.html" },
+            { title: "大理古城", description: "白族民居建筑，苍山洱海间", image: "./image/大理古城.jpg", link: "./大理古城建筑解读.html" }
+        ]
+    },
+    { 
+        name: "西藏", 
+        buildings: [
+            { title: "布达拉宫", description: "藏式建筑巅峰之作，世界文化遗产", image: "./image/布达拉宫.jpg", link: "./布达拉宫建筑解读.html" },
+        ]
+    },
+    { 
+        name: "陕西", 
+        buildings: [
+            { title: "西安古城墙", description: "明代城墙完整保存，世界现存最完整", image: "./image/西安古城墙.jpg", link: "./西安古城墙建筑解读.html" },
+        ]
+    },
+    { 
+        name: "甘肃", 
+        buildings: [
+            { title: "玉门关", description: "汉代长城关隘遗址，丝绸之路要冲", image: "./image/玉门关.jpg", link: "./玉门关建筑解读.html" },
+            { title: "敦煌莫高窟", description: "佛教艺术宝库，世界文化遗产", image: "./image/敦煌莫高窟.jpg", link: "./敦煌莫高窟建筑解读.html" }
+        ]
+    },
+    { 
+        name: "青海", 
+        buildings: [
+            { title: "塔尔寺", description: "藏传佛教格鲁派六大寺院之一", image: "./image/塔尔寺.jpg", link: "./塔尔寺建筑解读.html" },
+        ]
+    },
+    { 
+        name: "宁夏", 
+        buildings: [
+            { title: "西夏王陵", description: "西夏王朝皇家陵寝，东方金字塔", image: "./image/西夏王陵.jpg", link: "./西夏王陵建筑解读.html" },
+            { title: "中华黄河坛", description: "现代祭祀建筑，黄河文化象征", image: "./image/中华黄河坛.jpg", link: "./中华黄河坛建筑解读.html" }
+        ]
+    },
+    { 
+        name: "新疆", 
+        buildings: [
+            { title: "喀什古城", description: "维吾尔族民居，丝绸之路重镇", image: "./image/喀什古城.jpg", link: "./喀什古城建筑解读.html" },
+            { title: "交河故城", description: "唐代古城遗址，生土建筑", image: "./image/交河故城.jpg", link: "./交河故城建筑解读.html" }
+        ]
+    },
+    { 
+        name: "台湾", 
+        buildings: [
+            { title: "鹿港龙山寺", description: "清代寺庙建筑，台湾三大古刹之一", image: "./image/鹿港龙山寺.jpg", link: "./鹿港龙山寺建筑解读.html" }
+        ]
+    },
+    { 
+        name: "香港", 
+        buildings: [
+            { title: "黄大仙祠", description: "香港著名庙宇，道教建筑", image: "./image/黄大仙祠.jpg", link: "./黄大仙祠建筑解读.html" },
+            { title: "香港文武庙", description: "清代庙宇，文武二帝祭祀", image: "./image/香港文武庙.jpg", link: "./香港文武庙建筑解读.html" }
+        ]
+    },
+    { 
+        name: "澳门", 
+        buildings: [
+            { title: "大三巴牌坊", description: "圣保禄教堂遗址，澳门地标", image: "./image/大三巴牌坊.jpg", link: "./大三巴牌坊建筑解读.html" },
+            { title: "妈阁庙", description: "澳门最古老庙宇，妈祖文化", image: "./image/妈阁庙.jpg", link: "./妈阁庙建筑解读.html" }
+        ]
+    }
+];
+
+    let currentCarouselIdx = 0;
+    const slidesContainer = document.querySelector('.carousel-slides');
+    const slides = document.querySelectorAll('.carousel-slide-item');
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+    const nextBtn = document.querySelector('.carousel-btn.next');
+    const dots = document.querySelectorAll('.carousel-dots .dot');
+    let autoTimer;
+
+    function updateDimensionPanel(index) {
+    const b = buildingList[index];
+    document.getElementById('current-building-name').innerText = b.name;
+    const container = document.getElementById('dimension-grid-container');
+    if (!container) return;
+    
+    // 定义每个建筑的详情页面对应关系
+    const buildingDetailPages = [
+        '北京故宫建筑解读.html',
+        '徽州民居建筑解读.html',
+        '玉门关建筑解读.html',
+        '布达拉宫建筑解读.html'
+    ];
+    
+    const currentDetailPage = buildingDetailPages[index];
+    
+    container.innerHTML = `
+        <div class="dimension-card" data-dim="region" data-detail-page="${currentDetailPage}">
+            <div class="dimension-inner">
+                <div class="dimension-icon">🗺️</div>
+                <h4>地域风华</h4>
+                <div class="dimension-desc">${b.regionDesc}</div>
+                <div class="dimension-hint" style="color:#1890ff;">点击深度解读 →</div>
+            </div>
+        </div>
+        <div class="dimension-card" data-dim="craft" data-detail-page="${currentDetailPage}">
+            <div class="dimension-inner">
+                <div class="dimension-icon">🔨</div>
+                <h4>匠心营造</h4>
+                <div class="dimension-desc">${b.craftDesc}</div>
+                <div class="dimension-hint" style="color:#fa8c16;">点击深度解读 →</div>
+            </div>
+        </div>
+        <div class="dimension-card" data-dim="material" data-detail-page="${currentDetailPage}">
+            <div class="dimension-inner">
+                <div class="dimension-icon">🪵</div>
+                <h4>木石春秋</h4>
+                <div class="dimension-desc">${b.materialDesc}</div>
+                <div class="dimension-hint" style="color:#52c41a;">点击深度解读 →</div>
+            </div>
+        </div>
+        <div class="dimension-card" data-dim="function" data-detail-page="${currentDetailPage}">
+            <div class="dimension-inner">
+                <div class="dimension-icon">🏛️</div>
+                <h4>功用流芳</h4>
+                <div class="dimension-desc">${b.functionDesc}</div>
+                <div class="dimension-hint" style="color:#eb2f96;">点击深度解读 →</div>
+            </div>
+        </div>
+    `;
+    
+    // 绑定维度卡片点击事件
+    document.querySelectorAll('.dimension-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            e.preventDefault();
+            const dimType = card.getAttribute('data-dim');
+            const detailPage = card.getAttribute('data-detail-page');
+            
+            if (detailPage) {
+                // 构建带锚点的完整URL
+                const targetUrl = `${detailPage}#${dimType}`;
+                window.open(targetUrl, '_blank');
+            }
+        });
+    });
+}
+
+    function goToSlide(index) {
+        const total = slides.length;
+        if (index < 0) index = total - 1;
+        if (index >= total) index = 0;
+        currentCarouselIdx = index;
+        slidesContainer.style.transform = `translateX(-${currentCarouselIdx * 100}%)`;
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === currentCarouselIdx));
+        updateDimensionPanel(currentCarouselIdx);
+    }
+
+    function nextSlide() { goToSlide(currentCarouselIdx + 1); }
+    function prevSlide() { goToSlide(currentCarouselIdx - 1); }
+    function startAutoPlay() { autoTimer = setInterval(nextSlide, 5000); }
+    function stopAutoPlay() { clearInterval(autoTimer); }
+
+    prevBtn?.addEventListener('click', () => { prevSlide(); stopAutoPlay(); startAutoPlay(); });
+    nextBtn?.addEventListener('click', () => { nextSlide(); stopAutoPlay(); startAutoPlay(); });
+    dots.forEach((dot, i) => dot.addEventListener('click', () => { goToSlide(i); stopAutoPlay(); startAutoPlay(); }));
+    document.querySelector('.carousel-container')?.addEventListener('mouseenter', stopAutoPlay);
+    document.querySelector('.carousel-container')?.addEventListener('mouseleave', startAutoPlay);
+
+    // 轮播图片点击跳转至介绍页面（模拟新窗口）
+    slides.forEach((slide, idx) => {
+        const linkMap = ['北京故宫建筑解读.html', '徽州民居建筑解读.html', '玉门关建筑解读.html', '布达拉宫建筑解读.html'];
+        slide.style.cursor = 'pointer';
+        slide.addEventListener('click', (e) => {
+            if(e.target.tagName === 'A') return;
+            window.open(linkMap[idx], '_blank');
+        });
+    });
+
+    // 博客互动逻辑（点赞、收藏、评论、关注）
+    const postsData = [
+        { id:0, likes:342, liked:false, collected:false, comments:[{name:"故园旧梦",time:"甲辰腊月",text:"太和殿前的铜鹤仿佛诉说百年"}], followed:false },
+        { id:1, likes:198, liked:false, collected:false, comments:[{name:"南屏晚钟",time:"三月廿一",text:"西递的早晨薄雾最美"}], followed:false },
+        { id:2, likes:416, liked:false, collected:false, comments:[{name:"河西老张",time:"仲夏廿日",text:"玉门关星空同样震撼"}], followed:false }
+    ];
+    function renderComments(postId){
+        const card = document.querySelector(`.post-card[data-post-id='${postId}']`);
+        const listDiv = card?.querySelector('.comment-list');
+        if(!listDiv) return;
+        const data = postsData[postId];
+        listDiv.innerHTML = data.comments.map(c => `<div class="comment-item"><span class="comment-name">${escapeHtml(c.name)}</span> <span class="comment-time">${c.time}</span><div class="comment-text">${escapeHtml(c.text)}</div></div>`).join('');
+        const cntSpan = card.querySelector('.comment-count');
+        if(cntSpan) cntSpan.innerText = data.comments.length;
+    }
+    function escapeHtml(str){ return str.replace(/[&<>]/g, m=> ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+    function updatePostUI(postId){
+        const d = postsData[postId];
+        const card = document.querySelector(`.post-card[data-post-id='${postId}']`);
+        if(!card) return;
+        const likeBtn = card.querySelector('.like-btn');
+        likeBtn.querySelector('.like-count').innerText = d.likes;
+        if(d.liked){ likeBtn.classList.add('liked'); likeBtn.querySelector('i').className = 'fas fa-heart'; }
+        else { likeBtn.classList.remove('liked'); likeBtn.querySelector('i').className = 'far fa-heart'; }
+        const collectIcon = card.querySelector('.collect-btn i');
+        if(d.collected){ collectIcon.className = 'fas fa-bookmark'; collectIcon.style.color = '#bc6f2c'; }
+        else { collectIcon.className = 'far fa-bookmark'; collectIcon.style.color = ''; }
+        const followBtn = card.querySelector('.follow-btn');
+        if(d.followed){ followBtn.classList.add('active'); followBtn.innerHTML = '<i class="fas fa-bell"></i> 已关注'; }
+        else { followBtn.classList.remove('active'); followBtn.innerHTML = '<i class="far fa-bell"></i> 关注作者'; }
+    }
+    function addComment(postId, text, uname='旅友_'+Math.floor(100+Math.random()*900)){
+        if(!text.trim()) return;
+        const now = new Date();
+        const timeStr = `${now.getFullYear()}.${now.getMonth()+1}.${now.getDate()}`;
+        postsData[postId].comments.unshift({ name: uname, time: timeStr, text: text.trim() });
+        renderComments(postId);
+        const card = document.querySelector(`.post-card[data-post-id='${postId}']`);
+        card.querySelector('.comments-section').style.display = 'block';
+    }
+    function initBlogs(){
+        for(let i=0;i<postsData.length;i++){
+            renderComments(i);
+            updatePostUI(i);
+            const card = document.querySelector(`.post-card[data-post-id='${i}']`);
+            if(!card) continue;
+            card.querySelector('.like-btn').addEventListener('click',()=>{
+                const d=postsData[i];
+                if(!d.liked){ d.likes++; d.liked=true; } else { d.likes--; d.liked=false; }
+                updatePostUI(i);
+            });
+            card.querySelector('.collect-btn').addEventListener('click',()=>{
+                postsData[i].collected = !postsData[i].collected;
+                updatePostUI(i);
+                alert(postsData[i].collected ? '已藏录 · 加入古建典藏集' : '已移除藏录');
+            });
+            card.querySelector('.follow-btn').addEventListener('click',()=>{
+                postsData[i].followed = !postsData[i].followed;
+                updatePostUI(i);
+                alert(postsData[i].followed ? '已关注作者，后续将推送新游记' : '取消关注');
+            });
+            card.querySelector('.comment-toggle').addEventListener('click',()=>{
+                const sec = card.querySelector('.comments-section');
+                sec.style.display = sec.style.display === 'block' ? 'none' : 'block';
+            });
+            card.querySelector('.submit-comment').addEventListener('click',()=>{
+                const inp = card.querySelector('.comment-input');
+                if(inp.value.trim()){ addComment(i, inp.value); inp.value=''; }
+                else alert('请留下您的行旅感言');
+            });
+        }
+    }
+
+    // 导航：返回首页（保留当前页面全部内容）
+    function backToHome() {
+        // 当前就是首页容器，无需切换只是滚动到顶部
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.querySelectorAll('.nav-links li a').forEach(a => a.classList.remove('active'));
+        document.getElementById('navHome').classList.add('active');
+    }
+    document.getElementById('backToHomeBtn').addEventListener('click', backToHome);
+    document.getElementById('navHome').addEventListener('click', backToHome);
+    
+    // 重置搜索
+    function resetSearch() {
+        document.getElementById('searchResults').style.display = 'none';
+        document.getElementById('defaultRecommendations').style.display = 'block';
+        document.getElementById('provinceSearch').value = '';
+    }
+
+    // 绑定搜索事件
+    document.getElementById('searchBtn').addEventListener('click', () => {
+        searchProvince();
+    });
+
+    // 回车键搜索
+    document.getElementById('provinceSearch').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            searchProvince();
+        }
+    });
+
+    // 热门省份标签点击
+    document.querySelectorAll('.province-tag').forEach(tag => {
+        tag.addEventListener('click', (e) => {
+            const province = e.target.getAttribute('data-province');
+            searchProvince(province);
+        });
+    });
+
+    updateDimensionPanel(0);
+    initBlogs();
+    startAutoPlay();
+</script>
+</body>
+</html>

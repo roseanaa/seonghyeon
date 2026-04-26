@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>苏州园林 · 四维解读 | 咫尺乾坤 · 江南园林之冠</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <div class="pic">
+        <img src="./image/拙政园.jpg" title="苏州园林" alt="苏州园林拙政园风光">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 千年传承</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 园林营造</div>
+        <div class="dim-tab" data-tab="culture">🎪 文人雅趣</div>
+        <div class="dim-tab" data-tab="value">🌟 园林价值</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>苏州园林 · 咫尺乾坤</h3>
+            <p class="text"><strong>传奇：</strong>苏州园林是中国古典园林艺术的杰出代表，被誉为"中国园林之母"。自春秋时期始建，经宋、元、明、清历代发展，形成了以拙政园、留园、网师园、环秀山庄为代表的园林体系。1997年，苏州古典园林被联合国教科文组织列入《世界遗产名录》。这些园林以"咫尺之内再造乾坤"的造园艺术，完美诠释了中国古代文人的理想生活境界。</p>
+            <p><strong>代表园林：</strong></p>
+            <ul>
+                <li><strong>拙政园：</strong>苏州现存最大的古典园林，占地78亩。明代正德年间御史王献臣所建，取《闲居赋》"拙者之为政"意。全园以水为中心，山水萦绕，厅榭精美，花木繁茂，体现了"虽由人作，宛自天开"的最高造园境界。</li>
+                <li><strong>留园：</strong>清代园林艺术的代表，以建筑空间处理精湛著称。占地30亩，分中、东、西、北四区。园内冠云峰为太湖石极品，高6.5米，兼具"皱、漏、瘦、透"四美。</li>
+                <li><strong>网师园：</strong>苏州园林中最小而精致的园林，占地仅0.6公顷，堪称"小园极则"。布局紧凑，空间多变，以"小中见大"著称。夜花园演出《游园惊梦》，再现古典园林夜游雅趣。</li>
+                <li><strong>环秀山庄：</strong>以假山著称，占地仅3亩，但假山占地即达1亩。叠山大师戈裕良所造湖石假山，有"独步江南"之誉，将自然山水的险、奇、幽、深表现得淋漓尽致。</li>
+                <li><strong>狮子林：</strong>元代园林代表，以假山闻名。园内湖石假山形如群狮，占地1.73亩，洞壑盘旋，如入迷宫。乾隆皇帝六下江南，五次游此园，并在北京圆明园、承德避暑山庄仿建。</li>
+                <li><strong>沧浪亭：</strong>苏州现存最古老的园林，始建于北宋。以山林野趣为特色，一泓清水绕园而过，复廊漏窗将园内外景色融为一体。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>3-5月（春暖花开）、9-11月（秋高气爽），避开梅雨季节（6-7月）。建议清晨或傍晚游览，光线柔和，游人较少。</li>
+                <li><strong>经典线路：</strong>①拙政园→苏州博物馆→狮子林→平江路。②留园→西园寺→山塘街。③网师园→沧浪亭→可园。每条线路建议安排一天。</li>
+                <li><strong>深度体验：</strong>春季拙政园杜鹃花展，夏季荷塘赏莲，秋季留园桂花飘香，冬季狮子林赏梅。夜游网师园听昆曲，雨天游园体验"雨打芭蕉"意境。</li>
+                <li><strong>摄影建议：</strong>框景构图（利用门洞、窗框），倒影拍摄（水面倒影），四季变化（春樱、夏荷、秋枫、冬雪），光影运用（晨光、夕阳透过漏窗）。</li>
+            </ul>
+            <p><strong>交通信息：</strong>苏州园林集中于姑苏区，地铁4号线北寺塔站、4号线乐桥站可达拙政园、狮子林。建议购买苏州园林年卡或联票。与苏州博物馆、平江路、山塘街等景点组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">名园</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 园林印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 千年传承 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>千年传承 · 园林流变</h3>
+            <p class="text"><strong>起源与发展：</strong>苏州园林肇始于春秋时期吴王的苑囿，汉代私家园林兴起，魏晋南北朝受玄学、佛教影响，园林开始注重自然意趣。唐代文人园林兴起，白居易、陆龟蒙等文人在苏州建园，开创了"城市山林"的先河。宋代是苏州园林发展的重要时期，沧浪亭、网师园的前身"万卷堂"均建于此时。</p>
+            <p class="text"><strong>明清鼎盛：</strong>明清两代是苏州园林的黄金时期。明正德年间，御史王献臣建拙政园，成为江南文人园林的典范。清代苏州经济繁荣，盐商、官僚竞相造园，留园、耦园、怡园等相继建成。此时造园理论成熟，计成《园冶》、文震亨《长物志》等著作问世，奠定了中国古典园林的理论基础。</p>
+            <p class="text"><strong>近代变迁：</strong>清末至民国，苏州园林多易主或荒废。新中国成立后，苏州市政府开始系统修复园林，1952年拙政园、留园等首批对外开放。文革期间园林遭受破坏，改革开放后进行全面修复。1997年，拙政园、留园、网师园、环秀山庄作为苏州古典园林的代表列入《世界遗产名录》，2000年沧浪亭、狮子林、耦园、退思园、艺圃扩展列入。</p>
+            <p class="text"><strong>造园世家：</strong>苏州园林的建造离不开一代代能工巧匠。明代有叠山大师周秉忠，清代有戈裕良（环秀山庄假山）、张南阳（豫园假山，苏州人）。清末民初，姚承祖著《营造法原》，系统总结苏州建筑技艺。当代有香山帮工匠，传承了古典建筑营造技艺，被列入国家级非物质文化遗产。</p>
+            <p class="text"><strong>园林主人：</strong>①王献臣（1473-1544）：拙政园创建者，明弘治进士，官至御史。②徐泰时（1540-1598）：留园创建者，明工部营缮郎中。③宋宗元（1702-1779）：网师园创建者，清光禄寺少卿。④沈秉成（1823-1895）：耦园创建者，清安徽巡抚。这些园主多为罢官或退隐的文人，园林寄托了他们的精神追求。</p>
+            <p class="text"><strong>保护传承：</strong>20世纪50年代起，苏州建立古典园林保护机构，制定《苏州园林保护条例》。开展科学测绘、建立档案，培养专业修复队伍。苏州园林博物馆、中国园林博物馆（苏州馆）系统展示园林文化。园林修复坚持"修旧如旧"原则，使用传统材料工艺，传承香山帮营造技艺。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 园林营造 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>园林营造 · 巧夺天工</h3>
+            <p class="text"><strong>布局艺术：</strong>苏州园林布局讲究"因地制宜，顺应自然"。基本布局形式有：①以水为中心（拙政园）；②以山为中心（环秀山庄）；③山水并重（留园）。空间处理采用对比、渗透、层次、序列等手法，通过建筑、廊桥、墙垣分隔空间，形成"园中有园，景中有景"的丰富层次。</p>
+            <p class="text"><strong>叠山艺术：</strong>假山是苏州园林的灵魂。石材以太湖石为主，讲究"皱、漏、瘦、透"。叠山技法有：①土山：以土为主，点缀山石，模仿自然山峦（拙政园）；②石山：全用湖石堆叠，表现奇峰怪石（狮子林）；③土石相间：土石结合，更近自然（留园）。环秀山庄假山被誉为"尺幅千里"，在3亩之地营造出千岩万壑之势。</p>
+            <p class="text"><strong>理水艺术：</strong>苏州园林"无水不园"。理水手法有：①聚：集中水面形成主景（拙政园远香堂前）；②分：用桥、堤分隔水面（拙政园小飞虹）；③引：引水入园，创造源头活水之意；④藏：水尾隐藏，产生不尽之意。水体形态有池、潭、瀑、溪、涧、泉等，模仿自然水体的各种形态。</p>
+            <p class="text"><strong>建筑艺术：</strong>园林建筑类型丰富：厅、堂、楼、阁、轩、榭、亭、廊、舫、馆、斋、室等。建筑特点：①轻巧：白墙灰瓦，栗色门窗，色彩素雅；②通透：多用落地长窗、隔扇，内外空间流通；③多变：平面形式多样，与环境巧妙结合。拙政园三十六鸳鸯馆采用鸳鸯厅形式，南北装修风格各异。</p>
+            <p class="text"><strong>花木配置：</strong>植物配置讲究"师法自然，寓情于景"。选择标准：①姿态美：松、竹、梅、芭蕉等；②色彩美：枫、桂、玉兰、海棠等；③香味美：桂、梅、玉兰、荷花等；④寓意美：松（坚贞）、竹（虚心）、梅（高洁）、兰（幽雅）。配置手法有孤植、对植、丛植、群植等，形成四季有景。</p>
+            <p class="text"><strong>意境营造：</strong>苏州园林是"立体的诗，凝固的画"。意境营造手法：①题名点景：建筑匾额、楹联点明意境（拙政园"与谁同坐轩"取自苏轼词）；②诗画入景：模仿山水画意（网师园"殿春簃"仿倪瓒画意）；③声景结合：雨打芭蕉、风拂竹叶、流水潺潺；④光影运用：日光月影、花影扶疏。园林是物境、情境、意境的统一。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 园林艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 文人雅趣 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>文人雅趣 · 诗意栖居</h3>
+            <p class="text"><strong>隐逸文化：</strong>苏州园林是古代文人"隐于市"的理想居所。园主多为仕途失意或告老还乡的士大夫，园林是他们远离政治、回归自然的寄托。拙政园名取自"拙者之为政"，网师园意为"渔隐"，耦园寓"夫妇偕隐"。园林中的一山一水、一草一木，都承载着园主的隐逸情怀。</p>
+            <p class="text"><strong>诗画艺术：</strong>园林与诗画相通，计成《园冶》提出"三分匠，七分主人"，强调园主的文人修养。园林设计常以诗画为蓝本：拙政园借鉴王维辋川别业，网师园仿倪瓒山水画意。园中匾额、楹联多出自名家手笔，文徵明为拙政园题诗作画，沈周、唐寅等吴门画派画家也参与园林设计。</p>
+            <p class="text"><strong>雅集活动：</strong>园林是文人雅集的理想场所。明代拙政园文徵明、祝允明等"吴中四才子"常在此聚会。清代留园主人盛康举办"曲园雅集"，俞樾、吴大澂等名流云集。雅集活动包括：①诗会：分韵赋诗，即席唱和；②书画：挥毫泼墨，鉴赏收藏；③琴棋：抚琴对弈，陶冶性情；④品茗：汲泉烹茶，谈玄论道。</p>
+            <p class="text"><strong>昆曲艺术：</strong>园林与昆曲同为世界非物质文化遗产，二者相得益彰。园林中的戏台、水榭是演出昆曲的理想场所。网师园"殿春簃"曾排练《牡丹亭》，"月到风来亭"可演出《游园惊梦》。当代网师园夜花园演出《游园惊梦》《十五贯》等折子戏，再现古典园林夜游雅趣。</p>
+            <p class="text"><strong>节庆习俗：</strong>园林中的节庆活动丰富多彩：①春节：赏梅、挂灯、写春联；②元宵：灯会、猜谜；③端午：悬艾、饮雄黄酒；④中秋：赏月、品桂、听曲；⑤重阳：登高、赏菊、吃糕。拙政园杜鹃花节、荷花节，留园春季花展，成为苏州文化旅游品牌。</p>
+            <p class="text"><strong>生活美学：</strong>园林体现了古代文人的生活美学：①茶道：汲虎丘憨憨泉、天平山白云泉烹茶；②花道：瓶花、盆景艺术；③香道：焚香静坐，修养心性；④文玩：收藏书画、古籍、文房四宝。文震亨《长物志》详细记载了文人雅士的生活器具、室内陈设、花木鱼禽等，是园林生活美学的总结。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">雅趣</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 园林价值 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>园林价值 · 世界瑰宝</h3>
+            <p class="text"><strong>世界遗产价值：</strong>1997年，苏州古典园林被联合国教科文组织列入《世界遗产名录》，评价为："在咫尺之内再造乾坤，是中华园林文化的翘楚和骄傲。苏州园林的重要特色是，它不仅是历史文化的产物，同时也是中国传统思想文化的载体。"园林体现了"天人合一"的哲学思想，是人与自然和谐共处的典范。</p>
+            <p class="text"><strong>艺术价值：</strong>苏州园林是中国古典园林艺术的最高成就。在有限空间内，通过叠山、理水、建筑、花木的巧妙组合，创造出"多方胜景，咫尺山林"的艺术境界。园林是融建筑、山水、花木、文学、书画、雕刻于一体的综合艺术，体现了中国文人的审美理想和生活情趣。</p>
+            <p class="text"><strong>科学价值：</strong>园林营造技术蕴含科学智慧：①生态智慧：利用自然要素调节小气候，水池调节温湿度，植物净化空气；②建筑技术：木构架抗震，榫卯结构可拆卸，建筑与环境适应；③水利技术：水系循环，水位控制，防洪排涝；④植物栽培：盆景艺术，古树名木保护，花卉栽培技术。</p>
+            <p class="text"><strong>文化价值：</strong>苏州园林是江南文化的缩影，承载着丰富的文化信息：①哲学思想：儒、道、释思想的融合；②文学艺术：诗词、书画、楹联、匾额；③民俗文化：节庆、雅集、昆曲、茶道；④建筑文化：香山帮营造技艺，苏式建筑风格。园林是研究中国传统文化、地域文化、建筑文化、艺术文化的活化石。</p>
+            <p class="text"><strong>社会价值：</strong>园林在现代社会具有多重功能：①教育功能：园林美学教育，传统文化传承，爱国主义教育；②休闲功能：市民休闲空间，旅游观光胜地；③研究功能：建筑、园林、艺术、历史等多学科研究基地；④交流功能：中外文化交流窗口，苏州城市名片。每年接待游客超千万人次，其中外国游客占比显著。</p>
+            <p class="text"><strong>保护与传承：</strong>苏州建立了完善的园林保护体系：①法律保护：《苏州园林保护条例》《苏州古典园林保护管理办法》；②技术保护：科学测绘、建立档案、数字化保护；③人才培养：苏州园林技校培养专业人才，传承香山帮技艺；④学术研究：成立苏州园林设计院、苏州园林博物馆，出版《苏州园林》系列丛书；⑤公众参与：志愿者讲解，园林文化进校园，提高公众保护意识。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 苏州园林咫尺乾坤，江南文化诗意栖居 | 五重维度·五种灵韵爱心，点赞评论共话园林雅趣</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（苏州园林独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('suzhou_garden_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('suzhou_garden_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('suzhou_garden_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('suzhou_garden_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对苏州园林的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的苏州园林感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "园林访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

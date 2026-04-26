@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>塔尔寺 · 四维解读 | 藏传佛教格鲁派祖庭</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/塔尔寺.jpg" title="塔尔寺" alt="塔尔寺建筑群与金顶">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 宗喀巴故里</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 藏式建筑</div>
+        <div class="dim-tab" data-tab="culture">🎪 藏传佛教</div>
+        <div class="dim-tab" data-tab="value">🌟 宗教圣地</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>塔尔寺 · 藏传佛教格鲁派祖庭</h3>
+            <p class="text"><strong>传奇：</strong>塔尔寺位于青海省西宁市湟中区鲁沙尔镇西南的莲花山坳中，是中国西北地区藏传佛教的活动中心，也是中国藏传佛教格鲁派（黄教）六大寺院之一（其余五座为：西藏的甘丹寺、哲蚌寺、色拉寺、扎什伦布寺，甘肃的拉卜楞寺）。塔尔寺始建于明洪武十年（1377年），是为纪念藏传佛教格鲁派创始人宗喀巴大师而建。传说宗喀巴大师诞生时，其母剪脐带滴血处，长出一棵白旃檀树，树上十万片叶子，每片叶子上自然显现出一尊狮子吼佛像（释迦牟尼身像的一种）。宗喀巴去西藏学经后，母亲思念儿子，托人捎去书信，宗喀巴回信说："若能在我出生的地方用十万狮子吼佛像和菩提树为胎藏修建一座佛塔，就如与我见面一样。"明洪武十二年（1379年），其母与众信徒按宗喀巴大师的意愿，用石片砌成一座莲聚塔，这便是塔尔寺最早的建筑。1961年，塔尔寺被列为全国重点文物保护单位。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>八宝如意塔：</strong>位于寺前广场，是塔尔寺最著名的标志性建筑。八座白塔一字排开，建于清乾隆四十一年（1776年），为纪念释迦牟尼佛一生中的八件大事而建。从东向西依次是：莲聚塔（纪念佛陀降生）、菩提塔（纪念佛陀成道）、四谛塔（纪念佛陀初转法轮）、神变塔（纪念佛陀降伏外道）、天降塔（纪念佛陀从忉利天返回）、息诤塔（纪念佛陀平息僧众争论）、尊胜塔（纪念佛陀战胜病魔）、涅槃塔（纪念佛陀涅槃）。塔高6.4米，塔身白灰抹面，底座青砖砌成，腰部装饰经文，是藏式佛塔的典型代表。</li>
+                <li><strong>大金瓦殿：</strong>塔尔寺的主殿，藏语称"赛尔顿庆莫"，意为"金瓦"。始建于明嘉靖三十九年（1560年），清康熙五十年（1711年）扩建为三层重檐歇山式金顶。殿高19米，面积456平方米。殿顶覆盖黄金1300两，白银1万余两，在阳光下金光闪闪，辉煌夺目。殿内供奉宗喀巴大师纪念塔——大灵塔，塔高11米，纯银作底，表面镀金，镶嵌各种珠宝。塔内藏有宗喀巴大师的头发、衣物等遗物。大金瓦殿是塔尔寺最神圣的建筑。</li>
+                <li><strong>小金瓦殿：</strong>又称护法神殿，建于明崇祯四年（1631年）。殿内供奉着塔尔寺的护法神——吉祥天母、事业王、法王等。殿内陈列有虎、熊、野牛、羚羊等动物标本，象征护法神降伏的恶魔。殿内壁画描绘了护法神显灵的故事。小金瓦殿是研究藏传佛教护法神信仰的重要场所。</li>
+                <li><strong>大经堂：</strong>塔尔寺最大的殿堂，也是僧众集体诵经、举行法会的地方。始建于明万历三十四年（1606年），1912年毁于火灾，1917年重建。大经堂面积2750平方米，内有168根大柱，可容纳3000多僧人同时诵经。殿内供奉有释迦牟尼、宗喀巴、文殊菩萨等佛像，藏有大量经卷。经堂内悬挂着精美的堆绣、唐卡，是塔尔寺艺术品的集中展示。</li>
+                <li><strong>酥油花馆：</strong>专门陈列酥油花艺术品的殿堂。酥油花是用酥油（黄油）调入矿物颜料塑成的雕塑艺术，是塔尔寺"艺术三绝"之一。每年农历正月十五，塔尔寺举办酥油花灯会，展出大型酥油花作品，题材多为佛教故事、历史人物、花草树木等。酥油花馆内常年陈列着历年制作的精品酥油花。</li>
+                <li><strong>印经院：</strong>塔尔寺的印刷中心，建于清道光七年（1827年）。院内有大量的木刻经版，印刷藏文经书。经版用梨木、枣木等硬木雕刻，有《甘珠尔》《丹珠尔》等大藏经。印经院是研究藏族木刻印刷术的重要场所。</li>
+                <li><strong>班禅行宫：</strong>历代班禅大师来塔尔寺驻锡的居所。行宫建于清顺治六年（1649年），为典型的藏式建筑，有经堂、卧室、会客厅等。行宫内陈列有班禅大师的法座、法器等。十世班禅额尔德尼·确吉坚赞的灵塔也建在塔尔寺内。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>5月至10月是最佳游览时间，气候宜人。每年农历正月、四月、六月、九月，塔尔寺举办四大法会，最为热闹。正月法会（农历正月初八至十八）有晒大佛、酥油花灯会、跳欠（法王舞）等活动；四月法会（农历四月初八至十五）纪念释迦牟尼降生、成道、涅槃；六月法会（农历六月初三至初八）纪念释迦牟尼初转法轮；九月法会（农历九月二十至二十六）纪念释迦牟尼降凡。建议在法会期间游览，体验浓厚的宗教氛围。</li>
+                <li><strong>参观顺序：</strong>八宝如意塔→小金瓦殿→大经堂→大金瓦殿→酥油花馆→印经院→班禅行宫→医明经院→时轮经院→密宗经院。建议安排3-4小时。参观时需顺时针方向绕行，不可逆行。进殿要脱帽，不可踩门槛，不可用手指佛像，不可大声喧哗。</li>
+                <li><strong>深度体验：</strong>清晨观看僧众早课，感受庄严的宗教氛围；上午跟随导游参观主要殿堂，了解藏传佛教文化；中午在寺内品尝素斋，体验僧侣生活；下午参观酥油花馆、印经院，欣赏"艺术三绝"；傍晚在寺内转经，体验信徒的虔诚；参加法会活动，观看晒大佛、跳欠等仪式；学习藏文六字真言，了解藏传佛教基本知识；住寺内招待所，体验寺院生活；购买唐卡、堆绣、酥油花等手工艺品作纪念。</li>
+                <li><strong>摄影建议：</strong>八宝如意塔全景，大金瓦殿金顶，大经堂内景，酥油花艺术品特写，僧侣诵经场面，法会活动瞬间，转经筒人文，唐卡壁画细节，寺院建筑与雪山背景。注意：殿内严禁拍照，只能在外部指定区域拍摄。建议使用广角镜头拍摄建筑全景，长焦镜头拍摄人物、建筑细节。偏振镜可减少玻璃反光，增强蓝天白云对比。</li>
+            </ul>
+            <p><strong>交通信息：</strong>塔尔寺位于西宁市湟中区鲁沙尔镇。从西宁出发：①公交：西宁火车站旁"公交公司"站乘909路公交直达塔尔寺，车程1小时；②旅游专线：新宁路汽车站乘西宁-塔尔寺专线车，车程40分钟；③出租车：从西宁市区打车约100元，车程40分钟。塔尔寺开放时间：8:00-17:00（夏季至18:00）。门票：70元。导游讲解：100元/次。周边景点有青海湖（150公里）、日月山（40公里）、倒淌河（50公里）、贵德国家地质公园（100公里）。距西宁曹家堡机场40公里，车程50分钟；距西宁火车站30公里，车程40分钟。建议与青海湖、日月山组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">寺院</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 塔尔寺印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 宗喀巴故里 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>宗喀巴故里 · 格鲁派起源</h3>
+            <p class="text"><strong>宗喀巴大师：</strong>宗喀巴（1357-1419年），本名罗桑扎巴，因出生于宗喀（今青海湟中）地区，被尊称为宗喀巴。他是藏传佛教格鲁派创始人，被尊为"第二佛陀"。7岁出家，16岁赴西藏学经，精通显密教法。1409年，在拉萨创建甘丹寺，举行祈愿大法会，标志着格鲁派的创立。宗喀巴著有《菩提道次第广论》《密宗道次第广论》等，系统阐述了显密教法。他主张显密兼修，强调戒律，改革了当时西藏佛教的弊端。宗喀巴的弟子有贾曹杰、克主杰（后被追认为一世班禅、一世达赖）等。</p>
+            <p class="text"><strong>建寺历史：</strong>塔尔寺的建立与宗喀巴大师密切相关。1377年，宗喀巴母亲在宗喀巴诞生地建一小寺，这便是塔尔寺的雏形。1379年，建莲聚塔。1560年，禅师仁钦宗哲坚赞在塔旁建静房，修禅。1577年，建弥勒佛殿。1583年，三世达赖索南嘉措来此，指示扩建寺院。此后，历代高僧、信徒捐资修建，逐渐形成规模。至清乾隆年间，塔尔寺已有殿堂、僧舍9300余间，僧人3600余人，成为安多地区最大的格鲁派寺院。</p>
+            <p class="text"><strong>历辈活佛：</strong>塔尔寺实行活佛转世制度。主要活佛系统有：①阿嘉活佛：寺主，地位最高；②赛朵活佛：历代驻京呼图克图；③却藏活佛：著名学者；④米纳活佛：蒙古族活佛。活佛在寺院管理、宗教活动中起重要作用。十世班禅额尔德尼·确吉坚赞曾长期在塔尔寺学习、生活。</p>
+            <p class="text"><strong>历史事件：</strong>塔尔寺在历史上发挥重要作用。①明清时期：是中央政府与西藏联系的桥梁，历代达赖、班禅途经青海多在此驻锡；②民国时期：是青海地区的宗教、文化中心；③新中国成立后：得到保护，1961年列为全国重点文物保护单位；④改革开放后：恢复宗教活动，成为重要的旅游景点。塔尔寺见证了青海历史变迁。</p>
+            <p class="text"><strong>学术中心：</strong>塔尔寺是安多地区的学术中心。设有四大扎仓（学院）：①显宗学院（参尼扎仓）：学习显宗理论；②密宗学院（居巴扎仓）：学习密宗仪轨；③医明学院（曼巴扎仓）：学习藏医药；④时轮学院（丁科扎仓）：学习天文历算。寺院培养了大量高僧、学者。</p>
+            <p class="text"><strong>现代发展：</strong>新中国成立后，塔尔寺得到保护和发展。①1961年，列为全国重点文物保护单位；②1980年，重新开放，恢复宗教活动；③2001年，酥油花制作技艺列入国家级非物质文化遗产；④2006年，塔尔寺建筑群列入全国重点文物保护单位。如今，塔尔寺是宗教活动、文化研究、旅游观光的重要场所。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 藏式建筑 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>藏式建筑 · 汉藏结合</h3>
+            <p class="text"><strong>总体布局：</strong>塔尔寺依山就势而建，占地面积45万平方米。①轴线：以大金瓦殿为中心，各殿堂沿山势层层升高，形成错落有致的格局；②分区：分为宗教活动区、教学区、生活区、塔园区；③道路：有主道、巷道相连，形成网状道路系统；④朝向：主要殿堂坐北朝南，背靠莲花山，面向河谷。建筑与自然环境和谐统一。</p>
+            <p class="text"><strong>建筑形式：</strong>塔尔寺建筑融合了汉藏风格。①汉式：大金瓦殿、大经堂等为汉式歇山顶、琉璃瓦顶；②藏式：僧舍、佛塔为藏式平顶、女儿墙；③结合：汉藏结合式，如下部为藏式，上部为汉式。这种融合体现了多民族文化交融。</p>
+            <p class="text"><strong>殿堂结构：</strong>主要殿堂为木结构建筑。①柱网：大经堂有168根大柱，柱径0.5-0.8米；②梁架：采用抬梁式结构，用粗大的梁、枋；③屋顶：有歇山顶、硬山顶、攒尖顶等；④墙体：下部为石砌，上部为土坯，外抹白灰。结构坚固，适应高原气候。</p>
+            <p class="text"><strong>装饰艺术：</strong>建筑装饰丰富多彩。①金顶：大金瓦殿覆盖金瓦，用黄金1300两；②壁画：殿内外墙壁绘有佛教故事、人物、图案；③木雕：梁、枋、门窗雕刻精美；④彩绘：梁架施以彩绘，色彩鲜艳。装饰体现了藏族艺术的独特风格。</p>
+            <p class="text"><strong>佛塔建筑：</strong>塔尔寺佛塔形式多样。①八宝如意塔：藏式佛塔，塔瓶为覆钵形；②宗喀巴纪念塔：大灵塔，为银质鎏金，镶嵌珠宝；③菩提塔：纪念释迦牟尼成道。佛塔是藏传佛教的重要建筑形式。</p>
+            <p class="text"><strong>建筑材料：</strong>寺院采用本地材料。①木材：用本地松木、柏木；②石材：用本地花岗岩、青石；③土坯：用本地黏土制成；④金属：用铜、金、银装饰。材料体现地方特色。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 藏传佛教 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>藏传佛教 · 格鲁派中心</h3>
+            <p class="text"><strong>格鲁派教义：</strong>格鲁派是藏传佛教的重要派别。①创始人：宗喀巴；②教义：强调显密兼修，重视戒律，提倡"三士道"修行次第；③标志：黄色僧帽，故称"黄教"；④地位：是藏传佛教中影响最大的派别，达赖、班禅系统属此派。塔尔寺是格鲁派的发祥地之一。</p>
+            <p class="text"><strong>寺院组织：</strong>塔尔寺有严密的组织体系。①最高领导：寺主阿嘉活佛；②管理机构：总法台、襄佐、吉索等；③教学机构：四大扎仓（学院）；④僧众：现有僧人800余人。组织体系保证了寺院的正常运行。</p>
+            <p class="text"><strong>宗教活动：</strong>寺院宗教活动丰富。①日常：僧众早晚课诵、辩经；②法会：四大法会，有晒大佛、跳欠等活动；③学经：僧人在各扎仓学习；④修行：闭关、禅修等。宗教活动传承佛教文化。</p>
+            <p class="text"><strong>艺术三绝：</strong>塔尔寺有闻名遐迩的"艺术三绝"。①酥油花：用酥油塑成的雕塑，色彩鲜艳，造型生动；②壁画：绘于墙壁、布幔上，题材广泛，技艺精湛；③堆绣：用各色绸缎剪贴而成的刺绣，立体感强。三绝是藏族艺术的瑰宝。</p>
+            <p class="text"><strong>藏医药学：</strong>塔尔寺是藏医药学的重要传承地。医明学院（曼巴扎仓）专门培养藏医人才，研究藏医药。寺内设有藏医院，为僧俗群众治病。藏医药学是藏传佛教"五明"之一。</p>
+            <p class="text"><strong>天文历算：</strong>时轮学院（丁科扎仓）研究藏族天文历算。藏族历法融合了印度、汉族、藏族的天文知识，用于推算节气、预测天气、指导农事。天文历算是藏族文化的重要组成部分。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">藏传</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 宗教圣地 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>宗教圣地 · 文化瑰宝</h3>
+            <p class="text"><strong>宗教价值：</strong>塔尔寺是藏传佛教的圣地。①祖庭：是格鲁派创始人宗喀巴的诞生地；②中心：是安多地区格鲁派的宗教中心；③道场：是信众朝拜的圣地；④传承：是藏传佛教文化的重要传承地。塔尔寺在藏传佛教中具有崇高地位。</p>
+            <p class="text"><strong>历史价值：</strong>塔尔寺是青海历史的见证。①宗教史：反映了藏传佛教在青海的传播与发展；②建筑史：是汉藏建筑艺术结合的典范；③社会史：记录了青海地区的社会变迁；④民族史：体现了汉、藏、蒙古等民族的交流融合。塔尔寺是历史的"活化石"。</p>
+            <p class="text"><strong>艺术价值：</strong>塔尔寺是藏族艺术的宝库。①建筑艺术：殿堂、佛塔建筑精美；②绘画艺术：壁画、唐卡技艺精湛；③雕塑艺术：酥油花、佛像造型生动；④工艺艺术：堆绣、金属工艺独特。塔尔寺是"藏族艺术的博物馆"。</p>
+            <p class="text"><strong>文化价值：</strong>塔尔寺是多元文化的载体。①佛教文化：藏传佛教文化的集中体现；②民族文化：汉、藏、蒙古文化的交融；③学术文化：藏医药、天文历算等传统学科；④民俗文化：法会、节庆等民俗活动。塔尔寺是文化的"基因库"。</p>
+            <p class="text"><strong>科学价值：</strong>塔尔寺蕴含丰富的科学技术。①建筑科学：适应高原气候的建筑技术；②材料科学：酥油花材料配方、壁画颜料配方；③医学科学：藏医药学知识；④天文科学：藏族历法计算。塔尔寺是传统科技的宝库。</p>
+            <p class="text"><strong>保护与传承：</strong>塔尔寺得到科学保护。①法律保护：1961年列为全国重点文物保护单位；②规划保护：编制保护规划，控制建设；③工程保护：对古建筑进行维修保护；④活态保护：保持宗教活动，传承文化；⑤合理利用：发展文化旅游，服务社会；⑥社区参与：僧俗群众共同保护。塔尔寺的保护经验，为宗教文物保护提供了成功范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 塔尔寺藏传佛教格鲁派祖庭，宗喀巴故里诉说千年佛缘 | 五重维度·五种灵韵爱心，点赞评论共话宗教圣地</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（塔尔寺独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('taer_temple_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('taer_temple_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('taer_temple_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('taer_temple_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对塔尔寺的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的塔尔寺感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "塔尔寺访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

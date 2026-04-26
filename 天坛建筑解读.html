@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>天坛 · 四维解读 | 天人对话 · 祭天圣地</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <div class="pic">
+        <img src="./image/天坛.jpg" title="天坛祈年殿" alt="天坛祈年殿建筑群">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🌄 概览</div>
+        <div class="dim-tab" data-tab="origin">🔮 起源礼制</div>
+        <div class="dim-tab" data-tab="structure">🏗️ 结构营造</div>
+        <div class="dim-tab" data-tab="symbol">🔢 数理象征</div>
+        <div class="dim-tab" data-tab="wisdom">🎋 智慧传承</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🌄 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🌄 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>天坛 · 天人对话</h3>
+            <p class="text"><strong>传奇：</strong>明清两代皇帝祭天的圣地，中国古代祭天建筑的顶峰之作。建筑布局暗合"天圆地方"的宇宙观，处处体现"天人感应"思想。它不是一座单体建筑，而是一个完整的祭祀建筑群，堪称中国古代建筑与哲学思想的完美结合。</p>
+            <p><strong>参观攻略：</strong></p>
+            <ul><li><strong>祈年殿：</strong>标志性建筑，三重檐蓝色琉璃瓦攒尖顶，是举行祈谷大典的神殿。注意观察其结构——完全靠28根金丝楠木大柱支撑，无一钉一铆。</li><li><strong>皇穹宇：</strong>供奉"皇天上帝"神牌之处，其围墙就是著名的"回音壁"。在东西配殿后轻声说话，另一侧清晰可闻。</li><li><strong>圜丘坛：</strong>真正的祭天台，露天三层汉白玉圆坛。站在天心石上说话，会产生强烈的共鸣效果。</li><li><strong>丹陛桥：</strong>连接祈年殿与圜丘坛的宽阔甬道，是皇帝祭天时的"神道"，高出地面4米，意为"走在天街上"。</li></ul>
+            <p><strong>闯关秘籍：</strong></p>
+            <ul><li><strong>最佳时间：</strong>春秋两季清晨。日出时分光线柔和，游客稀少，适合拍照。冬季雪后尤其壮观。</li><li><strong>摄影技巧：</strong>从皇乾殿侧拍摄祈年殿与古柏的构图；利用对称构图突出建筑庄重感；傍晚拍摄祈年殿剪影。</li><li><strong>深度体验：</strong>沿着中轴线（南起昭亨门→圜丘→皇穹宇→丹陛桥→祈年殿）完整走一遍，感受"步步登天"的仪式感。</li></ul>
+            <p><strong>行程安排：</strong>上午：圜丘坛→回音壁→皇穹宇→丹陛桥。中午：在公园内休息。下午：祈年殿→皇乾殿→七十二长廊→斋宫。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🌄</span><span class="like-count">0</span><span class="like-btn-text">天音</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 天坛印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 起源礼制 爱心: 🔮 -->
+    <div class="dim-content" id="origin-content" data-dim="origin">
+        <div class="word">
+            <h3>起源礼制 · 敬天法祖</h3>
+            <p class="text"><strong>历史渊源：</strong>始建于明永乐十八年（1420年），原为"天地坛"，嘉靖九年（1530年）实行"天地分祀"，于北郊另建地坛，此处专为祭天，更名为"天坛"。清代多次扩建，形成今日规模。是明清两朝24位皇帝举行祭天典礼的场所。</p>
+            <p class="text"><strong>祭祀制度：</strong>一年举行三次大祭：孟春祈谷（正月上辛日，祈求五谷丰登）、冬至祭天（报谢天帝）、孟夏祈雨（如遇干旱）。皇帝需提前三天到斋宫斋戒，以示虔诚。祭祀时，皇帝立于"天子"之位（圜丘天心石），向"皇天上帝"汇报政绩，祈求风调雨顺。</p>
+            <p class="text"><strong>宇宙观体现：</strong>天坛的整个布局反映了中国古代"天圆地方"的宇宙观。祈年殿为圆形，象征天；四周方形围墙，象征地。建筑群的方位、尺寸、颜色都严格对应阴阳五行、天文历法，是"天人合一"哲学的物质载体。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="origin"><span class="like-icon">🔮</span><span class="like-count">0</span><span class="like-btn-text">礼敬</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="origin">💬 祭天礼制</button><div class="comment-list" id="comment-list-origin" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 结构营造 爱心: 🏗️ -->
+    <div class="dim-content" id="structure-content" data-dim="structure">
+        <div class="word">
+            <h3>结构营造 · 木构奇观</h3>
+            <p class="text"><strong>祈年殿结构：</strong>高38米，直径32米，三重檐圆形攒尖顶，覆盖象征天空的深蓝色琉璃瓦。其木构架堪称中国古建奇迹：内部四根"龙井柱"象征四季，中层十二根"金柱"象征十二月，外层十二根"檐柱"象征十二时辰，合计二十八柱又对应二十八星宿。整个建筑无大梁、无长檩，全靠斗拱层层叠加支撑。</p>
+            <p class="text"><strong>声学设计：</strong>天坛有三处著名声学奇迹：①回音壁（皇穹宇围墙）——利用圆形曲面连续反射声波；②三音石——站在皇穹宇殿前三块石板上击掌，分别听到一、二、三声回音；③天心石（圜丘坛中心）——站在上面说话，声音因栏板反射而增强，仿佛"天人对话"。</p>
+            <p class="text"><strong>色彩与材料：</strong>建筑色彩严格遵循礼制：蓝色琉璃瓦象征天，绿色象征地（斋宫），黄色象征皇帝（祈年殿内）。主要建材为金丝楠木、汉白玉、青白石、澄浆砖。砖瓦烧制极为考究，敲之有声，断之无孔，历经数百年风雨依旧坚固。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="structure"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">奇构</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="structure">💬 营造智慧</button><div class="comment-list" id="comment-list-structure" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 数理象征 爱心: 🔢 -->
+    <div class="dim-content" id="symbol-content" data-dim="symbol">
+        <div class="word">
+            <h3>数理象征 · 天地之数</h3>
+            <p class="text"><strong>数字密码：</strong>天坛处处是"数字崇拜"：祈年殿的28根柱子（四季+十二月+十二时辰）；圜丘三层，每层台阶、栏板、铺石均为九或九的倍数（九为阳数之极）。上层中心为一块圆形石板"天心石"，外铺扇形石九圈，第一圈9块，第二圈18块，直至第九圈81块，寓意"九重天"。</p>
+            <p class="text"><strong>几何象征：</strong>建筑群以圆形和方形为基本元素，祈年殿、皇穹宇、圜丘皆为圆形，围墙、斋宫则为方形，体现"天圆地方"。祈年殿三层屋檐直径由上至下逐渐增大，形成稳定向上的动势，象征"天人相接"。</p>
+            <p class="text"><strong>方位布局：</strong>天坛位于北京城南（丙丁之位，属火），与地坛（城北，属水）、日坛（城东，属木）、月坛（城西，属金）形成完整的祭祀体系。轴线为南北走向，北端祈年殿（祈谷），南端圜丘（祭天），中间以丹陛桥相连，形成"天南地北"的格局。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="symbol"><span class="like-icon">🔢</span><span class="like-count">0</span><span class="like-btn-text">天机</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="symbol">💬 数字密码</button><div class="comment-list" id="comment-list-symbol" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 智慧传承 爱心: 🎋 -->
+    <div class="dim-content" id="wisdom-content" data-dim="wisdom">
+        <div class="word">
+            <h3>智慧传承 · 天人合一</h3>
+            <p class="text"><strong>生态智慧：</strong>天坛占地273公顷，其中古柏森森，绿化率达90%以上。这些古柏不仅营造了庄严肃穆的祭祀氛围，还具有调节微气候、净化空气的功能。建筑群的排水系统设计精妙，历经六百年从未积水，体现了古代工匠对自然规律的深刻理解。</p>
+            <p class="text"><strong>声学成就：</strong>回音壁、三音石、天心石的声学效应并非偶然，而是古代工匠精确计算曲面弧度、反射角度后的杰作。这是世界上最早的建筑声学设计之一，比欧洲同类建筑早了两三百年。</p>
+            <p class="text"><strong>文化影响：</strong>天坛是中国古代宇宙观、政治观、建筑观、生态观的集中体现。1998年被列入世界文化遗产，联合国教科文组织评价："天坛是建筑和景观设计之杰作，朴素而鲜明地体现出对世界伟大文明之一的发展产生过影响的一种极其重要的宇宙观。"今天，它已成为北京的标志，中华文明的象征。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="wisdom"><span class="like-icon">🎋</span><span class="like-count">0</span><span class="like-btn-text">传承</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="wisdom">💬 天人合一</button><div class="comment-list" id="comment-list-wisdom" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🔮 祭天以诚，建筑以礼 | 五重维度·五种灵韵爱心，点赞评论共话天坛神韵</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（天坛独立存储）----------
+    let likesData = {
+        overview: 0,
+        origin: 0,
+        structure: 0,
+        symbol: 0,
+        wisdom: 0
+    };
+    let commentsData = {
+        overview: [],
+        origin: [],
+        structure: [],
+        symbol: [],
+        wisdom: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('temple_of_heaven_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('temple_of_heaven_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('temple_of_heaven_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('temple_of_heaven_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对天坛的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的天坛感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "天坛访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

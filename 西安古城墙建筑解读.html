@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>西安古城墙 · 四维解读 | 明城遗韵 · 千年城垣</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/西安古城墙.jpg" title="西安古城墙" alt="西安古城墙全景">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 千年城垣</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 城防体系</div>
+        <div class="dim-tab" data-tab="culture">🎪 城墙文化</div>
+        <div class="dim-tab" data-tab="value">🌟 国宝文物</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>西安古城墙 · 世界城垣之冠</h3>
+            <p class="text"><strong>传奇：</strong>西安古城墙，又称西安明城墙，位于陕西省西安市中心区，是中国现存规模最大、保存最完整的古代城垣，也是世界上现存规模最大、最完整的古代军事城堡防御体系。城墙始建于明洪武三年（1370年），在原隋唐长安皇城的基础上扩建而成，距今已有650多年历史。城墙呈长方形，周长13.74公里，高12米，顶宽12-14米，底宽15-18米。共有城门四座：东长乐门、西安定门、南永宁门、北安远门，每座城门由箭楼和城楼组成。城墙内为古城区域，城墙外有护城河环绕。1961年，西安城墙被列为全国重点文物保护单位，是西安最重要的历史文化地标。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>南门（永宁门）：</strong>西安城墙的正门，也是保存最完好、最雄伟的一座城门。南门由箭楼、闸楼、城楼组成，形成完整的防御体系。箭楼高33.4米，面阔十一间，进深两间，为重檐歇山顶建筑。城楼高32米，面阔七间，进深五间，为三重檐歇山顶建筑。南门是西安城墙的迎宾门，国家领导人、外国元首访陕多在此举行入城仪式。夜晚有《梦长安》大型实景演出。</li>
+                <li><strong>城墙自行车骑行：</strong>在城墙上骑自行车是体验西安城墙的最佳方式。城墙一周13.74公里，骑行一圈约需1.5-2小时。城墙上路面平坦，租车点有南门、西门、北门、东门四个。骑行时可俯瞰西安老城风光，远眺现代建筑，感受历史与现代的交融。傍晚骑行可欣赏古城日落，夜晚骑行可看城墙灯光夜景。</li>
+                <li><strong>城墙马拉松：</strong>每年举办的西安城墙国际马拉松是世界唯一的完整城墙马拉松。赛道设在城墙上，全程13.74公里，正好绕城墙一圈。比赛设全程马拉松、半程马拉松、迷你马拉松等项目，吸引国内外跑者参加。城墙马拉松被誉为"穿越历史的奔跑"，是西安重要的体育文化品牌。</li>
+                <li><strong>护城河公园：</strong>环绕城墙的护城河经过综合治理，已建成优美的环城公园。护城河宽20-30米，深6-8米，河水清澈，两岸绿树成荫，亭台楼阁点缀其间。公园免费开放，是市民晨练、散步、休闲的好去处。夜晚护城河灯光璀璨，与城墙交相辉映，构成美丽的夜景。</li>
+                <li><strong>含光门遗址博物馆：</strong>位于含光门段城墙内，是中国唯一一座展示城墙断面结构的博物馆。博物馆展示了隋唐皇城城墙、唐长安城过水涵洞、明清城墙等不同时期的城墙断面。通过遗址，可以看到1300多年来城墙的演变历史，是研究中国古代城墙建筑的珍贵实物资料。</li>
+                <li><strong>城墙灯会：</strong>每年春节至元宵节期间，西安城墙举办大型灯会。灯会以城墙为背景，布置数万盏彩灯，有传统宫灯、现代灯组、互动灯饰等。主题包括"大唐盛世""丝绸之路""十二生肖""西安故事"等。夜晚登上城墙，流光溢彩，美轮美奂，是西安春节最重要的民俗活动。</li>
+                <li><strong>西安城墙历史文化街区：</strong>城墙内的顺城巷是西安最具特色的历史文化街区。顺城巷沿城墙内侧而建，长6公里，汇集了酒吧、咖啡馆、餐厅、客栈、手工艺品店等。这里既有古老的明清民居，又有现代创意店铺，是体验西安慢生活的好去处。夜晚顺城巷灯火通明，游人如织。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，最佳游览时间为3-5月和9-11月。春季（3-5月）气候宜人，城墙内外百花盛开；夏季（6-8月）较热，建议早晚游览；秋季（9-11月）天高云淡，适合骑行；冬季（12-2月）有城墙灯会，夜景璀璨。建议避开节假日高峰，周末人较多。</li>
+                <li><strong>游览顺序：</strong>南门（永宁门）登城→城墙博物馆→骑自行车或步行→西门（安定门）→北门（安远门）→东门（长乐门）→返回南门。建议安排2-3小时，如要骑行一周需1.5-2小时。晚上可看《梦长安》演出或赏灯会。</li>
+                <li><strong>深度体验：</strong>清晨在城墙上跑步或散步，感受古城晨光；上午骑自行车绕城一周，俯瞰西安全景；中午在顺城巷品尝西安美食；下午参观含光门遗址博物馆，了解城墙历史；傍晚在城楼上看日落，欣赏古城暮色；晚上观看《梦长安》实景演出，感受盛唐气象；参加城墙夜跑，体验夜色中的城墙；春节看城墙灯会，感受传统年味；住城墙边民宿，体验古城生活。</li>
+                <li><strong>摄影建议：</strong>南门城楼全景，城墙骑行人文，护城河倒影，城墙断面结构，顺城巷市井生活，城墙日落晚霞，城墙灯会夜景，城墙马拉松瞬间，角楼建筑细节。建议使用广角镜头拍摄城楼全景，长焦镜头拍摄建筑细节。清晨和傍晚光线最佳，适合拍摄。三脚架必备，用于拍摄夜景。偏振镜可增强蓝天白云对比。</li>
+            </ul>
+            <p><strong>交通信息：</strong>西安城墙位于西安市中心。主要登城点：南门（永宁门）、西门（安定门）、北门（安远门）、东门（长乐门）。地铁：2号线永宁门站A1、D1出口（南门）。公交：多路公交可达各城门。城墙开放时间：8:00-22:00（南门至22:00，其他门至19:00）。门票：54元（含登城、含光门遗址博物馆）。自行车租赁：单人车45元/2小时，双人车90元/2小时。周边景点有钟楼、鼓楼、碑林博物馆、回民街等。距西安咸阳国际机场40公里，车程1小时；距西安北站15公里，车程30分钟。建议与钟鼓楼、碑林、回民街组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">城墙</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 城墙印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 千年城垣 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>千年城垣 · 古都印记</h3>
+            <p class="text"><strong>历史沿革：</strong>西安城墙的历史可追溯到隋唐时期。①隋唐：隋文帝建大兴城，唐改名为长安城，是当时世界上最大的都城；②五代宋元：长安城缩小，以唐皇城为基础建新城；③明代：洪武三年（1370年），朱元璋次子朱樉镇守西安，在唐皇城基础上扩建，形成现存规模；④清代：对城墙进行多次维修；⑤民国：为方便交通，开辟多座城门；⑥现代：1983年开始大规模维修，2004年完成护城河治理。西安城墙是古都西安的历史见证。</p>
+            <p class="text"><strong>明代修建：</strong>明城墙的修建历时八年。①时间：洪武三年至十一年（1370-1378年）；②规模：在原唐皇城基础上扩建，东、北各向外延伸三分之一；③材料：用黄土分层夯筑，底层用石灰、土、糯米汁混合夯打；④工艺："版筑"法，每版长2-3米，高0.3米，逐层加高；⑤包砖：明隆庆年间（1567-1572年）在土墙外包砌青砖。明城墙体现了明代军事防御思想。</p>
+            <p class="text"><strong>城门演变：</strong>城墙城门历经变迁。①明代：四座城门，东长乐门、西安定门、南永宁门、北安远门；②清代：保持四门；③民国：为方便交通，新开多门，如中山门、玉祥门、勿幕门等；④现代：现有城门18座。每座城门都有历史故事。</p>
+            <p class="text"><strong>抗战时期：</strong>抗战时期，西安城墙发挥重要作用。①防空：城墙上的垛口、敌楼用作防空阵地；②避难：城墙防空洞保护市民；③宣传：城墙书写抗日标语；④防御：准备抵御日军进攻。城墙见证了中华民族的抗战历史。</p>
+            <p class="text"><strong>保护维修：</strong>新中国成立后，城墙得到保护维修。①1961年，列为全国重点文物保护单位；②1983年，开始"环城建设工程"；③2004年，完成护城河综合治理；④2013年，完成城墙全线贯通；⑤2019年，完成城墙文物保护工程。维修遵循"修旧如旧"原则。</p>
+            <p class="text"><strong>世界遗产预备：</strong>西安城墙是中国明清城墙联合申报世界文化遗产的重要组成部分。2006年，南京、西安、荆州、兴城四地城墙联合申报；2012年，增加襄阳、开封、寿县、凤阳四地。西安城墙是明清城墙中最具代表性的一段。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 城防体系 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>城防体系 · 军事智慧</h3>
+            <p class="text"><strong>总体布局：</strong>西安城墙是完整的军事防御体系。①形状：长方形，周长13.74公里；②高度：高12米，相当于四层楼；③宽度：顶宽12-14米，可并行四辆汽车；④基础：底宽15-18米，稳固坚实；⑤城门：四座主门，每门有箭楼、城楼、闸楼；⑥角楼：四角有角楼，用于瞭望；⑦敌楼：98座敌楼，每120米一座；⑧垛口：5984个垛口，用于射击。布局体现"金城汤池"的防御理念。</p>
+            <p class="text"><strong>城门结构：</strong>每座城门都是独立的防御单元。①闸楼：最外侧，控制吊桥；②箭楼：中间，有箭窗，用于射击；③城楼：最内侧，指挥所；④瓮城：箭楼与城楼之间的封闭空间，可围歼入城敌军；⑤马道：斜坡，供兵马上下城墙。城门设计体现"层层设防"的思想。</p>
+            <p class="text"><strong>建筑材料：</strong>城墙建筑材料讲究。①墙芯：黄土分层夯筑，每层厚8-12厘米；②包砖：外层包砌青砖，每块重15公斤；③粘合剂：用石灰、糯米汁、桐油混合；④排水：城墙有排水系统，防止雨水侵蚀。材料经久耐用，650年不倒。</p>
+            <p class="text"><strong>防御设施：</strong>城墙有完善的防御设施。①垛口：高1.8米，宽0.5米，用于隐蔽射击；②瞭望口：垛口下方的小孔，用于观察；③射孔：敌楼上的射击孔；④马面：城墙外凸部分，可从侧面射击；⑤角台：城墙转角处加厚，增强防御。设施体现古代军事智慧。</p>
+            <p class="text"><strong>护城河：</strong>护城河是城墙的重要屏障。①宽度：20-30米；②深度：6-8米；③水源：引自浐河、泸河；④功能：防御、排水、消防、景观；⑤桥梁：每座城门有吊桥。护城河与城墙构成"城河一体"的防御体系。</p>
+            <p class="text"><strong>排水系统：</strong>城墙有科学的排水系统。①城墙顶：有排水槽，将雨水排到城外；②城墙内：有排水孔，防止墙体积水；③护城河：收纳雨水，保持水位。排水系统保护城墙不受雨水侵蚀。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 城墙文化 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>城墙文化 · 古都记忆</h3>
+            <p class="text"><strong>城墙民俗：</strong>西安城墙是民俗活动的舞台。①灯会：春节至元宵节，举办大型灯会；②马拉松：每年举办城墙国际马拉松；③风筝节：春季举办风筝节；④重阳节：重阳节登高活动；⑤入城仪式：国宾入城仪式，仿唐代礼仪。民俗活动传承古城文化。</p>
+            <p class="text"><strong>城墙文学：</strong>许多文人墨客为城墙赋诗作文。①唐诗：李白、杜甫、白居易等都有描写长安城的诗篇；②现代：贾平凹、陈忠实等作家以城墙为题材创作；③碑刻：城楼上有历代碑刻；④对联：城门上有对联，如"西望瑶池降王母，东来紫气满函关"。城墙是文学创作的源泉。</p>
+            <p class="text"><strong>城墙音乐：</strong>城墙是音乐表演的场所。①《梦长安》：大型实景演出，再现盛唐气象；②城墙音乐会：夏季举办露天音乐会；③民谣演出：顺城巷酒吧有民谣演出；④戏曲表演：城楼上有关中秦腔表演。音乐让城墙"活"起来。</p>
+            <p class="text"><strong>城墙美食：</strong>城墙周边是美食聚集地。①回民街：西安小吃集中地；②顺城巷：咖啡馆、酒吧、餐厅；③夜市：南门夜市热闹非凡；④老字号：有同盛祥、德发长等老字号。美食是城墙文化的重要组成部分。</p>
+            <p class="text"><strong>城墙生活：</strong>城墙是市民生活的一部分。①晨练：市民在城墙上跑步、打拳；②散步：护城河公园是散步好去处；③休闲：顺城巷是休闲娱乐场所；④社交：城墙是朋友聚会的地方。城墙融入现代生活。</p>
+            <p class="text"><strong>城墙象征：</strong>西安城墙是西安的象征。①地标：是西安最著名的地标；②名片：是西安旅游的名片；③记忆：是西安人的集体记忆；④精神：体现西安厚重、包容的城市精神。城墙是西安的灵魂。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">西安</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 国宝文物 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>国宝文物 · 世界瑰宝</h3>
+            <p class="text"><strong>历史价值：</strong>西安城墙是中国城市发展史的见证。①城市史：体现中国古代城市规划思想；②建筑史：是古代军事防御建筑的典范；③军事史：反映古代军事防御思想；④社会史：记录西安城市发展变迁。城墙是历史的"活化石"。</p>
+            <p class="text"><strong>科学价值：</strong>西安城墙蕴含丰富的科学技术。①建筑科学：夯土技术、包砖技术先进；②防御科学：多层次防御体系科学合理；③材料科学：粘合剂配方科学耐用；④排水科学：排水系统完善有效。城墙是古代科技的结晶。</p>
+            <p class="text"><strong>艺术价值：</strong>西安城墙是建筑艺术的瑰宝。①建筑艺术：城楼、箭楼建筑精美；②雕刻艺术：砖雕、石雕工艺精湛；③书法艺术：城门匾额书法优美；④景观艺术：城墙与城市景观和谐统一。城墙是艺术的宝库。</p>
+            <p class="text"><strong>文化价值：</strong>西安城墙是中华文化的重要载体。①古都文化：体现十三朝古都的厚重；②军事文化：反映古代军事思想；③民俗文化：传承民间习俗；④城市文化：塑造西安城市精神。城墙是文化的象征。</p>
+            <p class="text"><strong>旅游价值：</strong>西安城墙是陕西最重要的旅游景点。①景观价值：城墙、城楼、护城河构成壮丽景观；②体验价值：骑行、步行、演出等体验丰富；③经济价值：年接待游客数百万人次；④品牌价值："西安城墙"成为陕西旅游的金字招牌。城墙是旅游的核心资源。</p>
+            <p class="text"><strong>保护与传承：</strong>西安城墙得到科学保护。①法律保护：1961年列为全国重点文物保护单位；②规划保护：编制保护规划，划定保护区；③工程保护：多次维修，保持原貌；④活态保护：开展文化活动，让城墙"活"起来；⑤合理利用：发展旅游，让文物服务社会；⑥社区参与：市民参与保护，形成保护合力。西安城墙的保护经验，为大型土遗址保护提供了成功范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 西安古城墙千年城垣，明城遗韵诉说古都传奇 | 五重维度·五种灵韵爱心，点赞评论共话国宝文物</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（西安古城墙独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('xian_city_wall_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('xian_city_wall_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('xian_city_wall_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('xian_city_wall_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对古城墙的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的古城墙感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "城墙访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

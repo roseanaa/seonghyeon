@@ -1,0 +1,440 @@
+/* 首页样式 */
+/* 版心 */
+.wrapper {
+    margin: 0 auto;
+    width: 1200px;
+}
+.bg {
+    background-image: url(../image/首页背景图.jpg);
+}
+
+body {
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)),
+        url(../image/首页背景图.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.header {
+    height: 80px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.header .wrapper {
+    padding-top: 29px;
+    display: flex;
+}
+.logo a {
+    display: block;
+    width: 195px;
+    height: 41px;
+    font-family: "LiSu";
+    font-size: 29px;
+}
+.nav {
+    margin-left: 72px;
+}
+.nav ul{
+    display: flex;
+    flex-wrap: nowrap;
+}
+.nav li {
+    margin-right: 48px;
+    white-space: nowrap;
+}
+.nav li a {
+    display: block;
+    padding: 6px 8px;
+    line-height: 25px;
+    font-size: 19px;
+}
+/* 并集选择器active类选择器 表示默认选中的a*/
+/* .nav li .active, */
+.nav li a:hover {
+    border-bottom: 2px solid #00a4ff;
+}
+/* 轮播图区域 */
+.carousel {
+    margin-top: 30px;
+    margin-bottom: 60px;
+    padding: 20px 0;
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* 图片容器 */
+.carousel-slides {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease;
+}
+
+.carousel-slides img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+/* 左右按钮 */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    z-index: 10;
+}
+
+.carousel-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.prev {
+    left: 20px;
+}
+
+.next {
+    right: 20px;
+}
+
+/* 小圆点指示器 */
+.carousel-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dot.active {
+    background-color: #00a4ff;
+}
+
+.dot:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* 底部大板块 - 放在页面最底部 */
+.bottom-section {
+    width: 100%;                /* 占满整个页面宽度 */
+    margin-top: 80px;
+    padding: 50px 0;
+    background-color: transparent;  /* 完全透明，露出背景图 */
+    clear: both;
+}
+
+/* 里面的内容容器 - 用 wrapper 控制宽度和居中 */
+.bottom-section .wrapper {
+    margin: 0 auto;
+    width: 1200px;
+}
+
+/* 四个板块容器 - 从左边开始排列 */
+.block-list {
+    display: flex;
+    justify-content: flex-start;  /* 从左边开始，关键！ */
+    gap: 30px;                    /* 板块间距 */
+    margin: 0;
+    padding: 0;
+}
+
+/* 每个板块 */
+.block-item {
+    width: 270px;                 /* 固定宽度 */
+    background-color: rgba(255, 255, 255, 0.9);  /* 白色半透明 */
+    border-radius: 32px;
+    overflow: hidden;
+    transition: transform 0.3s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+}
+
+.block-item:hover {
+    transform: translateY(-8px);
+}
+
+.block-item a {
+    text-decoration: none;
+    display: block;
+}
+
+/* 图片区域 */
+.block-img {
+    width: 270px;
+    height: 180px;
+    overflow: hidden;
+}
+
+.block-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 文字区域 */
+.block-text {
+    padding: 16px 12px 20px;
+    text-align: center;
+}
+
+.block-text h4 {
+    margin-bottom: 8px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+.block-text p {
+    font-size: 14px;
+    color: #666;
+}
+/* 底部板块列表样式 - 补充 */
+.block-text ul {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0 0;
+}
+
+.block-text li {
+    margin-bottom: 8px;
+}
+
+.block-text li a {
+    font-size: 13px;
+    color: #555;
+    text-decoration: none;
+    transition: color 0.2s;
+    display: block;
+}
+
+.block-text li a:hover {
+    color: #00a4ff;
+}
+
+/* 板块标题链接样式 */
+.block-text h4 a {
+    color: #333;
+    text-decoration: none;
+}
+
+.block-text h4 a:hover {
+    color: #00a4ff;
+}
+/* ========== 轮播图文字叠加样式 ========== */
+
+/* 每个轮播项容器 - 相对定位锚点 */
+.carousel-slide-item {
+    position: relative;
+    flex: 0 0 100%;
+    min-width: 100%;
+    height: 100%;
+}
+
+.carousel-slide-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 文字叠加层 - 显示在图片底部 */
+.slide-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: transparent;  /* ← 改成全透明 */
+    color: white;
+    padding: 30px 24px 20px 24px;
+    transition: transform 0.3s ease-out;
+    border-radius: 0 0 20px 20px;
+}
+
+/* 标题样式 */
+.slide-caption h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* 描述文字样式 */
+.slide-caption p {
+    font-size: 14px;
+    opacity: 0.9;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* 🔥 核心效果：鼠标悬停时，文字向上移动10像素 */
+.carousel-slide-item:hover .slide-caption {
+    transform: translateY(-10px);
+    background: transparent;  /* ← 悬停时也是全透明 */
+}
+
+/* 搜索结果卡片样式 - 与博客卡片保持一致 */
+#searchResultsContent .post-card {
+    background: #ffffffea;
+    border-radius: 44px;
+    margin-bottom: 30px;
+    overflow: hidden;
+    box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #f1e3d5;
+    cursor: pointer;
+}
+
+#searchResultsContent .post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 45px -12px rgba(0, 0, 0, 0.15);
+    border-color: #e8d1b8;
+}
+
+#searchResultsContent .post-header {
+    padding: 24px 32px 8px;
+}
+
+#searchResultsContent .post-title {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #2c2418;
+    letter-spacing: -0.2px;
+    margin-bottom: 5px;
+}
+
+#searchResultsContent .post-meta {
+    display: flex;
+    gap: 20px;
+    color: #b87a48;
+    font-size: 0.85rem;
+    margin: 8px 0 10px;
+    flex-wrap: wrap;
+}
+
+#searchResultsContent .post-content {
+    padding: 0 32px 20px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #3b2e20;
+}
+
+#searchResultsContent .post-tags {
+    padding: 0 32px 20px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+#searchResultsContent .tag {
+    background: #f2e5d9;
+    padding: 5px 16px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #aa6f3c;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#searchResultsContent .tag:hover {
+    background: #e5d0bc;
+    transform: translateY(-2px);
+}
+
+#searchResultsContent .interaction-bar {
+    padding: 16px 32px 20px;
+    border-top: 2px solid #f7eadb;
+    display: flex;
+    gap: 30px;
+    background: #fffef7;
+    flex-wrap: wrap;
+}
+
+#searchResultsContent .action-btn {
+    background: none;
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 520;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #7c5a3a;
+    cursor: pointer;
+    padding: 8px 20px;
+    border-radius: 44px;
+    transition: 0.2s;
+}
+
+#searchResultsContent .action-btn:hover {
+    background: #ecdccd;
+    color: #bc6f2c;
+}
+
+/* 省份标签样式 */
+.province-tag {
+    padding: 10px 24px;
+    background: rgba(255, 250, 240, 0.9);
+    border: 2px solid #e0c7a8;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #8b5a2b;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.province-tag:hover {
+    background: #e6d9c4;
+    border-color: #c87b3a;
+    color: #7a481f;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    #searchResultsContent .post-header {
+        padding: 20px 20px 8px;
+    }
+    
+    #searchResultsContent .post-title {
+        font-size: 1.4rem;
+    }
+    
+    #searchResultsContent .post-content {
+        padding: 0 20px 20px;
+        font-size: 1rem;
+    }
+    
+    .province-tag {
+        padding: 8px 18px;
+        font-size: 0.85rem;
+    }
+}

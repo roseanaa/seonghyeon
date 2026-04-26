@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>海口骑楼老街 · 四维解读 | 南洋风情 · 百年骑楼</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/海口骑楼老街.jpg" title="海口骑楼老街" alt="海口骑楼老街街景">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 南洋往事</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 建筑特色</div>
+        <div class="dim-tab" data-tab="culture">🎪 琼岛风情</div>
+        <div class="dim-tab" data-tab="value">🌟 城市记忆</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>海口骑楼老街 · 南洋风情画卷</h3>
+            <p class="text"><strong>传奇：</strong>海口骑楼老街位于海南省海口市龙华区，主要分布于得胜沙路、中山路、博爱路、新华路、解放路、长堤路等老街区域，是海口市最具特色的街道景观。骑楼建筑群形成于19世纪末20世纪初，由南洋华侨返乡投资兴建，融合了欧亚建筑风格与岭南建筑特色，是中国现今保留规模最大、保存基本完好的骑楼建筑群，被誉为"中国历史文化名街"。2009年被评为首批"中国历史文化名街"，是海口城市历史文化的"活化石"。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>中山路骑楼街：</strong>老街核心区，全长约400米，保存最完整的骑楼街区。街道两侧是二至四层的骑楼建筑，底层为柱廊式人行道，宽约3-5米，形成连续的骑楼走廊。建筑立面装饰丰富，有精美的浮雕、窗花、女儿墙、山花等。夜晚灯光璀璨，是海口著名的"网红打卡地"。</li>
+                <li><strong>骑楼建筑形式：</strong>骑楼是典型的"下店上宅"商住两用建筑。底层为商铺，设柱廊，为行人遮阳避雨；二层以上为住宅或仓库。建筑多为砖木或钢筋混凝土结构，外墙用灰塑、彩绘、瓷砖等装饰。骑楼走廊宽畅，形成"晴天不晒，雨天不淋"的步行空间，适应海南炎热多雨的气候。</li>
+                <li><strong>建筑装饰艺术：</strong>骑楼建筑装饰中西合璧。①窗饰：有拱券窗、方形窗、百叶窗等，窗楣装饰丰富；②柱式：有罗马柱、爱奥尼柱、科林斯柱等西式柱式，也有中式柱础；③浮雕：门楣、窗楣、山花上有花卉、鸟兽、吉祥图案等灰塑浮雕；④女儿墙：屋顶有巴洛克式、洛可可式、新古典主义风格的女儿墙，造型各异。</li>
+                <li><strong>得胜沙路：</strong>原名"外沙路"，1849年改为现名。是海口最早的商业街之一，曾是海口最繁华的商业中心。沿街有"五层楼"（原海口大厦）、"大亚旅店"、"南强药房"等历史建筑。得胜沙路见证了海口开埠以来的商业繁荣。</li>
+                <li><strong>博爱路：</strong>老街中的"市井生活博物馆"。街道狭窄，店铺林立，有百年老店、传统手工艺作坊、特色小吃店等。博爱路以经营日用品、工艺品、婚庆用品为主，是海口市民的"淘宝街"。街上有天后宫、关帝庙等历史建筑。</li>
+                <li><strong>海口钟楼：</strong>位于长堤路，是海口的标志性建筑。原钟楼建于1929年，为纪念孙中山先生而建。现钟楼为1987年重建，高28米，六层，方形塔式建筑，顶部有四面大钟。钟楼与骑楼老街隔海相望，构成"钟楼-骑楼"的城市景观轴线。</li>
+                <li><strong>骑楼文化展示馆：</strong>位于中山路，利用老建筑改造而成。展示馆通过实物、图片、模型、多媒体等形式，展示骑楼建筑的历史、文化、艺术价值。馆内有骑楼建筑模型、老字号商铺复原、华侨下南洋历史等展览。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，最佳游览时间为10月至次年4月，气候凉爽。建议下午至傍晚游览，可避开烈日，欣赏骑楼夜景。骑楼老街全天开放，商铺一般营业至22:00。每年春节期间有"骑楼庙会"，热闹非凡。</li>
+                <li><strong>游览顺序：</strong>海口钟楼（起点）→长堤路骑楼→中山路骑楼街（核心区）→博爱路→得胜沙路→解放路→新华路→骑楼文化展示馆→天后宫→水巷口（美食街）。建议安排半天时间。</li>
+                <li><strong>深度体验：</strong>清晨在骑楼老街散步，感受老街的宁静；上午参观骑楼文化展示馆，了解骑楼历史；中午在水巷口品尝海南粉、清补凉、老爸茶等特色美食；下午在博爱路淘宝，购买海南特产、工艺品；傍晚在中山路拍摄骑楼夜景；晚上观看《骑楼往事》实景演出；住骑楼民宿，体验老海口生活。</li>
+                <li><strong>摄影建议：</strong>骑楼街景全景，建筑立面装饰特写，骑楼走廊光影，街拍人文，骑楼夜景与灯光，钟楼与骑楼同框，市井生活场景。建议使用广角镜头拍摄街景，长焦镜头捕捉建筑细节。清晨和傍晚光线柔和，适合拍摄。雨天拍摄骑楼走廊别有韵味。</li>
+            </ul>
+            <p><strong>交通信息：</strong>骑楼老街位于海口市龙华区。公交3路、5路、6路、7路、14路、17路、18路、20路、25路、26路、30路、37路、39路、43路、60路等到"钟楼"或"水巷口"站。从海口美兰国际机场乘机场巴士1线到"钟楼"站，车程40分钟。从海口火车站乘37路公交直达。自驾可停放在骑楼地下停车场。距海口东站8公里，车程20分钟。周边有万绿园、海口人民公园、琼台书院等景点。建议与海口火山口、假日海滩、冯小刚电影公社组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">骑楼</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 骑楼印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 南洋往事 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>南洋往事 · 华侨之乡</h3>
+            <p class="text"><strong>开埠背景：</strong>海口古称"海口浦"，宋代已成商港。1858年，《天津条约》将海口辟为通商口岸，称"琼州口"。开埠后，英、法、德、美等国在海口设领事馆、建教堂、开商行。随着对外贸易发展，海口逐渐成为海南岛的商业中心。骑楼建筑就是这一时期开始出现的。</p>
+            <p class="text"><strong>华侨投资：</strong>19世纪末20世纪初，海南掀起"下南洋"高潮。海南华侨（主要去新加坡、马来西亚、泰国、越南等地）在海外经商致富后，返乡投资建设。他们将南洋的建筑风格带回海口，结合本地气候特点，建起了骑楼街。华侨投资不仅带来了建筑风格，也带来了新的经营理念，促进了海口商业的繁荣。</p>
+            <p class="text"><strong>建设高潮：</strong>1920-1930年代是骑楼建设的高峰期。这一时期，海口城市建设迅速发展，得胜沙路、中山路、博爱路、新华路等主要街道都建起了骑楼。骑楼多为二至四层，采用钢筋混凝土结构，装饰华丽，体现了当时海口作为"小香港"的繁荣景象。据统计，海口现存骑楼建筑约600栋，大部分建于这一时期。</p>
+            <p class="text"><strong>商业繁荣：</strong>骑楼老街曾是海口最繁华的商业区。得胜沙路有"十三行"，经营进出口贸易；中山路有银行、钱庄、百货公司；博爱路有布匹、药材、日用品商店；新华路有书店、文具店、照相馆。老字号有"大亚旅店""琼南酒店""南强药房""大信行"等。骑楼老街是海口的"商业心脏"。</p>
+            <p class="text"><strong>历史事件：</strong>骑楼老街见证了海口近代历史。1926年，中共琼崖第一次代表大会在得胜沙路"大亚旅店"召开。抗日战争时期，骑楼老街遭受日军轰炸，部分建筑被毁。解放海南岛时，解放军从长堤路登陆。改革开放后，骑楼老街逐渐衰落，直到2000年后开始保护修复。</p>
+            <p class="text"><strong>保护复兴：</strong>2000年后，海口启动骑楼老街保护工程。2009年，被评为首批"中国历史文化名街"。2010年，完成一期修复工程。2013年，完成二期修复工程。现骑楼老街已恢复历史风貌，成为海口文化旅游名片。修复工程遵循"修旧如旧"原则，保留了骑楼的历史信息和文化价值。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑特色 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑特色 · 中西合璧</h3>
+            <p class="text"><strong>总体布局：</strong>骑楼老街以"五纵三横"格局分布。五纵：得胜沙路、中山路、博爱路、新华路、解放路；三横：长堤路、水巷口、新民路。街道宽度8-12米，骑楼走廊宽2-4米。建筑沿街连续排列，形成连续的柱廊空间。这种布局既适应商业需求，又符合海南气候特点。</p>
+            <p class="text"><strong>建筑结构：</strong>骑楼建筑多为二至四层。①底层：柱廊式，柱距3-5米，柱径0.4-0.6米，多用钢筋混凝土或砖石；②楼层：木结构或钢筋混凝土结构，楼板用木板或混凝土；③屋顶：坡屋顶，铺机平瓦或琉璃瓦，有阁楼；④楼梯：设在建筑内部或侧面，多用木楼梯。建筑进深较大，有的达20-30米。</p>
+            <p class="text"><strong>建筑风格：</strong>海口骑楼是多种建筑风格的融合。①南洋风格：受新加坡、马来西亚骑楼影响，有连续柱廊、百叶窗、彩色玻璃；②欧式风格：有罗马拱券、希腊柱式、巴洛克装饰、哥特式尖券；③中式风格：有岭南建筑的砖雕、木雕、灰塑，有琼北民居的坡屋顶、封火山墙；④装饰艺术风格：1930年代流行的几何图案、流线型装饰。多种风格和谐统一，形成独特的"海口骑楼风格"。</p>
+            <p class="text"><strong>装饰艺术：</strong>骑楼装饰丰富多彩。①灰塑：用石灰、糯米、红糖等材料塑造花卉、鸟兽、吉祥图案，施以彩绘；②彩绘：在墙面、梁枋上绘制图案，色彩鲜艳；③瓷砖：用彩色瓷砖拼贴图案，多用于女儿墙、窗台；④铁艺：用铁件制作栏杆、窗花、招牌；⑤木雕：门窗、栏杆、檐板上的木雕，工艺精湛。装饰题材有中西合璧的特点。</p>
+            <p class="text"><strong>功能设计：</strong>骑楼是"下店上宅"的商住建筑。①商业功能：底层为商铺，开间3-5米，进深8-12米，有橱窗、柜台、货架；②居住功能：二层以上为住宅，有卧室、客厅、厨房、卫生间；③仓储功能：顶层阁楼或后部用作仓库；④交通功能：骑楼走廊是人行道，宽畅遮阳。这种设计适应海南炎热多雨的气候和商业需求。</p>
+            <p class="text"><strong>建筑材料：</strong>骑楼建筑采用多种材料。①结构材料：钢筋混凝土、青砖、木材；②装饰材料：水刷石、水磨石、瓷砖、彩色玻璃、铁件；③屋顶材料：机平瓦、琉璃瓦、镀锌铁皮；④地面材料：花岗岩、水泥花砖、红砖。材料选择体现时代特征和地方特色。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 琼岛风情 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>琼岛风情 · 市井生活</h3>
+            <p class="text"><strong>商业文化：</strong>骑楼老街是海口商业文化的缩影。①老字号：有"大亚旅店""琼南酒店""南强药房""大信行"等百年老店；②行业聚集：得胜沙路以进出口贸易为主，中山路以金融、百货为主，博爱路以日用品、工艺品为主，新华路以文化用品为主；③经营方式：前店后厂、批发零售、代购代销等；④商业信誉：讲究"诚信经营，童叟无欺"。骑楼老街是海口的"商业基因库"。</p>
+            <p class="text"><strong>饮食文化：</strong>骑楼老街是海南美食的聚集地。①老爸茶：海南特色的茶文化，在骑楼茶楼喝"老爸茶"是海口市民的日常；②海南粉：有海南粉、抱罗粉、后安粉等，骑楼有多家老字号粉店；③清补凉：海南特色甜品，夏季消暑佳品；④海鲜：水巷口是海鲜美食街，有各种海鲜大排档；⑤小吃：有鸡屎藤、椰子饭、煎堆等特色小吃。骑楼老街是"吃货的天堂"。</p>
+            <p class="text"><strong>民俗文化：</strong>骑楼老街保存丰富的民俗文化。①节庆：春节有舞龙舞狮、琼剧表演，元宵有花灯巡游，端午有赛龙舟；②庙会：天后宫、关帝庙有庙会活动，热闹非凡；③婚俗：骑楼老街是传统婚庆用品采购地，有完整的婚庆服务；④手工艺：有椰雕、黎锦、藤编等传统手工艺店铺。骑楼老街是海口民俗的"活态博物馆"。</p>
+            <p class="text"><strong>艺术文化：</strong>骑楼老街是艺术创作的沃土。①琼剧：是海南地方戏曲，骑楼有琼剧演出场所；②八音：海南民间音乐，常在骑楼表演；③美术：骑楼建筑是绘画、摄影的重要题材；④文学：许多作家以骑楼为背景创作作品。骑楼老街是海南文化的"创作源泉"。</p>
+            <p class="text"><strong>市井生活：</strong>骑楼老街是海口市民生活的缩影。清晨，老人在骑楼走廊打太极拳、喝老爸茶；上午，主妇在博爱路采购日用品；中午，上班族在水巷口吃午餐；下午，游客在中山路拍照购物；傍晚，市民在长堤路散步看夕阳；夜晚，年轻人在骑楼酒吧聚会。骑楼老街是海口的"城市客厅"。</p>
+            <p class="text"><strong>现代活化：</strong>骑楼老街在保护中活化利用。①文化展示：设立骑楼文化展示馆、非遗展示中心；②创意产业：引入艺术工作室、设计公司、文创店铺；③休闲旅游：发展民宿、咖啡馆、书吧、酒吧；④节庆活动：举办骑楼庙会、艺术节、音乐节。骑楼老街正从"历史街区"转变为"生活街区"。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">风情</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 城市记忆 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>城市记忆 · 历史街区</h3>
+            <p class="text"><strong>历史价值：</strong>海口骑楼老街是海口百年历史的见证。①城市史：记录海口从渔村到通商口岸到现代都市的发展历程；②建筑史：是中国骑楼建筑的典型代表，研究近代建筑的重要实物；③商业史：反映海南近代商业发展，特别是华侨经济的影响；④社会史：展现海口市民的生活变迁。骑楼老街是海口的"城市记忆库"。</p>
+            <p class="text"><strong>建筑价值：</strong>骑楼老街是中国近代建筑的瑰宝。①类型价值：是中国现存规模最大、保存最完好的骑楼建筑群；②艺术价值：建筑装饰中西合璧，工艺精湛，是装饰艺术的宝库；③技术价值：采用钢筋混凝土等现代建筑材料和技术，反映当时建筑水平；④科学价值：适应热带气候的建筑设计，有重要参考价值。骑楼老街是"露天的建筑博物馆"。</p>
+            <p class="text"><strong>文化价值：</strong>骑楼老街是海南文化的集中体现。①华侨文化：是海南华侨爱国爱乡的实物见证；②商业文化：体现海南商人的经营智慧和诚信精神；③民俗文化：保存丰富的海南民俗活动；④饮食文化：是海南美食的集聚地。骑楼老街是海南文化的"基因密码"。</p>
+            <p class="text"><strong>社会价值：</strong>骑楼老街在海口社会生活中具有重要地位。①城市名片：是海口最具代表性的城市景观；②情感纽带：承载了几代海口人的集体记忆；③社区功能：仍然是市民生活、购物、休闲的重要场所；④教育功能：是爱国主义教育、乡土教育的重要基地。骑楼老街是海口的"精神家园"。</p>
+            <p class="text"><strong>经济价值：</strong>骑楼老街是海口重要的经济资源。①旅游价值：是海口核心旅游区，年接待游客数百万人次；②商业价值：商铺租金是重要收入来源；③文创价值：发展文创产业，创造就业岗位；④品牌价值：提升海口城市形象和文化软实力。骑楼老街是海口的"经济引擎"。</p>
+            <p class="text"><strong>保护与利用：</strong>骑楼老街得到科学保护。①法律保护：2009年评为"中国历史文化名街"，2013年列为全国重点文物保护单位；②规划保护：编制《海口骑楼老街保护规划》，划定保护区、建设控制地带；③工程保护：2009-2013年完成两期修复工程，恢复历史风貌；④活化利用：发展文化旅游、文创产业，让老街"活"起来；⑤社区参与：鼓励原住民参与保护，保持街区活力；⑥管理机制：成立骑楼老街管理机构，统筹保护利用。骑楼老街的保护经验，为历史街区保护提供了成功范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 海口骑楼老街南洋风情，百年建筑诉说琼岛往事 | 五重维度·五种灵韵爱心，点赞评论共话椰城记忆</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（海口骑楼老街独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('haikou_qilou_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('haikou_qilou_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('haikou_qilou_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('haikou_qilou_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对骑楼老街的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的骑楼老街感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "骑楼访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

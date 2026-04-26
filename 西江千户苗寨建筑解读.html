@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>西江千户苗寨 · 四维解读 | 中国第一苗寨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/西江千户苗寨.jpg" title="西江千户苗寨" alt="西江千户苗寨全景">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 苗寨千年</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 吊脚楼群</div>
+        <div class="dim-tab" data-tab="culture">🎪 苗族文化</div>
+        <div class="dim-tab" data-tab="value">🌟 活态遗产</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>西江千户苗寨 · 中国第一苗寨</h3>
+            <p class="text"><strong>传奇：</strong>西江千户苗寨位于贵州省黔东南苗族侗族自治州雷山县东北部的雷公山麓，距离雷山县城36公里，距离凯里市35公里，是中国乃至全世界最大的苗族聚居村寨。苗寨由十余个依山而建的自然村寨相连成片，现有1432户，6000余人，其中苗族占99.5%，被誉为"苗族文化博物馆""苗族历史文化教科书"。西江是苗语"鸡讲"的音译，意为"西氏苗族居住的寨子"。苗寨四面环山，重连叠嶂，白水河穿寨而过，将苗寨一分为二。千百年来，苗族同胞在这里日出而作，日落而息，开辟大片的梯田，形成了农耕文化与田园风光。2005年，西江千户苗寨被列入"中国历史文化名镇名村"；2013年，被列为"全国重点文物保护单位"。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>观景台全景：</strong>位于苗寨对面的东引村山坡上，是观赏苗寨全景的最佳位置。观景台高约100米，可俯瞰整个苗寨：层层叠叠的吊脚楼从山脚一直蔓延到山顶，夜晚万家灯火亮起，如繁星点点，蔚为壮观。建议清晨观晨雾缭绕的苗寨，傍晚观日落晚霞，夜晚观璀璨灯火。观景台是摄影爱好者的天堂。</li>
+                <li><strong>风雨桥：</strong>苗寨有7座风雨桥，横跨白水河，连接两岸村寨。风雨桥为木质结构，上有桥廊，可避雨遮阳，是苗族人民休憩、社交的场所。最著名的是1号风雨桥（古栈道桥）和6号风雨桥（游方桥）。桥身雕刻有苗族图腾图案，桥内有美人靠，常有苗族老人、绣娘在此做手工、聊天。风雨桥体现了苗族建筑艺术的精华。</li>
+                <li><strong>苗族博物馆：</strong>位于苗寨中心，是中国第一座苗族博物馆。博物馆为吊脚楼建筑，面积3000平方米，设有"苗族历史""苗族服饰""苗族银饰""苗族节日""苗族信仰""苗族建筑"等12个展馆，收藏文物1000余件。通过实物、图片、影像等形式，全面展示苗族的历史文化。博物馆是了解苗族文化的窗口。</li>
+                <li><strong>鼓藏头家：</strong>鼓藏头是苗族世袭的宗教领袖，掌管苗族最重要的祭祀活动——鼓藏节。鼓藏头家位于苗寨最高处，是苗族的精神中心。鼓藏头家保存有苗族神圣的铜鼓、木鼓。游客可参观鼓藏头家，了解苗族信仰。现任鼓藏头是唐守成，是第13代鼓藏头。</li>
+                <li><strong>嘎歌古巷：</strong>苗寨最古老的街巷，已有千年历史。巷道宽约2米，用青石板铺就，两侧是古老的吊脚楼。古巷内有"苗族古歌堂""苗族刺绣坊""苗族银饰坊""苗族酿酒坊"等传统作坊。苗族古歌是国家级非物质文化遗产，传承苗族的历史、神话、习俗。在古歌堂可听苗族老人唱古歌。</li>
+                <li><strong>田园观光区：</strong>位于苗寨后山，是苗族农耕文化的展示区。有梯田、菜园、茶园、果园等。春季油菜花开，夏季禾苗青青，秋季稻谷金黄，冬季云雾缭绕。游客可体验插秧、收割、打谷等农事活动。田园观光区展现了"苗寨—梯田—森林"的生态格局。</li>
+                <li><strong>《美丽西江》大型实景演出：</strong>每晚20:00在表演场举行，时长70分钟。演出以苗族历史文化为背景，分为"枫木图腾""迁徙""祭祀""婚俗""庆丰收"五个篇章，有300多名苗族群众参与演出。演出运用声、光、电等现代技术，再现苗族的历史、生活、信仰。演出气势恢宏，是了解苗族文化的视听盛宴。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，最佳游览时间为3-11月。春季（3-5月）油菜花、桃花、李花盛开；夏季（6-8月）凉爽，是避暑胜地；秋季（9-11月）稻谷金黄，气候宜人；冬季（12-2月）可体验苗族年节。苗族节日：苗年（农历十月）、吃新节（农历六月）、鼓藏节（13年一次）。建议安排1-2天。</li>
+                <li><strong>游览顺序：</strong>北门/西门入口→乘坐观光车到小北门→游方街→嘎歌古巷→苗族博物馆→鼓藏头家→田园观光区→风雨桥→观景台（傍晚观日落，夜晚观夜景）。建议上午游览古巷、博物馆，下午游览田园、风雨桥，傍晚上观景台。</li>
+                <li><strong>深度体验：</strong>清晨在观景台看苗寨晨雾与日出；上午跟随苗族绣娘学习刺绣、蜡染；中午品尝长桌宴，喝苗族米酒；下午在风雨桥听苗族老人讲故事；傍晚在观景台拍摄日落与夜景；晚上观看《美丽西江》实景演出；住苗家吊脚楼民宿，体验苗族生活；参加苗族节日活动，感受苗族风情；学唱苗族飞歌，体验苗族音乐。</li>
+                <li><strong>摄影建议：</strong>观景台全景（晨雾、日落、夜景），吊脚楼建筑细节，风雨桥与倒影，苗族服饰特写，苗族银饰工艺，梯田农耕场景，实景演出瞬间，市井生活人文。建议使用广角镜头拍摄全景，长焦镜头捕捉建筑、人物细节。三脚架必备，用于拍摄夜景。偏振镜可增强蓝天白云对比。</li>
+            </ul>
+            <p><strong>交通信息：</strong>西江千户苗寨位于贵州省黔东南州雷山县西江镇。从凯里出发：①客运：凯里客车站乘班车到西江，车程1小时；②高铁：乘高铁到凯里南站，转乘旅游专线到西江，车程1.5小时。从贵阳出发：①高铁：贵阳北站乘高铁到凯里南站，转乘旅游专线；②自驾：经沪昆高速到凯里，转凯雷高速到西江出口。景区内有观光车。距贵阳200公里，车程3小时；距凯里35公里，车程1小时。建议与镇远古镇、肇兴侗寨、荔波大小七孔组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">苗寨</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 苗寨印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 苗寨千年 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>苗寨千年 · 迁徙史诗</h3>
+            <p class="text"><strong>苗族起源：</strong>苗族是中国最古老的民族之一，与黄帝、炎帝同时期的蚩尤是苗族的祖先。据《苗族古歌》记载，苗族起源于黄河流域，后迁至长江中下游，形成"三苗"部落。商周时期，"三苗"被华夏族打败，开始向西南迁徙。秦汉时期，苗族迁入武陵山区。唐宋时期，部分苗族迁入贵州雷公山区。西江苗族是苗族迁徙史上的重要一支。</p>
+            <p class="text"><strong>建寨历史：</strong>西江苗寨已有2000多年历史。据《苗族古歌》和鼓藏头家谱记载，西江苗族是蚩尤的直系后裔。西汉时期，苗族先民迁入雷公山区。唐代，西江形成村寨。宋代，西江成为黔东南苗族聚居中心。明清时期，西江苗寨规模扩大，形成"千户"规模。清雍正七年（1729年），清政府在苗寨设"鸡讲司"，管理苗族事务。民国时期，西江是雷山县治所。</p>
+            <p class="text"><strong>鼓藏节传承：</strong>鼓藏节是苗族最隆重的祭祀节日，13年举办一次。鼓藏节源于苗族对祖先蚩尤的祭祀。节日持续13天，有醒鼓、接鼓、跳鼓、藏鼓等仪式。鼓藏头是鼓藏节的主祭者，世袭传承。西江鼓藏头家谱记载，至今已传13代。鼓藏节是苗族历史文化的活态传承。</p>
+            <p class="text"><strong>现代发展：</strong>新中国成立后，西江苗寨得到保护和发展。1958年，成立西江人民公社。1984年，建立西江镇。2005年，被列为"中国历史文化名镇名村"。2008年，贵州旅游发展大会在西江召开，苗寨旅游快速发展。2013年，被列为全国重点文物保护单位。如今，西江是贵州最重要的旅游目的地之一。</p>
+            <p class="text"><strong>苗族迁徙路线：</strong>苗族历史上经历五次大迁徙。①第一次：蚩尤战败，从黄河流域迁到长江中下游；②第二次：秦汉时期，从长江中下游迁到武陵山区；③第三次：唐宋时期，从武陵山区迁到贵州、云南；④第四次：明清时期，从贵州迁到东南亚；⑤第五次：近代，从东南亚迁到欧美。苗族是"世界性的迁徙民族"。</p>
+            <p class="text"><strong>西江苗族的支系：</strong>西江苗族属黔东方言苗族，是苗族中保存传统文化最完整的一支。西江苗族有12个"鼓社"（宗族），每个鼓社有共同的祖先、祭祀、节日。鼓社之间通婚，形成紧密的社会网络。西江苗族的文化是苗族文化的"活化石"。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 吊脚楼群 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>吊脚楼群 · 山地建筑</h3>
+            <p class="text"><strong>总体布局：</strong>西江苗寨依山傍水而建。①选址：背靠雷公山，面朝白水河，形成"前有照，后有靠"的风水格局；②布局：吊脚楼沿山坡层层叠起，形成"山有多高，楼有多高"的壮观景象；③分区：苗寨分为8个自然村寨，以白水河为界，东岸有羊排、东引、也通、也东4寨，西岸有平寨、也薅、也嗡、也响4寨；④道路：有主街、小巷、台阶相连。建筑与自然和谐统一。</p>
+            <p class="text"><strong>吊脚楼结构：</strong>吊脚楼是苗族传统民居。①基础：用木柱支撑，前部悬空，后部落地，适应山坡地形；②框架：穿斗式木结构，不用一钉一铆，用榫卯连接；③楼层：一般为三层，一层养牲畜，二层住人，三层储物；④屋顶：悬山顶，覆盖小青瓦或杉树皮。吊脚楼通风、防潮、防虫，适合山区气候。</p>
+            <p class="text"><strong>建筑装饰：</strong>吊脚楼装饰有苗族特色。①美人靠：二楼外廊设"美人靠"，供妇女刺绣、休息；②窗花：雕刻有龙、凤、花、鸟等图案；③门楣：悬挂牛角、枫木刻等辟邪物；④堂屋：设神龛，供奉祖先。装饰体现苗族信仰、审美。</p>
+            <p class="text"><strong>风雨桥建筑：</strong>风雨桥是苗族公共建筑。①结构：木结构，有桥墩、桥廊、桥亭；②功能：通行、避雨、休憩、社交；③装饰：雕刻苗族图腾，彩绘苗族故事；④数量：苗寨有7座风雨桥，每座桥都有故事。风雨桥是苗族建筑艺术的代表。</p>
+            <p class="text"><strong>鼓藏头家建筑：</strong>鼓藏头家是苗族神圣建筑。①位置：位于苗寨最高处，象征崇高地位；②布局：有三进院落，有正房、厢房、鼓房；③鼓房：供奉铜鼓、木鼓，是祭祀场所；④禁忌：女性、外人不得进入鼓房。鼓藏头家是苗族信仰的中心。</p>
+            <p class="text"><strong>建筑材料：</strong>苗寨建筑采用本地材料。①木材：用本地杉木，材质轻、耐腐蚀；②瓦：用本地黏土烧制的青瓦；③石料：用本地青石做地基、台阶；④竹：用竹编墙、做篱笆。材料体现生态、可持续。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 苗族文化 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>苗族文化 · 活态传承</h3>
+            <p class="text"><strong>苗族服饰：</strong>苗族服饰被称为"穿在身上的史诗"。①女盛装：由头饰、上衣、百褶裙、围腰、绑腿等组成，重达10-20公斤；②银饰：有银冠、银项圈、银手镯、银戒指等，一套完整的银饰重达10公斤；③刺绣：有平绣、挑花、辫绣、打籽绣等十几种技法；④图案：有蝴蝶、龙、鸟、花等，记录苗族历史、神话。苗族服饰是国家级非物质文化遗产。</p>
+            <p class="text"><strong>苗族银饰：</strong>苗族是"银饰之族"。①工艺：有錾刻、浮雕、镂空、焊接等；②题材：有蝴蝶妈妈、枫木图腾、迁徙路线等；③功能：装饰、辟邪、身份象征；④传承：银饰制作技艺代代相传。西江有"银匠村"，银匠数百人。苗族银饰制作技艺是国家级非物质文化遗产。</p>
+            <p class="text"><strong>苗族歌舞：</strong>苗族是"能歌善舞的民族"。①古歌：传承苗族历史、文化，是苗族"百科全书"；②飞歌：高亢嘹亮，在山间对唱；③芦笙舞：男子吹芦笙，女子跳舞，是苗族最重要的舞蹈；④铜鼓舞：祭祀、节庆时跳。苗族歌舞是苗族情感的宣泄。</p>
+            <p class="text"><strong>苗族节日：</strong>苗族节日丰富多彩。①苗年：苗族新年，农历十月，持续15天；②吃新节：庆祝新米丰收，农历六月；③芦笙节：吹芦笙、跳舞，农历正月；④鼓藏节：祭祀祖先，13年一次。节日是苗族文化的集中展示。</p>
+            <p class="text"><strong>苗族饮食：</strong>苗族饮食独具特色。①酸汤鱼：用酸汤煮鱼，酸辣开胃；②腊肉：用松枝熏制，香味浓郁；③糍粑：用糯米制成，软糯香甜；④米酒：用糯米酿造，香甜醇厚。长桌宴是苗族待客的最高礼仪。</p>
+            <p class="text"><strong>苗族信仰：</strong>苗族信仰万物有灵。①祖先崇拜：崇拜蚩尤、蝴蝶妈妈；②自然崇拜：崇拜枫木、太阳、月亮；③图腾崇拜：以蝴蝶、龙、鸟为图腾；④巫蛊文化：有巫术、蛊术传说。苗族信仰是苗族文化的核心。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">苗韵</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 活态遗产 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>活态遗产 · 文化瑰宝</h3>
+            <p class="text"><strong>历史价值：</strong>西江千户苗寨是苗族历史的活态见证。①迁徙史：记录苗族两千年的迁徙历程；②建筑史：保存完整的苗族吊脚楼建筑群；③社会史：保留苗族传统社会组织（鼓社制）；④文化史：传承苗族服饰、银饰、歌舞、节日等文化。苗寨是苗族历史的"活化石"。</p>
+            <p class="text"><strong>建筑价值：</strong>西江吊脚楼是山地建筑的典范。①生态价值：依山就势，不破坏自然；②技术价值：榫卯结构，不用一钉一铆；③美学价值：层层叠叠，与自然和谐；④科学价值：通风、防潮、抗震。吊脚楼是世界建筑史上的奇葩。</p>
+            <p class="text"><strong>文化价值：</strong>西江是苗族文化的宝库。①服饰文化：苗族服饰被誉为"穿在身上的史诗"；②银饰文化：苗族银饰制作技艺世界闻名；③歌舞文化：苗族古歌、飞歌、芦笙舞独具特色；④节日文化：苗年、鼓藏节等节日丰富多彩。西江是"苗族文化博物馆"。</p>
+            <p class="text"><strong>社会价值：</strong>西江苗寨在苗族社会中具有重要地位。①精神家园：是苗族同胞的精神寄托；②文化中心：是苗族文化的传承中心；③教育基地：是苗族文化教育的重要场所；④旅游胜地：是展示苗族文化的窗口。苗寨是苗族社会的"心脏"。</p>
+            <p class="text"><strong>旅游价值：</strong>西江是贵州最重要的旅游目的地。①景观价值：苗寨全景震撼人心；②文化价值：苗族文化丰富多彩；③体验价值：可深度体验苗族生活；④经济价值：带动地方经济发展。西江是贵州旅游的"金字招牌"。</p>
+            <p class="text"><strong>保护与传承：</strong>西江苗寨得到科学保护。①法律保护：2013年列为全国重点文物保护单位；②规划保护：编制保护规划，控制建设；③活态保护：鼓励村民传承文化，保持村寨活力；④旅游利用：发展文化旅游，让文化"活"起来；⑤社区参与：村民参与保护，分享旅游收益；⑥教育传承：开展苗族文化教育，培养传承人。西江的保护经验，为传统村落保护提供了成功范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 西江千户苗寨中国第一苗寨，吊脚楼群诉说苗族史诗 | 五重维度·五种灵韵爱心，点赞评论共话苗族文化</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（西江千户苗寨独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('xijiang_miao_village_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('xijiang_miao_village_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('xijiang_miao_village_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('xijiang_miao_village_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对苗寨的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的苗寨感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "苗寨访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

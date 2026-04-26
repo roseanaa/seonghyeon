@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>妈阁庙 · 四维解读 | 澳门起源 香火绵延</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/妈阁庙.jpg" title="妈阁庙" alt="澳门妈阁庙建筑与香火">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 澳门起源</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 依山而建</div>
+        <div class="dim-tab" data-tab="culture">🎪 妈祖信仰</div>
+        <div class="dim-tab" data-tab="value">🌟 世界遗产</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>妈阁庙 · 澳门起源 香火绵延</h3>
+            <p class="text"><strong>传奇：</strong>妈阁庙位于澳门半岛西南端妈阁山麓，坐落在风景秀丽的西望洋山脚下，面向澳门内港，是澳门现存最古老、最著名的庙宇，也是澳门名称"Macau"的由来。据传，明朝弘治元年（1488年），福建漳州籍商人在此建庙奉祀妈祖（天后），祈求航海平安。妈阁庙背山面海，依山而建，由入口大门、牌坊、大殿、观音阁、弘仁殿、正觉禅林等建筑组成，形成错落有致的建筑群。庙宇经历明清两代多次扩建重修，现存建筑多为清光绪年间重建。妈阁庙不仅是澳门妈祖信仰的中心，也是澳门作为国际商港的历史见证。葡萄牙人于1553年抵澳时，在庙前海湾登陆，询问地名，当地人以"妈阁"回答，葡人遂称此地为"Macau"，此名沿用至今。2005年，妈阁庙作为"澳门历史城区"的一部分被列入《世界文化遗产名录》。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>山门与石狮：</strong>妈阁庙的正门为三开间牌坊式山门，中门上方石匾刻"妈祖阁"三字，两侧有对联"德周化宇，泽润生民"。门前有一对石狮，左雄右雌，雕刻于清同治十三年（1874年），神态威武，守护庙宇。山门两侧墙壁有精美壁画，描绘妈祖故事。山门是进入妈阁庙的第一道门，也是拍照留念的热点。</li>
+                <li><strong>大殿（天后宫）：</strong>妈阁庙的主殿，供奉天后妈祖。大殿为重檐歇山顶建筑，面阔三间，进深三间，雕梁画栋，金碧辉煌。殿内正中供奉妈祖神像，高约2米，头戴凤冠，身着龙袍，慈眉善目，端庄肃穆。左右配祀千里眼、顺风耳两位护法神。殿内悬挂多块清代古匾，最著名的是"海不扬波"匾（1875年）和"恩光普照"匾（1888年）。殿前有巨大石香炉，为信众上香之用。</li>
+                <li><strong>弘仁殿：</strong>位于大殿后侧，是妈阁庙最古老的建筑之一。弘仁殿为单开间石构建筑，建于明弘治年间（1488-1505年），供奉天后妈祖。殿内神龛雕刻精美，有"神山第一"石匾。殿前有"洋船石"，石刻有帆船图案，象征妈祖护佑航海平安。弘仁殿虽小，但历史最久，是研究妈阁庙早期历史的重要实物。</li>
+                <li><strong>观音阁：</strong>位于大殿东侧，供奉观世音菩萨。观音阁为两层楼阁式建筑，上层供奉观音，下层为僧房。阁内观音像为木雕金身，高约1.5米，手持净瓶杨柳，慈悲庄严。观音阁体现了妈阁庙佛道融合的特色，信众既可拜妈祖，也可拜观音。阁前有放生池，池中有龟、鱼，象征吉祥长寿。</li>
+                <li><strong>正觉禅林：</strong>位于庙宇最高处，是佛教禅院。禅林为三进院落，有山门、天王殿、大雄宝殿、藏经楼等建筑。大雄宝殿供奉释迦牟尼佛，左右有文殊、普贤菩萨。禅林环境清幽，是僧人修行、信众禅修的场所。正觉禅林是妈阁庙的佛教部分，体现了宗教的包容性。</li>
+                <li><strong"洋船石"与摩崖石刻：</strong>妈阁庙有多处珍贵石刻。①洋船石：位于弘仁殿前，石刻有帆船图案，船上有"利涉大川"四字，是古代航海活动的见证。②摩崖石刻：山壁上有30多处明清时期的摩崖石刻，有诗、词、题记等，书法精美，内容多赞颂妈祖功德。最著名的是清嘉庆年间福建水师提督李长庚的题诗。石刻是研究澳门历史、书法、文学的重要资料。</li>
+                <li><strong>妈阁庙前地：</strong>庙前的广场，是澳门重要公共空间。广场用葡式碎石铺成波浪图案，象征海洋。广场上有喷泉、灯柱、长椅，是市民休憩、游客观光的热点。每年农历三月廿三日妈祖诞，广场举办盛大庙会，有巡游、戏曲、市集等活动。夜晚庙宇亮灯，景色迷人。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>全年皆宜，但最佳游览时间为10月至次年4月，此时气候凉爽干燥。妈祖诞（农历三月廿三日）是妈阁庙最重要的节日，有盛大祭典，人潮最多。春节（正月初一至十五）是上香高峰期，信众前来祈福。每月农历初一、十五也是上香的好日子。建议避开周末和节假日高峰。庙宇开放时间：7:00-18:00。</li>
+                <li><strong>参拜顺序：</strong>山门→大殿（天后宫）→弘仁殿→观音阁→正觉禅林→观看洋船石与摩崖石刻→妈阁庙前地→返回。建议安排1.5-2小时。参拜时应衣冠整洁，不可穿短裤、背心、拖鞋。进庙应先拜天公，再拜妈祖。上香一般为三支，代表敬天、敬地、敬人。可在庙内购买平安符、妈祖像等纪念品。</li>
+                <li><strong>深度体验：</strong>清晨参加庙宇早课，感受宁静氛围；上午跟随导游参观建筑，了解历史故事；中午在附近品尝澳门葡国菜；下午在庙内静坐，听海浪声，体会妈祖护佑航海的精神；傍晚在庙前看日落，欣赏澳门内港景色；晚上观看庙宇灯光夜景；学习妈祖文化，了解海上保护神信仰；住附近酒店，体验澳门中西文化交融；第二天前往海事博物馆、澳门旅游塔、西望洋山、郑家大屋等周边景点。</li>
+                <li><strong>摄影建议：</strong>山门与石狮全景，大殿妈祖神像，弘仁殿古老建筑，观音阁景观，洋船石特写，摩崖石刻细节，庙宇依山而建的层次感，妈阁庙前地广场，妈祖诞庙会盛况，香客虔诚上香，夜景灯光。建议使用广角镜头拍摄建筑全景，长焦镜头拍摄雕刻细节。清晨和傍晚光线最佳，适合拍摄。夜间需三脚架拍摄夜景。偏振镜可减少反光，增强石刻清晰度。</li>
+            </ul>
+            <p><strong>交通信息：</strong>妈阁庙位于澳门半岛妈阁上街。公交：乘1、2、5、6B、7、9、10、10A、11、18、21A、26、28B、MT4路巴士到"妈阁庙"站。免费穿梭巴士：许多酒店提供到妈阁庙或附近站点的免费穿梭巴士。出租车：从澳门各处打车前往均较方便。步行：从议事亭前地沿妈阁斜巷步行约15分钟。周边景点有海事博物馆（100米）、澳门旅游塔（1.5公里）、西望洋山（1公里）、郑家大屋（800米）、亚婆井前地（500米）、港务局大楼（300米）。距澳门国际机场4公里，车程12分钟；距外港客运码头3.5公里，车程10分钟。建议与海事博物馆、郑家大屋、亚婆井前地组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">庙宇</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 妈阁庙印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 澳门起源 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>澳门起源 · 妈阁传奇</h3>
+            <p class="text"><strong>建庙传说：</strong>妈阁庙的建庙有多种传说。①渔民传说：明代福建渔民在海上遇风暴，妈祖显灵相救，渔民上岸后建庙还愿。②商人传说：福建漳州商人来澳贸易，为求航海平安，建庙奉祀妈祖。③官建传说：明朝水师官员为护佑水师，建庙祭祀妈祖。传说虽异，但都反映妈祖信仰随闽人传入澳门。</p>
+            <p class="text"><strong>历史沿革：</strong>①1488年：相传妈阁庙始建，初为简陋小庙。②1624年：澳门华人集资扩建，形成规模。③1824年：大火烧毁部分建筑，后重建。④1875年：大规模扩建，形成现存格局。⑤1937年：日军侵华，庙宇受损，战后修复。⑥2005年：作为"澳门历史城区"一部分列入世界遗产。妈阁庙见证了澳门500多年历史。</p>
+            <p class="text"><strong>澳门名称由来：</strong>1553年，葡萄牙商人抵澳，在妈阁庙前海湾登陆，询问地名，当地人以"妈阁"回答。葡人将"妈阁"音译为"Macau"，此名沿用至今，成为澳门的外文名称。这一历史事件使妈阁庙不仅是宗教场所，也成为澳门城市起源的象征。</p>
+            <p class="text"><strong>中外交流：</strong>妈阁庙是中外文化交流的见证。①航海贸易：闽粤商人、葡萄牙商人、荷兰商人等都曾在此祈祷航海平安。②宗教交流：妈祖信仰随华人传播到东南亚、欧美。③文化融合：妈阁庙建筑融汇中西元素。妈阁庙是澳门作为国际商港的历史见证。</p>
+            <p class="text"><strong>历史事件：</strong>妈阁庙见证了许多历史事件。①葡萄牙人登陆：1553年，葡萄牙人在此登陆，开始澳门殖民历史。②鸦片战争：林则徐巡视澳门，曾到妈阁庙视察。③抗日战争：日军侵华，澳门成孤岛，难民在庙中避难。④澳门回归：1999年澳门回归，妈阁庙举办庆祝活动。历史事件增添了妈阁庙的文化内涵。</p>
+            <p class="text"><strong>修复保护：</strong>妈阁庙经历多次修复。①1875年：大规模扩建重修。②1962年：澳门政府资助修复。③2000年：为迎接澳门回归，进行全面修复。④2015年：检测加固，保护古建筑。修复工程保护了这座珍贵的历史遗产。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 依山而建 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>依山而建 · 园林庙宇</h3>
+            <p class="text"><strong>总体布局：</strong>妈阁庙为典型岭南庙宇园林布局。①依山：背靠妈阁山，建筑沿山势层层升高。②面海：面向澳门内港，符合妈祖作为海神的特性。③轴线：无明显中轴线，建筑自由布局。④院落：多个院落组成，有主有次。布局体现了"天人合一"的传统理念。</p>
+            <p class="text"><strong>建筑形式：</strong>妈阁庙建筑形式多样。①山门：牌坊式，三开间。②大殿：重檐歇山顶，三开间。③弘仁殿：单开间石构建筑。④观音阁：二层楼阁式。⑤正觉禅林：三进院落。形式丰富，功能齐全。</p>
+            <p class="text"><strong>建筑技术：</strong>妈阁庙建筑技术精湛。①石材：大量使用花岗岩，坚固耐久。②木构：大殿为抬梁式木构架。③雕刻：木雕、石雕、砖雕技艺精湛。④彩绘：梁枋有精美彩绘，但多已褪色。技术体现了清代岭南建筑的水平。</p>
+            <p class="text"><strong>装饰艺术：</strong>妈阁庙装饰丰富多彩。①木雕：梁架、门窗、神龛有精细木雕。②石雕：石狮、柱础、栏杆有浮雕、圆雕。③砖雕：山墙、屋脊有砖雕装饰。④灰塑：屋脊有灰塑装饰。⑤彩绘：梁枋有彩绘，但保存不佳。装饰具有岭南民间艺术特色。</p>
+            <p class="text"><strong>园林艺术：</strong>妈阁庙是园林式庙宇。①借景：借山景、海景，视野开阔。②理水：有放生池、溪流。③植物：有古树、花卉，环境清幽。④路径：有石阶、曲径，步移景异。园林增强了庙宇的宗教氛围。</p>
+            <p class="text"><strong>建筑特色：</strong>妈阁庙的建筑特色鲜明。①因地制宜：依山而建，节约土地。②佛道融合：既有道教妈祖殿，又有佛教观音阁、禅林。③中西元素：建筑为中式，但部分装饰受西方影响。④实用为主：无过度装饰，以实用为主。特色反映了澳门的地方文化。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 妈祖信仰 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>妈祖信仰 · 海上女神</h3>
+            <p class="text"><strong>妈祖传说：</strong>妈祖，原名林默，北宋福建莆田湄洲岛人。相传她生而灵异，能预言吉凶，救助海难，28岁升天成仙，被奉为海神。历代皇帝册封为"天妃"、"天后"、"天上圣母"。妈祖信仰起源于福建，随闽人航海、移民传播到中国沿海、台湾、东南亚及世界各地。</p>
+            <p class="text"><strong>信仰功能：</strong>妈祖是多种职能的神祇。①海神：护佑航海平安，是渔民、水手的保护神。②生育神：护佑妇女生育，是求子者的信仰对象。③医药神：能治病救人，是病患的祈求对象。④商业神：护佑商业顺利，是商人的信仰对象。妈祖信仰满足了民众多种需求。</p>
+            <p class="text"><strong>祭祀活动：</strong>妈阁庙有丰富的祭祀活动。①日常祭拜：信众上香、供果、叩拜。②诞辰祭典：妈祖诞（农历三月廿三）最隆重。③节日祭祀：春节、端午、中秋等传统节日有祭祀。④祈福法会：举办法会，为信众祈福。⑤巡游：妈祖诞有神像巡游活动。祭祀活动传承了妈祖文化。</p>
+            <p class="text"><strong>信仰传播：</strong>妈祖信仰从澳门传播到世界各地。①东南亚：随闽粤移民传到马来西亚、新加坡、印尼、菲律宾等地。②台湾：是台湾最重要的民间信仰之一。③欧美：随华人移民传到美国、加拿大、澳大利亚等地。④日本、韩国：历史上曾有妈祖信仰。妈祖是华人文化认同的象征。</p>
+            <p class="text"><strong>文化内涵：</strong>妈祖信仰具有丰富的文化内涵。①海洋文化：体现华人航海、贸易的历史。②移民文化：随华人移民传播，形成跨国信仰网络。③女性文化：女神崇拜，体现对女性的尊重。④慈善文化：妈祖救苦救难，体现仁爱精神。妈祖文化是中华文化的重要组成部分。</p>
+            <p class="text"><strong>现代意义：</strong>妈祖信仰在现代社会仍有重要意义。①精神寄托：为信众提供精神慰藉。②文化认同：是华人文化认同的符号。③社会凝聚：凝聚华人社群，促进和谐。④旅游文化：吸引游客，传播中华文化。妈祖信仰是连接过去与现在的文化桥梁。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">信仰</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 世界遗产 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>世界遗产 · 澳门象征</h3>
+            <p class="text"><strong>历史价值：</strong>妈阁庙是澳门历史的活化石。①城市起源：澳门名称"Macau"的由来。②航海历史：澳门作为国际商港的见证。③移民历史：闽粤移民开发澳门的历史。④建筑历史：明清岭南建筑的重要实例。妈阁庙是研究澳门历史的重要实物资料。</p>
+            <p class="text"><strong>艺术价值：</strong>妈阁庙是艺术的宝库。①建筑艺术：依山而建的园林式庙宇。②雕刻艺术：木雕、石雕、砖雕技艺精湛。③书法艺术：摩崖石刻是书法精品。④园林艺术：与自然和谐统一的园林设计。妈阁庙是"艺术的博物馆"。</p>
+            <p class="text"><strong>科学价值：</strong>妈阁庙蕴含科学技术。①建筑科学：山地建筑技术，结构稳固。②材料科学：石材、木材等材料的应用。③环境科学：选址、布局的环境适应性。④保护科学：文物监测、修复技术。妈阁庙是科学技术的研究对象。</p>
+            <p class="text"><strong>文化价值：</strong>妈阁庙是文化交融的象征。①妈祖文化：妈祖信仰在澳门的传承。②海洋文化：澳门作为海洋城市的特质。③移民文化：闽粤移民文化的体现。④宗教文化：佛道融合的宗教特色。妈阁庙是澳门文化的"基因库"。</p>
+            <p class="text"><strong>社会价值：</strong>妈阁庙在社会中发挥重要作用。①身份认同：澳门人身份认同的象征。②旅游经济：澳门最重要的旅游景点之一。③社区凝聚：凝聚华人社群，传承文化。④国际交流：中外文化交流的平台。妈阁庙是澳门社会的"精神地标"。</p>
+            <p class="text"><strong>保护与传承：</strong>妈阁庙得到科学保护。①法律保护：2005年作为"澳门历史城区"一部分列入《世界遗产名录》。②规划保护：制定保护规划，控制周边建设。③工程保护：多次修复加固，确保结构安全。④监测保护：建立监测系统，防止自然破坏。⑤研究展示：开展研究，出版资料，举办展览。⑥教育推广：举办讲座、导览，传播妈祖文化。⑦社区参与：社区居民参与保护，形成保护网络。妈阁庙的保护经验，为历史庙宇保护提供了成功范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 妈阁庙澳门起源香火绵延，妈祖信仰护佑航海平安 | 五重维度·五种灵韵爱心，点赞评论共话世界遗产</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（妈阁庙独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('a_ma_temple_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('a_ma_temple_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('a_ma_temple_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('a_ma_temple_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对妈阁庙的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的妈阁庙感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "妈阁庙访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

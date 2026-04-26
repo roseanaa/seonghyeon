@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>峨眉山金顶 · 四维解读 | 佛国净土 · 云上金顶</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/峨眉山金顶.jpg" title="峨眉山金顶" alt="峨眉山金顶与十方普贤像">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 佛国千年</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 金顶胜境</div>
+        <div class="dim-tab" data-tab="culture">🎪 佛光云海</div>
+        <div class="dim-tab" data-tab="value">🌟 天下名山</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>峨眉山金顶 · 云端佛国</h3>
+            <p class="text"><strong>传奇：</strong>峨眉山金顶，又称"金顶华藏寺"，位于四川省峨眉山市峨眉山主峰万佛顶东南侧，海拔3079.3米，是峨眉山的最高峰和佛教圣地。金顶始建于东汉，明万历年间（1573-1620年）扩建，形成"一山三顶"（金顶、千佛顶、万佛顶）格局。金顶以"金顶四绝"（日出、云海、佛光、圣灯）闻名于世，是普贤菩萨的道场，与山西五台山、浙江普陀山、安徽九华山并称为"中国佛教四大名山"。1982年，峨眉山被列为全国重点文物保护单位；1996年，峨眉山-乐山大佛被联合国教科文组织列入《世界文化与自然双重遗产名录》。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>十方普贤圣像：</strong>金顶标志，2006年落成。圣像通高48米，总重660吨，由台座、十方普贤像、金顶三部分组成。台座高6米，直径15米，刻有普贤菩萨十大行愿。圣像高42米，为十面四十八臂造型，十面代表十方三世诸佛，四十八臂执不同法器，象征普贤菩萨的慈悲与智慧。圣像用黄铜铸造，外部贴金，在阳光下金光灿烂，蔚为壮观。</li>
+                <li><strong>金殿（华藏寺）：</strong>金顶核心建筑，明万历三十年（1602年）创建。原为铜殿，在阳光下金光闪耀，故名"金顶"。清光绪十六年（1890年）毁于火灾。1986年重建，为钢筋混凝土仿木结构。殿高14米，宽15米，深13米，重檐歇山顶，覆盖铜瓦。殿内供奉铜质普贤骑象像，高3.85米，重12.5吨。殿前有"金顶"匾额，为赵朴初先生题写。</li>
+                <li><strong>银殿（卧云庵）：</strong>位于金顶西侧，明嘉靖年间（1522-1566年）建。原为铁瓦殿，后改为铜瓦。清康熙年间（1662-1722年）重修，用白银包裹，故名"银殿"。殿内供奉铜质释迦牟尼佛涅槃像（卧佛），长7.6米。银殿在月光下银光闪闪，与金殿交相辉映。</li>
+                <li><strong>铜殿（大雄宝殿）：</strong>位于金顶东侧，明万历年间建。原为铜铸，后毁。2004年重建，为铜质仿古建筑。殿高12米，宽18米，深12米，重檐庑殿顶。殿内供奉铜质三世佛（释迦牟尼佛、药师佛、阿弥陀佛），每尊高8米。铜殿是金顶的重要礼佛场所。</li>
+                <li><strong>睹光台：</strong>金顶最佳观景点，位于舍身崖边。台为石砌，面积约200平方米，是观看"金顶四绝"的最佳位置。清晨可观日出，白天可观云海，午后可观佛光，夜晚可观圣灯。台边有护栏，刻有"舍身崖""金刚嘴"等题刻。睹光台是金顶的"眼睛"。</li>
+                <li><strong>舍身崖：</strong>金顶最险要处，位于睹光台下。崖高600多米，垂直陡峭，云雾缭绕。传说在此舍身可成佛，故名"舍身崖"。崖上有"金刚嘴""天门石"等自然奇观。舍身崖是金顶的"灵魂"，也是登山者挑战自我的地方。</li>
+                <li><strong>金顶索道：</strong>上金顶的主要交通工具。索道下站位于接引殿，上站位于金顶，全长1164米，高差508米，单程运行时间约5分钟。索道为往复式，每个车厢可容100人。乘坐索道，可俯瞰云海、森林、溪流，体验"一步登天"的感觉。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，各有特色。春季（4-5月）山花烂漫，夏季（6-8月）凉爽避暑，秋季（9-10月）天高云淡，冬季（11-3月）银装素裹。观日出最佳时间：夏季5:30-6:30，冬季7:00-7:30。观佛光最佳时间：午后1-3点，雨后初晴。建议安排1-2天。</li>
+                <li><strong>登山路线：</strong>①经典线路：报国寺→伏虎寺→清音阁→洪椿坪→仙峰寺→洗象池→雷洞坪→接引殿→金顶（2-3天）；②快捷线路：报国寺乘车→雷洞坪→接引殿→索道→金顶（1天）；③徒步线路：万年寺→洗象池→雷洞坪→金顶（2天）。建议在雷洞坪或金顶住宿，方便观日出。</li>
+                <li><strong>深度体验：</strong>清晨在睹光台观日出，感受"金顶日出"的壮丽；上午绕行十方普贤像，祈求平安吉祥；中午在斋堂品尝峨眉山素斋；下午在睹光台寻找佛光，许下心愿；傍晚观云海日落，欣赏"彩色云海"；夜晚观圣灯（如运气好），感受神秘氛围；住金顶山庄，体验高山夜宿；参加早晚课，体验寺院生活。</li>
+                <li><strong>摄影建议：</strong>日出时的十方普贤像剪影，云海中的金顶建筑群，佛光与人的合影，日落时分的彩色云海，星空下的金顶夜景，冬季的雪景雾凇，索道穿越云海的瞬间。建议使用广角镜头拍摄全景，长焦镜头拍摄日出、佛光细节。三脚架必备，用于拍摄日出、星空。偏振镜可增强蓝天白云对比。</li>
+            </ul>
+            <p><strong>交通信息：</strong>峨眉山位于四川省乐山市峨眉山市。从成都出发：①高铁：成都东站/南站乘高铁到峨眉山站，车程1小时；②汽车：新南门汽车站乘大巴到峨眉山客运中心，车程2小时。自驾：经成乐高速到峨眉山出口。景区内有观光车到雷洞坪，再乘索道到金顶。距成都120公里，车程2小时；距乐山30公里，车程40分钟。建议与乐山大佛、成都市区组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">金顶</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 金顶印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 佛国千年 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>佛国千年 · 普贤道场</h3>
+            <p class="text"><strong>佛教传入：</strong>佛教传入峨眉山约在东汉时期。据《峨眉山志》记载，东汉永平六年（63年），蒲公在峨眉山见鹿迹现莲花，追至金顶，见普贤菩萨示现，遂在此建普光殿，是为峨眉山佛教开端。魏晋南北朝时期，峨眉山佛教逐渐发展，建有黑水寺、华严寺等。唐代，峨眉山成为普贤菩萨道场，与五台山（文殊道场）齐名。</p>
+            <p class="text"><strong>金顶创建：</strong>金顶建筑始于唐代。唐僖宗年间（874-888年），慧通禅师在金顶建光相寺。宋代，金顶建筑规模扩大。明洪武年间（1368-1398年），宝昙和尚重建光相寺。明万历三十年（1602年），妙峰禅师创建铜殿，万历皇帝赐名"永明华藏寺"。铜殿在阳光下金光灿烂，故称"金顶"。金顶成为峨眉山佛教中心。</p>
+            <p class="text"><strong>火灾重建：</strong>金顶历史上多次遭火灾。①清光绪十六年（1890年），金顶发生大火，铜殿、铁殿、锡殿俱毁，仅银殿幸存；②1972年，金顶再次发生火灾，大部分建筑被毁；③1986年，政府拨款重建金殿；④2004年，重建铜殿；⑤2006年，建成十方普贤圣像。每次火灾后，金顶都得到重建，体现了佛教"劫后重生"的精神。</p>
+            <p class="text"><strong>高僧大德：</strong>峨眉山历代高僧辈出。①唐代：慧通禅师，开创金顶佛教；②宋代：别峰禅师，建金顶铁殿；③明代：妙峰禅师，创建铜殿；④近代：能海法师、清定法师等在此修行。历代高僧的弘法，使峨眉山成为佛教名山。</p>
+            <p class="text"><strong>世界遗产：</strong>1996年，峨眉山-乐山大佛被联合国教科文组织列入《世界文化与自然双重遗产名录》。世界遗产委员会评价："峨眉山是中国佛教四大名山之一，具有特殊的宗教、历史、文化价值，其自然景观与佛教文化完美结合，体现了人与自然和谐共生的理念。"峨眉山是中国第2个、世界第18个双重遗产。</p>
+            <p class="text"><strong>现代发展：</strong>新中国成立后，峨眉山得到保护和发展。①1982年，列为全国重点文物保护单位；②1986年，重建金殿；③2004年，重建铜殿；④2006年，建成十方普贤圣像；⑤2010年，建成金顶索道；⑥2020年，完成金顶环境整治。峨眉山成为佛教朝圣、旅游观光、科学考察的重要基地。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 金顶胜境 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>金顶胜境 · 云端建筑</h3>
+            <p class="text"><strong>总体布局：</strong>金顶建筑群沿山脊分布，坐西朝东。①中轴线：十方普贤像→金殿（华藏寺）→睹光台→舍身崖；②北轴线：银殿（卧云庵）→僧寮→斋堂；③南轴线：铜殿（大雄宝殿）→客堂→法物流通处。建筑依山就势，错落有致，形成"众星捧月"的格局。建筑与自然景观融为一体，体现"天人合一"的思想。</p>
+            <p class="text"><strong>十方普贤圣像：</strong>圣像设计独特。①造型：十面四十八臂，十面分五层，每层两面，象征十方三世；②手势：四十八臂各执法器，有如意、莲花、宝剑、经卷等；③材质：内部为钢筋混凝土，外部为黄铜贴金，用黄金100公斤；④工艺：采用现代铸造、贴金、安装技术。圣像是传统佛教造像艺术的创新。</p>
+            <p class="text"><strong>金殿建筑：</strong>金殿为仿明建筑。①屋顶：重檐歇山顶，覆盖铜瓦，屋脊有鸱吻、走兽；②柱网：面阔五间，进深三间，用钢筋混凝土柱；③斗拱：仿明代斗拱，有承重和装饰作用；④装饰：梁枋施以彩绘，有莲花、卷草、梵文等图案。金殿是金顶的核心礼佛场所。</p>
+            <p class="text"><strong>银殿特色：</strong>银殿为仿清建筑。①屋顶：单檐歇山顶，原为银瓦，现为铝瓦；②结构：穿斗式木结构，用本地冷杉木；③佛像：供奉释迦牟尼涅槃像，为明代铜铸；④环境：殿周有云杉、冷杉，云雾常绕，故名"卧云庵"。银殿是金顶的静谧修行处。</p>
+            <p class="text"><strong>铜殿设计：</strong>铜殿为仿唐建筑。①屋顶：重檐庑殿顶，覆盖铜瓦，气势恢宏；②佛像：供奉三世佛，为现代铜铸；③空间：殿内宽敞，可容数百人同时礼佛；④采光：有高窗，光线柔和。铜殿是金顶的重要法事场所。</p>
+            <p class="text"><strong>建筑材料：</strong>金顶建筑采用现代材料与传统工艺结合。①结构材料：钢筋混凝土，保证高山建筑的稳固；②装饰材料：铜、铝、金、木材、玻璃；③保温材料：墙体、屋顶有保温层，适应高山气候；④环保材料：使用太阳能、污水处理等环保技术。建筑材料既体现传统，又符合现代要求。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 佛光云海 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>佛光云海 · 金顶四绝</h3>
+            <p class="text"><strong>日出奇观：</strong>金顶日出被誉为"峨眉第一景"。①时间：夏季5:30-6:30，冬季7:00-7:30；②过程：东方渐白→红霞满天→金轮初升→光芒万丈；③地点：睹光台最佳；④寓意：象征光明、希望、新生。观日出是金顶最重要的体验之一。</p>
+            <p class="text"><strong>云海仙境：</strong>金顶云海四季可见，以秋冬最佳。①类型：有瀑布云、玉带云、珊瑚云、棉花云等；②时间：雨后初晴，云雾升腾；③地点：睹光台、舍身崖；④景象：云海翻腾，山峰如岛，如入仙境。云海是金顶的"常态美景"。</p>
+            <p class="text"><strong>佛光神秘：</strong>佛光是金顶最神秘的奇观。①原理：阳光照射云雾，发生衍射形成彩色光环；②时间：午后1-3点，雨后初晴；③位置：睹光台下云海上方；④现象：光环中有观者身影，人动影动，神奇莫测。佛光被视为"普贤菩萨显圣"。</p>
+            <p class="text"><strong>圣灯传说：</strong>圣灯是金顶最罕见的奇观。①现象：夜晚，山谷中出现点点光亮，如灯如星；②解释：可能是磷火，或某种矿物发光；③时间：无月之夜，雨后；④地点：舍身崖下深谷。圣灯被称为"万盏明灯朝普贤"。</p>
+            <p class="text"><strong>佛教活动：</strong>金顶是佛教活动中心。①早晚课：僧众每日早晚诵经；②佛事：每月初一、十五有佛事活动；③法会：佛诞、观音诞、普贤诞有大型法会；④禅修：举办禅七、佛七等禅修活动。佛教活动传承佛教文化，净化人心。</p>
+            <p class="text"><strong>朝圣文化：</strong>金顶是佛教徒朝圣的圣地。①朝山：信徒三步一拜，从山脚拜到金顶；②绕佛：绕行十方普贤像，祈求平安；③供灯：在佛前供灯，祈求智慧；④许愿：在佛前许愿，祈求如愿。朝圣体现信徒的虔诚信仰。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">佛韵</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 天下名山 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>天下名山 · 世界遗产</h3>
+            <p class="text"><strong>宗教价值：</strong>金顶是普贤菩萨道场。①信仰中心：是普贤信仰的圣地，吸引海内外信众朝拜；②修行道场：为僧众提供清净的修行环境；③佛教教育：开展佛教教育，培养僧才；④文化交流：促进佛教文化交流。金顶在佛教界具有崇高地位。</p>
+            <p class="text"><strong>自然价值：</strong>金顶是自然奇观的宝库。①地质价值：是青藏高原与四川盆地的过渡带，地质构造复杂；②生态价值：有完整的垂直植被带谱，生物多样性丰富；③景观价值：有日出、云海、佛光、圣灯等自然奇观；④科学价值：是研究高山气候、地质、生态的天然实验室。金顶是世界自然遗产的重要组成部分。</p>
+            <p class="text"><strong>文化价值：</strong>金顶是佛教文化的重要载体。①佛教文化：是普贤菩萨道场，佛教中国化的体现；②建筑文化：金顶建筑融合了唐、明、清等时代风格；③造像文化：十方普贤像是现代佛教造像艺术的创新；④诗词文化：历代文人墨客留下大量诗词歌赋。金顶是中华文化的瑰宝。</p>
+            <p class="text"><strong>科学价值：</strong>金顶蕴含丰富的科学技术。①建筑科学：高山建筑的防风、防雷、保温技术；②材料科学：铜、金等材料在高山环境下的应用；③气象科学：高山气象观测，研究云、雾、光现象；④生态科学：高山生态系统保护。金顶是科学研究的宝贵基地。</p>
+            <p class="text"><strong>旅游价值：</strong>金顶是四川最重要的旅游景点。①景观价值：自然景观与佛教文化完美结合；②体验价值：朝圣、观光、摄影、探险等体验丰富；③经济价值：年接待游客数百万人次，带动地方经济；④品牌价值："峨眉山金顶"成为四川旅游的金字招牌。金顶是四川旅游的"必游之地"。</p>
+            <p class="text"><strong>保护与传承：</strong>金顶得到科学保护。①法律保护：1982年列为全国重点文物保护单位，1996年列入《世界遗产名录》；②规划保护：编制《峨眉山保护规划》，划定核心区、缓冲区；③工程保护：对建筑进行定期检查、维修；④环境保护：控制游客数量，保护生态环境；⑤文化传承：开展佛教活动，传承佛教文化；⑥合理利用：发展生态旅游，让遗产"活"起来。金顶的保护经验，为世界遗产保护提供了中国方案。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 峨眉山金顶云端佛国，十方普贤光照大千 | 五重维度·五种灵韵爱心，点赞评论共话天下名山</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（峨眉山金顶独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('emei_golden_summit_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('emei_golden_summit_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('emei_golden_summit_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('emei_golden_summit_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对金顶的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的金顶感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "金顶访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

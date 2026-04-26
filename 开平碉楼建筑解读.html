@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>开平碉楼 · 四维解读 | 华侨之乡 · 碉楼传奇</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/开平碉楼.jpg" title="开平碉楼" alt="开平碉楼与田园风光">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 华侨之乡</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 建筑奇观</div>
+        <div class="dim-tab" data-tab="culture">🎪 侨乡文化</div>
+        <div class="dim-tab" data-tab="value">🌟 世界遗产</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>开平碉楼 · 华侨建筑博物馆</h3>
+            <p class="text"><strong>传奇：</strong>开平碉楼位于广东省江门市下辖的开平市境内，是中国乡土建筑的一个特殊类型，是集防卫、居住和中西建筑艺术于一体的多层塔楼式建筑，是华侨文化的杰出代表。现存碉楼1833座，遍布开平15个镇，其中以塘口、百合、蚬冈、赤坎等镇最为集中。2007年6月，开平碉楼与村落被联合国教科文组织列入《世界遗产名录》，成为中国第35处世界遗产，也是广东省第一处世界文化遗产。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>自力村碉楼群：</strong>位于塘口镇自力村，是开平碉楼最集中、保存最完好的村落之一。村内有15座碉楼和庐（西式别墅），错落有致地分布在稻田、荷塘、竹林之间，形成"稻田、荷塘、碉楼"的田园画卷。最著名的有铭石楼（楼高6层，内部陈设精美）、云幻楼（楼高5层，天台有拜占庭式穹顶）、叶生居庐等。电影《让子弹飞》在此取景。</li>
+                <li><strong>马降龙碉楼群：</strong>位于百合镇马降龙村，背靠百足山，面临潭江水。村内有7座碉楼和8座庐，隐藏在茂密的竹林中，有"竹林碉楼"之美誉。其中天禄楼最为壮观，楼高7层，是开平现存最高的碉楼。马降龙被联合国专家称为"世界最美丽的村落"。</li>
+                <li><strong>锦江里碉楼群：</strong>位于蚬冈镇锦江里村，村中有三座最具代表性的碉楼：瑞石楼、升峰楼、锦江楼。瑞石楼被誉为"开平第一楼"，楼高9层，是开平现存最高、最豪华的碉楼，融合了罗马、拜占庭、巴洛克等多种西方建筑风格。</li>
+                <li><strong>立园：</strong>位于塘口镇赓华村，是旅美华侨谢维立于1926-1936年历时十年建造的私家园林。占地约1.1万平方米，集传统园林、岭南水乡、西方建筑风格于一体，有"小观园"之称。园内有碉楼、别墅、亭台、廊桥、人工湖等，装饰富丽堂皇。</li>
+                <li><strong>赤坎古镇：</strong>位于开平市中部的潭江之滨，是著名的侨乡古镇。古镇沿潭江而建，有600多座骑楼，形成连绵3公里的骑楼街，被誉为"中国骑楼博物馆"。赤坎古镇曾是电影《一代宗师》《醉拳Ⅱ》的拍摄地。</li>
+                <li><strong>方氏灯楼：</strong>位于塘口镇塘口墟北面的山坡上，1920年由方氏家族集资兴建。楼高5层，钢筋混凝土结构，是典型的更楼（瞭望楼）。灯楼矗立在山岗上，登楼可俯瞰整个塘口墟，是开平地标性建筑之一。</li>
+                <li><strong>南楼：</strong>位于赤坎镇腾蛟村，1912年建，楼高7层，是开平现存最早的钢筋混凝土结构碉楼。抗战时期，南楼七烈士在此坚守七天七夜，英勇牺牲，现为爱国主义教育基地。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，春秋最佳（3-5月，9-11月）。春季油菜花、夏季荷花、秋季稻浪、冬季静谧，各有特色。建议安排2-3天深度游览。每年9-10月是开平碉楼文化旅游节，有丰富活动。</li>
+                <li><strong>游览线路：</strong>①经典一日游：自力村碉楼群→立园→赤坎古镇；②深度二日游：第一天：自力村→立园→赤坎古镇；第二天：马降龙碉楼群→锦江里碉楼群→方氏灯楼；③摄影专线：自力村（晨雾、日落）→马降龙（竹林光影）→锦江里（瑞石楼特写）→赤坎（骑楼夜景）。</li>
+                <li><strong>深度体验：</strong>清晨在自力村拍摄晨雾中的碉楼；参观立园，了解华侨家族史；在赤坎古镇品尝黄鳝饭、豆腐角等特色美食；骑自行车穿梭于乡间小道，寻访散落的碉楼；住碉楼民宿，体验华侨生活；观看《开平碉楼》纪录片，了解华侨文化；参加开平碉楼摄影大赛。</li>
+                <li><strong>摄影建议：</strong>自力村碉楼与田园风光构图，马降龙碉楼与竹林光影，瑞石楼建筑细节特写，赤坎骑楼街景与人文，方氏灯楼日落剪影，碉楼内部装饰与文物。建议使用广角镜头拍摄全景，长焦镜头捕捉建筑细节。清晨和傍晚光线柔和，适合拍摄。雨天拍摄碉楼倒影别有韵味。</li>
+            </ul>
+            <p><strong>交通信息：</strong>开平市位于广东省中南部。①高铁：到开平南站，转乘公交或出租车到各景区；②汽车：广州、深圳、珠海等地有直达开平的大巴；③自驾：经沈海高速、中开高速到开平出口。各碉楼群分布较散，建议自驾或包车游览。景区间有旅游专线车。距广州120公里，车程1.5小时；距深圳200公里，车程2.5小时。建议与江门、台山、恩平组合游览，体验五邑侨乡文化。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">碉楼</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 开平印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 华侨之乡 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>华侨之乡 · 碉楼兴衰</h3>
+            <p class="text"><strong>华侨出洋：</strong>开平地处珠江三角洲西南部，毗邻港澳。明末清初，开平人开始出洋谋生。1840年鸦片战争后，出洋形成高潮。开平华侨主要前往美国、加拿大、澳大利亚、东南亚等地，从事淘金、修铁路、开餐馆、洗衣等工作。到20世纪初，开平旅外华侨达20余万人，遍布世界67个国家和地区，开平成为著名侨乡。</p>
+            <p class="text"><strong>侨汇建房：</strong>华侨在外辛勤劳动，将积蓄汇回家乡，称为"侨汇"。20世纪初至30年代，开平侨汇达到高峰。华侨用侨汇在家乡购置田产、修建房屋、兴办教育。碉楼就是在这一时期大量兴建。据统计，1912-1937年，开平共建碉楼1648座，占现存碉楼的90%。</p>
+            <p class="text"><strong>社会动乱：</strong>开平地处新会、台山、恩平、新兴四县交界，历来治安不佳。清末民初，社会动荡，盗匪猖獗。加上开平地势低洼，常有洪涝灾害。华侨为保护家乡亲人生命财产安全，兴建兼具防卫和居住功能的碉楼。碉楼成为侨乡的"安全岛"。</p>
+            <p class="text"><strong>碉楼功能：</strong>碉楼按功能分为三类：①更楼（瞭望楼）：建于村口或山岗，用于瞭望、报警；②众楼：由村民集资兴建，用于集体避难；③居楼：由富户独资兴建，集防卫、居住于一体。大多数碉楼为居楼，体现"以楼为家"的理念。</p>
+            <p class="text"><strong>抗日战争：</strong>抗战时期，碉楼发挥了重要作用。1939-1945年，日军三次进犯开平。碉楼成为抗日据点，南楼七烈士、北楼十二烈士等英勇事迹广为传颂。抗战后，碉楼建设基本停止。</p>
+            <p class="text"><strong>保护与复兴：</strong>新中国成立后，碉楼逐渐荒废。1980年代，随着侨乡政策落实，华侨回乡探亲，碉楼重新受到关注。1990年代，开平开始系统调查、保护碉楼。2001年，开平碉楼被列为全国重点文物保护单位。2007年，成功申报世界文化遗产。现开平碉楼成为重要的文化旅游资源。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑奇观 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑奇观 · 中西合璧</h3>
+            <p class="text"><strong>建筑形式：</strong>开平碉楼是多层塔楼式建筑，一般3-7层，最高9层（瑞石楼）。平面多为方形或长方形，立面垂直，墙体厚实。外观特征：①高耸：一般为4-6层，高于周边民居；②坚固：墙厚0.5-1米，用钢筋混凝土或青砖砌筑；③封闭：窗户小，有铁栅栏；④防御：有枪眼、瞭望台、铁门、水箱等防御设施；⑤装饰：顶部有山花、柱廊、穹顶等西式装饰。</p>
+            <p class="text"><strong>建筑材料：</strong>碉楼建筑材料有四种：①泥楼：用黄泥、石灰、砂、红糖等夯筑，最早期的碉楼；②砖楼：用青砖砌筑，清末民初常见；③石楼：用花岗岩石砌筑，坚固但较少；④混凝土楼：用钢筋混凝土建造，1920年代后成为主流。混凝土技术由华侨从国外引进，是开平碉楼的一大特色。</p>
+            <p class="text"><strong>建筑风格：</strong>开平碉楼是"中西建筑艺术的交融"。①中国传统：平面布局、风水观念、装饰图案（福禄寿、龙凤、八卦等）体现中国文化；②古希腊罗马：柱式（多立克、爱奥尼、科林斯）、拱券、山花；③中世纪欧洲：城堡式、哥特式尖券、玫瑰窗；④伊斯兰：穹顶、拱廊、几何图案；⑤文艺复兴：对称、比例、人性化。瑞石楼被称为"建筑艺术的博物馆"。</p>
+            <p class="text"><strong>防御系统：</strong>碉楼是完善的防御体系。①墙体：厚实，防枪弹；②门窗：铁制，厚重；③枪眼：有步枪眼、机枪眼，位置隐蔽；④水箱：顶层设水箱，防火、储水；⑤瞭望台：顶层有瞭望台，视野开阔；⑥传声筒：楼层间有传声筒，便于联系；⑦逃生通道：有的有地下通道。碉楼是"微型城堡"。</p>
+            <p class="text"><strong>内部布局：</strong>碉楼内部功能齐全。①底层：客厅、厨房、杂物间；②中间层：卧室、书房；③顶层：祖堂、祭祖空间；④天台：瞭望、纳凉、晾晒。内部装饰中西结合：有酸枝家具、西洋钟、留声机、瓷砖、彩色玻璃等。铭石楼内保存完整的民国时期家具和生活用品。</p>
+            <p class="text"><strong>建造技术：</strong>碉楼建造体现华侨智慧。①设计：华侨在国外看到喜欢的建筑，画下草图或拍照，带回国内请工匠建造；②材料：水泥、钢筋、瓷砖、彩色玻璃等从国外进口或香港购买；③工匠：本地工匠与外国工程师合作；④施工：用传统工艺与现代技术结合。碉楼是"没有建筑师的建筑"。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 侨乡文化 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>侨乡文化 · 跨国生活</h3>
+            <p class="text"><strong>华侨家族：</strong>开平华侨家族是典型的"两头家"模式。①丈夫在外：在海外打工、经商；②妻子在家：在家乡持家、育子；③侨汇联系：丈夫寄钱回家，妻子写信报平安。这种"男外女内""跨国家庭"模式，塑造了侨乡独特的社会结构。碉楼是华侨与家乡联系的物质纽带。</p>
+            <p class="text"><strong>侨乡教育：</strong>华侨重视教育，捐资办学。开平有"侨乡学府"之称。①开平一中：1925年由华侨捐建，中西合璧建筑；②风采中学：为纪念北宋名臣余靖（谥号"忠襄"，后裔在开平）而建；③开侨中学：1933年由华侨集资创办。华侨子弟在家乡读书，然后出国留学或继承家业。</p>
+            <p class="text"><strong>侨乡民俗：</strong>开平民俗融合中西。①婚姻：有"隔山娶亲"（华侨在国外，妻子在家乡）、"自梳女"（终身不嫁，独立谋生）等特殊婚俗；②节庆：春节、清明、中秋等传统节日隆重，华侨多在此期间回乡；③信仰：既有祖先崇拜、民间信仰，也有基督教、天主教信仰；④饮食：中西结合，有黄鳝饭、豆腐角等本地菜，也有咖啡、西点等外来食品。</p>
+            <p class="text"><strong>侨批文化：</strong>"侨批"是华侨寄给家乡的书信和汇款凭证的合称。开平侨批数量众多，内容涉及家庭琐事、社会新闻、经济状况等，是研究华侨史的"民间档案"。侨批中的"汇款"用于建碉楼、办学校、修道路；"书信"传递亲情、乡情、国情。</p>
+            <p class="text"><strong>艺术影响：</strong>开平碉楼是艺术创作的重要题材。①文学：有《开平碉楼》《侨乡风云》等作品；②影视：《让子弹飞》《一代宗师》《醉拳Ⅱ》等在此取景；③摄影：是摄影爱好者的天堂，有"开平碉楼摄影大赛"；④美术：众多画家以碉楼为题材创作。碉楼成为侨乡的文化符号。</p>
+            <p class="text"><strong>现代传承：</strong>开平侨乡文化在现代得到传承。①侨乡联谊：世界开平华侨联谊会定期举办活动；②侨乡旅游：碉楼旅游带动经济发展；③侨乡研究：成立开平碉楼研究所，出版《开平碉楼与村落》等著作；④侨乡教育：在学校开设侨乡文化课程。开平正在建设"华侨文化生态保护区"。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">侨乡</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 世界遗产 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>世界遗产 · 人类瑰宝</h3>
+            <p class="text"><strong>世界遗产价值：</strong>2007年6月28日，开平碉楼与村落被联合国教科文组织列入《世界遗产名录》。世界遗产委员会评价："开平碉楼与村落是华侨文化的杰出代表，体现了华侨主动接受和融合外来文化的开放性，是中国乡土建筑中独具特色的一类，是活生生的近代建筑博物馆。"开平碉楼符合世界文化遗产的三项标准：①人类创造性的天才杰作；②在一段时期内对建筑、技术、纪念性艺术、城镇规划或景观设计的发展产生重大影响；③能为一种已消逝的文明或文化传统提供独特的见证。</p>
+            <p class="text"><strong>历史价值：</strong>开平碉楼是近代中国社会变迁的见证。①华侨史：记录了华侨出国、奋斗、回乡的历史；②建筑史：展现了中国建筑从传统向现代的转型；③社会史：反映了侨乡独特的社会结构、家庭模式、文化心理；④军事史：见证了近代中国的动荡与抗争。碉楼是"石头的史书"。</p>
+            <p class="text"><strong>建筑价值：</strong>开平碉楼是中国乡土建筑的瑰宝。①独特性：中西合璧的建筑风格，世界罕见；②多样性：1833座碉楼，风格各异，被称为"建筑艺术的万花筒"；③科学性：钢筋混凝土技术的早期应用，体现建筑技术进步；④艺术性：建筑装饰精美，融合中西艺术元素。开平碉楼是"没有建筑师的建筑"的典范。</p>
+            <p class="text"><strong>文化价值：</strong>开平碉楼是华侨文化的物质载体。①文化交融：体现了中西文化的对话与融合；②乡土情结：表达了华侨对家乡的眷恋和责任感；③创新精神：展现了华侨敢于创新、善于学习的精神；④家族记忆：承载了华侨家族的悲欢离合。碉楼是侨乡的"精神家园"。</p>
+            <p class="text"><strong>科学价值：</strong>开平碉楼蕴含丰富的科学技术。①材料科学：早期混凝土技术的研究标本；②结构科学：防御性建筑的结构设计；③环境科学：建筑与自然环境的和谐共生；④保护科学：砖石、混凝土建筑的保护技术。碉楼是研究近代建筑技术的重要实例。</p>
+            <p class="text"><strong>保护与利用：</strong>开平碉楼得到科学保护。①法律保护：2001年列为全国重点文物保护单位；②规划保护：编制《开平碉楼保护规划》，划定核心区、缓冲区；③工程保护：对碉楼进行抢险加固、维修保养；④社区参与：鼓励村民参与保护，保持村落活力；⑤旅游利用：合理开发旅游，收益反哺保护；⑥研究展示：建立开平碉楼博物馆，举办国际学术研讨会。开平碉楼的保护经验，为世界文化遗产保护提供了中国方案。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 开平碉楼华侨之乡，中西合璧建筑奇观 | 五重维度·五种灵韵爱心，点赞评论共话侨乡传奇</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（开平碉楼独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('kaiping_diaolou_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('kaiping_diaolou_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('kaiping_diaolou_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('kaiping_diaolou_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对开平碉楼的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的开平碉楼感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "开平访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

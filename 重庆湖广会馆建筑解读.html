@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>重庆湖广会馆 · 四维解读 | 移民记忆 · 巴渝会馆</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/重庆湖广会馆.jpg" title="重庆湖广会馆" alt="重庆湖广会馆建筑群">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 湖广填川</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 会馆建筑</div>
+        <div class="dim-tab" data-tab="culture">🎪 移民文化</div>
+        <div class="dim-tab" data-tab="value">🌟 城市记忆</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>重庆湖广会馆 · 移民文化的活化石</h3>
+            <p class="text"><strong>传奇：</strong>重庆湖广会馆，又称禹王宫，位于重庆市渝中区东水门长江边，是清代"湖广填四川"移民运动的产物，也是中国现存规模最大、保存最完好的会馆建筑群。会馆始建于清乾隆二十四年（1759年），道光二十六年（1846年）扩建，由湖广（今湖南、湖北）籍移民集资兴建，既是同乡聚会、议事、祭祀的场所，也是清代重庆"八省会馆"之首。建筑群占地8561平方米，建筑面积9210平方米，包括禹王宫、齐安公所、广东公所三大部分，依山就势，层层叠起，气势恢宏。2006年被列为全国重点文物保护单位，是研究清代移民史、商业史、建筑史的重要实物资料。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>禹王宫：</strong>会馆核心建筑，为纪念大禹而建。①戏楼：三层重檐歇山顶，面阔9.8米，进深8.8米，高15米，雕刻精美，是重庆现存最精美的古戏楼；②大殿：面阔五间，进深三间，硬山式屋顶，供奉大禹像；③厢房：两侧有厢房，用于办公、住宿；④天井：青石铺地，有排水系统。禹王宫是湖广移民祭祀、议事、娱乐的中心。</li>
+                <li><strong>齐安公所：</strong>湖北黄州府（古称齐安）籍移民的会馆。①牌楼：门楼为四柱三间三楼式，高8米，雕刻"齐安公所"匾额；②戏楼：与禹王宫戏楼相对，较小但精致；③大殿：供奉关帝，体现移民的忠义精神；④厢房：有议事厅、客房等。齐安公所是"会馆中的会馆"，反映移民的地域组织。</li>
+                <li><strong>广东公所：</strong>广东籍移民的会馆。①门楼：中西合璧风格，有罗马柱、拱券等西式元素；②戏楼：雕刻有岭南风格的狮子、莲花图案；③大殿：供奉妈祖，反映广东沿海的妈祖信仰；④庭院：有假山、水池，小巧玲珑。广东公所体现广东移民的文化特色。</li>
+                <li><strong>古戏楼：</strong>禹王宫戏楼是中国古戏楼的精品。①结构：三重檐歇山顶，飞檐翘角，如大鹏展翅；②雕刻：梁、枋、柱、栏杆上雕刻有《三国演义》《水浒传》《西游记》等戏文故事，人物生动，情节连贯；③音响：戏台呈喇叭形，有扩音效果；④看台：对面有大殿、两侧有厢房作为看台。戏楼是移民文化娱乐的场所。</li>
+                <li><strong>移民博物馆：</strong>设在会馆内，是中国首个移民专题博物馆。①展览：分"湖广填四川""移民之路""会馆春秋""移民生活"等展区；②文物：有移民家谱、契约、农具、生活用品等；③模型：有移民路线图、会馆分布图、移民村落模型等；④多媒体：有"湖广填四川"纪录片、移民故事音频。博物馆是了解移民历史的重要窗口。</li>
+                <li><strong>封火墙：</strong>会馆建筑群的特色。①形式：有"人"字形、"一"字形、"品"字形等多种形式；②功能：防火、防风、防盗；③装饰：墙头有灰塑、彩绘，有吉祥图案；④色彩：以白、灰为主，朴素大方。封火墙与吊脚楼、青瓦房共同构成重庆山地建筑的特色。</li>
+                <li><strong>雕刻艺术：</strong>会馆雕刻精美绝伦。①木雕：戏楼、梁架、门窗上的木雕，题材有戏文故事、花鸟鱼虫、吉祥图案；②石雕：柱础、栏杆、台阶上的石雕，有狮子、麒麟、莲花等；③砖雕：墙面、墀头上的砖雕，工艺精湛；④灰塑：屋脊、山墙上的灰塑，色彩鲜艳。雕刻融合了湖广、巴蜀、江南等地的艺术风格。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，春秋最佳（3-5月，9-11月）。建议上午游览，光线适宜。每年农历六月初六（禹王诞辰）有祭祀活动，春节期间有庙会。会馆开放时间：9:00-17:00（周一闭馆）。夜晚灯光亮起，可欣赏夜景。</li>
+                <li><strong>游览顺序：</strong>大门→禹王宫戏楼→禹王宫大殿→齐安公所→广东公所→移民博物馆→观景平台（看长江、东水门大桥）。建议安排2-3小时。</li>
+                <li><strong>深度体验：</strong>清晨在会馆观景台看长江日出；跟随讲解员，了解"湖广填四川"的历史；在古戏楼听川剧，感受传统戏曲；学习拓片技艺，拓印会馆雕刻；品尝重庆小面、火锅等特色美食；夜游会馆，欣赏灯光下的古建筑；参加移民文化讲座，了解家族迁徙史；购买移民文化文创产品。</li>
+                <li><strong>摄影建议：</strong>会馆建筑群全景与长江、大桥同框，古戏楼建筑细节，雕刻艺术特写，封火墙的韵律感，移民博物馆文物，会馆夜景灯光，建筑与光影的结合。建议使用广角镜头拍摄全景，长焦镜头捕捉雕刻细节。侧光可增强建筑的立体感，傍晚拍摄夜景最佳。</li>
+            </ul>
+            <p><strong>交通信息：</strong>湖广会馆位于重庆市渝中区长江滨江路芭蕉园1号。公交120路、141路、372路、382路、862路到"道门口"站，步行5分钟。轨道交通1号线、6号线"小什字"站8号出口，步行10分钟。从解放碑步行15分钟可达。自驾可停放在会馆停车场。距重庆江北国际机场25公里，车程40分钟；距重庆北站8公里，车程20分钟。周边有解放碑、洪崖洞、长江索道、朝天门等景点。建议与洪崖洞、长江索道、十八梯组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">会馆</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 会馆印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 湖广填川 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>湖广填川 · 移民史诗</h3>
+            <p class="text"><strong>移民背景：</strong>明末清初，四川历经战乱，人口锐减。据记载，明万历六年（1578年）四川有人口310万，到清顺治十八年（1661年）仅剩8万。为恢复经济，清政府推行"湖广填四川"移民政策，从湖南、湖北、广东、江西、福建等地向四川移民。移民从康熙十年（1671年）开始，持续百余年，移民数量达数百万。重庆作为长江上游重要港口，成为移民的重要集散地。</p>
+            <p class="text"><strong>会馆建立：</strong>移民到重庆后，为联络乡谊、互助共济，按籍贯建立会馆。①湖广会馆：湖南、湖北移民共建，乾隆二十四年（1759年）始建；②广东公所：广东移民建，嘉庆年间（1796-1820年）建；③齐安公所：湖北黄州府移民建，道光年间（1821-1850年）建。此外还有江西会馆、福建会馆、陕西会馆、浙江会馆、江南会馆，合称"八省会馆"。</p>
+            <p class="text"><strong>会馆功能：</strong>会馆是移民的社会组织。①联谊：同乡聚会，联络感情；②互助：救济贫病，资助孤儿；③商务：交流信息，调解纠纷；④祭祀：祭祀乡土神祇（湖广祭大禹，广东祭妈祖，福建祭天后）；⑤娱乐：演戏、看戏，丰富生活；⑥教育：兴办义学，教育子弟。会馆是移民的"精神家园"。</p>
+            <p class="text"><strong>商业繁荣：</strong>清代重庆是西南商业中心。湖广会馆所在的东水门一带是商业码头，有"货堆如山，万商云集"之称。会馆不仅是同乡组织，也是商业行会。商人在会馆洽谈生意、存储货物、住宿休息。会馆有"牙行"（中介）、"镖局"（保安）、"银号"（金融）等商业服务机构。湖广会馆是重庆商业繁荣的见证。</p>
+            <p class="text"><strong>近代变迁：</strong>清末民初，会馆功能逐渐衰落。民国时期，部分会馆改为学校、工厂、民居。抗战时期，重庆成为陪都，会馆收容难民。新中国成立后，会馆被单位占用。1980年代，会馆年久失修，濒临倒塌。2003年，重庆市启动湖广会馆修复工程。2005年，修复完成，对外开放。2006年，列为全国重点文物保护单位。</p>
+            <p class="text"><strong>保护修复：</strong>湖广会馆修复工程历时三年。①考古：清理出原有建筑基址；②修复：按"修旧如旧"原则，修复禹王宫、齐安公所、广东公所；③重建：重建已毁的厢房、走廊；④环境：整治周边环境，修建观景平台；⑤展示：建立移民博物馆。修复工程获"联合国教科文组织亚太地区文化遗产保护奖"。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 会馆建筑 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>会馆建筑 · 巴渝特色</h3>
+            <p class="text"><strong>总体布局：</strong>湖广会馆依山面江，坐东北朝西南。①轴线：禹王宫、齐安公所、广东公所沿江一字排开，各有中轴线；②层次：建筑从江边到山顶，层层升高，形成"台、吊、挑、梭、靠"的山地建筑特色；③院落：各会馆有大门、戏楼、大殿、厢房，围合成四合院；④连接：会馆之间有巷道、台阶相连。建筑与地形完美结合，体现"天人合一"的思想。</p>
+            <p class="text"><strong>建筑结构：</strong>会馆为木结构建筑。①柱：用直径30-50厘米的楠木、杉木，柱础有鼓形、方形、莲花形；②梁：穿斗式与抬梁式结合，大梁直径达60厘米；③墙：用青砖砌筑，有封火墙；④屋顶：硬山、悬山、歇山顶，铺小青瓦。建筑结构严谨，抗震性能好。</p>
+            <p class="text"><strong>戏楼建筑：</strong>禹王宫戏楼是建筑精华。①屋顶：三重檐歇山顶，檐角高翘，如飞鸟展翅；②台口：宽6米，深5米，高2.5米，呈八字形；③藻井：穹窿形藻井，有扩音效果；④看台：大殿、厢房作为看台，可容数百人。戏楼雕刻精美，有"无木不雕，无石不刻"之说。</p>
+            <p class="text"><strong>装饰艺术：</strong>会馆装饰丰富多彩。①木雕：戏楼梁架雕刻《三国演义》"桃园结义""三顾茅庐"等故事，人物多达数百；②石雕：柱础雕刻狮子、麒麟、莲花，栏杆雕刻"暗八仙"；③砖雕：墙面雕刻"福禄寿喜"等吉祥图案；④灰塑：屋脊塑有鳌鱼、宝瓶、仙人。装饰融合湖广、巴蜀、江南风格。</p>
+            <p class="text"><strong>封火墙：</strong>会馆封火墙独具特色。①形式：有"人"字形（如人群）、"一"字形（如屏风）、"品"字形（如品字）等；②功能：防火、防风、防盗，适应重庆炎热多雨的气候；③装饰：墙头有灰塑、彩绘，有花草、鸟兽、人物等图案；④色彩：以白、灰为主，朴素大方。封火墙是会馆的标志性元素。</p>
+            <p class="text"><strong>建筑材料：</strong>会馆采用本地材料。①木材：用本地楠木、杉木，质地坚硬，耐腐蚀；②石材：用本地青石，雕刻精细；③砖瓦：用本地黏土烧制的青砖、小青瓦；④石灰：用本地石灰，做灰塑、彩绘。材料体现地方特色，也降低了建筑成本。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 移民文化 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>移民文化 · 乡愁记忆</h3>
+            <p class="text"><strong>祭祀文化：</strong>会馆是移民祭祀的场所。①禹王祭祀：湖广移民祭祀大禹，祈求风调雨顺；②关帝祭祀：商人祭祀关羽，祈求生意兴隆；③妈祖祭祀：广东移民祭祀妈祖，祈求水路平安；④祖先祭祀：清明、中元祭祀祖先，不忘根本。祭祀活动增强移民的凝聚力。</p>
+            <p class="text"><strong>戏曲文化：</strong>会馆戏楼是戏曲演出中心。①川剧：演出《白蛇传》《柳荫记》等川剧经典；②汉剧：湖广移民带来汉剧，在会馆演出；③粤剧：广东移民演出粤剧；④傩戏：祭祀时演出傩戏，驱邪纳福。戏曲既娱乐生活，也传播文化。</p>
+            <p class="text"><strong>饮食文化：</strong>移民带来各地饮食。①湖广菜：有蒸菜、煨汤，口味偏咸鲜；②粤菜：有烧腊、煲仔饭，口味清淡；③川菜：融合各地口味，形成麻辣特色。会馆有厨房，可办"九大碗"等宴席。饮食文化是移民文化的重要组成部分。</p>
+            <p class="text"><strong>方言文化：</strong>移民带来各地方言。①湖广话：湖南、湖北方言，是重庆方言的基础；②粤语：广东移民说粤语；③客家话：部分广东、江西移民说客家话。会馆是同乡说家乡话的场所。多种方言交融，形成重庆方言的特色。</p>
+            <p class="text"><strong>民俗活动：</strong>会馆有丰富的民俗活动。①庙会：春节、端午、中秋有庙会，热闹非凡；②龙舟：端午在东水门长江划龙舟；③舞狮：春节舞狮，祈求吉祥；④灯会：元宵办灯会，赏灯猜谜。民俗活动传承家乡文化，丰富移民生活。</p>
+            <p class="text"><strong>家族文化：</strong>移民重视家族传承。①修谱：编修族谱，记录家族历史；②建祠：在会馆设祠堂，供奉祖先牌位；③助学：设立义学，资助子弟读书；④济贫：救助族中贫困者。家族文化增强移民的归属感。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">乡情</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 城市记忆 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>城市记忆 · 重庆名片</h3>
+            <p class="text"><strong>历史价值：</strong>湖广会馆是清代移民史的见证。①移民史：记录"湖广填四川"的移民过程；②商业史：反映清代重庆的商业繁荣；③建筑史：体现重庆山地建筑的特色；④社会史：展示移民的社会组织、文化生活。会馆是研究清代重庆社会的"活化石"。</p>
+            <p class="text"><strong>建筑价值：</strong>湖广会馆是中国会馆建筑的典范。①类型价值：是中国现存规模最大、保存最完好的会馆建筑群；②艺术价值：建筑雕刻精美，装饰丰富，是雕刻艺术的宝库；③技术价值：适应山地地形的建筑技术，有重要参考价值；④科学价值：封火墙、排水系统等设计科学。会馆是"山地建筑的博物馆"。</p>
+            <p class="text"><strong>文化价值：</strong>湖广会馆是移民文化的重要载体。①移民文化：记录移民的乡愁、奋斗、融合；②戏曲文化：保存古戏楼，传承传统戏曲；③祭祀文化：保留民间信仰仪式；④民俗文化：传承传统民俗活动。会馆是移民文化的"基因库"。</p>
+            <p class="text"><strong>社会价值：</strong>湖广会馆在重庆社会生活中具有重要地位。①城市名片：是重庆重要的历史文化景观；②情感纽带：连接湖广移民后裔的情感；③教育功能：是爱国主义教育、乡土教育的重要基地；④社区功能：举办文化活动，丰富市民生活。会馆是重庆的"精神地标"。</p>
+            <p class="text"><strong>旅游价值：</strong>湖广会馆是重庆重要的旅游景点。①景观价值：建筑与长江、大桥构成独特景观；②文化价值：移民文化、建筑文化、戏曲文化吸引游客；③经济价值：年接待游客数十万人次，带动旅游发展；④品牌价值："湖广会馆"成为重庆文化旅游的重要品牌。会馆是重庆旅游的"必游之地"。</p>
+            <p class="text"><strong>保护与利用：</strong>湖广会馆得到科学保护。①法律保护：2006年列为全国重点文物保护单位；②规划保护：编制保护规划，划定保护区、建设控制地带；③工程保护：2003-2005年进行大规模修复，恢复历史风貌；④研究展示：建立移民博物馆，举办展览、讲座；⑤合理利用：发展文化旅游，举办戏曲演出、民俗活动；⑥社区参与：与当地社区合作，共同保护。湖广会馆的保护经验，为历史建筑保护提供了成功范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 重庆湖广会馆移民记忆，巴渝建筑诉说乡愁 | 五重维度·五种灵韵爱心，点赞评论共话城市文脉</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（重庆湖广会馆独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('chongqing_huguang_guildhall_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('chongqing_huguang_guildhall_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('chongqing_huguang_guildhall_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('chongqing_huguang_guildhall_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对湖广会馆的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的湖广会馆感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "会馆访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

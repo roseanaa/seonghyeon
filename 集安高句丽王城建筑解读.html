@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>集安高句丽王城 · 四维解读 | 东方金字塔 · 东北亚文明</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <div class="pic">
+        <img src="./image/集安高句丽王城.jpg" title="集安高句丽王城" alt="集安高句丽王城与将军坟">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 高句丽王朝</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 都城建筑</div>
+        <div class="dim-tab" data-tab="culture">🎪 高句丽文明</div>
+        <div class="dim-tab" data-tab="value">🌟 世界遗产</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>集安高句丽王城 · 东方金字塔</h3>
+            <p class="text"><strong>传奇：</strong>集安高句丽王城遗址位于吉林省集安市，是公元3年至427年高句丽王朝的都城遗址，存续时间长达425年。这里包括国内城、九都山城、王陵（将军坟、太王陵、千秋墓等）及贵族墓葬（好太王碑、五盔坟等），构成了完整的高句丽都城体系。2004年，集安高句丽王城、王陵及贵族墓葬被联合国教科文组织列入《世界遗产名录》，成为吉林省首个世界文化遗产。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>国内城：</strong>高句丽第二座都城，平面呈方形，周长2686米，城墙为石砌，现存城墙最高处3-4米。城内发现宫殿遗址、衙署遗址、居民区遗址。国内城是中国保存最完整的高句丽时期平原都城遗址。</li>
+                <li><strong>九都山城（尉那岩城）：</strong>高句丽的军事卫城，建于国内城北2.5公里的九都山上。山城利用山脊天然走向，城墙用石块垒砌，周长6951米，最高海拔676米。山城内有宫殿遗址、兵营遗址、蓄水池、瞭望台等军事设施。</li>
+                <li><strong>将军坟：</strong>被誉为"东方金字塔"，是高句丽第20代王长寿王的陵墓。建于5世纪初，用1100余块精琢花岗岩石条垒砌，呈方坛阶梯式，共7级，高12.4米，边长31.58米。墓室位于第五级中央，内有石棺两座。</li>
+                <li><strong>好太王碑：</strong>高句丽第19代王好太王的记功碑，建于公元414年。碑为角砾凝灰岩，呈方柱形，高6.39米，宽1.34-2米，重约37吨。碑文四面环刻，共44行1775字，用汉字隶书镌刻，记载了高句丽建国神话、好太王功绩等，是研究高句丽历史的第一手资料。</li>
+                <li><strong>五盔坟：</strong>五座大型封土石室墓，编号4号、5号墓最为著名。墓室四壁、藻井绘有精美壁画，内容有四神（青龙、白虎、朱雀、玄武）、伏羲女娲、仙人、莲花等，色彩鲜艳，是高句丽壁画艺术的顶峰。</li>
+                <li><strong>太王陵：</strong>好太王的陵墓，位于禹山南麓。陵墓为方坛阶梯石室墓，用花岗岩条石砌成，现存7级，高14.8米，边长66米。墓前有好太王碑，陵园有祭台、石狮等遗迹。</li>
+                <li><strong>丸都山城宫殿遗址：</strong>九都山城内的大型宫殿建筑群，面积约1万平方米。遗址有大型台基、柱础、瓦当、砖瓦等，出土"千秋万岁"瓦当、"太宁四年"文字砖等重要文物。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>5-10月最佳，气候宜人。6-8月为雨季，需备雨具；9-10月秋高气爽，红叶满山。冬季（11-3月）寒冷，但雪景别具特色。</li>
+                <li><strong>游览顺序：</strong>高句丽文物展示中心→国内城遗址→好太王碑→太王陵→将军坟→五盔坟→丸都山城遗址。建议安排1-2天时间。</li>
+                <li><strong>深度体验：</strong>参观文物展示中心了解高句丽历史，登九都山城俯瞰集安全景，探访将军坟感受"东方金字塔"的雄伟，欣赏五盔坟壁画领略高句丽艺术，研读好太王碑文追溯千年历史。</li>
+                <li><strong>摄影建议：</strong>将军坟全景（东方金字塔），好太王碑特写，五盔坟壁画细节，九都山城远眺，国内城遗址城墙，秋季红叶映衬下的王陵。建议使用广角镜头拍摄建筑全景，微距镜头拍摄壁画细节。</li>
+            </ul>
+            <p><strong>交通信息：</strong>集安市位于吉林省东南部，通化市代管。距通化市103公里，距长春市400公里。可乘飞机到通化机场，转乘汽车到集安（车程1.5小时）。火车可到通化站，转汽车。自驾从通化经G303国道到集安。集安市区到各遗址点有旅游专线车。建议与长白山、通化葡萄酒城组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">王城</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 高句丽印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 高句丽王朝 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>高句丽王朝 · 七百年兴衰</h3>
+            <p class="text"><strong>建国与扩张：</strong>高句丽是中国古代东北地区少数民族政权，由夫余人朱蒙于公元前37年（西汉元帝建昭二年）在纥升骨城（今辽宁省桓仁县）建立。公元3年（西汉平帝元始三年），第二代王琉璃明王迁都国内城（今集安），并建九都山城为军事卫城。从此，集安作为高句丽都城长达425年，经历了高句丽从兴起、强盛到衰落的全过程。</p>
+            <p class="text"><strong>集安时期：</strong>公元3年至427年，高句丽以集安为都城，历19位国王。期间重要事件：①好太王时期（391-412年）：扩张领土，击败倭寇，占领辽东，高句丽进入鼎盛时期；②长寿王时期（413-491年）：迁都平壤，但集安仍为"别都"；③广开土王时期（391-412年）：在位22年，领土扩大一倍，死后葬于集安太王陵。这一时期高句丽控制范围包括今吉林、辽宁大部及朝鲜半岛北部。</p>
+            <p class="text"><strong>迁都平壤：</strong>公元427年，第20代王长寿王（高琏）将都城从集安迁至平壤（今朝鲜平壤）。迁都原因：①军事需要：为向朝鲜半岛南部扩张；②地理优势：平壤地处大同江平原，农业发达；③安全考虑：远离中原王朝威胁。迁都后，集安仍为高句丽"别都"，王陵和贵族墓葬仍多建于此。</p>
+            <p class="text"><strong>高句丽灭亡：</strong>公元668年（唐高宗总章元年），唐朝与新罗联军攻灭高句丽。高句丽存续705年，历28位国王。灭亡原因：①内部矛盾：贵族争权，王权衰弱；②外部压力：唐朝崛起，新罗扩张；③战略失误：与隋唐长期战争消耗国力。高句丽灭亡后，大部分人口融入中原汉族、渤海国、新罗等民族。</p>
+            <p class="text"><strong>重要国王：</strong>①朱蒙（东明圣王）：高句丽开国君主，传说为天帝之子与河伯之女所生；②琉璃明王：迁都国内城，奠定高句丽基业；③故国原王：重建九都山城，抵抗前燕慕容皝进攻；④好太王（广开土王）：高句丽最伟大的国王，领土扩张最广；⑤长寿王：迁都平壤，在位79年，为高句丽在位时间最长的国王。</p>
+            <p class="text"><strong>历史地位：</strong>高句丽是中国古代东北地区重要的少数民族政权，在东北亚历史上具有重要地位：①创造了独特的山城平原相结合的都城体系；②发展了独具特色的高句丽文化（壁画、音乐、舞蹈）；③促进了东北亚各民族的交流融合；④为渤海国、辽、金等后续政权的建立奠定了基础。高句丽历史是中国历史和朝鲜历史的重要组成部分。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 都城建筑 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>都城建筑 · 山城平原结合</h3>
+            <p class="text"><strong>"一都二城"体系：</strong>高句丽创造了独特的"平原城+山城"的都城防御体系。国内城为行政、经济、文化中心，位于鸭绿江畔的平原；九都山城为军事防御中心，建在险峻的山上。平时国王居国内城，战时可退守山城。这种"一都二城"的模式是高句丽建筑的独创，影响了后世渤海国、辽、金等政权的都城建设。</p>
+            <p class="text"><strong>国内城建筑特点：</strong>①城墙：石砌城墙，内外壁用规整石条垒砌，中间填碎石黄土。墙基宽7-10米，顶宽1-2米，原高约8-10米。城墙有马面（突出城墙的防御设施）、角楼、城门等设施；②城门：东西南北各一门，东曰"绥远门"，西曰"通化门"，南曰"安阜门"，北曰"武宁门"；③城内布局：中轴线不明显，宫殿区位于城北部，衙署区位于城东部，居民区位于城南部，手工业区位于城西部。</p>
+            <p class="text"><strong>九都山城建筑特点：</strong>①城墙：依山脊而建，用自然石块垒砌，全长6951米。城墙分段建造，陡峭处用石块砌筑，平缓处筑有女墙（矮墙）；②城门：有7座城门，其中南门为正门，宽4米，有瓮城（城门外的防御性小城）；③宫殿：山城内发现大型宫殿遗址，面积约1万平方米，有台基、柱础、瓦当等；④军事设施：有兵营、仓库、蓄水池、瞭望台、烽火台等。</p>
+            <p class="text"><strong>王陵建筑类型：</strong>高句丽王陵主要有三种类型：①积石墓：早期王陵，用自然石块堆积而成，如千秋墓、西大墓；②方坛阶梯积石墓：中期王陵，用加工规整的石条砌成方坛阶梯状，如将军坟、太王陵；③封土石室墓：晚期王陵，地下为石室墓，地上封土，如五盔坟。将军坟是方坛阶梯积石墓的顶峰，共用1100余块精琢花岗岩石条。</p>
+            <p class="text"><strong>墓葬结构：</strong>高句丽墓葬由墓道、甬道、墓室组成。①墓道：斜坡式或阶梯式，长2-10米；②甬道：连接墓道与墓室的通道，有的有石门；③墓室：单室或双室，方形或长方形，穹窿顶或叠涩顶（用砖石层层内收形成的顶）。墓室放置石棺或木棺，有的有棺床。</p>
+            <p class="text"><strong>建筑技术：</strong>高句丽建筑技术先进：①石材加工：能开采、运输、加工巨大石料，将军坟最大石条长3.2米，宽1.2米，厚0.8米，重约20吨；②砌筑技术：采用"干砌法"（不用黏合剂），石缝严密，刀插不进；③木结构：宫殿采用木构架，有柱、梁、枋、斗拱等；④瓦作技术：烧制板瓦、筒瓦、瓦当，瓦当有莲花纹、忍冬纹、文字纹等。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 高句丽文明 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>高句丽文明 · 东北亚之光</h3>
+            <p class="text"><strong>壁画艺术：</strong>高句丽壁画是中国古代壁画艺术的瑰宝，主要发现于集安、桓仁、平壤等地。壁画内容：①早期（4-5世纪）：现实生活题材，如狩猎、歌舞、角抵（摔跤）、车马出行、宴饮等，代表墓葬有角抵墓、舞踊墓；②中期（5-6世纪）：四神（青龙、白虎、朱雀、玄武）题材，代表墓葬有五盔坟4号、5号墓；③晚期（6-7世纪）：佛教题材，如莲花、飞天、菩萨等。壁画色彩鲜艳，线条流畅，具有极高的艺术价值。</p>
+            <p class="text"><strong>文字与碑刻：</strong>高句丽使用汉字，但有自己的语言（属扶余语系）。好太王碑是现存最完整的高句丽文字资料，碑文1775字，用汉字隶书镌刻，内容包括：①高句丽建国神话（邹牟王出自北夫余）；②好太王功绩（征碑丽、伐百济、救新罗、败倭寇）；③守墓制度（330户烟户守墓）。此外还有"牟头娄墓志""申牟墓志""冉牟墓志"等碑刻。</p>
+            <p class="text"><strong>宗教信仰：</strong>高句丽信仰多元：①原始崇拜：崇拜太阳、山川、祖先，有祭天仪式；②道教：早期受中原道教影响，壁画中有伏羲、女娲、仙人等形象；③佛教：公元372年，前秦苻坚遣使送佛像、佛经，佛教传入高句丽。集安长川1号墓壁画有礼佛图，丸都山城出土"释迦如来"铭文砖；④儒教：高句丽设"太学"，教授儒家经典，好太王碑文体现了儒家"忠孝"思想。</p>
+            <p class="text"><strong>音乐舞蹈：</strong>高句丽人能歌善舞。壁画中有丰富的音乐舞蹈场景：①乐器：有筝、琵琶、阮咸、横笛、竖笛、筚篥、鼓等；②舞蹈：有长袖舞、鼓舞、假面舞等；③杂技：有角抵（摔跤）、马术、走索等。高句丽音乐对唐燕乐、日本雅乐产生影响，《隋书·音乐志》记载"高丽乐"为隋唐"七部乐""九部乐""十部乐"之一。</p>
+            <p class="text"><strong>生活习俗：</strong>①服饰：男子穿短衣长裤，束腰带，戴折风（一种帽子）；女子穿长裙短襦。贵族服饰华丽，有织锦、刺绣；②饮食：主食为粟、稻、麦，副食有猪、牛、羊、鱼等，喜饮酒；③居住：平民住半地穴式房屋，贵族住地面建筑，有火炕取暖；④丧葬：实行厚葬，有棺椁、殉葬品，墓室绘壁画。</p>
+            <p class="text"><strong>对外交流：</strong>高句丽地处东北亚交通要道，与中原王朝、朝鲜半岛诸国、日本有广泛交流：①与中原：向魏晋南北朝、隋唐朝贡，接受册封，学习汉文化；②与朝鲜半岛：与百济、新罗争战，也进行贸易、文化交流；③与日本：通过朝鲜半岛与日本交往，好太王碑记载击败倭寇，日本出土高句丽式马具、武器。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">文明</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 世界遗产 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>世界遗产 · 人类瑰宝</h3>
+            <p class="text"><strong>世界遗产价值：</strong>2004年7月1日，集安高句丽王城、王陵及贵族墓葬在第28届世界遗产委员会会议上被列入《世界遗产名录》。世界遗产委员会评价："高句丽王城、王陵及贵族墓葬体现了人类创造和智慧的杰作；作为历史早期建造的都城和墓葬，它反映了汉民族对其他民族文化的影响以及风格独特的壁画艺术；它也体现了已经消失的高句丽文明；高句丽王朝利用石块、泥土等材料建筑的都城，对后来产生了影响；它展现了人类的创造与大自然的完美结合。"</p>
+            <p class="text"><strong>历史价值：</strong>集安高句丽遗址是研究高句丽历史文化的实物宝库。①国内城、九都山城是研究高句丽都城制度、城市规划、军事防御的重要资料；②将军坟、太王陵、千秋墓等王陵是研究高句丽丧葬制度、建筑技术的珍贵遗存；③好太王碑是研究高句丽历史、语言文字的第一手史料；④五盔坟等墓葬壁画是研究高句丽艺术、生活习俗的直观图像资料。这些遗址填补了文献记载的不足。</p>
+            <p class="text"><strong>艺术价值：</strong>高句丽壁画是中国古代绘画艺术的瑰宝。①题材丰富：涵盖社会生活、宗教信仰、神话传说、天文星象等；②技艺高超：采用线描、平涂、晕染等技法，色彩鲜艳，历经1500多年仍保存较好；③风格独特：既受中原汉文化影响，又有本土特色，形成粗犷豪放、生动传神的艺术风格；④影响深远：对渤海国、辽、金壁画及朝鲜半岛、日本壁画产生影响。</p>
+            <p class="text"><strong>建筑价值：</strong>高句丽建筑体现了古代工匠的智慧。①"山城+平原城"的都城体系是高句丽的独创，对后世东北亚城市建筑产生深远影响；②将军坟等石构建筑，石材加工精细，砌筑严密，历经1500多年风雨仍基本完好，体现了高超的建筑技术；③墓葬的穹窿顶、叠涩顶结构，解决了大跨度空间的承重问题，是建筑技术的重要突破。</p>
+            <p class="text"><strong>科学价值：</strong>高句丽遗址包含多学科研究价值。①考古学：遗址地层清晰，出土文物丰富，是研究高句丽考古学文化的标尺；②历史学：好太王碑等碑刻文献，可补正史之缺；③建筑学：石构建筑技术、木结构技术、城市规划理念等；④艺术史：壁画艺术风格、技法、题材演变；⑤民族学：高句丽民族的形成、发展、融合过程。</p>
+            <p class="text"><strong>保护与传承：</strong>中国政府高度重视高句丽遗址保护：①法律保护：1961年，将军坟、好太王碑等被列为第一批全国重点文物保护单位；②规划保护：2003年，编制《集安高句丽王城、王陵及贵族墓葬保护规划》；③工程保护：实施王陵抢险加固、壁画保护、遗址展示等工程；④研究展示：建立高句丽文物展示中心，出版《集安高句丽王陵》《好太王碑研究》等著作；⑤合理利用：发展文化旅游，让文物"活"起来，传承高句丽文化。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 高句丽王城七百年，东方金字塔耀古今 | 五重维度·五种灵韵爱心，点赞评论共话东北亚文明</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（集安高句丽王城独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('jian_gaogouli_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('jian_gaogouli_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('jian_gaogouli_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('jian_gaogouli_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对高句丽王城的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的高句丽感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "高句丽访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

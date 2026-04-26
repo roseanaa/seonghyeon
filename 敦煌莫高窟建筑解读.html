@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>敦煌莫高窟 · 四维解读 | 世界佛教艺术宝库</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/敦煌莫高窟.jpg" title="敦煌莫高窟" alt="莫高窟九层楼与壁画">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 千年佛国</div>
+        <div class="dim-tab" data-tab="art">🎨 艺术宝库</div>
+        <div class="dim-tab" data-tab="culture">🎪 敦煌文化</div>
+        <div class="dim-tab" data-tab="value">🌟 世界遗产</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>敦煌莫高窟 · 世界佛教艺术宝库</h3>
+            <p class="text"><strong>传奇：</strong>敦煌莫高窟，俗称千佛洞，位于甘肃省敦煌市东南25公里处的鸣沙山东麓断崖上，始建于十六国时期的前秦建元二年（366年），历经十六国、北朝、隋、唐、五代、西夏、元等历代的兴建，形成巨大的规模。现有洞窟735个，壁画4.5万平方米，泥质彩塑2415尊，是世界上现存规模最大、内容最丰富的佛教艺术圣地。莫高窟与山西大同云冈石窟、河南洛阳龙门石窟、甘肃天水麦积山石窟并称为"中国四大石窟"。1987年，莫高窟被联合国教科文组织列入《世界文化遗产名录》。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>九层楼（第96窟）：</strong>莫高窟的标志性建筑，窟内供奉着世界第三大佛——弥勒佛坐像。佛像高35.5米，为石胎泥塑，建造于唐代，是莫高窟最大的佛像。九层楼外观为九层木构窟檐，高45米，依山而建，气势雄伟。站在九层楼前，可感受盛唐佛教艺术的恢弘气势。这里是游客必到的打卡地。</li>
+                <li><strong>藏经洞（第17窟）：</strong>1900年，道士王圆箓在清理积沙时偶然发现藏经洞。洞内藏有公元4世纪至11世纪的佛教经卷、社会文书、刺绣、绢画、法器等文物5万余件，涉及多种古代语言文字。藏经洞的发现被誉为"20世纪中国考古学上的一次重大发现"，但随后大量文物流失海外，成为"敦煌学"的伤心史。</li>
+                <li><strong>飞天壁画：</strong>莫高窟最著名的艺术形象。飞天是佛教中的香音之神，在壁画中表现为凌空飞舞的天人。莫高窟有4500余身飞天，形态各异，有的手持莲花，有的散花奏乐，衣带飘扬，姿态优美。第112窟的"反弹琵琶"飞天，第320窟的"双飞天"，都是飞天艺术的代表作。飞天是敦煌艺术的象征。</li>
+                <li><strong>中心塔柱窟：</strong>北朝时期典型的窟型。中心塔柱窟在窟内中央设一方形塔柱，塔柱四面开龛造像，供僧人绕塔礼拜。代表窟有第254窟、第428窟等。塔柱四面壁画内容连贯，构成完整的佛教故事。中心塔柱窟反映了印度佛教石窟艺术与中国建筑艺术的结合。</li>
+                <li><strong>涅槃窟（第158窟）：</strong>唐代大型涅槃窟。窟内塑有长15.8米的释迦牟尼佛涅槃像（卧佛），佛像神态安详，表情慈悲。窟内壁画描绘了佛弟子、菩萨、天人等哀悼佛陀涅槃的场景，气氛肃穆。涅槃窟是莫高窟艺术成熟期的代表作。</li>
+                <li><strong>数字展示中心：</strong>为了更好地保护洞窟文物，同时让游客更好地了解莫高窟艺术，敦煌研究院建立了数字展示中心。中心播放《千年莫高》和《梦幻佛宫》两部数字电影。《千年莫高》介绍莫高窟的历史背景，《梦幻佛宫》是球幕电影，展示7个经典洞窟的高清影像。观看数字电影是参观莫高窟的必要环节。</li>
+                <li><strong>敦煌研究院陈列中心：</strong>位于莫高窟景区内，是了解敦煌文化的重要场所。陈列中心有"敦煌石窟艺术陈列展""敦煌藏经洞文物陈列展""敦煌研究院发展史展"等展览，通过复制洞窟、文物复制品、图片、影像等形式，全面展示敦煌艺术。这里还展示有敦煌文物保护的科学成果。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>5月至10月是最佳游览时间，此时气候适宜。7-8月是旅游旺季，游客最多，建议提前预约。莫高窟实行预约参观制，每日限量6000人，旺季需提前1个月预约。开放时间：旺季（4月1日-11月30日）8:00-18:00，淡季（12月1日-次年3月31日）9:00-17:30。</li>
+                <li><strong>参观流程：</strong>数字展示中心观看两部电影（约1小时）→乘坐景区摆渡车前往莫高窟（约15分钟）→跟随讲解员参观8个洞窟（约1.5小时）→自由参观九层楼、藏经洞等→参观敦煌研究院陈列中心→返回。全程需3-4小时。</li>
+                <li><strong>深度体验：</strong>清晨第一批进入洞窟，享受宁静的参观环境；跟随高级讲解员参观特窟（需额外付费）；在数字展示中心观看高清球幕电影，感受洞窟细节；参观敦煌研究院，了解文物保护工作；学习敦煌壁画临摹，体验传统技艺；晚上观看《又见敦煌》情境融入式演出，感受敦煌历史；住敦煌市区，品尝驴肉黄面、杏皮水等特色美食；参观敦煌博物馆，系统了解敦煌历史；前往榆林窟、西千佛洞，看更多石窟艺术。</li>
+                <li><strong>摄影建议：</strong>九层楼外景，窟区崖壁全景，飞天壁画特写，彩塑佛像细节，藏经洞外观，数字展示中心建筑，敦煌研究院陈列中心展品，洞窟光影效果。注意：洞窟内严禁拍照，只能在外部指定区域拍摄。建议使用广角镜头拍摄建筑全景，长焦镜头拍摄崖壁细节。偏振镜可减少玻璃反光。</li>
+            </ul>
+            <p><strong>交通信息：</strong>莫高窟位于敦煌市东南25公里处。从敦煌市区出发：①公交：敦煌饭店对面乘12路公交到莫高窟数字展示中心；②出租车：车程30分钟，车费约50元；③自驾：有停车场。莫高窟实行预约制，需提前在"莫高窟参观预约网"预约。数字展示中心是参观起点。周边景点有鸣沙山月牙泉（25公里）、阳关（60公里）、玉门关（90公里）、雅丹地质公园（180公里）。距敦煌机场13公里，车程20分钟；距敦煌火车站12公里，车程20分钟。建议与鸣沙山月牙泉、阳关、玉门关组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">石窟</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 莫高窟印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 千年佛国 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>千年佛国 · 丝路明珠</h3>
+            <p class="text"><strong>开窟缘起：</strong>前秦建元二年（366年），僧人乐僔行至鸣沙山，忽见金光闪耀，如现万佛，于是在岩壁上开凿了第一个洞窟。不久，法良禅师在乐僔窟旁开凿了第二个洞窟。此后，开窟造像的活动延续了千年。莫高窟的开凿与丝绸之路的兴盛密不可分，敦煌是丝路咽喉，商旅、使节、僧侣往来频繁，促进了佛教传播和艺术交流。</p>
+            <p class="text"><strong>历代营建：</strong>莫高窟历经千年营建。①十六国北朝：开凿早期洞窟，风格受印度、中亚影响；②隋代：统一后，开窟活动兴盛，洞窟增多；③唐代：鼎盛期，艺术水平最高，开窟最多；④五代宋：归义军时期，仍有开凿；⑤西夏元：少数民族政权时期，艺术有民族特色；⑥明清：衰落期，少有开凿。历代营建形成今日规模。</p>
+            <p class="text"><strong>藏经洞发现：</strong>1900年6月22日，道士王圆箓在清理第16窟积沙时，发现北壁后的藏经洞。洞内藏有公元4-11世纪的各类文书和艺术品。这些文物是研究古代政治、经济、文化、宗教的珍贵资料。但随后英、法、俄、日等国的探险家以不正当手段获取大量文物，造成文物流失。藏经洞的发现与文物流失，是近代中国文物史的痛。</p>
+            <p class="text"><strong>敦煌学兴起：</strong>藏经洞文物流失后，在国际学界引发研究热潮，形成"敦煌学"。陈寅恪说："敦煌者，吾国学术之伤心史也。"20世纪30-40年代，中国学者开始敦煌学研究。新中国成立后，敦煌研究院成立，敦煌学研究中心回归中国。如今，敦煌学已成为国际显学。</p>
+            <p class="text"><strong>保护历程：</strong>莫高窟保护始于20世纪40年代。①1944年，成立敦煌艺术研究所（敦煌研究院前身）；②新中国成立后，国家重视保护，多次拨款维修；③1961年，列为全国重点文物保护单位；④1987年，列入《世界遗产名录》；⑤2011年，敦煌石窟保护研究陈列中心建成。保护工作从抢救性保护发展到预防性保护。</p>
+            <p class="text"><strong>现代发展：</strong>莫高窟的保护、研究、展示进入新阶段。①数字敦煌：利用数字技术保存、展示壁画；②游客管理：实行预约制，控制参观人数；③国际合作：与各国机构合作保护、研究；④文化传播：通过展览、演出、影视传播敦煌文化。莫高窟是"保护、研究、弘扬"的成功典范。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 艺术宝库 爱心: 🎨 -->
+    <div class="dim-content" id="art-content" data-dim="art">
+        <div class="word">
+            <h3>艺术宝库 · 壁画彩塑</h3>
+            <p class="text"><strong>壁画题材：</strong>莫高窟壁画题材丰富。①佛像画：描绘佛、菩萨、弟子、天王等；②经变画：将佛经内容变为图画，如《西方净土变》《弥勒经变》；③本生故事：讲述释迦牟尼前世善行的故事；④佛传故事：讲述释迦牟尼生平；⑤因缘故事：讲述因果报应的故事；⑥供养人像：出资开窟者的画像；⑦装饰图案：莲花、忍冬、联珠等。壁画是佛教艺术的百科全书。</p>
+            <p class="text"><strong>壁画技法：</strong>壁画绘制技法多样。①地仗：在石壁抹草泥、麻泥、细泥，形成绘画面；②起稿：用土红或淡墨线起稿；③上色：用矿物颜料，有石青、石绿、朱砂、土红等；④勾线：最后用墨线或色线勾勒。壁画色彩千年不变，得益于矿物颜料的稳定性。</p>
+            <p class="text"><strong>彩塑艺术：</strong>莫高窟彩塑形式多样。①圆塑：立体塑像，用于主尊；②浮塑：半立体塑像，用于装饰；③影塑：贴在壁上的小塑像；④善业泥：用模具压制的小泥像。彩塑技法：木骨泥塑，用木材做骨架，敷泥塑造。彩塑体现了"塑绘结合"的特点。</p>
+            <p class="text"><strong>艺术风格：</strong>莫高窟艺术风格演变。①早期（十六国北朝）：受印度、中亚影响，风格朴拙；②中期（隋唐）：民族化，风格华丽，达到鼎盛；③晚期（五代宋西夏元）：程式化，风格简率。艺术风格的演变反映了佛教中国化的过程。</p>
+            <p class="text"><strong>代表洞窟：</strong>莫高窟有众多精品洞窟。①第45窟：盛唐代表，彩塑精美；②第57窟：初唐代表，有"美人窟"之称；③第61窟：五代代表，有《五台山图》；④第96窟：九层楼，有大佛；⑤第148窟：盛唐代表，有《涅槃经变》；⑥第254窟：北魏代表，有《萨埵那太子舍身饲虎》。每个洞窟都是艺术宝库。</p>
+            <p class="text"><strong>音乐舞蹈图像：</strong>莫高窟有丰富的音乐舞蹈图像。①乐器：有琵琶、箜篌、筚篥、拍板等40多种；②乐队：有经变画中的天国乐队；③舞蹈：有胡旋舞、胡腾舞、柘枝舞等。这些图像是研究古代音乐舞蹈的珍贵资料。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="art"><span class="like-icon">🎨</span><span class="like-count">0</span><span class="like-btn-text">艺术</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="art">💬 艺术鉴赏</button><div class="comment-list" id="comment-list-art" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 敦煌文化 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>敦煌文化 · 中西交融</h3>
+            <p class="text"><strong>佛教文化：</strong>莫高窟是佛教文化宝库。①宗派：壁画反映了净土宗、禅宗、密宗等宗派思想；②经典：涉及《法华经》《维摩诘经》《阿弥陀经》等；③信仰：反映了民众的信仰需求；④仪轨：展现了佛教仪式。莫高窟是佛教中国化的实物见证。</p>
+            <p class="text"><strong>丝路文化：</strong>莫高窟是丝路文化交汇的产物。①商旅：壁画中有商队、胡商形象；②使节：有各国使节朝拜的图像；③民族：有汉族、鲜卑、吐蕃、回鹘、西夏、蒙古等民族形象；④交流：反映了东西方文化、艺术、技术的交流。莫高窟是丝路文明的"活化石"。</p>
+            <p class="text"><strong>世俗文化：</strong>壁画中保存了丰富的世俗生活场景。①建筑：有城池、宫殿、寺院、民居等；②服饰：有各朝代、各民族服饰；③生产：有耕作、收获、制陶、酿酒等；④娱乐：有马球、围棋、百戏等。壁画是研究古代社会生活的图像资料。</p>
+            <p class="text"><strong>敦煌遗书：</strong>藏经洞出土文献内容丰富。①宗教文献：佛经、道经、景教经典等；②历史文献：户籍、契约、账簿、书信等；③文学文献：变文、曲子词、诗歌等；④科技文献：医药、历法、算学等。遗书是研究中古社会的百科全书。</p>
+            <p class="text"><strong>敦煌学：</strong>以敦煌文献、文物为研究对象的学科。①范围：涉及历史、考古、艺术、宗教、语言、文学等；②机构：有敦煌研究院、各国研究机构；③成果：出版了《敦煌石窟全集》《敦煌遗书》等；④传播：通过展览、影视、网络传播敦煌文化。敦煌学是国际显学。</p>
+            <p class="text"><strong>敦煌精神：</strong>以常书鸿、段文杰、樊锦诗为代表的几代莫高窟人，在艰苦条件下守护、研究、弘扬敦煌文化，形成了"坚守大漠、甘于奉献、勇于担当、开拓进取"的"莫高精神"。这种精神是敦煌文化的灵魂。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">敦煌</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 世界遗产 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>世界遗产 · 人类瑰宝</h3>
+            <p class="text"><strong>历史价值：</strong>莫高窟是丝绸之路历史的见证。①佛教史：反映了佛教在中国的传播与发展；②艺术史：展示了千年佛教艺术演变；③社会史：记录了古代社会生活；④交流史：体现了中外文化交流。莫高窟是历史的"活化石"。</p>
+            <p class="text"><strong>艺术价值：</strong>莫高窟是世界艺术宝库。①壁画：规模宏大，技艺精湛，题材丰富；②彩塑：造型优美，技法多样，保存完好；③建筑：洞窟形制多样，体现建筑艺术；④综合：塑绘结合，艺术完美统一。莫高窟是"墙壁上的博物馆"。</p>
+            <p class="text"><strong>科学价值：</strong>莫高窟蕴含丰富的科学技术。①材料科学：矿物颜料、粘合剂配方；②保护科学：壁画、彩塑保护技术；③数字科学：数字化保存、展示技术；④环境科学：洞窟微环境监测控制。莫高窟是科技与人文结合的典范。</p>
+            <p class="text"><strong>文化价值：</strong>莫高窟是中华文化的重要载体。①佛教文化：佛教中国化的实物见证；②丝路文化：东西方文化交流的结晶；③民族文化：多民族艺术融合的典范；④精神文化："莫高精神"的体现。莫高窟是中华民族的文化瑰宝。</p>
+            <p class="text"><strong>世界影响：</strong>莫高窟对世界文化产生深远影响。①学术影响：敦煌学成为国际显学；②艺术影响：敦煌艺术影响世界艺术；③保护影响：保护经验为世界遗产保护提供借鉴；④交流影响：促进中外文化交流。莫高窟是世界文明的共同财富。</p>
+            <p class="text"><strong>保护与传承：</strong>莫高窟得到科学保护。①法律保护：1961年列为全国重点文物保护单位，1987年列入《世界遗产名录》；②规划保护：编制保护规划，控制游客数量；③工程保护：对危岩体加固，对壁画彩塑修复；④数字保护：建设"数字敦煌"，永久保存文物信息；⑤活态传承：开展展览、演出、教育，传播敦煌文化；⑥国际合作：与联合国教科文组织、各国机构合作保护。莫高窟的保护经验，为世界文化遗产保护提供了中国智慧。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 敦煌莫高窟世界佛教艺术宝库，千年壁画诉说丝路传奇 | 五重维度·五种灵韵爱心，点赞评论共话世界遗产</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（敦煌莫高窟独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        art: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        art: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('dunhuang_mogao_caves_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('dunhuang_mogao_caves_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('dunhuang_mogao_caves_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('dunhuang_mogao_caves_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对莫高窟的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的莫高窟感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "莫高窟访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

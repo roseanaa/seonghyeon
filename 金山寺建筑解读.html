@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>金山寺 · 四维解读 | 镇江名刹 水陆法会</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/金山寺.jpg" title="金山寺" alt="镇江金山寺建筑与江景">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 东晋古刹</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 江天禅寺</div>
+        <div class="dim-tab" data-tab="culture">🎪 佛教圣地</div>
+        <div class="dim-tab" data-tab="value">🌟 文化瑰宝</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>金山寺 · 镇江名刹 水陆法会</h3>
+            <p class="text"><strong>传奇：</strong>金山寺位于江苏省镇江市西北的金山上，始建于东晋明帝年间（323-325年），原名泽心寺，唐时称金山寺，宋真宗时赐名"龙游寺"，清康熙帝南巡时赐名"江天禅寺"。金山海拔43.7米，周长520米，原是长江中一个岛屿，有"江心一朵芙蓉"之称。清光绪年间，长江主泓道北移，金山与南岸相连，成为内陆山。金山寺建筑依山而建，殿宇楼阁层层相接，从山脚到山顶，殿厅栉比，亭台相连，有"寺裹山"的独特风貌。金山寺是中国佛教禅宗名寺，以佛印禅师、法海禅师闻名，更因《白蛇传》中"水漫金山"的故事而家喻户晓。寺内保存有众多珍贵文物，如苏东坡玉带、诸葛铜鼓、文徵明《金山图》等。金山寺是中国佛教水陆法会的发源地，在佛教史上具有重要地位。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>山门与大雄宝殿：</strong>金山寺山门坐西朝东，面向大江，正中悬挂康熙帝御笔"江天禅寺"匾额。大雄宝殿为重檐歇山顶建筑，面阔五间，进深四间，高25米，是寺内最大的殿堂。殿内供奉释迦牟尼佛、药师佛、阿弥陀佛三世佛，高8.5米，两侧供奉十八罗汉。殿顶有藻井，绘有九龙戏珠图案。大雄宝殿后方是藏经楼，珍藏《乾隆大藏经》等佛教经典。殿前有古银杏树，树龄约400年。</li>
+                <li><strong>慈寿塔：</strong>金山寺的标志性建筑，位于金山之巅。塔始建于南朝齐梁时期，现存塔为清光绪二十六年（1900年）重建，为七级八面砖木结构楼阁式塔，高约30米。塔身每层四面开门，可登塔远眺，俯瞰长江，景色壮丽。"江天一览"是金山最佳观景点。塔内供奉观音菩萨，塔顶有铜制葫芦形塔刹。慈寿塔是镇江"三山"（金山、焦山、北固山）的制高点。</li>
+                <li><strong>法海洞与白龙洞：</strong>与《白蛇传》传说相关的两处洞穴。①法海洞：位于金山西侧山腰，相传是唐代高僧法海（裴休之子）闭关修禅处。洞内供奉法海塑像，手持禅杖，面容慈祥。法海是金山寺开山祖师之一，开山得金，重建寺院。②白龙洞：位于金山东北麓，深约30米，相传是白娘子水漫金山时，小青由此洞潜入杭州。洞内塑有白娘子、小青像。两洞是《白蛇传》传说的历史遗迹。</li>
+                <li><strong>楞伽台与妙高台：</strong>金山两处重要历史文化遗址。①楞伽台：位于金山西侧，是宋代苏轼抄写《楞伽经》处。苏东坡曾在此与佛印禅师谈禅论道。台上有"楞伽室"，陈列苏轼手书《楞伽经》碑刻。②妙高台：位于金山顶峰，是宋代高僧佛印禅师说法处。妙高台又称"晒经台"，相传是佛印晒经处。苏东坡曾在此作《水调歌头·明月几时有》。两台是文人雅士吟诗作赋的胜地。</li>
+                <li><strong>江天一览亭与御码头：</strong>金山两处观景胜地。①江天一览亭：位于金山之巅，慈寿塔旁。亭为六角攒尖顶，是观赏长江风光的最佳地点。"江天一览"匾额为康熙帝御笔。在此可俯瞰长江，远眺焦山、北固山。②御码头：位于金山北麓江边，是康熙、乾隆南巡时登岸处。码头有石阶数十级，上有"御码头"石碑。在此可感受"大江横陈"的壮阔景象。</li>
+                <li><strong>金山寺文物珍藏：</strong>金山寺珍藏大量文物。①苏东坡玉带：宋代文豪苏轼的玉带，共20块玉，其中4块为后补。苏轼与佛印禅师打赌输玉带，留作镇寺之宝。②诸葛铜鼓：相传为诸葛亮南征时所铸，直径约1米，高0.6米。③文徵明《金山图》：明代画家文徵明绘金山全貌。④周鼎：西周铜鼎，高0.8米，重200公斤。⑤《龙藏》：清乾隆版《大藏经》，共7240卷。文物是金山寺历史文化的见证。</li>
+                <li><strong>金山寺园林景观：</strong>金山寺不仅是佛寺，也是精美园林。①天下第一泉：位于金山西南，唐代刘伯刍评为"天下第一泉"，即中泠泉。泉水甘冽，宜沏茶。泉边有"天下第一泉"石刻。②百花洲：位于金山南麓，四季花开，尤以牡丹、芍药闻名。③塔影湖：位于金山北麓，湖中可倒影慈寿塔，故名。湖中有荷花，夏季花开，清香四溢。园林体现了"寺裹山，山藏寺"的独特景观。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>全年皆宜，但最佳游览时间为春秋两季（3-5月，9-11月），此时气候宜人，景色最佳。夏季（6-8月）炎热，但可体验"接天莲叶无穷碧"的荷花景观。冬季（12-2月）较冷，但可欣赏雪后金山"银装素裹"的景色。农历四月初八佛诞日、农历七月十五盂兰盆节是重要佛教节日，寺内有法会。建议避开周末和节假日高峰。开放时间：夏季7:00-18:00，冬季7:30-17:30。</li>
+                <li><strong>游览顺序：</strong>山门→大雄宝殿→藏经楼→慈寿塔→江天一览亭→法海洞→白龙洞→楞伽台→妙高台→御码头→天下第一泉→百花洲→塔影湖。建议安排3-4小时。进寺应衣冠整洁，不可穿短裤、短裙、背心、拖鞋。进入殿堂应轻声细语，不可喧哗。上香一般为三支，代表敬佛、敬法、敬僧。可在寺内购买佛经、佛像、开光纪念品。</li>
+                <li><strong>深度体验：</strong>清晨参加寺内早课，聆听梵呗；上午跟随导游参观建筑，了解历史故事；中午在寺内品尝素斋；下午在楞伽台静坐，体会苏东坡"明月几时有"的意境；傍晚登慈寿塔看长江日落，欣赏"一道残阳铺水中，半江瑟瑟半江红"的美景；晚上观看"金山禅乐"演出（如有）；学习佛教文化，了解禅宗历史；住镇江市区，品尝镇江三怪（肴肉、香醋、锅盖面）；第二天前往焦山、北固山、西津渡等周边景点。</li>
+                <li><strong>摄影建议：</strong>慈寿塔全景，大雄宝殿建筑，江天一览亭远眺长江，法海洞、白龙洞内景，楞伽台、妙高台历史文化，御码头江景，天下第一泉石刻，百花洲花卉，塔影湖倒影，僧人诵经场景，香客上香，金山寺夜景灯光。建议使用广角镜头拍摄建筑全景，长焦镜头拍摄长江远景。清晨和傍晚光线最佳，适合拍摄。登慈寿塔拍摄长江全景需用广角。偏振镜可减少反光，增强色彩饱和度。</li>
+            </ul>
+            <p><strong>交通信息：</strong>金山寺位于江苏省镇江市润州区金山路62号。公交：乘2、8、12、34、35、49、102、133、204、215、601路公交到"金山公园"站。自驾：导航"金山公园"，公园有停车场。火车：乘高铁到镇江站，转公交或打车前往。长途汽车：到镇江汽车站，转公交或打车前往。周边景点有焦山（3公里）、北固山（2.5公里）、西津渡（2公里）、镇江博物馆（2公里）。距南京禄口机场80公里，车程1.5小时；距常州奔牛机场50公里，车程1小时。建议与焦山、北固山、西津渡组合游览，购买"三山一渡"联票。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">名刹</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 金山寺印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 东晋古刹 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>东晋古刹 · 千年沧桑</h3>
+            <p class="text"><strong>建寺历史：</strong>金山寺始建于东晋明帝年间（323-325年），原名泽心寺。唐代，法海禅师（裴休之子）开山得金，重建寺院，改名金山寺。宋代，真宗皇帝赐名"龙游寺"。元代，寺院毁于战火，后重建。明代，多次扩建重修。清代，康熙帝南巡，赐名"江天禅寺"，并御笔题写寺额。太平天国时期，寺院受损严重。清代后期至民国，多次修复。1949年后，政府拨款修复。"文革"期间，寺院遭到破坏。1980年后，全面修复，恢复宗教活动。2000年，金山寺被列为江苏省文物保护单位。</p>
+            <p class="text"><strong>高僧大德：</strong>金山寺历史上高僧辈出。①法海禅师：唐代高僧，金山寺开山祖师之一。裴休之子，出家为僧，开山得金，重建寺院。民间传说中，法海是《白蛇传》中的人物，但历史上的法海是得道高僧。②佛印禅师：宋代高僧，金山寺住持。与苏东坡是好友，常谈禅论道，留下许多佳话。③宗镜禅师：明代高僧，重修金山寺，制定寺规。④隐儒禅师：清代高僧，编纂《金山志》。⑤慈舟法师：近代高僧，弘扬佛法，培养僧才。高僧大德是金山寺的灵魂。</p>
+            <p class="text"><strong>水陆法会起源：</strong>金山寺是中国佛教水陆法会的发源地。水陆法会全称"法界圣凡水陆普度大斋胜会"，是中国佛教最隆重的法会。据《释门正统》记载，南朝梁武帝夜梦神僧，告以六道四生受苦无量，应设水陆大斋普济群灵。武帝咨询宝志禅师，禅师建议参阅大藏经，编制仪轨。武帝在金山寺设坛，亲临法会，水陆法会由此开始。宋代，水陆法会盛行。明清时期，成为全国性法会。水陆法会体现了佛教的慈悲精神。</p>
+            <p class="text"><strong>文人墨客：</strong>金山寺是文人墨客吟咏的胜地。①苏东坡：常游金山，与佛印禅师交厚，留下《游金山寺》《水调歌头》等名篇。②白居易：任苏州刺史时，游金山，作《登金山寺》。③王安石：游金山，作《金山寺》。④陆游：游金山，作《金山寺》。⑤文徵明：绘《金山图》。⑥康熙、乾隆：南巡时多次驻跸金山，题诗题字。文人墨客增添了金山寺的文化底蕴。</p>
+            <p class="text"><strong>历史事件：</strong>金山寺见证了许多历史事件。①梁武帝设水陆法会：中国佛教史上重大事件。②宋金战争：韩世忠、梁红玉在金山阻击金兵。③明代抗倭：金山是抗倭前线。④太平天国：寺院受损。⑤抗日战争：日军侵占镇江，寺院遭破坏。⑥改革开放：宗教政策落实，寺院恢复。历史事件是金山寺的沧桑记忆。</p>
+            <p class="text"><strong>保护修复：</strong>金山寺经历多次修复。①1980-1990年：政府拨款，全面修复。②2000年：修复大雄宝殿、慈寿塔。③2010年：修复藏经楼、楞伽台。④2020年：检测加固，保护古建筑。修复工程保护了这座千年古刹。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 江天禅寺 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>江天禅寺 · 寺裹金山</h3>
+            <p class="text"><strong>总体布局：</strong>金山寺建筑依山而建，形成"寺裹山"的独特格局。①山脚：山门、天王殿、大雄宝殿等主要殿堂。②山腰：法海洞、白龙洞、楞伽台等。③山顶：慈寿塔、江天一览亭等。建筑从山脚到山顶，层层升高，殿厅栉比，亭台相连，远望只见寺庙不见山，故有"金山寺裹山"之说。这种布局充分利用山地地形，节约土地，形成独特的空间序列。</p>
+            <p class="text"><strong>建筑形式：</strong>金山寺建筑形式多样。①大雄宝殿：重檐歇山顶，面阔五间，进深四间，是寺内最大的殿堂。②慈寿塔：七级八面楼阁式砖木塔，高约30米，是金山寺的标志。③山门：单檐歇山顶，面阔三间，正中悬挂"江天禅寺"匾额。④藏经楼：二层楼阁，珍藏佛教经典。⑤亭台：江天一览亭、妙高台、楞伽台等。形式丰富，功能齐全。</p>
+            <p class="text"><strong>建筑技术：</strong>金山寺建筑技术精湛。①木结构：大雄宝殿为抬梁式木构架，用材粗大，结构稳固。②砖石结构：慈寿塔为砖木结构，塔身用青砖砌筑，木构屋檐。③山地建筑：依山而建，采用台地、悬挑等技术。④防水防潮：长江边，建筑有良好防水措施。技术体现了古代工匠的智慧。</p>
+            <p class="text"><strong>装饰艺术：</strong>金山寺装饰丰富多彩。①木雕：梁架、门窗、斗拱有精细木雕。②石雕：柱础、栏杆、碑刻有浮雕、圆雕。③彩绘：梁枋有彩绘，以青绿为主，间以金粉。④壁画：大雄宝殿内壁有佛教故事壁画。⑤匾额楹联：康熙、乾隆等皇帝御笔，文人墨客题咏。装饰具有江南寺庙的特色。</p>
+            <p class="text"><strong>园林艺术：</strong>金山寺是园林式寺庙。①借景：借长江、焦山、北固山之景。②理水：有塔影湖、天下第一泉等水景。③植物：有古树名木，四季花卉。④路径：有石阶、曲径，步移景异。园林增强了寺庙的宗教氛围和游览价值。</p>
+            <p class="text"><strong>建筑特色：</strong>金山寺的建筑特色鲜明。①寺裹山：建筑包裹山体，形成独特景观。②江天一览：位于长江边，视野开阔。③佛道融合：有佛教殿堂，也有道教元素（如白龙洞）。④文人气息：多处建筑与文人墨客相关。特色反映了金山寺的历史文化。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 佛教圣地 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>佛教圣地 · 水陆法会</h3>
+            <p class="text"><strong>禅宗道场：</strong>金山寺是中国佛教禅宗重要道场。①传承：属禅宗临济宗。②修行：僧众坐禅、诵经、劳作。③法会：举办水陆法会、佛诞法会、盂兰盆会等。④讲经：高僧大德讲经说法。金山寺是江南禅宗的中心之一。</p>
+            <p class="text"><strong>水陆法会：</strong>金山寺是中国佛教水陆法会的发源地。水陆法会是中国佛教最隆重、最盛大的法会，旨在超度水陆一切亡灵。法会历时七天七夜，设内坛、外坛，诵经礼忏，施食放生。法会程序复杂，仪式庄严。水陆法会体现了佛教的慈悲济世精神。金山寺每年举办水陆法会，吸引全国信众参加。</p>
+            <p class="text"><strong>佛教艺术：</strong>金山寺是佛教艺术的宝库。①雕塑：三世佛、十八罗汉、观音等塑像，造型庄严。②绘画：壁画、卷轴画，题材为佛教故事。③书法：苏轼、文徵明等文人墨客的题咏。④音乐：梵呗、钟鼓，音乐庄严。佛教艺术丰富了金山寺的文化内涵。</p>
+            <p class="text"><strong>《白蛇传》传说：</strong>金山寺因《白蛇传》"水漫金山"的故事而闻名。故事中，白娘子为救许仙，与法海斗法，水漫金山。虽然故事是民间传说，但增加了金山寺的知名度。法海洞、白龙洞成为传说遗迹。金山寺每年举办"白蛇传"文化旅游节，吸引游客。</p>
+            <p class="text"><strong>文人雅集：</strong>金山寺是文人雅士聚集地。①苏轼与佛印：二人谈禅论道，留下许多趣闻。②文人题咏：白居易、王安石、陆游等留下诗篇。③书画创作：文徵明绘《金山图》。④琴棋书画：文人雅士在此交流。文人雅集提升了金山寺的文化品位。</p>
+            <p class="text"><strong>现代传承：</strong>金山寺文化在现代得到传承。①宗教活动：正常开展，信众众多。②文化旅游：吸引游客，传播佛教文化。③学术研究：学者研究金山寺历史、艺术。④教育功能：举办佛学讲座、禅修营。金山寺是传统文化的重要载体。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">法会</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 文化瑰宝 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>文化瑰宝 · 江南名刹</h3>
+            <p class="text"><strong>历史价值：</strong>金山寺是历史的见证。①佛教史：水陆法会发源地，佛教史重要寺院。②建筑史："寺裹山"格局的典范，山地建筑杰作。③文学史：《白蛇传》故事发生地，文人墨客吟咏对象。④地方史：镇江历史文化的缩影。金山寺是"活的历史博物馆"。</p>
+            <p class="text"><strong>艺术价值：</strong>金山寺是艺术的宝库。①建筑艺术：依山而建，殿宇巍峨。②雕塑艺术：佛像庄严，工艺精湛。③绘画艺术：壁画、卷轴画精美。④书法艺术：名家题咏，墨宝珍贵。⑤园林艺术：与自然和谐，景色优美。金山寺是"综合艺术博物馆"。</p>
+            <p class="text"><strong>科学价值：</strong>金山寺蕴含科学技术。①建筑科学：山地建筑技术，结构稳固。②材料科学：木材、砖石等材料的应用。③环境科学：选址、布局的环境适应性。④保护科学：文物监测、修复技术。金山寺是科学技术的研究对象。</p>
+            <p class="text"><strong>文化价值：</strong>金山寺是文化交融的象征。①佛教文化：禅宗道场，水陆法会发源地。②文学文化：《白蛇传》故事，文人诗词。③艺术文化：建筑、雕塑、绘画、书法。④民俗文化：庙会、法会等民俗活动。金山寺是江南文化的"基因库"。</p>
+            <p class="text"><strong>社会价值：</strong>金山寺在社会中发挥重要作用。①宗教功能：满足信众宗教需求。②旅游功能：镇江最重要的旅游景点之一。③教育功能：传播佛教文化、传统文化。④社区功能：凝聚社区，促进和谐。金山寺是镇江的"城市名片"。</p>
+            <p class="text"><strong>保护与传承：</strong>金山寺得到科学保护。①法律保护：2000年列为江苏省文物保护单位。②规划保护：制定保护规划，控制周边建设。③工程保护：多次修复加固，确保结构安全。④监测保护：建立监测系统，防止自然破坏。⑤研究展示：开展研究，出版资料，举办展览。⑥教育推广：举办讲座、导览，传播佛教文化。⑦社区参与：社区居民参与保护，形成保护网络。金山寺的保护经验，为古寺庙保护提供了成功范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 金山寺镇江名刹水陆法会，寺裹金山江天一览 | 五重维度·五种灵韵爱心，点赞评论共话文化瑰宝</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（金山寺独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('jinshan_temple_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('jinshan_temple_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('jinshan_temple_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('jinshan_temple_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对金山寺的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的金山寺感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "金山寺访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

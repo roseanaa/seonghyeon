@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>中华黄河坛 · 四维解读 | 黄河文化地标</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/中华黄河坛.jpg" title="中华黄河坛" alt="中华黄河坛全景">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 建坛缘起</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 坛庙建筑</div>
+        <div class="dim-tab" data-tab="culture">🎪 黄河文化</div>
+        <div class="dim-tab" data-tab="value">🌟 文化地标</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>中华黄河坛 · 黄河文化地标</h3>
+            <p class="text"><strong>传奇：</strong>中华黄河坛位于宁夏回族自治区吴忠市青铜峡市青铜峡镇，坐落在黄河西岸，背靠贺兰山，面向黄河，是中国第一座以黄河为主题的大型文化纪念建筑群。黄河坛始建于2010年4月，2011年4月建成开放，占地面积4.5万平方米，建筑面积6.5万平方米，总投资2.6亿元。黄河坛采用明清建筑风格，以"黄河是中华民族的母亲河"为主题，通过坛、庙、碑、鼎、钟、鼓等建筑元素，展现黄河文化的深厚底蕴。黄河坛由思恩区、礼恩区、感恩区三大区域组成，包括牌楼、碑林大道、黄河坛、黄河钟、黄河鼓、黄河鼎、黄河楼等建筑，形成了一条完整的黄河文化展示轴线。黄河坛是集黄河文化展示、爱国主义教育、旅游观光、祭祀庆典等功能于一体的综合性文化旅游景区。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>黄河坛主坛：</strong>黄河坛的核心建筑，位于中轴线最高处。主坛为三层圆形石坛，仿北京天坛祈年殿形制，但规模更大。坛高33米，直径99米，寓意"天长地久"。坛分三层，每层有汉白玉栏杆，雕刻黄河文化图案。第一层为"水坛"，代表黄河之水；第二层为"文坛"，代表黄河文化；第三层为"祖坛"，代表中华民族始祖。坛内供奉黄河神像，四周墙壁有大型浮雕，描绘黄河流域的历史文化。站在主坛上，可俯瞰黄河壮丽景色。</li>
+                <li><strong>碑林大道：</strong>通往黄河坛的主通道，长365米，宽36米，寓意一年365天，黄河36个主要支流。大道两侧立有108通石碑，每通石碑高3.6米，宽1.2米，厚0.3米。石碑内容分为三部分：①历代帝王咏黄河诗；②历代文人咏黄河诗；③现代名人咏黄河诗。碑文由全国著名书法家书写，楷、行、草、隶、篆各体兼备，是中国最大的黄河主题碑林。行走在碑林大道，可欣赏书法艺术，感受黄河文化。</li>
+                <li><strong>黄河钟：</strong>位于黄河坛东侧，是中国最大的铜钟之一。钟高5.6米，代表56个民族；直径3.6米，代表黄河流域36个主要支流；重13吨，代表13亿中国人民。钟身铸有"黄河颂"铭文，记载黄河的历史、文化、功德。钟声雄浑悠远，可传数里。每年清明节、端午节、中秋节、重阳节，举行撞钟仪式，祈福国泰民安。</li>
+                <li><strong>黄河鼎：</strong>位于黄河坛西侧，是中国最大的青铜鼎之一。鼎高6.6米，代表六六大顺；直径4.9米，代表黄河流域49个主要湖泊；重9.9吨，代表九九归一。鼎身铸有"黄河魂"铭文，记载黄河的文明、精神、贡献。鼎腹有三足，象征天、地、人三才。黄河鼎是中华文明的象征。</li>
+                <li><strong>黄河楼：</strong>位于黄河坛北侧，是黄河坛的标志性建筑。楼高66米，共九层，为仿明清楼阁式建筑。楼内有黄河文化展览，展示黄河流域的自然地理、历史文化、民俗风情。登楼可远眺黄河、贺兰山，景色壮丽。黄河楼与黄鹤楼、岳阳楼、滕王阁并称为"中国四大名楼"（新评）。</li>
+                <li><strong>黄河文化广场：</strong>位于黄河坛前，面积3万平方米，可容纳3万人集会。广场中央有大型音乐喷泉，喷水高度可达100米，配合灯光、音乐，形成壮观的水景表演。广场四周有12根文化柱，代表黄河流经的12个省区。广场是举办黄河文化节、祭祀大典、文艺演出的主要场所。</li>
+                <li><strong>黄河微缩景观：</strong>位于景区东侧，按1:1000比例微缩黄河流域。从青海巴颜喀拉山源头，到山东东营入海口，全长5464公里的黄河被浓缩在500米长的区域内。沿途有龙羊峡、青铜峡、三门峡、小浪底等著名峡谷，有兰州、郑州、济南等重要城市，有壶口瀑布、龙门等自然景观。微缩景观直观展示了黄河全貌。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>4月至10月是最佳游览时间，此时气候宜人。夏季（6-8月）可在黄河边纳凉，秋季（9-10月）天高云淡，景色最佳。每年清明节（4月5日前后）举办黄河祭祀大典，场面盛大；端午节（农历五月初五）举办黄河文化节，有龙舟赛、民歌会等活动。建议避开正午高温时段。黄河坛开放时间：8:00-18:00（夏季至19:00）。</li>
+                <li><strong>参观顺序：</strong>景区大门→碑林大道→黄河文化广场→黄河钟→黄河鼎→黄河坛主坛→黄河楼→黄河微缩景观→返回。建议安排2-3小时。景区内有电瓶车，可代步。</li>
+                <li><strong>深度体验：</strong>清晨在黄河边看日出，感受"黄河之水天上来"的意境；上午登黄河坛主坛，俯瞰黄河壮丽景色；中午在景区餐厅品尝黄河鲤鱼、羊肉等特色美食；下午参观黄河楼展览，了解黄河文化；傍晚在黄河边散步，欣赏"长河落日圆"的美景；晚上观看音乐喷泉表演，感受现代科技与黄河文化的结合；参加黄河祭祀活动，体验传统礼仪；学习黄河诗词，感受黄河文化的魅力；住黄河边民宿，听黄河涛声入眠；第二天前往青铜峡黄河大峡谷、一百零八塔、黄河楼景区游览。</li>
+                <li><strong>摄影建议：</strong>黄河坛主坛全景与黄河背景，碑林大道书法艺术，黄河钟、黄河鼎特写，黄河楼建筑细节，黄河微缩景观全景，音乐喷泉夜景，黄河日出日落，祭祀大典人文场景，游客与黄河坛合影。建议使用广角镜头拍摄建筑全景，长焦镜头拍摄建筑、书法细节。清晨和傍晚光线最佳，适合拍摄。三脚架必备，用于拍摄夜景。偏振镜可增强蓝天白云对比。</li>
+            </ul>
+            <p><strong>交通信息：</strong>中华黄河坛位于吴忠市青铜峡市青铜峡镇。从银川出发：①旅游专线：银川旅游汽车站乘银川-青铜峡旅游专线，在黄河坛下车，车程1小时；②公交：银川南门乘302路到青铜峡市，转乘出租车；③自驾：经京藏高速到青铜峡出口，沿滨河大道行驶10公里。从吴忠出发：乘吴忠-青铜峡公交，在黄河坛下车。景区内有停车场。周边景点有青铜峡黄河大峡谷（5公里）、一百零八塔（3公里）、黄河楼景区（8公里）、沙坡头（150公里）。距银川河东机场60公里，车程1小时；距吴忠火车站20公里，车程30分钟。建议与青铜峡黄河大峡谷、一百零八塔、黄河楼组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">黄河坛</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 黄河坛印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建坛缘起 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>建坛缘起 · 母亲河颂</h3>
+            <p class="text"><strong>建设背景：</strong>黄河是中华民族的母亲河，孕育了中华文明。但长期以来，中国没有一座专门祭祀黄河、展示黄河文化的大型建筑。2009年，宁夏回族自治区政府提出建设"中华黄河坛"的设想，得到国家支持。2010年4月28日，黄河坛奠基开工。2011年4月28日，黄河坛建成开放。黄河坛的建成，填补了中国黄河文化展示的空白，成为弘扬黄河文化、凝聚民族精神的重要载体。</p>
+            <p class="text"><strong>设计理念：</strong>黄河坛的设计体现了深厚的文化内涵。①主题："黄河是中华民族的母亲河"；②布局：沿中轴线对称布局，体现庄严、肃穆；③数字：大量使用有文化内涵的数字，如3、6、9、12、36、56、99、108等；④元素：综合运用坛、庙、碑、鼎、钟、鼓等传统建筑元素；⑤风格：采用明清建筑风格，体现传统与现代的结合。设计理念是黄河文化精神的物化。</p>
+            <p class="text"><strong>建设过程：</strong>黄河坛建设历时一年。①2010年4月28日，奠基开工；②2010年8月，主体建筑封顶；③2010年12月，内部装修完成；④2011年4月28日，建成开放。建设动用技术人员、工人3000余人，克服了工期紧、任务重、技术要求高等困难。黄河坛的建设体现了"宁夏速度"。</p>
+            <p class="text"><strong>开坛大典：</strong>2011年4月28日，中华黄河坛举行开坛大典。全国政协副主席、国家有关部委领导、黄河流域9省区代表、海外侨胞代表等3000余人参加。大典包括祭祀黄河、撞钟祈福、文艺演出等活动。开坛大典的举行，标志着黄河坛正式向公众开放，成为黄河文化的新地标。</p>
+            <p class="text"><strong>历届活动：</strong>黄河坛建成后，举办了多项重要活动。①每年清明节，举办黄河祭祀大典；②端午节，举办黄河文化节；③国庆节，举办黄河音乐会；④春节，举办黄河灯会。活动弘扬了黄河文化，丰富了群众文化生活。</p>
+            <p class="text"><strong>社会影响：</strong>黄河坛的建成产生了广泛的社会影响。①文化影响：成为黄河文化的重要展示平台；②旅游影响：成为宁夏重要的旅游景点；③教育影响：成为爱国主义教育基地；④经济影响：带动了当地旅游经济发展。黄河坛是宁夏文化建设的标志性工程。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 坛庙建筑 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>坛庙建筑 · 明清风格</h3>
+            <p class="text"><strong>总体布局：</strong>黄河坛采用中国传统的中轴线对称布局。①轴线：南北中轴线，长1000米；②序列：牌楼→碑林大道→广场→钟、鼎→主坛→黄河楼；③分区：思恩区（入口）、礼恩区（广场）、感恩区（主坛）；④朝向：坐西朝东，面向黄河。布局体现了"天人合一"的思想。</p>
+            <p class="text"><strong>建筑形式：</strong>黄河坛建筑形式多样。①坛：主坛为圆形三层石坛；②楼：黄河楼为九层木结构楼阁；③碑：碑林大道有108通石碑；④钟：黄河钟为铜钟；⑤鼎：黄河鼎为青铜鼎；⑥鼓：有黄河鼓。形式丰富，功能齐全。</p>
+            <p class="text"><strong>主坛结构：</strong>主坛为黄河坛的核心建筑。①形制：仿天坛祈年殿，但规模更大；②层数：三层，代表天、地、人；③材料：汉白玉栏杆，青石坛身，琉璃瓦顶；④装饰：雕刻黄河文化图案，有龙、凤、水纹等。结构严谨，装饰精美。</p>
+            <p class="text"><strong>黄河楼结构：</strong>黄河楼为仿古楼阁。①层数：九层，取"九五之尊"之意；②高度：66米，寓意"六六大顺"；③结构：木结构，有斗拱、飞檐；④功能：一层展览，二层观景，三层至九层为文化展示。楼阁雄伟，功能完善。</p>
+            <p class="text"><strong>装饰艺术：</strong>黄河坛装饰丰富多彩。①石雕：栏杆、台阶、碑刻有精美石雕；②木雕：门窗、梁枋有精细木雕；③彩绘：梁、枋、檐有鲜艳彩绘；④铸铜：钟、鼎有精美铸铜纹饰。装饰体现了传统工艺水平。</p>
+            <p class="text"><strong>建筑材料：</strong>黄河坛采用优质建筑材料。①石材：用汉白玉、青石、花岗岩；②木材：用松木、柏木、楠木；③金属：用铜、铁、铝；④琉璃：用琉璃瓦、琉璃构件。材料保证建筑的耐久性。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 黄河文化 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>黄河文化 · 文明之源</h3>
+            <p class="text"><strong>黄河文明：</strong>黄河流域是中华文明的发祥地。①旧石器时代：有西侯度、匼河等遗址；②新石器时代：有仰韶文化、龙山文化；③三代：夏、商、周均在黄河流域；④秦汉至明清：长安、洛阳、开封等古都均在黄河流域。黄河文明是中华文明的主干。</p>
+            <p class="text"><strong>黄河精神：</strong>黄河孕育了伟大的民族精神。①自强不息：黄河奔流不息，象征中华民族的奋斗精神；②厚德载物：黄河滋养万物，象征中华民族的包容精神；③坚韧不拔：黄河冲破险阻，象征中华民族的坚强意志；④无私奉献：黄河润泽大地，象征中华民族的奉献精神。黄河精神是中华民族的精神象征。</p>
+            <p class="text"><strong>黄河文学：</strong>黄河是文学创作的永恒主题。①诗歌：有《诗经》中的黄河诗篇，李白、王之涣、刘禹锡等的黄河诗；②散文：有《黄河赋》《河伯》等；③小说：有《黄河东流去》等；④歌曲：有《黄河大合唱》《黄河颂》等。黄河文学是中华文学的重要组成部分。</p>
+            <p class="text"><strong>黄河艺术：</strong>黄河是艺术表现的重要题材。①绘画：有《清明上河图》《黄河万里图》等；②雕塑：有黄河主题雕塑；③音乐：有《黄河大合唱》等；④舞蹈：有黄河歌舞。黄河艺术是中华艺术的瑰宝。</p>
+            <p class="text"><strong>黄河民俗：</strong>黄河流域有丰富的民俗文化。①祭祀：有祭河神、祭龙王等；②节庆：有黄河文化节、龙舟赛等；③饮食：有黄河鲤鱼、羊肉泡馍等；④工艺：有黄河石艺、剪纸等。黄河民俗是民间文化的体现。</p>
+            <p class="text"><strong>黄河治理：</strong>中国人民与黄河的斗争贯穿历史。①古代：有大禹治水、王景治河等；②近代：有李仪祉、张含英等治黄专家；③现代：有三门峡、小浪底等水利工程；④当代：有黄河调水调沙、生态保护等。黄河治理体现了人水和谐的追求。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">黄河</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 文化地标 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>文化地标 · 时代丰碑</h3>
+            <p class="text"><strong>文化价值：</strong>黄河坛是黄河文化的集中展示。①象征价值：是黄河文化的物质象征；②教育价值：是爱国主义教育的基地；③艺术价值：是建筑、书法、雕塑等艺术的集成；④精神价值：是民族精神的凝聚。黄河坛是文化的"教科书"。</p>
+            <p class="text"><strong>历史价值：</strong>黄河坛是新时代的文化创造。①时代价值：体现了21世纪初中国的文化自觉；②创新价值：是传统文化现代表达的创新；③记录价值：记录了黄河文化保护传承的实践；④标志价值：是宁夏文化建设的标志。黄河坛是历史的见证。</p>
+            <p class="text"><strong>艺术价值：</strong>黄河坛是综合艺术的结晶。①建筑艺术：坛、楼、碑、钟、鼎等形式丰富；②书法艺术：碑林汇集了当代书法精品；③雕塑艺术：石雕、铜雕工艺精湛；④景观艺术：建筑与黄河、贺兰山和谐统一。黄河坛是"艺术的博物馆"。</p>
+            <p class="text"><strong>社会价值：</strong>黄河坛在社会生活中发挥重要作用。①教育功能：开展爱国主义、黄河文化教育；②旅游功能：吸引游客，促进旅游发展；③活动功能：举办祭祀、节庆、演出等活动；④休闲功能：为市民提供休闲场所。黄河坛是社会的"精神家园"。</p>
+            <p class="text"><strong>旅游价值：</strong>黄河坛是宁夏重要的旅游景点。①景观价值：建筑宏伟，黄河壮丽；②文化价值：黄河文化内容丰富；③体验价值：祭祀、撞钟、登楼等体验多样；④经济价值：带动旅游及相关产业发展。黄河坛是宁夏旅游的"新名片"。</p>
+            <p class="text"><strong>保护与利用：</strong>黄河坛得到科学管理和合理利用。①管理机制：有专门的管理机构，负责保护、运营；②维护保养：定期对建筑、设施进行维护；③活动开展：举办多种文化活动，保持活力；④旅游开发：合理开展旅游，服务公众；⑤教育功能：开展青少年教育，传承文化；⑥社区参与：当地群众参与管理，分享收益。黄河坛的保护利用经验，为新建文化景观的管理提供了借鉴。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 中华黄河坛黄河文化地标，母亲河颂诉说文明之源 | 五重维度·五种灵韵爱心，点赞评论共话时代丰碑</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（中华黄河坛独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('yellow_river_altar_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('yellow_river_altar_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('yellow_river_altar_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('yellow_river_altar_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对黄河坛的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的黄河坛感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "黄河坛访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

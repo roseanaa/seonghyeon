@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>交河故城 · 四维解读 | 车师前国故都</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/交河故城.jpg" title="交河故城" alt="交河故城全景与建筑遗迹">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 车师前国</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 建筑奇迹</div>
+        <div class="dim-tab" data-tab="culture">🎪 丝路文明</div>
+        <div class="dim-tab" data-tab="value">🌟 世界遗产</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>交河故城 · 车师前国故都</h3>
+            <p class="text"><strong>传奇：</strong>交河故城位于新疆维吾尔自治区吐鲁番市西约10公里的雅尔乃孜沟中，是世界上最大、最古老、保存最完好的生土建筑城市，也是中国保存最完整的都市遗址。故城建于公元前2世纪至公元14世纪，距今已有2300多年历史。因两条河水绕城相交，故名"交河"。故城南北长约1650米，东西最宽处约300米，总面积47万平方米，建筑面积22万平方米。全城为柳叶形台地，四周为深约30米的河谷，形成天然屏障。故城是古代西域三十六国之一"车师前国"的都城，唐代为安西都护府治所，是丝绸之路上的重要城镇。13世纪末，因战乱和自然环境恶化，交河逐渐废弃。1961年，交河故城被列为全国重点文物保护单位。2014年，交河故城作为"丝绸之路：长安-天山廊道的路网"的重要组成部分，被联合国教科文组织列入《世界文化遗产名录》。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>南门遗址：</strong>故城的正门，也是唯一的地面入口。南门宽约10米，两侧有高大的门墩遗迹。门前有斜坡道通向河谷底部，是古代进出故城的唯一通道。南门设有瓮城，增强了防御功能。站在南门遗址，可俯瞰整个故城全貌，感受这座古城的雄伟气势。南门是古代商旅、使节、僧侣进入交河的必经之路。</li>
+                <li><strong>中央大道：</strong>故城的中轴线，南北走向，长350米，宽10米。大道将故城分为东、西两区，东区为官署区，西区为居民区。大道两侧有高大的生土墙，墙上有佛龛遗迹。大道用夯土铺就，历经千年仍清晰可辨。沿中央大道行走，可参观故城的主要建筑遗迹，感受古代都城的规划布局。</li>
+                <li><strong>官署区：</strong>位于故城东部，是行政、军事中心。主要建筑有：①安西都护府衙署：唐代安西都护府在交河的办公机构，面积约2000平方米，有厅堂、厢房、庭院等；②军营：驻军场所，有营房、马厩、仓库等；③监狱：关押犯人的场所，有牢房、审讯室等。官署区建筑规模宏大，体现了中央政权对西域的统治。</li>
+                <li><strong>佛教寺院区：</strong>故城内有众多佛教寺院遗址，反映了佛教在交河的兴盛。主要寺院有：①大佛寺：故城最大的佛寺，有主殿、配殿、僧房等，主殿中央有大型佛坛，原供奉佛像；②东北小寺：保存较好的佛寺，墙壁有壁画遗迹；③西北小寺：有佛塔遗迹。寺院建筑体现了犍陀罗艺术风格。</li>
+                <li><strong>民居区：</strong>位于故城西部，是平民居住区。民居多为"地穴式"或"半地穴式"建筑，即在生土中挖出房屋，冬暖夏凉。民居有单间、套间、院落等多种形式，反映了不同阶层的居住状况。部分民居保存有灶台、壁龛、储物坑等生活设施。民居区巷道纵横，形似迷宫。</li>
+                <li><strong>手工业区：</strong>故城有发达的手工业。遗址有：①冶铁作坊：有炼铁炉、铁渣、铁器等遗物；②陶窑：有陶窑遗址，出土大量陶器；③酿酒作坊：有酒窖、酿酒工具等；④纺织作坊：有纺轮、织机零件等。手工业区反映了交河的经济生活。</li>
+                <li><strong>地下寺院：</strong>故城最神秘的建筑，位于地下16米深处。寺院为石窟式建筑，有主室、侧室、甬道等。主室中央有佛坛，四壁有佛龛。地下寺院的发现，证明交河故城不仅有地面建筑，还有地下建筑。地下寺院的用途尚在研究中，可能是修行、避暑、储物的场所。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>4月至10月是最佳游览时间，此时气候适宜。夏季（6-8月）吐鲁番气温极高，故城内无遮阴，建议清晨或傍晚游览，并做好防晒、补水。春秋两季（4-5月、9-10月）气温适宜，是游览的最佳季节。冬季（11月至次年3月）较冷，但游客稀少，可享受宁静。故城开放时间：9:30-19:00（夏季至20:00）。</li>
+                <li><strong>参观顺序：</strong>游客中心（参观展览）→南门遗址→中央大道→官署区→佛教寺院区→民居区→手工业区→地下寺院（如开放）→返回。建议安排2-3小时。故城面积大，无遮阴，需带足水，穿舒适鞋子。景区内有电瓶车，可从游客中心到南门。</li>
+                <li><strong>深度体验：</strong>清晨第一批进入故城，在晨光中拍摄古城全景；上午跟随导游参观主要遗址，了解交河历史；中午在树荫下休息，感受千年古城的宁静；下午参观博物馆，观看出土文物；傍晚在观景台看夕阳下的故城，感受"大漠孤烟直，长河落日圆"的意境；观看《交河》纪录片，了解故城的兴衰；学习生土建筑知识，了解古人的智慧；住吐鲁番市区，品尝葡萄、哈密瓜等水果；第二天前往高昌故城、柏孜克里克千佛洞、火焰山等周边景点。</li>
+                <li><strong>摄影建议：</strong>南门故城全景，中央大道纵深，官署区建筑遗迹，佛寺佛坛特写，民居巷道光影，生土墙体纹理，日出日落时分的故城剪影，四季不同的故城景色，星空下的故城夜景。建议使用广角镜头拍摄全景，长焦镜头拍摄建筑细节。清晨和傍晚光线最佳，适合拍摄。偏振镜可增强蓝天白云对比。注意保护遗址，不要攀爬、触摸文物。</li>
+            </ul>
+            <p><strong>交通信息：</strong>交河故城位于吐鲁番市西约10公里。从吐鲁番市区出发：①旅游专线：吐鲁番客运站有旅游专线车到交河故城，车程20分钟；②出租车：从市区打车约30元，车程15分钟；③自驾：有停车场。从乌鲁木齐出发：可乘动车到吐鲁番北站（1小时），再转乘出租车。景区内有电瓶车。周边景点有高昌故城（40公里）、柏孜克里克千佛洞（15公里）、火焰山（30公里）、葡萄沟（20公里）。距吐鲁番交河机场15公里，车程20分钟；距吐鲁番北站12公里，车程15分钟。建议与高昌故城、柏孜克里克千佛洞、火焰山组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">故城</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 交河印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 车师前国 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>车师前国 · 西域古国</h3>
+            <p class="text"><strong>车师前国：</strong>车师是古代西域民族，分前、后两部。车师前国都城在交河，车师后国都城在务涂谷（今吉木萨尔）。车师前国存在于公元前2世纪至公元5世纪，是西域三十六国之一。其疆域包括今吐鲁番盆地，是丝绸之路北道的重要国家。车师人以农业为主，兼营畜牧业，有冶铁、制陶等手工业。车师前国与汉朝时战时和，公元前108年，汉将赵破奴攻破车师。公元前60年，西汉设西域都护府，车师前国归附。</p>
+            <p class="text"><strong>高昌郡时期：</strong>公元327年，前凉设高昌郡，治所高昌城，交河为高昌郡属县。此后，前秦、后凉、西凉、北凉相继统治。这一时期，中原政权加强对西域的统治，汉族移民增多，汉文化影响加深。佛教在交河兴盛，修建了许多佛寺。</p>
+            <p class="text"><strong>麹氏高昌时期：</strong>公元460年，柔然灭北凉，立阚伯周为高昌王。公元499年，麹嘉建立麹氏高昌王国，都高昌城，交河为重要城镇。麹氏高昌存在140年，是吐鲁番历史上的繁荣时期。佛教达到鼎盛，交河佛寺增多，成为佛教中心。</p>
+            <p class="text"><strong>唐代时期：</strong>公元640年，唐太宗灭高昌，设西州，后设安西都护府，治所交河。交河成为唐朝经营西域的政治、军事、经济中心。唐代是交河最繁荣的时期，城市规模扩大，建筑增多，文化繁荣。许多中原僧人经交河西行求法，许多西域僧人经交河东来传教。</p>
+            <p class="text"><strong>回鹘时期：</strong>公元840年，回鹘汗国灭亡，部分回鹘人西迁至高昌，建立高昌回鹘王国。回鹘人信仰佛教，交河佛教继续发展。但交河的地位逐渐被高昌取代，开始衰落。</p>
+            <p class="text"><strong>废弃原因：</strong>13世纪末，交河逐渐废弃。原因有：①战乱：蒙古西征，战争破坏；②环境：气候变化，水源减少；③经济：丝绸之路改道，贸易衰落；④政治：政治中心转移。交河废弃后，逐渐被风沙掩埋，保存至今。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑奇迹 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑奇迹 · 生土之城</h3>
+            <p class="text"><strong>选址特点：</strong>交河故城的选址极具智慧。①地形：建于柳叶形台地上，高出河谷30米，易守难攻；②水源：两条河水绕城，提供水源；③防御：四周为深谷，形成天然屏障；④交通：位于丝绸之路要道。选址体现了军事防御与生活便利的结合。</p>
+            <p class="text"><strong>城市规划：</strong>故城规划严谨。①布局：沿中央大道分为东、西两区，功能分区明确；②道路：有主干道、次干道、巷道，形成网状道路系统；③防御：有城墙、城门、瓮城、角楼等防御设施；④排水：有明沟、暗渠排水系统。规划体现了古代城市的建设水平。</p>
+            <p class="text"><strong>建筑技术：</strong>故城建筑技术独特。①生土建筑：在原生土中挖出房屋，或用于夯土砌墙；②减地法：从地面向下挖掘，留出墙体，形成房屋；③夯土技术：用夯土筑墙，坚固耐久；④木结构：用木材做梁、柱、门窗。技术适应了当地干旱少雨的气候。</p>
+            <p class="text"><strong>建筑类型：</strong>故城建筑类型丰富。①官署：衙署、军营、监狱等；②宗教：佛寺、佛塔、佛堂等；③民居：地穴式、半地穴式、地面式等；④手工业：作坊、窑炉、仓库等；⑤公共：广场、道路、水井等。类型反映了城市的多功能。</p>
+            <p class="text"><strong>防御体系：</strong>故城有完整的防御体系。①城墙：沿台地边缘筑墙，高5-10米；②城门：只有南门一个地面入口；③瓮城：南门外有瓮城，增强防御；④角楼：城墙转角有角楼，用于瞭望；⑤暗道：有秘密通道通往河谷。防御体系使交河易守难攻。</p>
+            <p class="text"><strong>建筑材料：</strong>故城主要用本地材料。①土：用原生土、夯土；②木：用胡杨、柳木、榆木；③草：用麦草、芦苇做筋；④石：少量用石材。材料简单，但经久耐用。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 丝路文明 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>丝路文明 · 东西交融</h3>
+            <p class="text"><strong>佛教文化：</strong>交河是佛教传播的重要中心。①传入：公元前后，佛教经丝绸之路传入交河；②发展：魏晋南北朝至唐代，佛教兴盛，寺院众多；③艺术：佛教艺术融合了犍陀罗、中原、西域风格；④高僧：许多高僧在交河驻锡、译经。佛教对交河文化有深远影响。</p>
+            <p class="text"><strong>多元民族：</strong>交河是多民族聚居地。①原住民：车师人，属印欧人种；②汉族：汉代开始移民，唐代增多；③突厥：突厥、回鹘等民族；④其他：粟特、波斯、印度等民族。多民族共同创造了交河文明。</p>
+            <p class="text"><strong>语言文字：</strong>交河使用多种语言文字。①汉语：官方语言，用于公文、碑刻；②车师语：当地民族语言；③粟特文：粟特商人使用的文字；④梵文：佛教经典使用的文字；⑤回鹘文：回鹘人使用的文字。语言文字反映了文化交流。</p>
+            <p class="text"><strong>艺术成就：</strong>交河有丰富的艺术遗存。①建筑艺术：生土建筑独具特色；②雕塑艺术：佛像、菩萨像等；③壁画艺术：佛寺壁画，色彩鲜艳；④工艺品：陶器、金属器、纺织品等。艺术体现了东西方风格的融合。</p>
+            <p class="text"><strong>经济生活：</strong>交河经济以农业、手工业、商业为主。①农业：种植小麦、大麦、葡萄等；②手工业：冶铁、制陶、纺织、酿酒等；③商业：丝绸之路贸易，东西方商品集散。经济繁荣支撑了城市发展。</p>
+            <p class="text"><strong>科学技术：</strong>交河有一定科技水平。①建筑技术：生土建筑技术先进；②水利技术：引水灌溉，打井取水；③冶炼技术：冶铁技术成熟；④天文历法：使用多种历法。科技适应了当地环境。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">丝路</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 世界遗产 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>世界遗产 · 人类瑰宝</h3>
+            <p class="text"><strong>历史价值：</strong>交河故城是丝绸之路历史的见证。①城市史：保存最完整的古代都市遗址；②建筑史：生土建筑的杰出代表；③民族史：多民族交流融合的实证；④宗教史：佛教传播的重要中心。故城是历史的"活化石"。</p>
+            <p class="text"><strong>科学价值：</strong>交河故城蕴含丰富的科学技术。①建筑科学：生土建筑技术，适应干旱环境；②规划科学：城市规划，功能分区；③材料科学：土、木等材料的应用；④环境科学：选址、布局的环境适应性。故城是古代科技的结晶。</p>
+            <p class="text"><strong>艺术价值：</strong>交河故城是艺术的宝库。①建筑艺术：城市布局、建筑造型独特；②雕塑艺术：佛像、装饰雕塑精美；③壁画艺术：佛寺壁画色彩鲜艳；④整体艺术：遗址与环境的和谐统一。故城是"石头的史书"。</p>
+            <p class="text"><strong>文化价值：</strong>交河故城是多元文化的载体。①佛教文化：佛教建筑的集中体现；②丝路文化：东西方文化交流的实证；③民族文化：多民族文化融合的典范；④地域文化：西域绿洲文化的代表。故城是文化交融的结晶。</p>
+            <p class="text"><strong>旅游价值：</strong>交河故城是重要的旅游景点。①景观价值：遗址壮观，环境独特；②文化价值：丝路文化吸引游客；③教育价值：是历史、考古教育的基地；④经济价值：带动地方旅游经济发展。故城是吐鲁番旅游的"金字招牌"。</p>
+            <p class="text"><strong>保护与传承：</strong>交河故城得到科学保护。①法律保护：1961年列为全国重点文物保护单位，2014年列入《世界遗产名录》；②规划保护：编制保护规划，划定保护区；③工程保护：对危岩体加固，对遗址进行保护；④研究展示：开展考古研究，建立博物馆；⑤合理利用：发展文化旅游，让遗产"活"起来；⑥社区参与：当地群众参与保护，分享旅游收益。交河故城的保护经验，为土遗址保护提供了成功范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 交河故城车师前国故都，生土之城诉说丝路传奇 | 五重维度·五种灵韵爱心，点赞评论共话世界遗产</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（交河故城独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('jiaobe_ancient_city_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('jiaobe_ancient_city_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('jiaobe_ancient_city_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('jiaobe_ancient_city_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对交河故城的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的交河故城感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "交河访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

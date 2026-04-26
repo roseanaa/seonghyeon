@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>长白山古建筑群 · 四维解读 | 神山圣境 · 满族祖地</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <div class="pic">
+        <img src="./image/长白山古建筑群.jpg" title="长白山古建筑群" alt="长白山古建筑群与天池风光">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">⛰️ 概览</div>
+        <div class="dim-tab" data-tab="history">📖 历史渊源</div>
+        <div class="dim-tab" data-tab="architecture">🏯 建筑精华</div>
+        <div class="dim-tab" data-tab="culture">🎎 满族文化</div>
+        <div class="dim-tab" data-tab="value">🌟 圣地价值</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：⛰️ 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: ⛰️ -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>长白山古建筑群 · 神山圣境</h3>
+            <p class="text"><strong>传奇：</strong>长白山古建筑群是清朝皇室祭祀长白山神的皇家祭祀建筑群，是中国古代祭祀山岳的最高等级建筑遗存。位于吉林省长白山保护开发区池北区（原二道白河镇），主要包括长白山神庙、祭坛、行宫、碑亭等建筑。始建于清康熙十六年（1677年），是清朝"龙兴之地"的祭祀中心，体现了满族萨满教信仰与儒家祭祀文化的完美融合，具有极高的历史、文化和建筑价值。</p>
+            <p><strong>核心建筑：</strong></p>
+            <ul><li><strong>长白山神庙：</strong>又称"长白山祠"，是祭祀长白山神的主殿。康熙年间敕建，乾隆年间扩建。大殿为重檐歇山顶，黄琉璃瓦，仿北京太庙规制，内供奉长白山神牌位。</li><li><strong>望祭殿：</strong>又称"望祭楼"，是皇帝遥祭长白山的场所。建于高台之上，登楼可远眺长白山主峰。殿内供奉康熙御书"长白山神"匾额。</li><li><strong>碑亭：</strong>康熙御制《长白山神告祭文》碑亭，内有汉白玉石碑，碑文记述长白山为"龙兴之地"，祭祀缘由。</li><li><strong>祭坛：</strong>天坛式圆形祭坛，三层，汉白玉栏杆，是举行祭祀大典的场所。坛北设燎炉，用于焚烧祭品。</li><li><strong>行宫：</strong>又称"驻跸处"，是皇帝祭祀期间居住的行宫。建筑为满族"口袋房"式四合院，内有御书房、寝宫、膳房等。</li><li><strong>神道：</strong>从山门到神庙的神道，长300米，两侧立石像生（石狮、石马、石虎、石羊、石人）。</li><li><strong>山门：</strong>三间四柱牌楼式山门，上悬康熙御书"长白山神庙"匾额。</li></ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul><li><strong>最佳时间：</strong>6-9月，夏季凉爽，冬季可看雪景。农历三月二十一、五月十五、九月十二是传统祭祀日，有祭祀表演。</li><li><strong>游览顺序：</strong>山门→神道→碑亭→长白山神庙→望祭殿→祭坛→行宫。建议2-3小时。可与长白山北坡景区（天池、瀑布、温泉）组合游览。</li><li><strong>深度体验：</strong>了解满族萨满祭祀文化，体验清代皇家祭祀仪式，感受"神山"崇拜信仰。清晨或傍晚拍摄建筑与长白山主峰的合影。</li><li><strong>摄影建议：</strong>长白山神庙全景，望祭殿与长白山主峰同框，碑亭汉白玉石碑特写，祭坛祭祀场景，冬季雪后古建筑银装素裹。</li></ul>
+            <p><strong>交通信息：</strong>位于长白山北坡，距二道白河镇15公里。从长白山机场乘机场大巴到二道白河，再打车前往。从延吉、敦化、白山等地有长途汽车到二道白河。建议与长白山天池、瀑布、温泉组成"神山朝圣之旅"。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">⛰️</span><span class="like-count">0</span><span class="like-btn-text">神山</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 圣地印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 历史渊源 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>历史渊源 · 龙兴之地</h3>
+            <p class="text"><strong>满族起源：</strong>长白山是满族的发祥地，被视为"神山"和"祖地"。据《清太祖武皇帝实录》记载，满族始祖布库里雍顺是天女佛库伦在长白山天池沐浴时吞食神鹊所衔朱果而生。这一"天女浴躬池"传说，使长白山成为满族的神圣起源地。清皇室自认是布库里雍顺的后裔，尊长白山为"龙兴之地"。</p>
+            <p class="text"><strong>康熙敕建：</strong>清康熙十六年（1677年），为巩固统治，彰显"君权神授"，康熙帝派内大臣觉罗武默讷、侍卫费耀色等人探查长白山。武默讷登临天池，确认长白山为"龙脉"所在。康熙帝遂敕建长白山神庙，命每年春秋两季由宁古塔将军（后为吉林将军）代皇帝祭祀。这是长白山古建筑群的肇始。</p>
+            <p class="text"><strong>乾隆扩建：</strong>乾隆十九年（1754年），乾隆帝东巡吉林，亲临望祭殿遥祭长白山。乾隆四十一年（1776年），为庆祝"十全武功"，乾隆帝大规模扩建长白山神庙，增建碑亭、祭坛、行宫，形成完整的祭祀建筑群。乾隆帝还御制《长白山神告祭文》《长白山神庙碑记》，将长白山祭祀提升到国家祀典的最高等级。</p>
+            <p class="text"><strong>清代祭祀：</strong>清代，长白山祭祀列入国家祀典，与泰山、华山、衡山、恒山、嵩山"五岳"并列。每年春秋两季，由吉林将军代皇帝祭祀，仪式隆重：①斋戒三日。②陈设祭品（牛、羊、猪、酒、果）。③宣读祭文。④行三跪九叩礼。⑤焚烧祭品。⑥望祭长白山。遇皇帝登基、大婚、寿辰、凯旋等大事，也遣官祭祀。</p>
+            <p class="text"><strong>近代变迁：</strong>清末，国力衰微，祭祀渐废。光绪二十六年（1900年），沙俄入侵东北，建筑遭破坏。民国时期，祭祀停止，建筑荒废。1949年后，列为文物保护单位。1966-1976年，建筑遭严重破坏。1980年代开始修复。2006年，长白山古建筑群被列为全国重点文物保护单位。2012年，大规模修复工程完成，对外开放。</p>
+            <p class="text"><strong>世界遗产潜力：</strong>长白山古建筑群已列入《中国世界文化遗产预备名单》。作为中国古代山岳祭祀建筑的杰出代表，满族文化的圣殿，具有申报世界文化遗产的潜力。联合国教科文组织专家考察后认为，其"体现了人类与自然的神圣关系，具有突出普遍价值"。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑精华 爱心: 🏯 -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑精华 · 皇家祭祀</h3>
+            <p class="text"><strong>总体布局：</strong>长白山古建筑群坐北朝南，背依长白山，前临二道白河。建筑沿中轴线布置：山门→神道→碑亭→长白山神庙→望祭殿→祭坛。行宫位于轴线东侧。这种"前朝后寝"、"左祖右社"的布局，体现了儒家礼制思想。建筑与自然环境和谐统一，体现了"天人合一"的哲学理念。</p>
+            <p class="text"><strong>建筑风格：</strong>建筑风格融合满汉特色：①汉式：主体建筑采用汉式宫殿建筑，重檐歇山顶，黄琉璃瓦，斗拱彩绘，体现皇家威严。②满式：行宫采用满族"口袋房"式四合院，万字炕，索伦杆，体现满族生活习俗。③藏式：部分装饰采用藏传佛教元素，如经幢、法轮，体现清代"满蒙藏"联盟政策。</p>
+            <p class="text"><strong>长白山神庙：</strong>祭祀主殿，面阔五间，进深三间，重檐歇山顶，黄琉璃瓦绿剪边。殿身高大，庄严肃穆。殿内供奉长白山神牌位，上悬康熙御书"长白山神"匾额。神案上陈设祭器：铜香炉、烛台、供盘。殿前有月台，是举行祭祀仪式的地方。</p>
+            <p class="text"><strong>望祭殿：</strong>两层楼阁，高15米，重檐歇山顶，黄琉璃瓦。登楼可远眺长白山主峰，是"遥祭"的场所。殿内供奉康熙御书"长白山神"牌位，设祭案、香炉。楼上有回廊，可环视四周景色。望祭殿体现了"祭如在"的祭祀理念，即使不能亲临天池，也要遥祭神山。</p>
+            <p class="text"><strong>祭坛：</strong>圆形三层汉白玉祭坛，直径20米，高4米。上层设燎炉，用于焚烧祭品。中层设祭案，摆放祭品。下层为广场，是官员、仪仗站立处。祭坛形制仿北京天坛圜丘坛，但规模较小。坛周有汉白玉栏杆，雕有云龙图案。</p>
+            <p class="text"><strong>碑亭：</strong>方形重檐碑亭，内立汉白玉石碑。碑身高3米，宽1.2米，厚0.4米。碑文为康熙御制《长白山神告祭文》，满汉文合璧。碑额雕双龙戏珠，碑座为赑屃（龙子）。碑文记述长白山为"龙兴之地"，祭祀缘由，具有重要的历史价值。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">筑艺</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑之美</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 满族文化 爱心: 🎎 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>满族文化 · 神山崇拜</h3>
+            <p class="text"><strong>萨满信仰：</strong>满族原始信仰是萨满教，崇拜自然神祇：天神、山神、水神、火神、祖先神。长白山被视为最重要的山神，是满族的保护神。萨满（巫师）通过跳神、念咒、祭祀，沟通人神。长白山神庙祭祀融合了萨满教的自然崇拜和儒家的祖先崇拜，形成了独特的祭祀文化。</p>
+            <p class="text"><strong>祭祀仪轨：</strong>长白山祭祀是清代国家祀典，仪式严格：①斋戒：主祭官斋戒三日，沐浴更衣。②陈设：祭坛陈设太牢（牛、羊、猪）、酒、果、帛。③迎神：奏乐，迎神。④初献：献帛、献酒、读祝文。⑤亚献、终献：再献酒。⑥饮福受胙：主祭官饮福酒，受胙肉。⑦送神：奏乐，送神。⑧望燎：焚烧祭品。整个过程庄严肃穆，体现"敬天法祖"思想。</p>
+            <p class="text"><strong>神话传说：</strong>①天女浴躬池：仙女佛库伦在长白山天池沐浴，吞神鹊所衔朱果，生布库里雍顺，是为满族始祖。②神鹊救主：清太祖努尔哈赤被明军追捕，神鹊栖于其头，明军以为枯木，努尔哈赤得救。③神鹿引路：清太宗皇太极狩猎迷路，神鹿引其出山。这些神话强化了长白山的神圣性。</p>
+            <p class="text"><strong>文学艺术：</strong>长白山是满族文学艺术的重要题材：①诗词：康熙、乾隆、嘉庆等皇帝作有大量咏长白山诗。②绘画：《长白山图》《天池图》是清代宫廷画的重要题材。③音乐：祭祀音乐庄严肃穆，有《中和韶乐》《庆神欢乐》。④舞蹈：萨满跳神舞，祭祀山神。</p>
+            <p class="text"><strong>民俗活动：</strong>①祭山：农历三月二十一、五月十五、九月十二，民间祭祀长白山。②祭祖：满族祭祖时，要面向长白山方向叩拜。③放山：进长白山采人参，要祭拜山神。④狩猎：猎人出猎前，祭拜山神，祈求平安。⑤节庆：春节、中秋等节日，要向长白山方向祭拜。</p>
+            <p class="text"><strong>语言文字：</strong>满语称长白山为"果勒敏珊延阿林"（长白山），"安巴代敏嘎珊"（大神山）。满文文献《满文老档》《满洲实录》详细记载了长白山神话。清代，满语是官方语言，长白山祭祀用满语诵祝文。现代满语已濒危，但长白山相关词汇仍被研究。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎎</span><span class="like-count">0</span><span class="like-btn-text">满韵</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 圣地价值 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>圣地价值 · 多重意义</h3>
+            <p class="text"><strong>历史价值：</strong>长白山古建筑群是清朝"龙兴之地"的实物见证，记录了满族从部落到王朝的历史进程。它是清代国家祭祀制度的重要遗存，体现了"敬天法祖"、"君权神授"的政治理念。建筑群的兴建、扩建、祭祀活动，反映了清王朝的兴衰历程，是研究清代政治、宗教、民族关系的重要资料。</p>
+            <p class="text"><strong>建筑价值：</strong>是中国古代山岳祭祀建筑的杰出代表，融合了汉、满、藏建筑艺术。其"因山就势"的布局，"天人合一"的设计，体现了中国古代建筑与自然环境和谐共生的理念。建筑技术精湛，木结构、砖石结构、琉璃工艺都达到很高水平。是研究清代官式建筑的重要实例。</p>
+            <p class="text"><strong>文化价值：</strong>承载了丰富的文化内涵：①宗教文化：萨满教自然崇拜与儒家祖先崇拜的融合。②政治文化："龙兴之地"的神话建构，巩固统治。③民族文化：满族起源、发展、壮大的历史记忆。④生态文化：人与自然和谐共处的生态智慧。⑤艺术文化：建筑、雕塑、绘画、音乐的综合艺术。</p>
+            <p class="text"><strong>科学价值：</strong>建筑选址、布局、设计体现了古代科学智慧：①风水学：背山面水，藏风聚气。②建筑学：木结构抗震，砖石耐久。③材料学：青砖、琉璃瓦、汉白玉的选用。④环境学：建筑与环境的和谐。⑤祭祀学：祭祀仪式、祭器、祭品的科学安排。</p>
+            <p class="text"><strong>旅游价值：</strong>长白山古建筑群是长白山旅游的重要组成部分，与天池、瀑布、温泉、森林共同构成完整的旅游体系。游客在此可了解满族文化，感受神山崇拜，体验皇家祭祀，欣赏古建筑艺术。年接待游客50万人次，是吉林省重要的文化旅游目的地。</p>
+            <p class="text"><strong>保护传承：</strong>2006年列为全国重点文物保护单位后，实施了大规模修复工程：①建筑修缮：按"修旧如旧"原则，修复主要建筑。②环境整治：清理周边环境，恢复历史风貌。③陈列展览：设立"长白山祭祀文化展"，展示文物、图片、文献。④学术研究：举办国际学术研讨会，出版研究著作。⑤教育推广：开展爱国主义教育、民族团结教育。⑥旅游开发：合理利用，可持续发展。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>⛰️ 长白神山，满族祖地；皇家祭祀，文化圣殿 | 五重维度·五种灵韵爱心，点赞评论共话神山圣境</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（长白山古建筑群独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('changbaishan_gujianzhuqun_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('changbaishan_gujianzhuqun_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('changbaishan_gujianzhuqun_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('changbaishan_gujianzhuqun_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对长白山古建筑群的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的长白山感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "神山访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

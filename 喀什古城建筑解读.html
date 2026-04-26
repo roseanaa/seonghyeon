@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>喀什古城 · 四维解读 | 丝路明珠</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/喀什古城.jpg" title="喀什古城" alt="喀什古城街景与建筑">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 千年古城</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 民居建筑</div>
+        <div class="dim-tab" data-tab="culture">🎪 维吾尔文化</div>
+        <div class="dim-tab" data-tab="value">🌟 活态遗产</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>喀什古城 · 丝路明珠</h3>
+            <p class="text"><strong>传奇：</strong>喀什古城，又称喀什噶尔古城，位于新疆维吾尔自治区喀什地区喀什市中心，是中国唯一的以伊斯兰文化为特色的迷宫式城市街区，也是世界上现存规模最大的生土建筑群之一。古城始建于2100多年前的西汉时期，是古代丝绸之路南北两道的交会点，也是东西方文化交流的重要枢纽。古城总面积4.25平方公里，现有居民12.68万人，其中维吾尔族占95%以上。古城街巷纵横交错，布局灵活多变，民居多为土木、砖木结构，具有浓郁的维吾尔族建筑特色。2015年，喀什古城被国家旅游局评为"中国国际特色旅游目的地"，是国家5A级旅游景区，也是新疆首个国家5A级历史人文景区。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>艾提尕尔清真寺：</strong>位于古城中心，是中国最大的清真寺，也是新疆伊斯兰教的活动中心。清真寺始建于1442年，占地16800平方米，由礼拜堂、教经堂、门楼、水池等组成。礼拜堂可容纳近万人同时礼拜，每逢古尔邦节、肉孜节，有数万穆斯林在此聚礼。寺内有158根雕花木柱，支撑着白色顶棚。门楼高12米，两侧各有一座18米高的宣礼塔。艾提尕尔清真寺是喀什古城的标志性建筑。</li>
+                <li><strong>百年老茶馆：</strong>位于古城吾斯塘博依路上，是喀什最古老的茶馆，已有百年历史。茶馆为两层土木结构建筑，一楼是厨房和储物间，二楼是茶室。茶室内铺设地毯，设有炕桌，茶客盘腿而坐，喝茶聊天。茶馆主要供应维吾尔族传统药茶，用多种草药配制，有保健功效。每天下午，这里聚集着许多维吾尔族老人，弹着热瓦普、都塔尔，唱着木卡姆，是体验维吾尔族民间文化的绝佳场所。</li>
+                <li><strong>职人巴扎：</strong>喀什古城是手工业的天堂，每条街巷都有不同的手工作坊。①花帽巴扎：制作销售维吾尔族花帽；②铜器巴扎：制作销售铜壶、铜盘等铜器；③乐器巴扎：制作销售热瓦普、都塔尔等民族乐器；④刀具巴扎：制作销售英吉沙小刀；⑤地毯巴扎：制作销售维吾尔族地毯；⑥土陶巴扎：制作销售土陶器皿。在巴扎中，可以看到工匠们现场制作，体验传统工艺的魅力。</li>
+                <li><strong>高台民居：</strong>位于古城东北端的高崖上，已有600多年历史。高台民居是喀什古城中保存最古老的区域，因地势较高，房屋依崖而建，层层叠叠，形成了独特的"过街楼""半街楼""悬空楼"等建筑形式。这里居住着近600户人家，巷道狭窄曲折，最窄处仅容一人通过。高台民居保留了完整的维吾尔族传统社区结构和生活方式，是研究维吾尔族社会文化的"活化石"。</li>
+                <li><strong>喀什古城景区东门：</strong>古城的正门，也是游客的主要入口。城门为仿古城楼建筑，高12米，宽24米，门上有"喀什噶尔"维吾尔文、汉文大字。门前有大型广场，每天上午10:30举行开城仪式，有维吾尔族歌舞表演。城门内有游客中心，提供导游、地图等服务。从这里进入古城，仿佛穿越时空，回到千年前的丝路重镇。</li>
+                <li><strong>古巷道：</strong>古城内有50多条古巷道，总长6公里。巷道宽1-3米，地面用六棱砖铺就，两侧是土黄色的民居。巷道弯曲交错，形似迷宫，但遵循"六边形地砖为 tourist 道，长方形地砖为居民道"的规则，游客只需顺着六棱砖走就不会迷路。巷道两侧的民居大门多有精美木雕，门楣上刻有古兰经文或花卉图案。</li>
+                <li><strong>民间艺术展示区：</strong>古城内有多个民间艺术展示点。①木卡姆表演：在古丽茶馆等地有木卡姆表演，木卡姆是维吾尔族古典音乐，被联合国教科文组织列为"人类口头和非物质遗产代表作"；②麦西热甫：在广场上有麦西热甫歌舞表演，麦西热甫是维吾尔族传统民间歌舞聚会；③达瓦孜：在高空有达瓦孜（高空走绳）表演，是维吾尔族传统杂技。这些表演展示了维吾尔族丰富的艺术形式。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>4月至10月是最佳游览时间，此时气候宜人。夏季（6-8月）较热，但古城内巷道有荫凉；秋季（9-10月）瓜果飘香，景色最佳。冬季（11月至次年3月）较冷，但游客稀少，可享受宁静。伊斯兰教历的重要节日，如肉孜节（开斋节）、古尔邦节（宰牲节），古城有盛大庆祝活动。建议避开正午高温时段。古城全天开放，但建议白天游览。</li>
+                <li><strong>参观顺序：</strong>东门开城仪式（10:30）→艾提尕尔清真寺→百年老茶馆→职人巴扎（花帽巴扎、铜器巴扎、乐器巴扎等）→高台民居→古巷道漫步→民间艺术表演→返回。建议安排1-2天。古城内只能步行，巷道复杂，建议请导游或跟随旅游团。</li>
+                <li><strong>深度体验：</strong>清晨在艾提尕尔清真寺看穆斯林晨礼；上午在百年老茶馆喝茶，听老人弹唱木卡姆；中午在维吾尔族餐厅品尝抓饭、烤包子、拉条子等美食；下午在职人巴扎学做手工艺品；傍晚在古城墙上看日落，感受千年沧桑；晚上参加麦西热甫歌舞晚会，与维吾尔族群众共舞；住古城民宿，体验维吾尔族家庭生活；学习维吾尔语简单问候语，与当地居民交流；穿维吾尔族服饰，拍摄特色写真；前往喀什大巴扎、香妃墓、玉素甫·哈斯·哈吉甫墓等周边景点。</li>
+                <li><strong>摄影建议：</strong>艾提尕尔清真寺全景，百年老茶馆人文，高台民居建筑，古巷道光影，手工艺人特写，维吾尔族老人肖像，巴扎市井生活，开城仪式表演，民间艺术表演，古城夜景。建议使用广角镜头拍摄建筑全景，长焦镜头拍摄人物、建筑细节。清晨和傍晚光线最佳，适合拍摄。注意尊重当地风俗，拍摄人物前最好征得同意。</li>
+            </ul>
+            <p><strong>交通信息：</strong>喀什古城位于喀什市中心。外部交通：①飞机：喀什徕宁国际机场，距古城10公里，车程20分钟；②火车：喀什站，距古城6公里，车程15分钟；③汽车：喀什客运站，距古城3公里。内部交通：古城内只能步行，禁止机动车通行。周边景点有喀什大巴扎（1公里）、香妃墓（5公里）、玉素甫·哈斯·哈吉甫墓（3公里）、喀什博物馆（4公里）。距乌鲁木齐1470公里，飞机2小时，火车16小时。建议与喀什大巴扎、香妃墓、帕米尔高原组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">古城</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 喀什印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 千年古城 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>千年古城 · 丝路重镇</h3>
+            <p class="text"><strong>历史沿革：</strong>喀什古城有2100多年历史。①汉代：公元前2世纪，为疏勒国都城，是西域三十六国之一；②唐代：设疏勒都督府，是安西四镇之一；③宋代：为喀喇汗王朝东部都城，伊斯兰教传入；④元代：为察合台汗国重镇；⑤明代：为叶尔羌汗国都城；⑥清代：设喀什噶尔参赞大臣，为南疆政治中心；⑦现代：新中国成立后，为喀什地区行署驻地。喀什是新疆历史最悠久的城市之一。</p>
+            <p class="text"><strong>丝绸之路：</strong>喀什是丝绸之路的重要枢纽。①位置：位于丝绸之路南北两道交会点，北道经阿克苏、库车，南道经和田、若羌；②功能：是商旅、使节、僧侣的中转站，东西方商品的集散地；③交流：促进了中原与西域、中国与中亚、欧洲的文化交流；④遗产：留下了丰富的文化遗产，如佛教石窟、伊斯兰建筑等。喀什是丝路文明的"活化石"。</p>
+            <p class="text"><strong>伊斯兰化：</strong>10世纪，伊斯兰教传入喀什。①喀喇汗王朝：第一个信奉伊斯兰教的突厥王朝，以喀什为东部都城；②萨图克·布格拉汗：喀喇汗王朝可汗，率20万部众皈依伊斯兰教；③影响：伊斯兰教成为喀什的主要宗教，修建了艾提尕尔清真寺等伊斯兰建筑；④融合：伊斯兰文化与当地文化融合，形成了独特的维吾尔族伊斯兰文化。</p>
+            <p class="text"><strong>近代变迁：</strong>19-20世纪，喀什经历重大变迁。①阿古柏入侵：1865-1877年，浩罕汗国阿古柏侵占喀什，建立"哲德沙尔汗国"；②左宗棠收复：1877年，清军收复喀什；③民国时期：为喀什行政区；④新中国成立后：1952年，设喀什市；⑤改革开放后：古城得到保护，2009年开始大规模改造。喀什保持了历史文化名城的特色。</p>
+            <p class="text"><strong>改造工程：</strong>2009-2015年，喀什古城进行保护性改造。①背景：古城基础设施落后，存在安全隐患；②原则："修旧如旧，保留风貌"；③内容：改造供水、排水、供电、通信等基础设施，加固危房，保护传统建筑；④效果：改善了居民生活条件，保护了古城风貌，促进了旅游发展。改造工程获得了联合国教科文组织的高度评价。</p>
+            <p class="text"><strong>现代发展：</strong>喀什古城在保护中发展。①旅游：2015年评为国家5A级景区，年接待游客数百万人次；②文化：保护维吾尔族传统文化，传承手工艺；③经济：发展旅游、手工艺等产业，提高居民收入；④社会：保持社区活力，促进民族团结。喀什古城是"保护与发展"的成功范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 民居建筑 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>民居建筑 · 生土艺术</h3>
+            <p class="text"><strong>总体布局：</strong>喀什古城是典型的伊斯兰城市布局。①无规划：没有统一规划，自然形成迷宫式格局；②街巷：巷道狭窄弯曲，适应沙漠地区防风沙、遮阳光的需要；③分区：按职业、家族聚居，形成不同的社区；④中心：以艾提尕尔清真寺为中心，辐射全城。布局体现了适应环境、注重社区的智慧。</p>
+            <p class="text"><strong>建筑形式：</strong>古城民居形式多样。①高台民居：依崖而建，有"过街楼""半街楼""悬空楼"；②庭院式：有内庭院，四周是房间；③楼层式：多为二层，一层储物，二层居住；④混合式：多种形式结合。形式适应地形、气候、功能的需要。</p>
+            <p class="text"><strong>建筑结构：</strong>民居为土木、砖木结构。①基础：用石材或砖砌基础；②墙体：用土坯砌墙，厚0.5-1米，保温隔热；③梁柱：用木梁、木柱支撑；④屋顶：平顶，用木椽、苇席、泥土覆盖。结构简单，材料易得，适合当地条件。</p>
+            <p class="text"><strong>建筑装饰：</strong>民居装饰富有民族特色。①木雕：门窗、梁柱有精美木雕，图案有几何形、花卉、古兰经文等；②彩绘：墙壁、天花板有彩绘，色彩鲜艳；③石膏雕花：墙面有石膏雕花装饰；④砖雕：用砖拼出几何图案。装饰体现了维吾尔族的审美。</p>
+            <p class="text"><strong>庭院布局：</strong>维吾尔族民居注重庭院。①功能：庭院是家庭活动、待客、纳凉的场所；②元素：有葡萄架、果树、花池、水池等；③朝向：多为南向，采光好；④分隔：用花墙、拱门分隔空间。庭院是民居的"灵魂"。</p>
+            <p class="text"><strong>建筑材料：</strong>民居采用本地材料。①土：用黏土制作土坯；②木：用杨木、柳木、桑木；③砖：用青砖、红砖；④石膏：用石膏做装饰。材料生态、环保、经济。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 维吾尔文化 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>维吾尔文化 · 丝路传承</h3>
+            <p class="text"><strong>语言文字：</strong>维吾尔族有独特的语言文字。①语言：维吾尔语属阿尔泰语系突厥语族；②文字：使用阿拉伯字母为基础的维吾尔文；③文学：有《福乐智慧》《突厥语大词典》等古典文学；④教育：有经学院、现代学校。语言文字是文化的载体。</p>
+            <p class="text"><strong>宗教信仰：</strong>维吾尔族主要信仰伊斯兰教。①教派：多数属逊尼派；②礼仪：有礼拜、封斋、朝觐等；③节日：有肉孜节、古尔邦节等；④场所：有清真寺、麻扎（陵墓）等。伊斯兰教对维吾尔族文化有深远影响。</p>
+            <p class="text"><strong>音乐舞蹈：</strong>维吾尔族能歌善舞。①木卡姆：大型古典音乐套曲，有十二木卡姆、刀郎木卡姆等；②乐器：有热瓦普、都塔尔、弹布尔、艾捷克、手鼓等；③舞蹈：有赛乃姆、刀郎舞、萨玛舞等；④麦西热甫：民间歌舞聚会。音乐舞蹈是维吾尔族的情感表达。</p>
+            <p class="text"><strong>手工艺：</strong>维吾尔族手工艺丰富多彩。①花帽：有男式巴旦木花帽、女式珍珠花帽等；②地毯：有和田地毯、喀什地毯等；③刀具：有英吉沙小刀；④土陶：有釉陶、素陶等；⑤铜器：有铜壶、铜盘等。手工艺体现了维吾尔族的智慧。</p>
+            <p class="text"><strong>饮食文化：</strong>维吾尔族饮食独具特色。①主食：有馕、抓饭、拉条子、烤包子等；②肉类：有烤肉、烤全羊、手抓肉等；③瓜果：有葡萄、哈密瓜、石榴、无花果等；④饮品：有药茶、酸奶、葡萄酒等。饮食体现了绿洲农业的特点。</p>
+            <p class="text"><strong>节庆习俗：</strong>维吾尔族有丰富的节庆习俗。①诺鲁孜节：春节，庆祝春耕开始；②肉孜节：开斋节，伊斯兰教历10月1日；③古尔邦节：宰牲节，伊斯兰教历12月10日；④婚礼：有提亲、订婚、婚礼等仪式；⑤葬礼：按伊斯兰教规进行。节庆习俗传承了民族文化。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">维吾尔</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 活态遗产 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>活态遗产 · 文化瑰宝</h3>
+            <p class="text"><strong>历史价值：</strong>喀什古城是丝绸之路历史的见证。①城市史：是中国唯一的伊斯兰迷宫式古城；②建筑史：是世界上最大的生土建筑群之一；③宗教史：是伊斯兰教在中国传播的重要中心；④民族史：是维吾尔族文化的集中体现。古城是历史的"活化石"。</p>
+            <p class="text"><strong>科学价值：</strong>喀什古城蕴含丰富的科学技术。①建筑科学：生土建筑技术，适应沙漠气候；②规划科学：迷宫式布局，防风沙、遮阳光；③材料科学：土坯、木材等本地材料的应用；④生态科学：与自然环境和谐共生。古城是适应环境的智慧结晶。</p>
+            <p class="text"><strong>艺术价值：</strong>喀什古城是艺术的宝库。①建筑艺术：民居、清真寺建筑精美；②装饰艺术：木雕、彩绘、石膏雕花技艺精湛；③手工艺：花帽、地毯、刀具等工艺独特；④表演艺术：木卡姆、舞蹈等艺术丰富。古城是"艺术的博物馆"。</p>
+            <p class="text"><strong>文化价值：</strong>喀什古城是多元文化的载体。①伊斯兰文化：清真寺、经学院等伊斯兰建筑；②丝路文化：商旅、文化交流的遗迹；③民族文化：维吾尔族语言、宗教、习俗等；④地域文化：新疆绿洲文化的代表。古城是文化交融的结晶。</p>
+            <p class="text"><strong>社会价值：</strong>喀什古城是活态的社会社区。①居住功能：仍有12万居民居住，保持社区活力；②传承功能：传承维吾尔族传统文化；③教育功能：是民族团结、爱国主义教育的基地；④示范功能：为古城保护提供成功范例。古城是"活着的文化遗产"。</p>
+            <p class="text"><strong>保护与传承：</strong>喀什古城得到科学保护。①法律保护：是国家级历史文化名城，有《喀什历史文化名城保护条例》；②工程保护：2009-2015年实施保护性改造；③活态保护：保持居民居住，传承社区文化；④合理利用：发展文化旅游，让遗产"活"起来；⑤社区参与：居民参与保护，分享旅游收益；⑥教育传承：开展文化教育，培养传承人。喀什古城的保护经验，为活态遗产保护提供了中国智慧。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 喀什古城丝路明珠，千年巷道诉说维吾尔文明 | 五重维度·五种灵韵爱心，点赞评论共话活态遗产</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（喀什古城独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('kashgar_ancient_city_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('kashgar_ancient_city_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('kashgar_ancient_city_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('kashgar_ancient_city_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对喀什古城的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的喀什古城感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "喀什访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

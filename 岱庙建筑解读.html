@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>岱庙 · 四维解读 | 东岳神府 · 帝王封禅</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/岱庙.jpg" title="岱庙" alt="岱庙天贶殿与汉柏">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 帝王封禅</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 庙宇规制</div>
+        <div class="dim-tab" data-tab="culture">🎪 东岳文化</div>
+        <div class="dim-tab" data-tab="value">🌟 泰山瑰宝</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>岱庙 · 东岳神府</h3>
+            <p class="text"><strong>传奇：</strong>岱庙位于山东省泰安市泰山南麓，俗称"东岳庙"，是古代帝王举行封禅大典和祭祀泰山神的地方，始建于汉代，拓建于唐宋，金元明清多次重修，是泰山现存规模最大、保存最完整的古建筑群，与北京故宫、曲阜孔庙、承德避暑山庄并称"中国四大古建筑群"。1988年被列为全国重点文物保护单位，是泰山世界文化与自然双遗产的重要组成部分。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>天贶殿：</strong>岱庙主体建筑，始建于北宋大中祥符二年（1009年），为宋真宗"天书降灵"而建。面阔九间（48.7米），进深五间（19.8米），高22.3米，重檐庑殿顶，铺黄色琉璃瓦，规格仅次于北京故宫太和殿。殿内供奉泰山神（东岳大帝）泥塑像，高4.4米，为明代作品。殿内北、东、西三面墙壁有巨幅壁画《泰山神启跸回銮图》，高3.3米，长62米，描绘泰山神出巡盛况。</li>
+                <li><strong>汉柏院：</strong>位于岱庙东南隅，因院内有五株汉柏而得名。相传为汉武帝元封元年（前110年）封禅泰山时所植，距今2100余年。五株汉柏形态各异，其中"挂印封侯""昂首天外""赤眉斧痕""灰鹤架巢""姊妹连理"最负盛名。院内有历代碑刻，如乾隆御制《汉柏图》碑、张钦《汉柏诗》碑等。</li>
+                <li><strong>秦刻石：</strong>位于东御座院内，为秦二世胡亥元年（前209年）诏书，由丞相李斯篆书。原石有222字，现仅存10字，是中国现存最古老的石刻之一。与《琅琊刻石》《峄山刻石》同为秦代"小篆"典范，是研究秦代历史、书法的重要实物。</li>
+                <li><strong>铜亭：</strong>原名"金阙"，位于岱庙后花园，明万历四十三年（1615年）铸造。高5.6米，面阔4.4米，进深3.4米，仿木结构，重檐歇山顶，全部用铜铸成，是中国现存三大铜亭之一（另两座在北京颐和园、武当山）。原在泰山顶碧霞祠，1972年迁至岱庙。</li>
+                <li><strong>铁塔：</strong>位于岱庙西侧，明嘉靖十二年（1533年）铸造。原为十三层，高10余米，现存四级。塔身铸有佛像、经文，是研究明代铸铁工艺和佛教艺术的重要实物。</li>
+                <li><strong>遥参亭：</strong>岱庙前导建筑，是古代帝王祭祀泰山神的第一个场所。始建于唐，宋代称"草参亭"，明代改今名。亭为方形，重檐歇山顶，四面有门。亭前有石坊，额题"遥参亭"。</li>
+                <li><strong>岱庙碑林：</strong>保存历代碑刻200余通，有"岱庙碑林"之称。著名碑刻有：①《张迁碑》（东汉）：汉隶典范；②《衡方碑》（东汉）：汉隶精品；③《孙夫人碑》（西晋）：最早的妇女墓碑；④《大唐齐州神宝寺碑》（唐）：记载泰山佛教；⑤《大宋封祀坛颂碑》（宋）：记载宋真宗封禅。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，春秋最佳（4-5月，9-10月）。建议上午参观，光线适宜。农历三月二十八日（东岳大帝诞辰）、四月十八日（碧霞元君诞辰）有庙会，热闹非凡。泰山国际登山节期间（9月）是游览岱庙、泰山的黄金时间。</li>
+                <li><strong>游览顺序：</strong>遥参亭→正阳门→配天门→仁安门→天贶殿→后寝宫→铜亭→铁塔→汉柏院→东御座（秦刻石）→唐槐院。建议安排2-3小时。登泰山者，应先拜岱庙，后登泰山，取"先拜庙，后登山"之意。</li>
+                <li><strong>深度体验：</strong>清晨参观，感受庙宇的宁静庄严；细观天贶殿《泰山神启跸回銮图》壁画，了解封禅文化；在汉柏院静思，感悟2100年古树的生命力；欣赏秦刻石，领略李斯小篆艺术；参观岱庙碑林，研习书法艺术；晚上观看《中华泰山·封禅大典》实景演出；品尝泰山豆腐宴、煎饼卷大葱等特色美食。</li>
+                <li><strong>摄影建议：</strong>天贶殿全景与建筑细节，汉柏奇姿与光影，铜亭铁塔特写，秦刻石与碑林，《泰山神启跸回銮图》壁画局部，庙宇建筑与古树构图。建议使用广角镜头拍摄建筑全景，长焦镜头捕捉雕刻细节。侧逆光可增强建筑的立体感，早晨和傍晚光线最佳。</li>
+            </ul>
+            <p><strong>交通信息：</strong>岱庙位于泰安市泰山区东岳大街。从泰山站（火车站）乘3路、4路、6路、15路、39路公交到"岱庙"站，步行即到。从泰安站（高铁站）乘17路、37路公交可达。自驾可经京台高速、青兰高速到泰安出口。岱庙南门（正阳门）正对泰山登山起点一天门。建议与泰山、普照寺、王母池组合游览。购买泰山门票可免费参观岱庙。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">神府</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 岱庙印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 帝王封禅 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>帝王封禅 · 泰山崇拜</h3>
+            <p class="text"><strong>封禅起源：</strong>封禅是古代帝王祭祀天地的最高仪式。"封"是在泰山顶筑坛祭天，"禅"是在泰山下小山（梁父山、社首山等）辟场祭地。封禅思想源于原始的山岳崇拜，认为泰山是"沟通天地"的神山。传说上古有七十二位帝王封禅泰山，但缺乏信史记载。《史记·封禅书》载："自古受命帝王，曷尝不封禅？"</p>
+            <p class="text"><strong>秦始皇封禅：</strong>秦始皇二十八年（前219年），秦始皇东巡，登泰山封禅。这是中国历史上有明确记载的第一次封禅大典。始皇"上自泰山阳至巅，立石颂秦始皇帝德，明其得封也"，在泰山顶立《泰山刻石》（李斯篆书，现存岱庙）。禅梁父山。封禅后，始皇命丞相李斯在泰山立无字碑（现存玉皇顶）。</p>
+            <p class="text"><strong>汉武帝封禅：</strong>汉武帝元封元年（前110年），武帝登泰山封禅。此后每隔五年封禅一次，共八次。武帝在泰山立无字碑（与始皇碑不同），植柏树（今岱庙汉柏）。封禅时，"山上举火，下悉应之"，场面壮观。武帝封禅，扩大了泰山崇拜的影响。</p>
+            <p class="text"><strong>汉光武帝封禅：</strong>建武三十二年（56年），光武帝刘秀登泰山封禅。这是东汉唯一一次封禅。光武帝在泰山立《泰山刻石》（已佚），在岱庙植柏树。封禅后，泰山地位进一步提高。</p>
+            <p class="text"><strong>唐高宗封禅：</strong>乾封元年（666年），唐高宗与武则天登泰山封禅。这是历史上规模最大的一次封禅，随从文武百官、各国使节、仪仗队伍绵延数百里。封禅后，改年号"乾封"，在泰山立《双束碑》（现存岱庙）。此次封禅，武则天以皇后身份参与，为女性参与封禅之始。</p>
+            <p class="text"><strong>唐玄宗封禅：</strong>开元十三年（725年），唐玄宗登泰山封禅。封禅前，命张说撰《封祀坛颂》，苏颋撰《朝觐坛颂》。封禅后，在泰山立《纪泰山铭》（唐摩崖，现存大观峰）。玄宗封禅，泰山崇拜达到顶峰。</p>
+            <p class="text"><strong>宋真宗封禅：</strong>大中祥符元年（1008年），宋真宗以"天书降灵"为由，登泰山封禅。此次封禅政治目的明显，为洗刷"澶渊之盟"之耻。封禅后，在泰山建天贶殿，在岱庙立《大宋封祀坛颂碑》。宋真宗封禅是历史上最后一次封禅，此后帝王只祭祀，不再封禅。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">封禅</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 庙宇规制 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>庙宇规制 · 皇家气派</h3>
+            <p class="text"><strong>总体布局：</strong>岱庙南北长405.7米，东西宽236.7米，总面积9.6万平方米。采用宫城式布局，沿中轴线对称。①南北中轴线：遥参亭→正阳门→配天门→仁安门→天贶殿→后寝宫→厚载门；②东西轴线：汉柏院→东御座→天贶殿→唐槐院→雨花道院。整个布局"前朝后寝""左祖右社"，模仿皇宫规制。</p>
+            <p class="text"><strong>天贶殿结构：</strong>天贶殿是岱庙核心建筑，规格极高。①基座：汉白玉须弥座，高2.65米，面积800平方米；②柱网：殿内用"减柱造"，实际只有8根内柱，使空间开阔；③梁架：用"拾梁式"结构，梁柱粗大；④斗拱：外檐用"七踩单翘重昂"斗拱，内檐用"五踩重翘"斗拱；⑤屋顶：重檐庑殿顶，铺黄色琉璃瓦，正脊有螭吻，垂脊有仙人走兽；⑥彩绘：金龙和玺彩绘，是清代最高等级的彩绘。天贶殿的规格超过曲阜孔庙大成殿，仅次于故宫太和殿。</p>
+            <p class="text"><strong>《泰山神启跸回銮图》壁画：</strong>天贶殿内大型壁画，创作年代有宋、明、清等说。①内容：描绘泰山神出巡（启跸）和回銮（回宫）的盛况；②构图：分两大部分，东壁为"启跸图"，西壁为"回銮图"；③人物：共675人，形态各异；④场景：有山川、城池、仪仗、车马等；⑤艺术：采用工笔重彩，线条流畅，色彩绚丽。壁画是中国古代壁画艺术的珍品。</p>
+            <p class="text"><strong>汉柏院建筑：</strong>汉柏院是岱庙的园林区。①布局：以五株汉柏为中心，四周有碑廊、亭台；②碑廊：保存历代碑刻60余通，有《汉柏图》碑、《张迁碑》等；③亭台：有"炳灵门""汉柏亭""御碑亭"等；④古树：除汉柏外，还有唐槐、宋银杏等。汉柏院体现了"庙园一体"的特色。</p>
+            <p class="text"><strong>铜亭铁塔：</strong>岱庙的金属建筑珍品。①铜亭：用铜铸成，仿木结构，榫卯连接，不用一钉；②铁塔：用生铁铸造，分体浇铸，叠装而成。铜亭原在泰山顶，铁塔原在泰安城内，均为保护文物迁至岱庙。这两座金属建筑展示了古代高超的铸造技术。</p>
+            <p class="text"><strong>建筑特色：</strong>岱庙建筑体现皇家气派。①规格高：采用皇宫规制，黄瓦红墙；②材料精：用楠木、汉白玉、琉璃瓦等高档材料；③工艺精：木雕、石雕、彩绘、铸造等工艺精湛；④文化深：建筑与封禅、祭祀、碑刻、古树等文化元素结合。岱庙是"建筑是凝固的历史"的典范。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 东岳文化 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>东岳文化 · 信仰体系</h3>
+            <p class="text"><strong>泰山神信仰：</strong>泰山神，又称东岳大帝，是道教尊奉的泰山之神。①起源：源于原始的山岳崇拜；②职能：主生死、掌贵贱、管魂魄；③形象：帝王装扮，戴冕旒，执圭；④祭祀：历代帝王祭祀，民间也广泛信仰。岱庙是泰山神的祖庙，各地东岳庙均以岱庙为蓝本。</p>
+            <p class="text"><strong>碧霞元君信仰：</strong>碧霞元君，俗称"泰山奶奶""泰山老母"，是泰山女神的代表。①起源：有黄帝玉女、华山玉女、东岳大帝之女等说；②职能：主生育、保平安、赐福禄；③影响：明代以来，碧霞元君信仰超过东岳大帝，成为泰山主神。岱庙虽主祀东岳大帝，但也体现碧霞元君信仰。</p>
+            <p class="text"><strong>封禅文化：</strong>封禅是岱庙的核心文化。①政治意义：帝王宣示"君权神授""国泰民安"；②宗教意义：沟通天、地、人三界；③文化意义：促进文学、艺术、建筑发展。岱庙保存了大量封禅文物，如秦刻石、唐碑、宋殿等，是封禅文化的实物见证。</p>
+            <p class="text"><strong>碑刻文化：</strong>岱庙碑刻丰富，有"岱庙碑林"之誉。①秦刻石：李斯小篆，书法瑰宝；②汉碑：《张迁碑》《衡方碑》等，汉隶典范；③唐碑：《双束碑》《纪泰山铭》等，记载封禅；④宋碑：《大宋封祀坛颂碑》等，记载宋真宗封禅；⑤御碑：乾隆、康熙等皇帝题诗碑。这些碑刻是研究历史、书法、宗教的珍贵资料。</p>
+            <p class="text"><strong>古树文化：</strong>岱庙古树名木众多。①汉柏：五株，汉武帝植，2100余年；②唐槐：一株，唐代植，1300余年；③宋银杏：数株，宋代植，1000余年；④凌霄、紫藤等。古树与建筑相映成趣，体现了"天人合一"的思想。汉柏院"挂印封侯""赤眉斧痕"等典故，增添了文化内涵。</p>
+            <p class="text"><strong>民俗活动：</strong>岱庙是泰山民俗活动中心。①庙会：农历三月二十八东岳大帝诞辰、四月十八碧霞元君诞辰，有盛大庙会；②祭祀：民间自发祭祀泰山神、碧霞元君；③祈福：游客在岱庙祈福、许愿、挂锁；④游艺：有戏曲、杂技、民间艺术表演。这些活动传承了泰山文化。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">东岳</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 泰山瑰宝 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>泰山瑰宝 · 世界遗产</h3>
+            <p class="text"><strong>世界遗产价值：</strong>1987年，泰山被联合国教科文组织列入《世界文化与自然双遗产名录》，岱庙是泰山遗产的重要组成部分。世界遗产委员会评价："泰山一直是中国艺术家和学者的精神源泉，是古代中国文明和信仰的象征。"岱庙作为泰山祭祀中心，体现了"山岳崇拜""帝王封禅""儒释道融合"等文化内涵，是世界遗产价值的核心载体。</p>
+            <p class="text"><strong>历史价值：</strong>岱庙是2000多年中国历史的见证。①政治史：从秦始皇到宋真宗，历代帝王封禅祭祀，反映了政治与宗教的关系；②建筑史：从汉代到清代，历代修建，体现了古建筑的发展演变；③宗教史：泰山神信仰、碧霞元君信仰的发展，反映了民间信仰的变迁；④艺术史：碑刻、壁画、雕塑等，是艺术史的实物资料。岱庙是"石质史书""木构史诗"。</p>
+            <p class="text"><strong>建筑价值：</strong>岱庙是中国古建筑的杰出代表。①规制价值：宫城式布局，皇家气派；②技术价值：木结构、石结构、金属结构技术精湛；③艺术价值：建筑造型优美，装饰华丽；④科学价值：抗震、排水、采光等设计科学。天贶殿是中国三大宫殿式建筑之一，具有极高的建筑价值。</p>
+            <p class="text"><strong>艺术价值：</strong>岱庙是综合性艺术宝库。①书法艺术：秦刻石、汉碑、唐碑等，是书法艺术的殿堂；②绘画艺术：《泰山神启跸回銮图》壁画，是中国古代壁画珍品；③雕塑艺术：泰山神像、铜亭铁塔等，雕塑技艺高超；④工艺艺术：木雕、石雕、彩绘、铸造等，工艺精湛。岱庙集建筑、书法、绘画、雕塑、工艺艺术于一体。</p>
+            <p class="text"><strong>科学价值：</strong>岱庙蕴含丰富的科学技术。①古树科学：汉柏、唐槐等古树，是研究古气候、古环境的活标本；②材料科学：木材、石材、金属材料的选用和处理技术；③结构科学：木结构抗震技术，经历多次地震而不倒；④保护科学：古建筑、古树、文物的保护技术。岱庙是研究古代科学技术的重要场所。</p>
+            <p class="text"><strong>保护与传承：</strong>岱庙得到科学保护。①法律保护：1961年列为山东省文物保护单位，1988年列为全国重点文物保护单位；②规划保护：编制《岱庙保护规划》，划定保护区、建设控制地带；③工程保护：对古建筑进行维修加固，如1956年、1984年、2005年大修；④研究展示：成立泰山研究院，举办学术研讨会，出版《岱庙志》《泰山石刻》等著作；⑤活态传承：恢复庙会、祭祀等民俗活动，开展文化讲座、研学活动；⑥环境整治：整治周边环境，保护古树名木。岱庙的保护经验，为世界文化遗产保护提供了借鉴。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 岱庙东岳神府，帝王封禅圣地 | 五重维度·五种灵韵爱心，点赞评论共话泰山文化</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（岱庙独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('daimiao_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('daimiao_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('daimiao_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('daimiao_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对岱庙的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的岱庙感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "岱庙访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>香港文武庙 · 四维解读 | 文武二帝 香火绵延</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/香港文武庙.jpg" title="香港文武庙" alt="香港文武庙内景与香火">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 开埠古庙</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 岭南古建</div>
+        <div class="dim-tab" data-tab="culture">🎪 文武信仰</div>
+        <div class="dim-tab" data-tab="value">🌟 法定古迹</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>香港文武庙 · 文武二帝 香火绵延</h3>
+            <p class="text"><strong>传奇：</strong>香港文武庙位于香港岛上环荷李活道，是香港现存最古老、最具历史价值的庙宇之一，也是香港开埠早期华人社会的精神与司法中心。庙宇建于1847年（清道光二十七年），供奉文昌帝君（文）和关圣帝君（武），故称"文武庙"。庙宇见证了香港从渔村到国际大都会的变迁，是香港早期华人社群自治、司法仲裁、宗教信仰的重要场所。文武庙建筑为典型岭南风格，三进三间，雕梁画栋，古色古香。庙内悬挂众多清代古匾、对联，以及由香港开埠初期华人领袖捐赠的铜钟、香炉等文物。最著名的是悬挂于正殿的"神光普照"和"至圣至神"大匾。文武庙至今香火鼎盛，不仅是香港法定古迹，更是市民祈求学业进步、事业有成、公平正义的信仰中心。每年文昌诞、关帝诞，庙宇举办盛大祭典，吸引无数信众参拜。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>正殿（文武二帝殿）：</strong>文武庙的核心建筑，供奉文昌帝君和关圣帝君。文昌帝君（文）位于左侧，主管功名利禄、学业考试，手持如意，象征智慧与文运。关圣帝君（武）位于右侧，主管忠义诚信、武运财运，手持青龙偃月刀，象征武勇与正义。两尊神像均为木雕金身，高约2米，庄严肃穆。正殿为三开间硬山顶建筑，梁架雕刻精美，悬挂多块清代古匾，最著名的是"神光普照"匾（1851年）和"至圣至神"匾（1862年）。殿前有巨大铜香炉，为1862年铸造。正殿是信众祈福的主要场所。</li>
+                <li><strong>偏殿（列圣宫）：</strong>位于正殿东侧，供奉城隍、土地、包公等其他神祇。城隍是城市的保护神，主管阴间司法；土地公是地方保护神，主管地方安宁；包公（包拯）是公正廉明的象征。偏殿体现了香港早期华人信仰的多元性。建筑为单开间硬山顶，装饰朴素。偏殿内还供奉华佗、财神等神祇，满足信众不同祈求。</li>
+                <strong>铜钟与香炉：</strong>文武庙保存多件珍贵历史文物。①铜钟：庙内存有多个清代铜钟，最早为1851年铸造，上刻捐赠者姓名，是香港早期华人社会的历史见证。②香炉：正殿前的巨大铜香炉为1862年铸造，重达数百斤，雕刻精美，是香港现存最大的古铜香炉之一。③铜鼎：庙前广场有铜鼎，为信众焚化纸宝之用。这些文物是研究香港早期社会、经济、文化的重要实物资料。</li>
+                <li><strong>古匾与对联：</strong>文武庙内悬挂众多清代古匾、对联。①"神光普照"匾：1851年立，由香港华人领袖捐赠。②"至圣至神"匾：1862年立，赞扬文武二帝的圣德。③"正义参天"匾：赞扬关帝的正义精神。④"文光射斗"匾：赞扬文昌的文运。对联多刻于木柱上，内容多为劝善、赞颂文武二帝。这些古匾、对联不仅是书法艺术精品，更是香港早期华人文化的见证。</li>
+                <li><strong>文昌笔与祈福塔：</strong>文武庙的特色祈福物品。①文昌笔：信众在文昌帝君前求得文昌笔，祈求学业进步、考试顺利。文昌笔为红色，笔杆刻有"文昌"二字。②祈福塔：信众将愿望写在祈福纸上，放入祈福塔中焚烧，祈求愿望实现。③祈福灯：悬挂祈福灯，祈求平安、健康、财运。这些祈福方式深受学生、考生、职场人士欢迎。</li>
+                <li><strong"正义堂"（昔日的公所）：</strong>文武庙不仅是宗教场所，历史上还是华人社会的司法仲裁中心。①仲裁：早期香港华人发生纠纷，不到英国殖民政府打官司，而是到文武庙请华人领袖仲裁。②公所：庙内设有"正义堂"，是华人领袖聚会、议事的场所。③教育：庙内曾设私塾，教授华人子弟中文。文武庙是香港早期华人自治的重要场所。</li>
+                <li><strong>庙会与祭典：</strong>文武庙每年举办多次庙会与祭典。①文昌诞：农历二月初三，学生、考生前来祈求学业进步。②关帝诞：农历六月廿四，商人、警察、武术界人士前来祈求事业顺利、平安。③春节：正月初一至十五，信众前来上香祈福。④中秋：举办赏月、祈福活动。庙会期间有舞狮、戏曲、祈福仪式等，热闹非凡。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>全年皆宜，但最佳游览时间为春秋两季（3-5月、9-11月），此时气候宜人。文昌诞（农历二月初三）和关帝诞（农历六月廿四）是文武庙最重要的节日，有盛大祭典，人潮最多。春节（正月初一至十五）是上香高峰期，信众前来祈福。每月农历初一、十五也是上香的好日子。建议避开假日人潮，选择平日游览。</li>
+                <li><strong>参拜顺序：</strong>庙前广场→正殿参拜文武二帝→偏殿参拜其他神祇→欣赏古匾对联→观看铜钟香炉→求取文昌笔（可选）→悬挂祈福带（可选）→返回。建议安排1-1.5小时。参拜时应衣冠整洁，不可穿短裤、背心、拖鞋。进庙应先拜天公，再拜主神。上香一般为三支，代表敬天、敬地、敬人。求文昌笔需捐献香油钱。</li>
+                <li><strong>深度体验：</strong>早晨参加庙宇早课，感受宁静氛围；上午跟随导游参观建筑，了解历史故事；中午在附近品尝传统港式茶餐厅；下午在庙内静坐，体会古朴氛围；傍晚观看庙祝关门仪式，感受传统礼仪；体验求签（如有），了解香港民俗；学习传统祈福仪式，了解上香、叩拜、祈福的规矩；住附近酒店，体验香港中西文化交融；第二天前往荷李活道古董街、PMQ元创方、中环半山自动扶梯等周边景点游览。</li>
+                <li><strong>摄影建议：</strong>正殿文武二帝神像，古匾特写（"神光普照"、"至圣至神"），铜钟与香炉细节，建筑梁架雕刻，文昌笔与祈福塔，庙会祭典场景，香客虔诚上香，建筑全景，夜景灯光。建议使用广角镜头拍摄建筑全景，长焦镜头拍摄雕刻细节。清晨和傍晚光线最佳，适合拍摄。使用偏光镜可减少反光，增强色彩饱和度。注意尊重宗教场所，拍摄前最好征得同意，不要对着神像直拍。</li>
+            </ul>
+            <p><strong>交通信息：</strong>文武庙位于香港岛上环荷李活道124-126号。地铁：港岛线上环站A2出口，步行约10分钟；或港岛线中环站D2出口，步行约15分钟。巴士：多条巴士路线经荷李活道，包括26、101、104、109、111、115、182、619、681、690、692、720、722、780、788、789等。电车：乘坐往西行的电车，在文咸东街站下车，步行约5分钟。步行：从中环步行约15分钟可达。开放时间：每日8:00-18:00。免费参观。周边景点有荷李活道古董街（毗邻）、PMQ元创方（200米）、中环半山自动扶梯（300米）、兰桂坊（500米）、中环至半山自动扶梯系统（300米）、大馆（前中区警署建筑群）（400米）。距香港国际机场34公里，车程约40分钟；距香港站1.5公里，车程10分钟。建议与荷李活道古董街、PMQ元创方、大馆组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">祠庙</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 文武庙印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 开埠古庙 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>开埠古庙 · 百年沧桑</h3>
+            <p class="text"><strong>建庙背景：</strong>1841年香港开埠后，大量华人涌入香港谋生。早期华人社会需要宗教场所和精神寄托，同时需要解决纠纷的仲裁机构。1847年，由香港华人领袖卢亚贵、谭亚才等人倡议，集资兴建文武庙，供奉文昌帝君和关圣帝君。庙宇建成后，成为香港华人社会的宗教、司法、教育、社交中心。</p>
+            <p class="text"><strong>历史沿革：</strong>①1847年：文武庙建成，初为简陋建筑。②1851年：首次扩建，增加偏殿，铸造铜钟。③1862年：第二次扩建，铸造大香炉，悬挂"至圣至神"匾。④19世纪后期：成为香港华人司法仲裁中心，设"正义堂"。⑤1976年：被列为香港法定古迹。⑥1990年：进行大规模修复。⑦2010年：再次修缮，恢复历史原貌。文武庙见证了香港从渔村到国际都市的变迁。</p>
+            <p class="text"><strong>司法功能：</strong>在殖民地早期，英国法律不适用于华人，华人纠纷多在文武庙仲裁。①仲裁人：由华人领袖（如卢亚贵、谭亚才）担任仲裁人。②程序：双方在文武二帝前发誓，陈述事实，由仲裁人裁决。③裁决：裁决结果具有约束力，双方必须遵守。④记录：仲裁记录保存在庙内。文武庙是香港早期华人自治的重要机构。</p>
+            <p class="text"><strong>教育功能：</strong>文武庙曾设私塾，教育华人子弟。①私塾：庙内设"文武庙义学"，教授《三字经》、《千字文》、《四书五经》等。②学生：多为华人子弟，学习中文、算术、书法。③教师：由科举落第文人或退休官员担任。④影响：培养了一批华人精英，为香港社会发展做出贡献。文武庙是香港早期教育的重要场所。</p>
+            <p class="text"><strong>社会功能：</strong>文武庙是香港早期华人社会的中心。①宗教：提供宗教信仰和精神寄托。②司法：解决纠纷，维持社会秩序。③教育：提供基础教育。④社交：华人聚会、议事的场所。⑤慈善：救济贫困华人。文武庙是香港早期华人社会的缩影。</p>
+            <p class="text"><strong>保护修复：</strong>文武庙作为法定古迹，得到良好保护。①1976年：被列为香港法定古迹。②1990年：香港古物古迹办事处进行大规模修复，恢复历史原貌。③2010年：再次修缮，加固结构，修复装饰。④日常维护：由东华三院负责日常管理和维护。文武庙是香港文物保护的成功范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 岭南古建 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>岭南古建 · 三进三间</h3>
+            <p class="text"><strong>总体布局：</strong>文武庙为典型岭南庙宇布局。①朝向：坐北朝南，符合风水原则。②轴线：南北中轴线，山门-天井-正殿-后殿。③院落：三进三间，前有广场，中有天井，后有后院。④功能分区：宗教区（正殿、偏殿）、公共区（广场）、服务区（办公室）。布局严谨，主次分明。</p>
+            <p class="text"><strong>建筑形式：</strong>文武庙建筑形式为岭南传统风格。①山门：三开间牌楼式，上有"文武庙"石匾。②正殿：三开间硬山顶，前有廊庑。③偏殿：单开间硬山顶，位于正殿东侧。④天井：方形天井，用于采光、通风。⑤后院：用于存放杂物。形式简洁，实用为主。</p>
+            <p class="text"><strong>木构架：</strong>文武庙木构架为穿斗式与抬梁式结合。①梁架：正殿为抬梁式，偏殿为穿斗式。②斗拱：有简单斗拱，承托屋檐。③雕刻：梁架有精美木雕，有龙、凤、花鸟等图案。④彩绘：梁枋有彩绘，但多数已褪色。木构架体现了清代岭南建筑的特点。</p>
+            <p class="text"><strong>装饰艺术：</strong>文武庙装饰朴素而精美。①木雕：梁架、门窗有精细木雕。②石雕：柱础、门墩有石雕。③砖雕：山墙有砖雕装饰。④灰塑：屋脊有灰塑装饰。⑤彩绘：梁枋有彩绘，但保存不佳。装饰体现了清代岭南民间艺术的特色。</p>
+            <p class="text"><strong>建筑材料：</strong>文武庙用材实在。①木材：用广东杉木，耐用防虫。②石材：用花岗岩做柱础、台阶。③砖瓦：用青砖、灰瓦。④灰泥：用石灰、糯米、红糖调制。材料适应当地湿热气候。</p>
+            <p class="text"><strong>建筑特色：</strong>文武庙的建筑特色鲜明。①简朴实用：无过多装饰，以实用为主。②融合中西：部分构件受西方建筑影响。③适应气候：高窗、天井利于通风散热。④功能多元：既是庙宇，又是公所、学校。特色反映了香港早期建筑的特点。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 文武信仰 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>文武信仰 · 功名正义</h3>
+            <p class="text"><strong>文昌帝君信仰：</strong>文昌帝君是道教神祇，主管功名利禄、学业考试。①起源：源于星辰崇拜，文昌星主管文运。②形象：手持如意或毛笔，象征智慧与文运。③职能：护佑学子考试顺利、文人功成名就。④祭祀：农历二月初三为文昌诞，学生、考生前来祭祀。文昌信仰在香港、广东、台湾等地盛行。</p>
+            <p class="text"><strong>关圣帝君信仰：</strong>关圣帝君是三国名将关羽，被神化为武神、财神、正义之神。①起源：历史人物关羽，因忠义勇武被神化。②形象：红面长髯，手持青龙偃月刀。③职能：主管武运、财运、正义、诚信。④祭祀：农历六月廿四为关帝诞，商人、警察、武术界人士祭祀。关帝信仰是华人社会最普遍的信仰之一。</p>
+            <p class="text"><strong>多元祭祀：</strong>文武庙除文昌、关帝外，还供奉多种神祇。①城隍：城市保护神，主管阴间司法。②土地：地方保护神，主管地方安宁。③包公：公正廉明的象征。④华佗：医神，主管健康。⑤财神：主管财运。多元祭祀满足了信众的不同需求。</p>
+            <p class="text"><strong>祭祀活动：</strong>文武庙有丰富的祭祀活动。①日常祭拜：信众上香、供果、叩拜。②诞辰祭典：文昌诞、关帝诞有盛大祭典。③节日祭祀：春节、中秋、重阳等传统节日有祭祀。④祈福法会：举办法会，为信众祈福。祭祀活动传承了中华传统文化。</p>
+            <p class="text"><strong>祈福方式：</strong>信众在文武庙有多种祈福方式。①上香：一般上三支香，代表敬天、敬地、敬人。②供品：供奉水果、鲜花、糕点等。③文昌笔：求得文昌笔，祈求学业进步。④祈福带：书写愿望挂在祈福架上。⑤点灯：在灯亭点平安灯、智慧灯等。祈福方式多样，满足不同需求。</p>
+            <p class="text"><strong>社会功能：</strong>文武庙在社会中发挥重要作用。①精神寄托：为信众提供精神慰藉。②道德教化：宣扬忠、孝、仁、义、礼、智、信。③社区凝聚：凝聚华人社群，传承文化。④旅游文化：吸引游客，传播中华文化。文武庙是香港文化的重要组成部分。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">信仰</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 法定古迹 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>法定古迹 · 香港记忆</h3>
+            <p class="text"><strong>历史价值：</strong>文武庙是香港历史的活化石。①开埠见证：见证香港从渔村到国际都市的变迁。②华人社会：反映香港早期华人社会的生活、信仰、司法。③建筑史：是香港现存最古老的庙宇建筑之一。④文物史：保存大量清代文物，如古匾、铜钟、香炉。文武庙是研究香港历史的重要实物资料。</p>
+            <p class="text"><strong>建筑价值：</strong>文武庙是清代岭南建筑的典范。①布局：三进三间，典型岭南庙宇布局。②结构：穿斗式与抬梁式结合的木构架。③装饰：木雕、石雕、砖雕、灰塑、彩绘等装饰艺术。④材料：使用当地材料，适应当地气候。文武庙是香港早期建筑的珍贵实例。</p>
+            <p class="text"><strong>艺术价值：</strong>文武庙是艺术的宝库。①书法艺术：古匾、对联是书法精品。②雕刻艺术：木雕、石雕、砖雕技艺精湛。③铸造艺术：铜钟、香炉铸造工艺高超。④建筑艺术：整体建筑和谐统一。文武庙是"艺术的博物馆"。</p>
+            <p class="text"><strong>文化价值：</strong>文武庙是香港文化的重要载体。①信仰文化：文昌、关帝信仰的传承。②司法文化：早期华人司法仲裁的见证。③教育文化：早期华人教育的场所。④社区文化：早期华人社交的中心。文武庙是香港文化的"记忆库"。</p>
+            <p class="text"><strong>社会价值：</strong>文武庙在现代社会中仍发挥重要作用。①宗教信仰：为信众提供精神寄托。②文化传承：传承中华传统文化。③旅游观光：吸引游客，促进经济。④教育研究：为学者提供研究资料。文武庙是香港社会的重要组成部分。</p>
+            <p class="text"><strong>保护与传承：</strong>文武庙作为法定古迹，得到良好保护。①法律保护：1976年被列为香港法定古迹。②机构保护：由东华三院负责日常管理。③修复保护：1990年、2010年进行大规模修复。④研究展示：开展研究，出版刊物，举办展览。⑤教育推广：举办导览、讲座，传播历史文化。⑥社区参与：社区居民参与保护，形成保护网络。文武庙的保护经验，为都市古迹保护提供了成功范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 香港文武庙开埠古庙文武二帝，香火绵延百年沧桑见证 | 五重维度·五种灵韵爱心，点赞评论共话法定古迹</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（香港文武庙独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('hongkong_man_mo_temple_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('hongkong_man_mo_temple_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('hongkong_man_mo_temple_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('hongkong_man_mo_temple_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对文武庙的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的文武庙感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "文武庙访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

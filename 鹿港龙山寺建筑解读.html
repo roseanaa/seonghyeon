@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>鹿港龙山寺 · 四维解读 | 台湾第一古刹</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/鹿港龙山寺.jpg" title="鹿港龙山寺" alt="鹿港龙山寺山门与殿宇">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 泉州分灵</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 闽南建筑</div>
+        <div class="dim-tab" data-tab="culture">🎪 民间信仰</div>
+        <div class="dim-tab" data-tab="value">🌟 国定古迹</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>鹿港龙山寺 · 台湾第一古刹</h3>
+            <p class="text"><strong>传奇：</strong>鹿港龙山寺位于台湾彰化县鹿港镇，是台湾现存最完整的清代建筑群，也是台湾规模最大、历史最悠久的佛寺，素有"台湾紫禁城"、"台湾建筑之宝"的美誉。龙山寺始建于明永历二十年（1666年），由泉州移民自福建泉州府晋江县安海龙山寺分香而来，最初建于鹿港旧港畔（今大有街一带）。清乾隆五十一年（1786年），迁建于现址。寺庙占地1600坪（约5300平方米），坐东朝西，为三进二院七开间的宫殿式建筑，布局严谨，规模宏大。寺内供奉观世音菩萨，是台湾观音信仰的重要中心。1983年，龙山寺被指定为台湾"国定古迹"，是台湾最具代表性的古建筑之一。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>山门（五门殿）：</strong>龙山寺的正门，为五开间重檐歇山顶建筑，面宽五间，进深三间，是台湾现存最大的庙宇山门。山门中央三间为通道，两侧为"哼哈二将"塑像。门楣上悬挂"龙山寺"匾额，为清乾隆年间福建水师提督王得禄所题。山门屋脊为燕尾脊，两端有鸱吻，脊上有剪黏装饰，有双龙戏珠、八仙过海等题材。山门的斗拱、雀替、门簪等木构件雕刻精美，展现了闽南建筑的精湛工艺。</li>
+                <li><strong>戏台：</strong>位于山门后、拜殿前，是台湾现存最古老、最完整的庙宇戏台。戏台为四柱歇山顶建筑，面宽4.5米，进深4.5米，高约8米。戏台藻井为蜘蛛结网式八角藻井，由16组斗拱层层叠叠而成，不用一根铁钉，全靠榫卯结构支撑，是台湾木构建筑的杰作。戏台是酬神演戏的场所，每逢观音诞辰、成道日、出家日，以及春节、端午、中秋等节日，都会上演歌仔戏、布袋戏等传统戏曲。</li>
+                <li><strong>拜殿：</strong>位于戏台后、正殿前，是信众祭拜的主要场所。拜殿为卷棚顶建筑，面宽五间，进深三间。殿内悬挂多块古匾，最著名的是清乾隆皇帝御赐的"慈云远被"匾，以及清福建水师提督王得禄所献的"法雨均沾"匾。拜殿的龙柱为花岗岩雕刻，一柱一龙，龙身盘旋而上，龙首昂然，栩栩如生。拜殿的梁架、斗拱、雀替等木构件均有精美雕刻，有花鸟、人物、吉祥图案等。</li>
+                <li><strong>正殿（大雄宝殿）：</strong>龙山寺的主殿，供奉观世音菩萨。正殿为歇山顶建筑，面宽五间，进深四间。殿内主祀观音菩萨，左右配祀文殊菩萨、普贤菩萨，两侧有十八罗汉。观音像为泥塑金身，高约3米，面容慈祥，端庄肃穆。正殿的屋顶结构复杂，有"三通五瓜"的梁架，是闽南建筑的代表作。殿内墙壁有彩绘壁画，内容为佛教故事、山水花鸟等。</li>
+                <li><strong>后殿：</strong>位于正殿后方，供奉地藏王菩萨、注生娘娘、境主公等神祇。后殿为硬山顶建筑，面宽五间，进深三间。殿内最珍贵的是清嘉庆年间的"龙山寺重建碑记"，记载了龙山寺的历史沿革和修建过程。后殿前有拜亭，左右有护龙（厢房），形成完整的院落。</li>
+                <li><strong>钟鼓楼：</strong>位于山门两侧，左钟楼，右鼓楼，均为二层楼阁式建筑。钟楼内悬挂一口清乾隆年间铸造的古钟，高1.5米，直径0.9米，重约600公斤，钟声浑厚悠远。鼓楼内有大鼓一面，直径1.2米。晨钟暮鼓是寺院的传统，每日清晨敲钟108响，傍晚击鼓，提醒僧众修行。</li>
+                <li><strong>廊庑与天井：</strong>龙山寺的廊庑连接各殿，形成封闭的院落。廊庑的墙壁上有碑刻、诗匾，记载了历代修建情况和捐献者名单。天井用红砖铺地，中有石砌甬道。天井种植有榕树、桂花等花木，环境清幽。廊庑的墙壁上还有彩绘，有"鹿港八景"、"龙山寺全景"等题材。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>全年皆宜，但最佳游览时间为春秋两季（3-5月、9-11月），此时气候宜人。农历二月十九日（观音诞辰）、六月十九日（观音成道日）、九月十九日（观音出家日）是龙山寺最重要的三大香期，有盛大法会、绕境、演戏等活动，热闹非凡。春节、端午、中秋等传统节日也有庆祝活动。建议避开假日人潮，选择平日游览。</li>
+                <li><strong>参观顺序：</strong>山门（五门殿）→戏台→拜殿→正殿（大雄宝殿）→后殿→钟鼓楼→廊庑碑刻→返回。建议安排1-2小时。参观时应保持肃静，不可大声喧哗。进殿应先拜天公炉，再拜主神。拍照时请勿使用闪光灯，不要对着神像直拍。</li>
+                <li><strong>深度体验：</strong>清晨参加寺院的早课，感受佛教氛围；上午跟随导游参观建筑，了解木构、雕刻艺术；中午在鹿港老街品尝蚵仔煎、面线糊、肉圆等小吃；下午在寺内静坐，体会古刹的宁静；傍晚听暮鼓钟声，感受时光流逝；观看传统戏曲表演，体验民间艺术；学习闽南建筑知识，了解斗拱、剪黏、交趾陶等工艺；参加法会活动，了解佛教仪式；住鹿港民宿，体验古镇生活；第二天前往天后宫、文武庙、摸乳巷、半边井等鹿港景点游览。</li>
+                <li><strong>摄影建议：</strong>山门全景，戏台藻井特写，拜殿龙柱雕刻，正殿观音像，钟鼓楼建筑，廊庑碑刻，屋顶剪黏艺术，木构件细部，法会活动场景，香客虔诚祭拜。建议使用广角镜头拍摄建筑全景，长焦镜头拍摄雕刻细节。清晨和傍晚光线最佳，适合拍摄。偏振镜可减少反光，增强色彩饱和度。注意尊重宗教场所，拍摄前最好征得同意。</li>
+            </ul>
+            <p><strong>交通信息：</strong>鹿港龙山寺位于彰化县鹿港镇金门巷81号。从台北出发：①高铁：台北站乘高铁到台中站（约1小时），转乘台湾好行鹿港线或彰化客运到鹿港；②台铁：台北站乘台铁到彰化站（约2小时），转乘彰化客运到鹿港。从台中出发：乘台湾好行鹿港线或彰化客运到鹿港，车程约1小时。龙山寺开放时间：5:00-22:00。免费参观。周边景点有鹿港天后宫（500米）、鹿港老街（300米）、文武庙（800米）、摸乳巷（400米）、半边井（200米）。距台中清泉岗机场20公里，车程30分钟；距彰化火车站15公里，车程25分钟。建议与鹿港天后宫、鹿港老街、文武庙组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">古刹</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 龙山寺印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 泉州分灵 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>泉州分灵 · 闽台渊源</h3>
+            <p class="text"><strong>创建缘起：</strong>明郑时期，泉州晋江、南安、惠安等地移民渡海来台，开发鹿港。移民为求航海平安、事业顺利，自故乡泉州府晋江县安海龙山寺恭请观世音菩萨分灵来台。明永历二十年（1666年），在鹿港旧港畔（今大有街）建小祠奉祀，此为龙山寺之始。清乾隆五十一年（1786年），因旧庙狭小，迁建于现址，由泉州匠师设计施工，历时12年建成。龙山寺的创建，体现了闽台之间的血缘、神缘、文缘关系。</p>
+            <p class="text"><strong>清代扩建：</strong>清代是龙山寺的鼎盛时期。①乾隆年间：迁建现址，奠定规模；②嘉庆年间：增建后殿、钟鼓楼；③道光年间：重修，增添雕刻、彩绘；④光绪年间：再次重修。清代鹿港是台湾第二大港，商业繁荣，龙山寺成为泉州移民的信仰中心，也是鹿港"八郊"（商会）的活动场所。</p>
+            <p class="text"><strong>日据时期：</strong>1895-1945年，台湾被日本统治。龙山寺受到保护，但香火受到影响。1920年，龙山寺被指定为"台湾重要寺庙"。1938年，进行大修，由泉州匠师王益顺主持。日据时期，龙山寺成为台湾人民维系中华文化的重要场所。</p>
+            <p class="text"><strong>战后修复：</strong>1945年台湾光复后，龙山寺得到修复。1959年，进行大修，修复因地震、台风损坏的建筑。1978年，再次大修，由台湾著名匠师施镇洋主持。1983年，被指定为"国定古迹"。2000年，进行全面修复，历时5年，耗资2亿元新台币。</p>
+            <p class="text"><strong>文物保存：</strong>龙山寺保存了大量珍贵文物。①古匾：有清乾隆"慈云远被"、嘉庆"法雨均沾"、道光"慧日常明"等；②碑刻：有嘉庆"龙山寺重建碑记"、道光"重修碑记"等；③法器：有乾隆古钟、古鼓、香炉等；④雕塑：有木雕、石雕、泥塑等。文物是龙山寺历史的见证。</p>
+            <p class="text"><strong>现代发展：</strong>龙山寺在现代社会中发挥多重功能。①宗教功能：观音信仰中心，举办法会、祭祀；②文化功能：古建筑展示，传统艺术传承；③教育功能：乡土教育，文化传承；④旅游功能：观光景点，促进地方经济。龙山寺是台湾重要的文化遗产。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 闽南建筑 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>闽南建筑 · 匠艺精华</h3>
+            <p class="text"><strong>总体布局：</strong>龙山寺为典型的闽南庙宇布局。①朝向：坐东朝西，面向海洋，庇佑航海；②轴线：南北中轴线，山门-戏台-拜殿-正殿-后殿；③院落：三进二院，前院有天井，后院有花园；④护龙：左右有护龙（厢房），形成封闭院落。布局严谨，主次分明。</p>
+            <p class="text"><strong>建筑形式：</strong>龙山寺建筑形式多样。①山门：重檐歇山顶，五开间；②戏台：单檐歇山顶，四柱；③拜殿：卷棚顶，五开间；④正殿：歇山顶，五开间；⑤后殿：硬山顶，五开间；⑥钟鼓楼：二层楼阁式。形式丰富，等级分明。</p>
+            <p class="text"><strong>木构架：</strong>龙山寺木构架精湛。①斗拱：有"一斗三升"、"如意斗拱"等多种形式；②梁架：有"三通五瓜"、"拾梁式"等结构；③藻井：戏台有蜘蛛结网式藻井，不用一钉；④榫卯：全部用榫卯连接，不用铁钉。木构架体现了匠师的高超技艺。</p>
+            <p class="text"><strong>装饰艺术：</strong>龙山寺装饰丰富多彩。①木雕：梁架、斗拱、雀替、门簪有精美木雕；②石雕：龙柱、石狮、石鼓、石窗有精细石雕；③剪黏：屋脊有剪黏装饰，有龙凤、人物、花鸟；④彩绘：梁枋、墙壁有彩绘，有山水、人物、故事。装饰体现了闽南艺术的特色。</p>
+            <p class="text"><strong>建筑材料：</strong>龙山寺用材讲究。①木材：用福州杉、樟木、楠木等；②石材：用泉州白花岗岩、青斗石等；③砖瓦：用红砖、黑瓦；④灰泥：用石灰、糯米、红糖等调制。材料保证建筑的耐久性。</p>
+            <p class="text"><strong>建筑匠师：</strong>龙山寺由泉州匠师建造。①设计：泉州匠师设计，体现闽南风格；②施工：泉州匠师施工，带来先进技术；③传承：台湾匠师学习，传承技艺。匠师是建筑的灵魂。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 民间信仰 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>民间信仰 · 观音道场</h3>
+            <p class="text"><strong>观音信仰：</strong>龙山寺主祀观世音菩萨。①观音形象：为"南海观音"，慈祥庄严；②信仰功能：有求必应，救苦救难；③祭祀活动：有日常祭拜、法会、绕境等；④信仰圈：信徒遍布全台，甚至海外。观音信仰是龙山寺的核心。</p>
+            <p class="text"><strong>多元祭祀：</strong>龙山寺供奉多种神祇。①佛教：观音、文殊、普贤、地藏等菩萨；②道教：注生娘娘、境主公、土地公等；③民间：十八罗汉、韦驮、伽蓝等。多元祭祀体现了闽台民间信仰的包容性。</p>
+            <p class="text"><strong>法会活动：</strong>龙山寺有丰富的法会活动。①三大香期：观音诞辰、成道、出家日；②春节：除夕夜开庙门、抢头香；③中元：盂兰盆会，普度众生；④水陆法会：大型法会，超度亡灵。法会是信仰活动的重要组成部分。</p>
+            <p class="text"><strong>庙会文化：</strong>龙山寺是庙会文化中心。①演戏：戏台演歌仔戏、布袋戏酬神；②绕境：神轿出巡，巡境祈福；③市集：庙前有市集，买卖商品；④饮食：有平安粥、寿面等庙食。庙会丰富了民众生活。</p>
+            <p class="text"><strong>民俗艺术：</strong>龙山寺传承民俗艺术。①戏曲：歌仔戏、布袋戏表演；②音乐：南管、北管演奏；③舞蹈：跳鼓阵、车鼓阵等；④工艺：木雕、石雕、彩绘等。艺术是信仰的延伸。</p>
+            <p class="text"><strong>社会功能：</strong>龙山寺在社会中发挥重要作用。①凝聚：凝聚泉州移民，形成社区；②慈善：举办慈善活动，救济贫困；③教育：传播中华文化，教育民众；④调解：调解纠纷，维护和谐。寺庙是社会的稳定器。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">信仰</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 国定古迹 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>国定古迹 · 文化瑰宝</h3>
+            <p class="text"><strong>历史价值：</strong>龙山寺是台湾历史的见证。①移民史：泉州移民开发台湾的见证；②建筑史：清代闽南建筑的典范；③宗教史：观音信仰在台湾传播的实证；④社会史：鹿港发展史的缩影。龙山寺是历史的"活化石"。</p>
+            <p class="text"><strong>科学价值：</strong>龙山寺蕴含丰富的科学技术。①建筑科学：木构架、斗拱、藻井等结构科学；②材料科学：木材、石材、砖瓦等材料的应用；③工艺科学：木雕、石雕、剪黏等工艺技术；④环境科学：选址、布局的环境适应性。龙山寺是古代科技的结晶。</p>
+            <p class="text"><strong>艺术价值：</strong>龙山寺是艺术的宝库。①建筑艺术：布局严谨，形式优美；②雕塑艺术：木雕、石雕技艺精湛；③绘画艺术：彩绘色彩鲜艳，构图巧妙；④整体艺术：建筑与环境的和谐统一。龙山寺是"艺术的博物馆"。</p>
+            <p class="text"><strong>文化价值：</strong>龙山寺是闽台文化的载体。①闽南文化：闽南建筑、艺术、信仰的集中体现；②移民文化：泉州移民文化的传承；③信仰文化：观音信仰文化的传播；④社区文化：鹿港社区文化的中心。龙山寺是文化交融的结晶。</p>
+            <p class="text"><strong>教育价值：</strong>龙山寺是重要的教育基地。①历史教育：了解台湾开发史；②艺术教育：学习传统建筑艺术；③宗教教育：认识民间信仰；④乡土教育：培养爱乡情怀。龙山寺是"露天的教室"。</p>
+            <p class="text"><strong>保护与传承：</strong>龙山寺得到科学保护。①法律保护：1983年指定为"国定古迹"；②规划保护：编制保护计划，划定保护区；③工程保护：定期维修，保护建筑；④研究展示：开展研究，出版成果；⑤教育推广：举办讲座、导览，传播文化；⑥社区参与：社区居民参与保护，形成保护网络。龙山寺的保护经验，为古建筑保护提供了成功范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 鹿港龙山寺台湾第一古刹，泉州分灵诉说闽台渊源 | 五重维度·五种灵韵爱心，点赞评论共话国定古迹</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（鹿港龙山寺独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('lugang_lungshan_temple_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('lugang_lungshan_temple_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('lugang_lungshan_temple_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('lugang_lungshan_temple_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对龙山寺的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的龙山寺感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "龙山寺访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

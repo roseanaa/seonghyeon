@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>曲阜孔庙 · 四维解读 | 天下文枢 · 儒家圣地</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/曲阜孔庙.jpg" title="曲阜孔庙" alt="曲阜孔庙大成殿与古柏">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 千年沿革</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 建筑规制</div>
+        <div class="dim-tab" data-tab="culture">🎪 祭孔大典</div>
+        <div class="dim-tab" data-tab="value">🌟 世界遗产</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>曲阜孔庙 · 天下文枢</h3>
+            <p class="text"><strong>传奇：</strong>曲阜孔庙位于山东省曲阜市中心，是中国现存规模最大、历史最久、保存最完整的祭祀孔子的庙宇，与北京故宫、承德避暑山庄并称"中国三大古建筑群"。始建于公元前478年，即孔子逝世后的第二年，鲁哀公将孔子故宅改建为庙，岁时奉祀。历经2000多年的历代扩建重修，形成现有规模。1994年被联合国教科文组织列入《世界遗产名录》，是儒家文化的圣地，中华民族的文化象征。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>大成殿：</strong>孔庙主体建筑，始建于宋天禧二年（1018年），明弘治十三年（1500年）重建。面阔九间（45.78米），进深五间（24.89米），高24.8米，重檐歇山顶，铺黄色琉璃瓦。殿前有巨型石雕云龙陛石，殿内供奉孔子及四配、十二哲像。檐下10根深浮雕蟠龙石柱，为明代遗物，每柱雕有两条对翔蟠龙，是中国古代石雕艺术的瑰宝。</li>
+                <li><strong>杏坛：</strong>相传为孔子讲学处，位于大成殿前甬道正中。始建于宋代，现存为明隆庆三年（1569年）重建。十字结脊，方亭重檐，黄瓦朱柱，十字结脊。亭内立金代党怀英篆书"杏坛"碑，亭前有古杏树一株，象征"杏坛设教"。</li>
+                <li><strong>奎文阁：</strong>孔庙藏书楼，始建于宋天禧二年（1018年），明弘治十七年（1504年）扩建。三层木结构楼阁，高23.35米，面阔七间，进深五间，三重檐，阁内原藏历代帝王赐书、墨迹。结构独特，历经多次地震仍完好无损，是中国古代木结构建筑的典范。</li>
+                <li><strong>十三碑亭：</strong>位于大成门前的碑亭院，有金、元、明、清碑亭13座，内存唐、宋、金、元、明、清、民国碑刻55通。最珍贵的是唐开元二十七年（739年）《大唐赠孔子太师碑》、明成化四年（1468年）《御制重修孔子庙碑》。碑亭形制各异，是研究历代碑刻、书法的宝库。</li>
+                <li><strong>棂星门：</strong>孔庙第一道大门，始建于明永乐十三年（1415年），原为木结构，清乾隆十九年（1754年）改为石质。四柱三间冲天式，柱顶有辟邪（朝天吼）。"棂星"即天田星，主文运，寓意孔子为文星下凡。</li>
+                <li><strong>圣迹殿：</strong>位于孔庙最后部，明万历二十年（1592年）建。殿内保存《圣迹图》石刻120幅，连环画形式表现孔子生平事迹，从"尼山致祷"到"汉高祀鲁"，是现存最早的孔子传记石刻连环画。</li>
+                <li><strong>先师手植桧：</strong>位于大成门内，相传为孔子亲手所植。原树已枯，现存为清雍正十年（1732年）萌发新枝。树旁立"先师手植桧"碑，为明代书法家杨光训题写。此树被视为儒家文化的象征，有"桧树荣枯兆国运"之说。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，春秋最佳（4-5月，9-10月）。建议上午8:00-11:00参观，光线适宜。每年9月28日孔子诞辰日有盛大的祭孔大典，是体验儒家文化的最佳时机。</li>
+                <li><strong>游览顺序：</strong>万仞宫墙→金声玉振坊→棂星门→太和元气坊→至圣庙坊→圣时门→弘道门→大中门→同文门→奎文阁→十三碑亭→大成门→杏坛→大成殿→寝殿→圣迹殿。建议安排3-4小时。</li>
+                <li><strong>深度体验：</strong>清晨观看开庙仪式，感受庄严氛围；细观大成殿蟠龙石柱的精美雕刻；在杏坛前静思，遥想孔子讲学场景；参观十三碑亭，欣赏历代书法艺术；拜谒先师手植桧，感悟文化传承；晚上观看《金声玉振》大型实景演出。</li>
+                <li><strong>摄影建议：</strong>大成殿全景与蟠龙石柱特写，杏坛与古柏构图，奎文阁建筑细节，十三碑亭碑刻，棂星门牌坊，先师手植桧。建议使用广角镜头拍摄建筑全景，长焦镜头捕捉雕刻细节。晨光或夕照时分，光影效果最佳。</li>
+            </ul>
+            <p><strong>交通信息：</strong>曲阜孔庙位于山东省曲阜市神道路。从曲阜东站（高铁站）乘K01路公交直达"孔庙南门"站，车程20分钟。从曲阜汽车站乘1路、2路、5路公交可达。距济南遥墙机场180公里，车程2.5小时；距济宁曲阜机场80公里，车程1小时。建议与孔府、孔林（三孔景区）组合游览，购买联票。周边有尼山圣境、孔子六艺城等景点。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">圣庙</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 孔庙印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 千年沿革 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>千年沿革 · 代代增崇</h3>
+            <p class="text"><strong>春秋初创：</strong>鲁哀公十六年（前479年）孔子逝世，次年（前478年），鲁哀公将孔子故宅三间改建为庙，"岁时奉祀"，是为孔庙之始。当时"庙屋三间"，内藏孔子生前所用"衣、冠、琴、车、书"。西汉高祖十二年（前195年），刘邦过鲁，"以太牢祀孔子"，开帝王祭孔先例。</p>
+            <p class="text"><strong>魏晋南北朝：</strong>北魏太和十三年（489年），孝文帝下诏在京城平城（今大同）建孔庙，开外地建孔庙先河。北齐天保元年（550年），诏各地郡学立孔庙。这一时期，曲阜孔庙多次重修，规模渐大。</p>
+            <p class="text"><strong>唐宋扩建：</strong>唐太宗贞观四年（630年），诏州县皆立孔庙。唐乾封元年（666年），唐高宗封禅泰山，至曲阜祭孔，赠孔子"太师"。北宋大中祥符元年（1008年），宋真宗封禅泰山，至曲阜祭孔，追谥孔子为"玄圣文宣王"。天禧二年（1018年），大修孔庙，建藏书楼（奎文阁前身）。元祐元年（1086年），增建大殿（大成殿前身）。</p>
+            <p class="text"><strong>金元时期：</strong>金明昌二年至六年（1191-1195年），大修孔庙，形成"殿、庑、阁、亭三百六十余楹"的规模。元至大四年（1311年），元武宗加封孔子为"大成至圣文宣王"。元至顺二年（1331年），孔庙用天子礼乐，立"官员人等至此下马"碑。</p>
+            <p class="text"><strong>明代鼎盛：</strong>明弘治十二年（1499年），孔庙遭雷击，大部分建筑焚毁。弘治十三年至十七年（1500-1504年），明孝宗拨银15.2万两，大规模重建，形成现存基本格局。正德八年（1513年），建"金声玉振"坊。嘉靖十七年（1538年），建"太和元气"坊。</p>
+            <p class="text"><strong>清代至今：</strong>清雍正二年（1724年），孔庙又遭雷击，大成殿等主要建筑焚毁。雍正三年至八年（1725-1730年），雍正帝拨银15.7万两重建，历时6年，用匠工6.6万，建成现存建筑。民国时期，孔庙得到保护。1961年，被列为全国重点文物保护单位。1994年，与孔府、孔林一起列入《世界遗产名录》。2005年，启动大规模维修工程。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑规制 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑规制 · 皇家典范</h3>
+            <p class="text"><strong>总体布局：</strong>孔庙坐北朝南，沿中轴线对称布局，南北长1120米，东西宽140-153米，占地约16万平方米。全庙共有九进院落，殿堂阁庑466间，分三路：中路祭祀孔子及先贤先儒，东路祭祀孔子上五代祖先，西路祭祀孔子父母。这种布局体现了"前庙后学""左昭右穆"的礼制思想。</p>
+            <p class="text"><strong>九进院落：</strong>①第一进：万仞宫墙至金声玉振坊；②第二进：金声玉振坊至棂星门；③第三进：棂星门至圣时门；④第四进：圣时门至弘道门；⑤第五进：弘道门至大中门；⑥第六进：大中门至同文门；⑦第七进：同文门至奎文阁；⑧第八进：奎文阁至大成门；⑨第九进：大成门至圣迹殿。九进象征"九重天"，体现孔子至高地位。</p>
+            <p class="text"><strong>大成殿建筑：</strong>大成殿是孔庙核心建筑，规制极高。①屋顶：重檐歇山顶，铺黄色琉璃瓦，这是皇家建筑才能使用的规格；②开间：面阔九间，进深五间，符合"九五之尊"的帝王规制；③柱础：用覆盆式莲花柱础，为唐代风格；④斗拱：外檐用七踩单翘重昂斗拱，内檐用五踩重翘斗拱；⑤彩绘：金龙和玺彩绘，是清代最高等级的彩绘。大成殿的规格超过北京故宫太和殿以外的所有宫殿。</p>
+            <p class="text"><strong>蟠龙石柱：</strong>大成殿檐下10根深浮雕蟠龙石柱，是孔庙建筑艺术的精华。每根高5.98米，直径0.81米，用整块巨石雕成。每柱雕两条对翔蟠龙，中雕宝珠，四周绕云焰，柱脚衬以山石波涛。龙姿生动，云水翻腾，雕刻深度达10-20厘米。这10根石柱是明代弘治年间遗物，历时500年仍保存完好。</p>
+            <p class="text"><strong>奎文阁结构：</strong>奎文阁是中国古代木结构楼阁的典范。采用"明三暗二"结构，外观三层，内部实为两层。梁架结构独特：①底层：用"通柱造"，柱子从地面直通二层楼板；②二层：用"叉柱造"，上层柱脚插入下层斗拱；③顶层：用"缠柱造"，柱子用斜撑加固。这种结构使奎文阁抗震性能极强，历经多次地震而不倒。</p>
+            <p class="text"><strong>碑刻艺术：</strong>孔庙保存历代碑刻2000余通，是中国第二大碑林（仅次于西安碑林）。①十三碑亭：有金、元、明、清碑亭13座，内存碑刻55通；②汉魏碑刻陈列馆：存汉代碑刻19通，魏碑1通，包括《乙瑛碑》《礼器碑》《史晨碑》等名碑；③玉虹楼法帖：清乾隆年间孔继涑刻，收历代书法家作品584块。这些碑刻是研究历史、书法、石刻艺术的珍贵资料。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">规制</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 祭孔大典 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>祭孔大典 · 国之大典</h3>
+            <p class="text"><strong>历史沿革：</strong>祭孔始于孔子逝世后的第二年（前478年），鲁哀公于孔子故宅立庙祭祀。汉高祖刘邦过鲁祭孔，开帝王祭孔先例。东汉时，祭孔成为国家大典。唐玄宗开元二十七年（739年），追谥孔子为"文宣王"，祭孔用"太牢"（牛、羊、猪三牲）。宋代，祭孔升为中祀。明代，祭孔用"八佾舞"（64人）。清代，祭孔用"大祀"，与祭天、祭地、祭太庙同等级。</p>
+            <p class="text"><strong>释奠礼：</strong>祭孔的正礼称"释奠礼"。程序：①迎神：奏《昭平之章》，主祭、分献官就位；②初献：献帛、献爵，奏《宣平之章》，舞"八佾舞"；③亚献：献羹、献食，奏《秩平之章》；④终献：献果、献茶，奏《叙平之章》；⑤读祝：读祭文；⑥饮福受胙：主祭饮酒、受胙（祭肉）；⑦撤馔：撤供品，奏《懿平之章》；⑧送神：奏《德平之章》；⑨望燎：焚烧祭品。整个仪式约一小时。</p>
+            <p class="text"><strong>现代祭孔：</strong>现代祭孔大典在每年9月28日孔子诞辰日举行。①时间：上午9:28开始，取孔子诞辰之意；②地点：曲阜孔庙大成殿前；③主祭：山东省省长或国家领导人；④参与者：孔子后裔、专家学者、国际友人、各界代表等数千人；⑤程序：沿用古代释奠礼，但简化了部分环节；⑥特色：增加了"诵读《论语》"、"中学生成人礼"等现代内容。祭孔大典通过电视、网络向全球直播。</p>
+            <p class="text"><strong>八佾舞：</strong>祭孔时表演的乐舞。佾是舞列，八佾是八行八列，共64人，是天子才能使用的规格。舞生手持"羽"（雄尾）和"籥"（竹管乐器），按"三献礼"（初献、亚献、终献）分别表演。舞姿庄重典雅，体现"中和""礼让"的儒家精神。八佾舞是中国古代雅乐舞的活化石。</p>
+            <p class="text"><strong>祭孔乐舞：</strong>祭孔时演奏的雅乐。乐器有"八音"：金（钟）、石（磬）、丝（琴、瑟）、竹（箫、管）、匏（笙）、土（埙）、革（鼓）、木（柷、敔）。乐曲有"六章"：《昭平》《宣平》《秩平》《叙平》《懿平》《德平》。歌词为四言古诗，歌颂孔子功德。祭孔乐舞被列为国家级非物质文化遗产。</p>
+            <p class="text"><strong>祭器祭品：</strong>祭孔用器、用牲、用乐都有严格规定。①祭器：用青铜器或仿古瓷器，有爵、尊、簋、簠、豆、笾等；②祭品：太牢（牛、羊、猪）、五谷、时果、茶酒等；③祭服：主祭穿古代祭服（明代或清代式样），舞生、乐生穿特定服装；④祭文：用文言文写成，歌颂孔子功德，祈求国泰民安。这些规制体现了"祭如在"的诚敬之心。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">礼乐</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 世界遗产 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>世界遗产 · 人类瑰宝</h3>
+            <p class="text"><strong>世界遗产价值：</strong>1994年12月，曲阜孔庙、孔林、孔府被联合国教科文组织列入《世界遗产名录》。世界遗产委员会评价："孔子是公元前6世纪到公元前5世纪中国春秋时期伟大的哲学家、政治家和教育家。孔夫子的庙宇、墓地和府邸位于山东省的曲阜。孔庙是公元前478年为纪念孔夫子而兴建的，千百年来屡毁屡建，到今天已经发展成超过100座殿堂的建筑群。孔林里不仅容纳了孔夫子的坟墓，而且他的后裔中，有超过10万人也葬在这里。当初小小的孔宅如今已经扩建成一个庞大显赫的府邸，整个宅院包括了152座殿堂。曲阜的古建筑群之所以具有独特的艺术和历史特色，应归功于2000多年来中国历代帝王对孔夫子的大力推崇。"</p>
+            <p class="text"><strong>历史价值：</strong>孔庙是2000多年儒家文化发展史的实物见证。①建筑史：历代修建，体现了不同时期的建筑风格和技术；②文化史：反映了儒家思想从一家之说到国家意识形态的演变；③政治史：见证了历代帝王对孔子的尊崇和对儒家思想的利用；④社会史：记录了祭孔礼仪、科举制度、宗法制度等社会制度的变迁。孔庙是研究中国历史、文化、思想、建筑的百科全书。</p>
+            <p class="text"><strong>建筑价值：</strong>孔庙是中国古代建筑的杰出代表。①规制完整：九进院落，中轴对称，体现了完整的礼制建筑体系；②等级最高：大成殿用黄色琉璃瓦、面阔九间，超过一般王府、寺庙的规格；③工艺精湛：木结构、石雕、彩绘、瓦作等工艺，代表了中国古代建筑技术的最高水平；④保存完好：现存建筑多为明清原构，保存状况良好。孔庙是研究中国古代建筑的活教材。</p>
+            <p class="text"><strong>艺术价值：</strong>孔庙是综合性艺术宝库。①雕塑艺术：蟠龙石柱、石狮、华表等，雕刻精美；②书法艺术：2000多通碑刻，涵盖篆、隶、楷、行、草各体，是书法艺术的宝库；③绘画艺术：圣迹图石刻、彩绘壁画等；④工艺美术：祭器、礼器、家具等，工艺精湛。孔庙集建筑、雕塑、书法、绘画、工艺艺术于一体。</p>
+            <p class="text"><strong>文化价值：</strong>孔庙是儒家文化的物质载体和精神象征。①祭祀功能：2000多年的祭孔传统，传承了中华礼乐文明；②教育功能：历史上的学宫，培养了大批人才；③象征功能：是中华文化的象征，凝聚了民族认同；④传播功能：通过祭孔、研学、交流等活动，传播儒家思想和中华优秀传统文化。孔庙是"活着的文化遗产"。</p>
+            <p class="text"><strong>保护与传承：</strong>孔庙得到科学保护和合理利用。①法律保护：1961年列为全国重点文物保护单位；②规划保护：编制《曲阜孔庙保护规划》，划定保护区、缓冲区；③工程保护：实施古建筑维修、彩绘修复、防雷、消防等工程；④研究展示：成立孔子研究院，举办国际儒学论坛，出版《孔子研究》《曲阜孔庙》等著作；⑤活态传承：恢复祭孔大典，开展"论语背诵""开笔礼""成人礼"等传统文化活动；⑥国际交流：与世界各地孔子学院、文庙开展文化交流。孔庙的保护经验，为世界文化遗产保护提供了范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 曲阜孔庙千年圣殿，儒家文化万世流芳 | 五重维度·五种灵韵爱心，点赞评论共话天下文枢</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（曲阜孔庙独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('qufu_kongmiao_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('qufu_kongmiao_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('qufu_kongmiao_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('qufu_kongmiao_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对孔庙的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的孔庙感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "孔庙访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

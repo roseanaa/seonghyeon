@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>福建土楼 · 四维解读 | 东方城堡 · 客家民居瑰宝</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <div class="pic">
+        <img src="./image/福建土楼.jpg" title="福建土楼" alt="福建土楼群与梯田风光">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 客家大迁徙</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 建筑奇观</div>
+        <div class="dim-tab" data-tab="culture">🎪 客家文化</div>
+        <div class="dim-tab" data-tab="value">🌟 世界遗产</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>福建土楼 · 东方城堡</h3>
+            <p class="text"><strong>传奇：</strong>福建土楼是中国东南部福建省山区独特的客家民居建筑，是世界独一无二的大型夯土民居建筑，被誉为"东方古城堡"。主要分布在闽西的永定县和闽南的南靖县、华安县等地，现存土楼约3000座。土楼产生于宋元时期，成熟于明清时期，是客家先民为抵御外敌、防范野兽、聚族而居而建造的集体住宅。2008年7月6日，福建土楼（包括永定、南靖、华安的46座土楼）被联合国教科文组织列入《世界遗产名录》。</p>
+            <p><strong>代表土楼：</strong></p>
+            <ul>
+                <li><strong>承启楼（永定）：</strong>"土楼之王"，始建于明崇祯年间（1628-1644年），清康熙四十八年（1709年）竣工。直径73米，高12.4米，四圈同心圆，内通廊式。外环4层，每层72间；中环2层，每层40间；里环单层，32间；中心为祖堂。全楼400个房间，鼎盛时居住800余人。"高四层，楼四圈，上上下下四百间；圆中圆，圈套圈，历经沧桑三百年。"</li>
+                <li><strong>振成楼（永定）：</strong>"土楼王子"，建于1912年，中西合璧。按八卦布局，分内外两圈。外圈4层，每层48间，按八卦分为8个单元；内圈2层，有议事厅、戏台、学堂等。楼内有石柱、砖墙、西洋式栏杆，是中西建筑融合的典范。</li>
+                <li><strong>田螺坑土楼群（南靖）：</strong>"四菜一汤"，由1座方楼（步云楼）、3座圆楼（和昌楼、振昌楼、瑞云楼）和1座椭圆形楼（文昌楼）组成。方楼建于1796年，其余建于1930-1966年。从山脚看，5座土楼依山势错落布局，形似餐桌上的"四菜一汤"。</li>
+                <li><strong>二宜楼（华安）：</strong>"土楼之宝"，建于清乾隆三十五年（1770年）。直径73.4米，高16米，双环圆形。外环4层，内环单层。楼内有壁画、彩绘、木雕、石刻等装饰，文化内涵丰富。是单元式与通廊式结合的典范。</li>
+                <li><strong>裕昌楼（南靖）：</strong>"东倒西歪楼"，建于元末明初（约1368年）。直径36米，高5层，每层54间。建成后不久，楼内回廊木柱从左向右倾斜，最大倾斜度15°，但历经600多年风雨地震依然屹立，被称为"东倒西歪楼"。</li>
+                <li><strong>和贵楼（南靖）：</strong>最高的方楼，建于清雍正十年（1732年）。高5层，21.5米，每层28间。建在沼泽地上，用200多根松木打桩、铺垫，历经200多年仍坚固稳定。楼内有两口井，相距18米，一清一浊，称"阴阳井"。</li>
+                <li><strong>初溪土楼群（永定）：</strong>由5座圆楼和数十座方楼组成，依山就势，错落有致。集庆楼建于明永乐十七年（1419年），是现存最古老的圆楼之一。土楼博物馆设于此，展示土楼历史与文化。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>3-5月（春季）和9-11月（秋季），气候宜人。春季油菜花开，土楼与花田相映；秋季稻田金黄，土楼与梯田辉映。夏季多雨，冬季较冷，但各有特色。</li>
+                <li><strong>经典线路：</strong>①永定线：洪坑土楼群（振成楼、福裕楼、奎聚楼）→高北土楼群（承启楼、五云楼）→初溪土楼群。②南靖线：田螺坑土楼群（四菜一汤）→裕昌楼（东倒西歪楼）→塔下村→河坑土楼群→云水谣古镇。建议安排2-3天。</li>
+                <li><strong>深度体验：</strong>住在土楼民宿，体验客家生活；品尝客家美食（盐焗鸡、酿豆腐、梅菜扣肉）；观看客家土楼歌舞表演；学做客家传统手工艺（打糍粑、做芋子包）；拍摄土楼晨雾、夕阳、夜景；听客家老人讲土楼故事。</li>
+                <li><strong>摄影建议：</strong>田螺坑"四菜一汤"全景（观景台俯拍），承启楼"土楼王"内景，振成楼八卦布局，裕昌楼"东倒西歪"，土楼与梯田、云雾结合，土楼内生活场景，夜晚土楼灯光。建议使用广角镜头拍摄土楼全景，长焦镜头捕捉建筑细节和人物。</li>
+            </ul>
+            <p><strong>交通信息：</strong>福建土楼分布在龙岩市永定区、漳州市南靖县和华安县。①飞机：到厦门高崎机场或龙岩冠豸山机场，转乘汽车；②火车：到龙岩站、南靖站，转乘旅游专线车；③自驾：从厦门、福州、龙岩出发，经高速、省道可达。景区间有旅游专线车，但班次较少，建议包车或自驾。土楼分布分散，建议在景区内住宿1-2晚。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">土楼</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 土楼印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 客家大迁徙 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>客家大迁徙 · 千年南迁</h3>
+            <p class="text"><strong>迁徙背景：</strong>客家人是汉族的一个重要民系，祖籍中原（今河南、山西一带）。自西晋永嘉之乱（311年）起，为避战乱，中原汉人开始南迁，历经五次大迁徙：①第一次（317-879年）：西晋末至唐末，从中原迁至长江中下游；②第二次（880-1126年）：唐末至北宋，从长江中下游迁至江西、福建；③第三次（1127-1644年）：南宋至明末，从江西、福建迁至广东、广西；④第四次（1645-1867年）：明末至清中期，从广东、福建迁至四川、台湾及东南亚；⑤第五次（1867年后）：太平天国后，迁至海南、海外。客家先民在迁徙中形成"客而家焉"的民系。</p>
+            <p class="text"><strong>入闽定居：</strong>唐末黄巢起义（878-884年）期间，大量中原汉人南迁入闽。宋代，金兵南侵，又有大批汉人南迁。这些移民被称为"客家人"，意为"客居他乡之人"。他们进入福建西部、南部的山区，面对恶劣的自然环境和土著居民、盗匪的威胁，为求生存，开始建造具有防御功能的集体住宅——土楼。土楼的建造技术，融合了中原的夯土技术和当地的自然条件。</p>
+            <p class="text"><strong>土楼兴起：</strong>土楼产生于宋元时期，成熟于明清时期。①宋元时期（960-1368年）：早期土楼多为方形，规模较小，如馥馨楼（建于769年）、裕昌楼（建于1368年）；②明代（1368-1644年）：土楼技术成熟，出现大型圆楼、方楼，如集庆楼（建于1419年）、承启楼（始建1628年）；③清代（1644-1911年）：土楼鼎盛，形式多样，技术精湛，如振成楼（建于1912年）、二宜楼（建于1770年）；④民国以后（1912年至今）：土楼建造减少，现存土楼多为清代、民国所建。</p>
+            <p class="text"><strong>建造原因：</strong>客家人建造土楼的主要原因：①防御需要：抵御盗匪、野兽、土著居民侵扰；②聚族而居：保持宗族团结，传承中原文化；③节约土地：山区耕地稀少，土楼集中居住，节约用地；④适应环境：厚墙可隔热保温，适应山区气候；⑤就地取材：用黄土、杉木、竹、石等当地材料，造价低廉。土楼是客家人智慧的结晶，体现了"天人合一"的建筑理念。</p>
+            <p class="text"><strong>重要人物：</strong>①黄氏家族：永定洪坑村土楼主要建造者，建振成楼、福裕楼、奎聚楼等；②江氏家族：南靖田螺坑土楼建造者；③张氏家族：华安大地村土楼建造者；④胡氏家族：南靖塔下村土楼建造者。这些家族世代建造土楼，传承建造技艺。</p>
+            <p class="text"><strong>现代表现：</strong>20世纪80年代，福建土楼引起国内外关注。1986年，中国邮政发行"福建土楼"邮票。1999年，福建土楼申报世界文化遗产。2008年7月6日，福建土楼列入《世界遗产名录》。如今，土楼成为旅游热点，年接待游客数百万人次。许多土楼仍有居民居住，是"活着的世界遗产"。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑奇观 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑奇观 · 夯土巨构</h3>
+            <p class="text"><strong>建筑类型：</strong>土楼按形状分为：①圆楼：平面圆形，如承启楼、振成楼；②方楼：平面方形，如和贵楼、遗经楼；③五凤楼：前低后高，如大夫第、福裕楼；④椭圆形楼：平面椭圆形，如文昌楼；⑤八卦楼：按八卦布局，如振成楼；⑥半月楼：平面半月形。按结构分为：①内通廊式：各层有环形走廊相通，如承启楼；②单元式：每户独立单元，如二宜楼；③混合式：通廊与单元结合。</p>
+            <p class="text"><strong>结构体系：</strong>土楼是生土建筑杰作。①基础：用大石块砌筑，深1-2米，防潮、防蚁；②墙体：用黄土、砂石、石灰等按比例拌和，用模板夯筑，俗称"干打垒"。墙厚1-2米，底层厚可达1.5米，向上逐渐收分。墙体中加入竹片、木条作"筋骨"，增强抗震性；③木构架：内部为木结构，穿斗式或抬梁式，柱、梁、枋、椽用榫卯连接；④屋顶：双坡悬山顶，铺青瓦。出檐深远，防雨遮阳。</p>
+            <p class="text"><strong>防御系统：</strong>土楼是完善的防御体系。①外墙：底层不开窗，2层以上开小窗，内大外小，便于射击观察；②大门：厚10-15厘米，外包铁皮，有防火装置；③瞭望台：顶层四角设瞭望台；④传声洞：墙内有垂直传声洞，可传递信息；⑤暗沟：有排水暗沟，防敌人从水道潜入；⑥水井：楼内有水井，被围困时可自给；⑦粮仓：储存粮食，可长期固守。一座土楼就是一座坚固的城堡。</p>
+            <p class="text"><strong>空间布局：</strong>土楼是"小社会、大家庭"。①中心：祖堂（祠堂），祭祀祖先、议事、婚丧礼仪；②内环：学堂、仓库、磨坊、厨房等公共设施；③外环：居住层，一般3-5层，1层厨房，2层粮仓，3层以上卧室；④天井：中心庭院，公共活动空间，有水井、石臼等；⑤楼梯：2-4部公共楼梯，均匀分布；⑥走廊：各层有环形走廊，连接各户。</p>
+            <p class="text"><strong>建造工艺：</strong>土楼建造工艺复杂。①选址：看风水，背山面水，坐北朝南；②备料：准备黄土、砂石、石灰、竹木、石料等；③夯墙：用墙枋（模板）分层夯筑，每层高40厘米，晾干后再夯上层；④立架：墙体完成后，立木柱、架梁枋；⑤盖顶：上梁、铺椽、盖瓦；⑥装修：安装门窗、楼梯、地板，粉刷墙面。建一座大土楼需3-5年，耗费大量人力物力。</p>
+            <p class="text"><strong>抗震防火：</strong>土楼有良好的抗震防火性能。①抗震：墙厚基深，重心低；圆形结构，受力均匀；木构架柔韧，可吸收地震能量；②防火：土墙不燃，屋顶有防火墙（马头墙）；天井、水井可蓄水防火；厨房集中，设烟道；③防风：圆形结构，减小风压；厚墙隔热保温，冬暖夏凉。土楼可抗7级地震、12级台风，有的已屹立数百年。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 客家文化 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>客家文化 · 土楼生活</h3>
+            <p class="text"><strong>宗族制度：</strong>土楼是客家宗族社会的缩影。①聚族而居：一座土楼居住一个家族，少则几十人，多则数百人，都是同姓同宗；②族长制：由辈分高、有威望的长者任族长，管理族内事务；③族规：有严格族规，规范族人行为；④族产：有公田、公山、公屋等族产，收入用于祭祀、教育、公益；⑤族谱：记载家族历史、世系、家训。土楼维系了宗族团结，传承了中原文化。</p>
+            <p class="text"><strong>教育传统：</strong>客家人重视教育，"耕读传家"。①学堂：土楼内设学堂（私塾），聘请塾师教育子弟；②劝学：族规规定，子弟必须读书，成绩优秀者族内奖励；③楹联：土楼楹联多鼓励读书，如"振作哪有闲时少时壮时老年时时时须努力，成名原非易事家事国事天下事事事要关心"（振成楼）；④人才辈出：土楼培养了许多人才，如振成楼出过进士、举人、博士数十人。客家地区有"文化之乡"美誉。</p>
+            <p class="text"><strong>民俗节庆：</strong>土楼民俗活动丰富。①春节：舞龙舞狮、打糍粑、做年糕；②元宵：游灯、猜谜、放烟花；③清明：祭祖扫墓，全族聚餐；④端午：包粽子，赛龙舟；⑤中秋：赏月，吃月饼，烧塔；⑥婚嫁：按"六礼"（纳采、问名、纳吉、纳征、请期、亲迎）进行，热闹隆重；⑦丧葬：厚葬重祭，体现孝道。这些民俗传承了中原传统，又有地方特色。</p>
+            <p class="text"><strong>客家美食：</strong>客家菜以咸、香、肥为特点。①盐焗鸡：用盐焗制，皮脆肉嫩；②酿豆腐：豆腐中酿入肉馅，煎煮而成；③梅菜扣肉：梅干菜与五花肉同蒸，肥而不腻；④芋子包：芋头泥做皮，包入肉馅，蒸熟食用；⑤牛肉丸：手工捶打，弹性十足；⑥糍粑：糯米蒸熟捶打，沾糖或包馅；⑦擂茶：茶叶、芝麻、花生等擂碎，冲入开水，佐以米果、炒豆。土楼农家乐可品尝地道客家菜。</p>
+            <p class="text"><strong>民间艺术：</strong>客家民间艺术多彩。①山歌：即兴编唱，内容广泛，有劳动歌、情歌、劝世歌等；②汉剧：客家地方戏，唱腔丰富，表演细腻；③木偶戏：提线木偶，传统剧目；④民间舞蹈：采茶舞、竹马灯、船灯等；⑤工艺美术：木雕、石雕、泥塑、剪纸、刺绣等。土楼内常举办民间艺术表演。</p>
+            <p class="text"><strong>宗教信仰：</strong>客家人信仰多元。①祖先崇拜：供奉祖先牌位，按时祭祀；②佛教：信仰观音、弥勒等；③道教：信仰关公、城隍等；④自然崇拜：崇拜土地、山神、水神等；⑤基督教、天主教：清末传入，有部分信徒。土楼内设神龛，供奉多种神祇，体现"万物有灵"观念。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">客家</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 世界遗产 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>世界遗产 · 人类瑰宝</h3>
+            <p class="text"><strong>世界遗产价值：</strong>2008年7月6日，福建土楼在第32届世界遗产大会上被列入《世界遗产名录》。世界遗产委员会评价："福建土楼是东方血缘伦理关系和聚族而居传统文化的历史见证，是世界上独一无二的大型生土夯筑的建筑艺术成就，具有'普遍而杰出的价值'。" 福建土楼符合世界遗产标准：①代表一种独特的艺术成就；②能在一定时期内对建筑艺术、纪念物艺术、城镇规划或景观设计方面的发展产生重大影响；③能为一种已消逝的文明或文化传统提供独特的见证；④可作为一种建筑或建筑群或景观的杰出范例。</p>
+            <p class="text"><strong>建筑价值：</strong>福建土楼是世界生土建筑的奇迹。①材料科学：用生土、砂石、石灰等普通材料，创造出坚固耐用的宏伟建筑；②结构科学：圆形结构受力均匀，抗震性能优越；③防御科学：完善的防御体系，体现古代军事防御思想；④生态科学：就地取材，节能环保，冬暖夏凉，适应山区环境；⑤工艺科学：夯土技术达到顶峰，可建高十几米、直径近百米的巨型建筑。土楼是古代劳动人民智慧的结晶。</p>
+            <p class="text"><strong>文化价值：</strong>土楼是客家文化的物质载体。①宗族文化：体现聚族而居、尊祖敬宗的宗法制度；②教育文化：体现重教兴学、耕读传家的传统；③民俗文化：保存了丰富的客家民俗、礼仪、节庆；④建筑文化：融合中原建筑文化与福建地方特色；⑤移民文化：记录了客家民系南迁、开发山区的历史。土楼是"活着的文化遗产"，仍有居民居住，传承着传统生活方式。</p>
+            <p class="text"><strong>社会价值：</strong>土楼具有重要的社会价值。①社区价值：土楼是和谐的社区典范，居民互助互爱，和睦相处；②教育价值：作为爱国主义教育基地、传统文化教育基地，对青少年进行教育；③研究价值：是研究建筑学、社会学、民族学、历史学、民俗学的重要实物资料；④旅游价值：是世界知名的旅游目的地，年接待游客数百万，带动地方经济发展；⑤国际交流价值：是中外文化交流的窗口，许多外国政要、学者参观土楼。</p>
+            <p class="text"><strong>科学价值：</strong>土楼蕴含丰富的科学智慧。①建筑科学：夯土技术、木结构技术、抗震技术等；②环境科学：选址、布局适应环境，生态友好；③材料科学：生土材料的配比、处理、应用；④社会工程：大型工程的规划、组织、管理；⑤军事工程：防御工事的设计、建造。现代建筑可从土楼中汲取灵感，如生态建筑、抗震建筑、社区规划等。</p>
+            <p class="text"><strong>保护与传承：</strong>福建土楼得到有效保护。①法律保护：1988年，福建土楼被列为全国重点文物保护单位；2008年，列入《世界遗产名录》；②规划保护：编制《福建土楼保护规划》，划定保护区、缓冲区；③工程保护：对土楼进行抢险加固、维修保养；④活态保护：鼓励居民继续居住，保持土楼活力；⑤研究展示：建立土楼博物馆，开展学术研究，出版研究成果；⑥旅游管理：控制游客数量，规范旅游行为，实现保护与利用的平衡。福建土楼的保护经验，为世界文化遗产保护提供了范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 福建土楼东方城堡，客家文化千年传承 | 五重维度·五种灵韵爱心，点赞评论共话民居瑰宝</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（福建土楼独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('fujian_tulou_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('fujian_tulou_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('fujian_tulou_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('fujian_tulou_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对福建土楼的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的土楼感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "土楼访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

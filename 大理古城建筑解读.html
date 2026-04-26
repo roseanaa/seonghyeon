@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>大理古城 · 四维解读 | 风花雪月 · 南诏故都</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/大理古城.jpg" title="大理古城" alt="大理古城与苍山洱海">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 南诏大理</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 古城格局</div>
+        <div class="dim-tab" data-tab="culture">🎪 白族文化</div>
+        <div class="dim-tab" data-tab="value">🌟 历史名城</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>大理古城 · 风花雪月</h3>
+            <p class="text"><strong>传奇：</strong>大理古城位于云南省大理白族自治州大理市，背靠苍山，面朝洱海，是古代南诏国和大理国的都城，已有1200多年历史。古城始建于明洪武十五年（1382年），是在南诏、大理国都城旧址上重建的。古城呈方形，开四门，上建城楼，下有卫城，更有南北三条溪水作为天然屏障。东西宽约1000米，南北长约2000米，总面积约3平方公里。古城保存了明清时期的棋盘式格局，东西走向的护国路（洋人街）和南北走向的复兴路是古城的主要街道。1982年，大理古城被列为全国首批历史文化名城，是云南最具代表性的历史文化名城之一。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>文献楼：</strong>古城的南大门，又称"承恩门"，是进入古城的第一道门户。文献楼始建于清康熙年间，为三层歇山顶建筑，高20米，气势雄伟。楼上有"文献名邦"匾额，为清康熙年间云南提督偏图所题，意为大理是文化典籍丰富的地方。文献楼是古城的标志性建筑，也是拍摄古城全景的最佳位置之一。</li>
+                <li><strong>五华楼：</strong>古城的中心建筑，位于复兴路与护国路交叉口。原为南诏国、大理国时期的国宾馆，始建于唐代，明代重建。楼为五重檐歇山顶，高20米，雕梁画栋，气势恢宏。楼上可俯瞰古城全景，远眺苍山洱海。五华楼是古城的制高点，也是举办重要活动的场所。</li>
+                <li><strong>洋人街（护国路）：</strong>古城最繁华的街道，因历史上多有外国人居住而得名。街道长1000米，宽7米，两侧是白族传统民居建筑，开设酒吧、咖啡馆、餐厅、手工艺品店等。夜晚灯火辉煌，游人如织，是体验大理夜生活的最佳去处。洋人街体现了大理的开放与包容。</li>
+                <li><strong>复兴路：</strong>古城的中轴线，南北走向，全长1500米。复兴路是古城的主要商业街，两侧店铺林立，有银器店、扎染店、茶叶店、民族服饰店等。沿街有文庙、武庙、大理市博物馆等历史建筑。复兴路是感受古城商业氛围和文化底蕴的主要街道。</li>
+                <li><strong>大理市博物馆：</strong>位于古城内，原为清代提督府。博物馆占地面积3万平方米，收藏文物8000余件，设有"大理通史""南诏大理国历史""白族文化""大理石文化"等展馆。馆内有著名的"南诏德化碑""元世祖平云南碑"等重要文物。博物馆是了解大理历史文化的窗口。</li>
+                <li><strong>天主教堂：</strong>位于古城内，是一座中西合璧的建筑。教堂始建于1927年，为法国传教士所建。建筑外观为白族传统民居风格，内部为哥特式教堂结构，将白族建筑艺术与西方教堂建筑完美结合。教堂现仍在使用，每周有礼拜活动。天主教堂是大理多元文化融合的见证。</li>
+                <li><strong>玉洱园：</strong>古城内的园林，原为清代提督府花园。园内亭台楼阁，小桥流水，花木繁茂，是古城中的一处宁静之地。园内有"风、花、雪、月"四亭，分别代表大理的四大景观：下关风、上关花、苍山雪、洱海月。玉洱园是体验大理"风花雪月"意境的理想场所。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，最佳游览时间为3-5月和9-11月。春季（3-5月）气候宜人，百花盛开；夏季（6-8月）是雨季，但凉爽舒适；秋季（9-11月）天高云淡，苍山洱海景色最美；冬季（12-2月）阳光充足，是避寒胜地。建议避开国庆、春节等长假高峰期。</li>
+                <li><strong>游览顺序：</strong>文献楼（南门）→五华楼→复兴路→洋人街→大理市博物馆→天主教堂→玉洱园→红龙井→人民路。建议安排1-2天，第一天游览古城内景点，第二天可前往崇圣寺三塔、喜洲古镇、周城等地。</li>
+                <li><strong>深度体验：</strong>清晨在古城墙上看苍山日出；上午在复兴路逛小店，购买手工艺品；中午品尝大理砂锅鱼、乳扇、饵块等特色美食；下午在洋人街咖啡馆看书发呆；傍晚在五华楼看古城日落；晚上在酒吧听民谣，感受夜大理；住白族民居客栈，体验当地生活；学习白族扎染，了解传统工艺；参加三月街民族节，感受白族风情；骑行洱海，欣赏苍山洱海美景。</li>
+                <li><strong>摄影建议：</strong>五华楼古城全景与苍山同框，文献楼建筑特写，洋人街夜景人文，复兴路市井生活，天主教堂中西合璧建筑，玉洱园园林景观，白族民居建筑细节，扎染工艺过程，苍山洱海大场景。建议使用广角镜头拍摄全景，长焦镜头拍摄建筑、人物细节。清晨和傍晚光线最佳，适合拍摄。偏振镜可增强蓝天白云对比。</li>
+            </ul>
+            <p><strong>交通信息：</strong>大理古城位于大理市古城区。外部交通：①飞机：大理凤仪机场，距古城13公里，车程20分钟；②火车：大理站，距古城17公里，车程30分钟；③汽车：大理客运站，距古城2公里。内部交通：古城内只能步行，禁止机动车通行。周边景点有崇圣寺三塔（2公里）、喜洲古镇（18公里）、周城（25公里）、双廊（40公里）。距丽江180公里，车程2.5小时；距昆明350公里，车程4.5小时。建议与崇圣寺三塔、喜洲古镇、洱海骑行组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">古城</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 大理印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 南诏大理 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>南诏大理 · 千年古国</h3>
+            <p class="text"><strong>南诏国时期：</strong>南诏国（738-902年）是唐代西南地区的地方政权。①建立：738年，皮逻阁统一六诏，建立南诏国，定都太和城（今大理太和村）；②强盛：阁逻凤时期，南诏国达到鼎盛，疆域包括今云南全境、四川南部、贵州西部、缅甸北部；③文化：吸收唐文化，创制南诏文字，信仰佛教；④遗迹：有南诏德化碑、崇圣寺三塔等。</p>
+            <p class="text"><strong>大理国时期：</strong>大理国（937-1253年）是宋代以白族为主体的地方政权。①建立：937年，段思平建立大理国，定都羊苴咩城（今大理古城）；②佛教：大理国盛行佛教，有"妙香国"之称，国王多有出家为僧者；③经济：农业、手工业、商业发达，与宋朝贸易频繁；④灭亡：1253年，被蒙古忽必烈灭亡。</p>
+            <p class="text"><strong>元明清时期：</strong>元明清三代，大理仍是滇西重镇。①元代：设大理路，为云南行省的一部分；②明代：1382年，明军攻占大理，建大理古城，设大理府；③清代：延续明制，大理为滇西政治、经济、文化中心；④近代：1911年辛亥革命后，设大理县。</p>
+            <p class="text"><strong>历史名人：</strong>大理历史上名人辈出。①段思平：大理国开国皇帝；②段正淳：《天龙八部》中段誉的父亲原型；③杨黼：明代白族学者，著有《山花碑》；④杜文秀：清代回民起义领袖，建立大理政权。这些名人丰富了大理的历史文化。</p>
+            <p class="text"><strong>历史遗迹：</strong>大理保存丰富的历史遗迹。①古城遗址：有太和城遗址、羊苴咩城遗址；②古建筑：有崇圣寺三塔、弘圣寺塔、佛图寺塔；③古碑刻：有南诏德化碑、元世祖平云南碑；④古墓葬：有南诏王陵、大理国贵族墓葬。遗迹见证了大理的辉煌历史。</p>
+            <p class="text"><strong>现代发展：</strong>新中国成立后，大理得到保护和发展。①1982年，列为全国首批历史文化名城；②1986年，崇圣寺三塔列为全国重点文物保护单位；③2004年，大理古城保护规划实施；④2013年，苍山洱海列为国家级自然保护区。大理成为云南最重要的旅游目的地之一。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 古城格局 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>古城格局 · 棋盘方城</h3>
+            <p class="text"><strong>总体布局：</strong>大理古城呈方形，为典型的棋盘式格局。①城墙：周长6公里，高8米，厚7米，有东南西北四座城门；②城门：南门文献楼、北门安远门、西门苍山门、东门洱海门；③街道：以复兴路为南北中轴线，以护国路为东西轴线，形成"井"字形路网；④水系：有玉洱河、桃溪、梅溪三条溪水穿城而过。古城体现了中国古代城市规划思想。</p>
+            <p class="text"><strong>白族民居：</strong>古城民居为白族传统建筑。①布局："三坊一照壁""四合五天井"；②结构：土木结构，穿斗式木构架；③材料：用本地石材、木材、土坯；④装饰：门楼、照壁、门窗雕刻精美，有彩绘、木雕、石雕；⑤功能：一层商铺，二层居住。民居适应高原气候，冬暖夏凉。</p>
+            <p class="text"><strong>城楼建筑：</strong>古城四门建有城楼。①文献楼：南门城楼，三层歇山顶，气势雄伟；②五华楼：中心城楼，五重檐歇山顶，为古城制高点；③其他城楼：北门、西门、东门城楼均为重檐歇山顶。城楼是古城的标志性建筑。</p>
+            <p class="text"><strong>宗教建筑：</strong>古城内宗教建筑众多。①文庙：祭祀孔子，清代建筑；②武庙：祭祀关羽，清代建筑；③天主教堂：中西合璧建筑；④清真寺：回族清真寺。宗教建筑体现大理多元文化。</p>
+            <p class="text"><strong>街巷系统：</strong>古城街巷保存完整。①主街：复兴路、护国路、人民路、玉洱路等；②小巷：有数十条小巷，纵横交错；③铺地：用青石板铺砌，古朴典雅；④名称：以历史、功能命名，如红龙井、银苍路。街巷是古城的"脉络"。</p>
+            <p class="text"><strong>防御体系：</strong>古城有完整的防御体系。①城墙：高大坚固，有垛口、马面；②城门：有瓮城、箭楼；③护城河：原有护城河，现已填平；④卫城：城门外有卫城，增强防御。防御体系体现古城的军事功能。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 白族文化 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>白族文化 · 风花雪月</h3>
+            <p class="text"><strong>白族服饰：</strong>白族服饰色彩艳丽。①女性：头饰有"风花雪月"寓意，上衣为白色或浅色，外套坎肩，围腰，下穿长裤；②男性：对襟上衣，宽腿裤，包头巾；③颜色：以白、蓝、红为主；④装饰：刺绣、扎染、银饰。白族服饰是国家级非物质文化遗产。</p>
+            <p class="text"><strong>白族民居：</strong>白族民居建筑精美。①照壁：正房对面的墙壁，有彩绘、题字；②门楼：大门建筑，雕刻精美；③门窗：木雕工艺精湛，有花鸟、人物、吉祥图案；④彩绘：梁、枋、檐有彩绘，色彩鲜艳。白族民居建筑技艺是国家级非物质文化遗产。</p>
+            <p class="text"><strong>白族扎染：</strong>白族扎染技艺独特。①工艺：用线扎结布料，染色后形成花纹；②图案：有蝴蝶、梅花、八卦等；③颜色：以蓝、白为主；④传承：周城是白族扎染之乡。白族扎染技艺是国家级非物质文化遗产。</p>
+            <p class="text"><strong>白族节庆：</strong>白族节庆丰富多彩。①三月街：农历三月十五至二十一，是大理最盛大的民族节；②绕三灵：农历四月二十三至二十五，祭祀本主；③火把节：农历六月二十四，驱邪祈福；④本主节：各村祭祀本主神的节日。节庆是白族文化的集中展示。</p>
+            <p class="text"><strong>白族饮食：</strong>大理美食独具特色。①砂锅鱼：用洱海鱼煮制，鲜美可口；②乳扇：用牛奶制成，可煎、炸、烤；③饵块：用大米制成，可炒、煮、烤；④三道茶：一苦二甜三回味，寓意人生哲理。白族饮食体现高原特色。</p>
+            <p class="text"><strong>白族音乐舞蹈：</strong>白族能歌善舞。①大本曲：白族说唱艺术，有"三七一五"句式；②吹吹腔：白族戏曲，有数百年历史；③霸王鞭舞：用霸王鞭跳舞，节奏明快；④八角鼓：用八角鼓伴奏，边唱边跳。白族音乐舞蹈是国家级非物质文化遗产。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">白韵</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 历史名城 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>历史名城 · 文化瑰宝</h3>
+            <p class="text"><strong>历史价值：</strong>大理古城是南诏、大理国历史的见证。①都城史：南诏、大理国都城遗址；②建筑史：保存完好的明清古城；③文化史：白族文化的集中体现；④宗教史：佛教、道教、伊斯兰教、天主教共存。古城是历史的"活化石"。</p>
+            <p class="text"><strong>建筑价值：</strong>大理古城是古城建筑的典范。①规划价值：完整的棋盘式格局；②建筑价值：保存完好的城墙、城楼、民居；③艺术价值：精美的白族建筑装饰；④科学价值：适应地形的规划设计。古城是建筑艺术的宝库。</p>
+            <p class="text"><strong>文化价值：</strong>大理古城是白族文化的宝库。①民族文化：白族服饰、民居、扎染、节庆等文化丰富；②宗教文化：多元宗教和谐共存；③商业文化：茶马古道重要枢纽；④艺术文化：音乐、舞蹈、绘画等艺术繁荣。古城是白族文化的博物馆。</p>
+            <p class="text"><strong>科学价值：</strong>大理古城蕴含丰富的科学技术。①规划科学：棋盘式格局，功能分区明确；②建筑科学：土木结构建筑，抗震性能好；③水利科学：有三条溪水穿城，供水排水系统完善；④生态科学：背靠苍山，面朝洱海，与自然和谐。古城是古代科学的结晶。</p>
+            <p class="text"><strong>旅游价值：</strong>大理古城是云南最重要的旅游目的地。①景观价值：古城、苍山、洱海构成绝美风景；②文化价值：白族文化、历史遗迹吸引游客；③体验价值：慢生活、休闲度假的理想之地；④经济价值：旅游业带动地方经济发展。古城是云南旅游的"金字招牌"。</p>
+            <p class="text"><strong>保护与传承：</strong>大理古城得到科学保护。①法律保护：1982年列为全国首批历史文化名城，有《大理历史文化名城保护条例》；②规划保护：编制保护规划，控制建设；③工程保护：对古建筑进行维修保护；④活态保护：保护原住民，保持古城活力；⑤合理利用：发展文化旅游，让遗产"活"起来；⑥社区参与：居民参与保护，分享旅游收益。大理的保护经验，为历史文化名城保护提供了成功范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 大理古城风花雪月，南诏故都诉说千年传奇 | 五重维度·五种灵韵爱心，点赞评论共话历史名城</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（大理古城独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('dali_ancient_town_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('dali_ancient_town_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('dali_ancient_town_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('dali_ancient_town_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对大理古城的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的大理古城感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "大理访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

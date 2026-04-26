@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>兴城古城 · 四维解读 | 明代边关 · 宁远卫城</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <div class="pic">
+        <img src="./image/兴城古城.jpg" title="兴城古城" alt="兴城古城全景与钟鼓楼">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 历史风云</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 古城格局</div>
+        <div class="dim-tab" data-tab="battle">⚔️ 宁远之战</div>
+        <div class="dim-tab" data-tab="culture">🎪 古城文化</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>兴城古城 · 明代边关</h3>
+            <p class="text"><strong>传奇：</strong>中国保存最完整的明代古城之一，明代"关宁锦防线"的重要军事要塞。始建于明宣德三年（1428年），为宁远卫城，清代改称宁远州城，民国时期改称兴城。古城周长3274米，城墙高8.8米，四门齐全，城内十字街格局完整，钟鼓楼居中而立，是中国古代军事防御型城市的典范。1988年被列为全国重点文物保护单位。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul><li><strong>古城墙：</strong>明代原物，周长3274米，高8.8米，底宽6.5米，顶宽4.5米。墙体砖石包砌，内夯三合土。四座城门：东"春和门"、南"延辉门"、西"永宁门"、北"威远门"。城门均有瓮城，城上设敌楼、角楼、马面。</li><li><strong>钟鼓楼：</strong>古城中心，建于明景泰五年（1454年），清代重修。楼为两层，高17.6米，重檐歇山顶，底层为十字券洞，可通行车马。楼内陈列明清文物，登楼可俯瞰古城全貌。</li><li><strong>祖氏石坊：</strong>两座石坊，一为祖大寿"忠贞胆智"坊（1631年），一为祖大乐"登坛骏烈"坊（1638年）。均为四柱三间五楼式，青石雕刻，工艺精湛，是明代石雕艺术珍品。</li><li><strong>蓟辽督师府：</strong>袁崇焕驻守宁远时的督师府，现为袁崇焕纪念馆。馆内陈列袁崇焕生平事迹、宁远之战史料，是爱国主义教育基地。</li><li><strong>文庙：</strong>明代建筑，东北地区现存最古老的文庙。占地1.68万平方米，有三进院落，主要建筑有大成殿、崇圣祠、明伦堂、泮池、棂星门等。</li><li><strong>城隍庙：</strong>明代建筑，供奉城隍神。庙内戏楼、大殿、配殿保存完好，每年农历四月十八有庙会。</li><li><strong>将军府：</strong>清代将军府第，四合院布局，展示清代官署建筑和军事将领生活。</li></ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul><li><strong>最佳时间：</strong>5-10月，春秋最佳。夏季可结合兴城海滨（5公里）一起游览。冬季雪后古城别有韵味。</li><li><strong>游览顺序：</strong>春和门（东门）登城墙→沿城墙步行至钟鼓楼→祖氏石坊→蓟辽督师府→文庙→城隍庙→将军府→延辉门（南门）下城墙。建议3-4小时。</li><li><strong>深度体验：</strong>绕城墙一周（约1小时），俯瞰古城全貌；参观蓟辽督师府，了解袁崇焕事迹；登钟鼓楼，拍摄古城中轴线。</li><li><strong>摄影建议：</strong>清晨或傍晚拍摄城墙全景，钟鼓楼十字券洞透视效果，祖氏石坊石雕细节，文庙大成殿庄严肃穆，雪后古城银装素裹。</li></ul>
+            <p><strong>交通信息：</strong>位于辽宁省葫芦岛市兴城市。从沈阳乘高铁1.5小时，从北京乘高铁2.5小时。兴城火车站距古城1公里，步行可达。建议与兴城海滨、觉华岛（菊花岛）组成"古城-海滨-海岛"两日游。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">古城</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 古城印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 历史风云 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>历史风云 · 关宁要塞</h3>
+            <p class="text"><strong>建城背景：</strong>明宣德三年（1428年），为防御蒙古兀良哈部侵扰，总兵巫凯、都御史包怀德奏请建宁远卫城。宣德五年（1430年）建成，设宁远卫，隶属辽东都司。宁远卫与山海关、锦州构成"关宁锦防线"，是明长城防御体系的重要组成部分。</p>
+            <p class="text"><strong>明代鼎盛：</strong>明代中后期，宁远卫城成为辽东军事重镇。嘉靖年间，蒙古俺答汗多次侵犯，宁远军民固守。万历年间，女真（后金）崛起，宁远战略地位更加重要。天启年间，袁崇焕重修城墙，增建炮台，使宁远成为"关外第一坚城"。</p>
+            <p class="text"><strong>清代变迁：</strong>清顺治元年（1644年），清军入关，宁远失去军事价值。康熙三年（1664年），撤卫设州，称宁远州，隶属奉天府。乾隆四十三年（1778年），重修城墙、钟鼓楼。清代宁远成为普通州县，但城墙保存完好。</p>
+            <p class="text"><strong>民国时期：</strong>1914年，因与湖南宁远县重名，改称兴城县。1929年，张学良东北易帜，兴城属辽宁省。1931年"九一八"事变后，日军占领兴城。1945年日本投降，八路军收复兴城。1948年，辽沈战役期间，兴城和平解放。</p>
+            <p class="text"><strong>现代保护：</strong>1949年后，古城得到保护。1956年，列为辽宁省重点文物保护单位。1986年，被国务院命名为"历史文化名城"。1988年，兴城城墙被列为全国重点文物保护单位。2002年，兴城古城被评为国家AAAA级旅游景区。2012年，列入"中国世界文化遗产预备名单"。</p>
+            <p class="text"><strong>历史人物：</strong>①袁崇焕（1584-1630年）：明末蓟辽督师，守宁远，取得宁远大捷、宁锦大捷。②祖大寿（？-1656年）：明末将领，守大凌河，后降清。其石坊在古城内。③吴三桂（1612-1678年）：明末守山海关，后引清军入关，曾驻守宁远。④孙承宗（1563-1638年）：明末兵部尚书，经营关宁锦防线。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 古城格局 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>古城格局 · 军事城池</h3>
+            <p class="text"><strong>总体布局：</strong>兴城古城为方形城池，周长3274米，面积约0.68平方公里。城墙高8.8米，底宽6.5米，顶宽4.5米。四座城门，东西、南北大街十字相交，中心为钟鼓楼，形成"十字街、鼓楼居中"的典型明代城池格局。城内街巷呈棋盘式，主街宽8米，胡同宽2-4米。</p>
+            <p class="text"><strong>防御体系：</strong>城墙为砖石包砌，内夯三合土。防御设施齐全：①城门：四门均有瓮城，瓮城门与城门呈90度，可"瓮中捉鳖"。②敌楼：城上建敌楼12座，可瞭望、射击。③角楼：四角建角楼，控制城墙转角。④马面：城墙外凸"马面"20个，可侧面射击。⑤垛口：垛口高1.8米，间距0.8米，共1500余个。⑥护城河：原宽10米，深3米，现部分保存。</p>
+            <p class="text"><strong>钟鼓楼：</strong>古城制高点，建于明景泰五年（1454年），清代重修。楼为两层，高17.6米，重檐歇山顶。底层为十字券洞，可通行车马。二层为木结构，四周有回廊，原置钟、鼓，用于报时、报警。现为文物陈列馆，展出古城历史文物。</p>
+            <p class="text"><strong>祖氏石坊：</strong>两座石坊均为四柱三间五楼式，青石雕刻。①祖大寿"忠贞胆智"坊：建于明崇祯四年（1631年），高11.5米，宽12米。坊额题"忠贞胆智"，雕刻二龙戏珠、狮子滚绣球等图案。②祖大乐"登坛骏烈"坊：建于明崇祯十一年（1638年），高10.8米，宽11.5米。坊额题"登坛骏烈"，雕刻仙鹤、祥云等图案。两坊雕刻精细，是明代石雕艺术珍品。</p>
+            <p class="text"><strong>文庙建筑群：</strong>东北地区现存最古老的文庙，占地1.68万平方米。中轴线上依次为：棂星门、泮池、戟门、大成殿、崇圣祠。东侧有明伦堂、名宦祠、乡贤祠，西侧有忠义祠、节孝祠。大成殿为歇山顶，面阔五间，进深三间，殿内供奉孔子及四配十二哲。</p>
+            <p class="text"><strong>蓟辽督师府：</strong>袁崇焕驻守宁远时的督师府，占地1.2万平方米。建筑为三进院落，有大门、仪门、大堂、二堂、内宅等。大堂为袁崇焕办公、议事场所，现陈列宁远之战沙盘、明代兵器、历史文献。二堂为会客、书房，内宅为起居处。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">筑防</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑智慧</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 宁远之战 爱心: ⚔️ -->
+    <div class="dim-content" id="battle-content" data-dim="battle">
+        <div class="word">
+            <h3>宁远之战 · 明清对决</h3>
+            <p class="text"><strong>战前形势：</strong>明天启二年（1622年），后金攻占广宁，明军退守山海关。辽东经略王在晋主张放弃关外，退守山海关。兵部主事袁崇焕力主守宁远，提出"若保关内，必守关外；若保关外，必守宁远"。天启三年（1623年），袁崇焕修筑宁远城，城墙高厚，增设炮台，储备粮草，训练军队。</p>
+            <p class="text"><strong>第一次宁远之战（1626年）：</strong>天启六年（1626年）正月，后金大汗努尔哈赤亲率6万大军（号称20万）进攻宁远。袁崇焕仅有守军1万余人，但决心死守。正月二十三日，后金军开始攻城，袁崇焕指挥明军以红夷大炮（葡萄牙制前装滑膛炮）轰击，后金军伤亡惨重。正月二十五日，努尔哈赤被炮火击伤，后金军撤退。此役是明军对后金的第一次重大胜利，史称"宁远大捷"。努尔哈赤因伤于同年八月去世。</p>
+            <p class="text"><strong>第二次宁远之战（1627年）：</strong>天启七年（1627年）五月，皇太极为报父仇，亲率15万大军进攻宁远、锦州。袁崇焕采取"凭坚城、用大炮"战术，坚守不出。后金军猛攻锦州不克，转攻宁远。五月二十八日，双方在宁远城外激战，明军炮火猛烈，后金军再次受挫。六月初五，后金军撤兵。此役称"宁锦大捷"，巩固了关宁锦防线。</p>
+            <p class="text"><strong>战术创新：</strong>袁崇焕在宁远之战中创造"凭坚城、用大炮"新战术：①坚城：加固城墙，增设炮台。②大炮：引进红夷大炮，射程远，威力大。③火炮战术：将火炮置于城上，居高临下射击。④步兵配合：火铳手、弓箭手掩护炮兵。这种"城炮结合"战术，改变了明军野战不利的局面，是冷兵器向热兵器过渡的重要战例。</p>
+            <p class="text"><strong>历史影响：</strong>宁远之战是明清战争的重要转折点：①明军首次战胜后金，鼓舞士气。②后金认识到火器威力，开始研制火炮。③确立关宁锦防线的战略价值。④袁崇焕崭露头角，成为抗金名将。⑤延缓了后金（清）入关进程，为明朝续命二十年。</p>
+            <p class="text"><strong>袁崇焕悲剧：</strong>崇祯二年（1629年），皇太极绕道蒙古，突破长城，兵临北京。袁崇焕率军回援，取得"北京保卫战"胜利。但崇祯帝中反间计，以"通敌叛国"罪将袁崇焕凌迟处死。袁崇焕之死是明朝自毁长城，加速了明朝灭亡。清代乾隆皇帝为袁崇焕平反，称其"忠烈可嘉"。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="battle"><span class="like-icon">⚔️</span><span class="like-count">0</span><span class="like-btn-text">战史</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="battle">💬 战争记忆</button><div class="comment-list" id="comment-list-battle" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 古城文化 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>古城文化 · 关东风情</h3>
+            <p class="text"><strong>军事文化：</strong>兴城是明代军事文化的活化石：①城墙文化：城墙不仅是防御工事，也是城市象征。②炮台文化：宁远之战使用的红夷大炮复制品在城墙展示。③将领文化：袁崇焕、祖大寿等将领事迹广为传颂。④边防文化："关宁铁骑"的骁勇善战成为历史记忆。</p>
+            <p class="text"><strong>建筑文化：</strong>古城建筑体现多元文化融合：①军事建筑：城墙、敌楼、瓮城体现防御功能。②官署建筑：督师府、将军府体现官府威严。③祭祀建筑：文庙、城隍庙体现儒家、道教文化。④民居建筑：四合院、商铺体现市井生活。⑤石雕艺术：祖氏石坊体现明代石雕技艺。</p>
+            <p class="text"><strong>民俗活动：</strong>①庙会：农历四月十八城隍庙会，有戏曲、杂耍、集市。②祭祀：农历八月二十七祭孔大典，在文庙举行。③登高：重阳节登城墙，望远祈福。④灯会：元宵节灯会，古城张灯结彩。⑤戏曲：评剧、二人转演出，在戏楼、广场举行。</p>
+            <p class="text"><strong>饮食文化：</strong>兴城临海，饮食以海鲜为特色：①海鲜：对虾、螃蟹、皮皮虾、海参、鲍鱼。②烧烤：海鲜烧烤，炭火烤制。③小吃：杏仁粥、油炸糕、豆腐脑、煎饼盒子。④特产：多宝鱼、海蜇皮、虾酱、鱼干。⑤酒水：道光廿五（清代贡酒）、菊花白酒。</p>
+            <p class="text"><strong>非物质文化遗产：</strong>①兴城满族剪纸：满族传统剪纸，题材有萨满神偶、动物、花卉。②兴城皮影戏：驴皮制作，表演历史故事。③兴城大鼓：说唱艺术，表演《隋唐演义》《杨家将》。④兴城刺绣：满族刺绣，针法多样，色彩鲜艳。⑤兴城石雕：传承明代石雕技艺，雕刻牌坊、石碑。</p>
+            <p class="text"><strong>影视拍摄：</strong>兴城古城是著名的影视拍摄基地，因保存完好的明代古城风貌，被誉为"露天明史博物馆"。在此拍摄的影视作品有：《三进山城》《吉鸿昌》《平原枪声》《努尔哈赤》《康熙王朝》《江山风雨情》《大明王朝1566》《袁崇焕》等。古城内的街道、建筑、城墙都是天然的影视场景。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">城韵</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 明代边关宁远卫，清代州城兴城邑 | 五重维度·五种灵韵爱心，点赞评论共话古城春秋</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（兴城古城独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        battle: 0,
+        culture: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        battle: [],
+        culture: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('xingcheng_gucheng_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('xingcheng_gucheng_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('xingcheng_gucheng_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('xingcheng_gucheng_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对兴城古城的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的兴城古城感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "古城访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

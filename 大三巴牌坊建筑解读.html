@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>大三巴牌坊 · 四维解读 | 澳门历史城区</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/大三巴牌坊.jpg" title="大三巴牌坊" alt="澳门大三巴牌坊全景">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 圣保禄学院</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 巴洛克艺术</div>
+        <div class="dim-tab" data-tab="culture">🎪 东西交融</div>
+        <div class="dim-tab" data-tab="value">🌟 世界遗产</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>大三巴牌坊 · 澳门历史城区</h3>
+            <p class="text"><strong>传奇：</strong>大三巴牌坊位于澳门半岛炮台山下，是圣保禄大教堂（天主之母教堂）的前壁遗址，也是澳门最具代表性的历史地标。牌坊建于1602-1640年，由葡萄牙籍耶稣会神父设计，日本工匠参与建造，是远东地区最大、最古老的天主教堂建筑之一。教堂原名"圣保禄大教堂"，因与澳门另一座教堂"圣安多尼堂"（花王堂）区分，当地华人称其为"大三巴"（"圣保禄"的粤语音译）。1835年，教堂在台风引发的大火中被焚毁，仅存花岗岩前壁，因形似中国传统牌坊，故称"大三巴牌坊"。牌坊高27米，宽23.5米，厚2.7米，为巴洛克风格建筑，融合了欧洲文艺复兴与东方装饰艺术。2005年，大三巴牌坊作为"澳门历史城区"的一部分被列入《世界文化遗产名录》，成为澳门最重要的旅游和文化象征。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>前壁结构：</strong>牌坊为四层三间结构，用花岗岩建造。第一层为入口，有三座门洞，中央门洞上方刻有"IHS"耶稣会徽号和"天主之母"葡文。第二层有四座壁龛，供奉耶稣会圣人。第三层中央为圣母升天像，两侧有天使和象征美德的浮雕。第四层有鸽子（代表圣灵）、太阳、月亮、星辰等浮雕。顶部有十字架。牌坊融合了天主教象征与东方艺术元素。</li>
+                <li><strong>石雕装饰：</strong>牌坊上有大量精美石雕。①宗教题材：有耶稣受难、圣母升天、天使、圣人等基督教题材浮雕。②东方元素：有中文石刻"念死者无为罪"、"圣母踏龙头"等，以及菊花、牡丹等东方花卉图案。③象征图案：有船锚（希望）、心（仁爱）、剑（正义）等象征图案。石雕是东西方艺术融合的杰作，由日本工匠雕刻。</li>
+                <li><strong>地下墓穴与天主教艺术博物馆：</strong>牌坊后方有地下墓穴，原为教堂地下室，现为天主教艺术博物馆。墓穴内安葬着日本、越南殉道者和澳门主教的遗骨。博物馆陈列有宗教画、雕塑、圣器等艺术品，最珍贵的是日本殉道者的骨骸和圣方济各·沙勿略的遗物。地下空间让游客了解教堂原貌和历史。</li>
+                <li><strong>前地广场：</strong>牌坊前的大三巴前地是澳门重要公共空间。广场用葡式碎石铺成波浪图案，象征澳门作为海洋城市的特质。广场上有喷泉、长椅、灯柱，是市民休憩、游客拍照的场所。每年圣诞节、复活节、农历新年，广场举办音乐会、市集、灯光秀等活动。夜晚牌坊亮灯，景色迷人。</li>
+                <li><strong>哪吒庙：</strong>位于牌坊右侧，与大三巴形成中西文化对比。哪吒庙建于1888年，供奉中国传统神祇哪吒三太子。庙宇虽小，但香火鼎盛，体现澳门中西宗教共存的特色。哪吒庙与大三巴相邻，象征澳门文化的包容性。</li>
+                <li><strong>旧城墙遗址：</strong>位于牌坊左侧，是澳门现存最古老的城墙。城墙建于1569年，用于防御海盗和荷兰入侵。城墙用夯土和蚝壳建造，现仅存一段。城墙遗址见证澳门作为军事要塞的历史。</li>
+                <li><strong>大三巴手信街：</strong>从牌坊通往议事亭前地的街道，两旁遍布手信店、餐厅、咖啡馆。手信店出售澳门特色食品，如杏仁饼、蛋卷、猪肉干、花生糖等。街道充满怀旧气息，是购买伴手礼、品尝澳门美食的好去处。推荐店铺有钜记饼家、咀香园、晃记饼家等。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>全年皆宜，但最佳游览时间为10月至次年4月，此时气候凉爽干燥。夏季（6-9月）炎热多雨，但可避开白天高温，选择清晨或傍晚游览。圣诞节、农历新年、复活节期间，牌坊有灯光装饰和活动，但游客较多。建议避开周末和节假日高峰。牌坊全天开放，前地广场24小时开放，地下博物馆开放时间：9:00-18:00（周二至周日，周一闭馆）。</li>
+                <li><strong>参观顺序：</strong>大三巴前地广场→牌坊正面观赏→绕到牌坊后方→参观地下墓穴和天主教艺术博物馆→参观哪吒庙→参观旧城墙遗址→漫步手信街→前往恋爱巷、玫瑰堂等周边景点。建议安排1.5-2小时。牌坊免费参观，地下博物馆免费开放。</li>
+                <li><strong>深度体验：</strong>清晨第一批到达，在晨光中拍摄无人的牌坊；上午跟随导游了解建筑细节和历史故事；中午在手信街品尝澳门美食；下午参观博物馆，了解天主教在远东的传播；傍晚在牌坊前看日落，欣赏灯光亮起；晚上观看"光影大三巴"灯光秀（如有）；学习摄影技巧，拍摄牌坊不同角度；住附近酒店，体验澳门历史城区的夜晚；第二天前往大炮台、澳门博物馆、议事亭前地、妈阁庙等景点。</li>
+                <li><strong>摄影建议：</strong>牌坊正面全景，石雕细节特写，牌坊与哪吒庙对比，前地广场全景，地下墓穴神秘氛围，牌坊夜景灯光，不同时段的光影变化，游客与牌坊的互动，航拍视角（如允许）。建议使用广角镜头拍摄全景，长焦镜头拍摄雕刻细节。清晨和傍晚光线最佳，适合拍摄。夜间需三脚架拍摄夜景。偏振镜可减少反光，增强色彩饱和度。</li>
+            </ul>
+            <p><strong>交通信息：</strong>大三巴牌坊位于澳门半岛炮台山下。从澳门半岛出发：可步行前往，从议事亭前地沿手信街步行约10分钟。公交：乘8A、17、18、19、26路巴士到"新马路/永亨"站，步行约5分钟；或乘3、3X、4、6A、8A、18A、19、26A、33、N1A路巴士到"新马路/大丰"站，步行约5分钟。免费穿梭巴士：许多酒店提供到新马路或议事亭前地的免费穿梭巴士，再步行前往。出租车：从澳门各处打车前往均较方便。周边景点有大炮台（100米）、澳门博物馆（150米）、议事亭前地（300米）、玫瑰堂（400米）、恋爱巷（50米）、仁慈堂大楼（350米）。距澳门国际机场4.5公里，车程15分钟；距外港客运码头3公里，车程10分钟。建议与大炮台、澳门博物馆、议事亭前地组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">牌坊</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 大三巴印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 圣保禄学院 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>圣保禄学院 · 远东第一</h3>
+            <p class="text"><strong>圣保禄学院：</strong>大三巴牌坊原为圣保禄学院的一部分。圣保禄学院由耶稣会于1594年创立，是远东地区第一所西方大学，也是中国境内第一所西式大学。学院设有神学、哲学、文学、数学、天文学、医学等学科，用拉丁语授课。学生来自中国、日本、韩国、越南等地，培养了许多传教士、学者、翻译家。学院图书馆藏书4000余册，是当时远东最大的图书馆。圣保禄学院是中西文化交流的重要桥梁。</p>
+            <p class="text"><strong>教堂建设：</strong>圣保禄大教堂是学院的教堂。①1563年：最初的小教堂建成。②1595年：扩建为较大教堂。③1602-1640年：重建为宏伟的巴洛克式教堂，由意大利籍耶稣会神父卡尔洛·斯皮诺拉设计，日本工匠参与建造。④1642年：教堂祝圣启用。教堂是当时远东最大、最宏伟的天主教堂，被称为"东方梵蒂冈"。</p>
+            <p class="text"><strong>火灾与损毁：</strong>教堂历史上经历三次大火。①1835年1月26日：台风引发大火，教堂主体被焚毁，仅存前壁、地基、部分墙壁。②1836年：台风再次袭击，前壁部分受损。③20世纪：前壁结构出现倾斜、裂缝，经多次加固修复。火灾原因可能是厨房用火不慎或雷电击中。</p>
+            <p class="text"><strong>修复保护：</strong>牌坊经历多次修复。①1990-1996年：澳门政府与葡萄牙合作，进行大规模加固修复，防止倒塌。②2005年：为申报世界遗产，进行清洁、修复。③2018年：再次检测、维护。修复工程采用传统工艺和现代技术结合，保护了这座珍贵的历史遗迹。</p>
+            <p class="text"><strong>考古发现：</strong>20世纪90年代，在牌坊周围进行考古发掘。①发现教堂地基、柱础、台阶。②发现墓穴，内有日本、越南殉道者遗骨。③发现圣物、圣器、钱币等文物。④发现早期华人基督徒墓葬。考古发现为了解教堂原貌和历史提供了实物证据。</p>
+            <p class="text"><strong>现代意义：</strong>大三巴牌坊在现代澳门具有多重意义。①文化象征：澳门中西文化交融的象征。②旅游地标：澳门最重要的旅游景点。③历史见证：澳门400多年历史的见证。④世界遗产：人类共同的文化遗产。牌坊是澳门人的精神地标。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 巴洛克艺术 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>巴洛克艺术 · 东西合璧</h3>
+            <p class="text"><strong>建筑风格：</strong>大三巴牌坊是巴洛克风格建筑。①巴洛克特征：曲线、动感、光影对比、装饰华丽。②结构：四层三间，逐层收分，富有节奏感。③装饰：大量浮雕、壁龛、雕塑。④象征：宗教象征与艺术表现结合。牌坊是巴洛克艺术在远东的杰出代表。</p>
+            <p class="text"><strong>结构特点：</strong>牌坊结构精巧坚固。①材料：用花岗岩建造，坚固耐久。②结构：四层结构，每层功能不同。③支撑：内部有石柱、拱券支撑。④抗震：结构具有一定抗震能力，经历多次台风、地震未倒。结构体现了高超的建筑技艺。</p>
+            <p class="text"><strong>装饰艺术：</strong>牌坊装饰丰富多彩。①宗教题材：圣经故事、圣人像、天使、十字架等。②东方元素：中文石刻、菊花、牡丹、龙等。③象征图案：船锚（希望）、心（仁爱）、剑（正义）等。④字母图案：IHS（耶稣）、AM（圣母）等。装饰是东西方艺术的融合。</p>
+            <p class="text"><strong>东西融合：</strong>牌坊体现了东西方艺术的融合。①西方元素：巴洛克风格、基督教题材、拉丁字母。②东方元素：中文石刻、东方花卉、龙纹。③工匠：由欧洲神父设计，日本工匠雕刻，中国工匠参与。④意义：象征澳门作为东西方文化交流的桥梁。牌坊是文化融合的结晶。</p>
+            <p class="text"><strong>建筑技术：</strong>牌坊建造技术先进。①石材加工：花岗岩切割、雕刻技术精湛。②结构计算：四层结构，受力合理。③施工组织：工程历时38年，组织复杂。④材料运输：石材从广东、福建运来。技术体现了当时建筑的最高水平。</p>
+            <p class="text"><strong>比较研究：</strong>大三巴牌坊可与其他建筑比较。①与欧洲巴洛克教堂比较：规模较小，装饰更简洁。②与日本"南蛮屏风"比较：都有东西融合特征。③与中国牌坊比较：形式相似，但内容不同。比较研究有助于理解其独特性。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 东西交融 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>东西交融 · 文化桥梁</h3>
+            <p class="text"><strong>宗教传播：</strong>大三巴是天主教在远东传播的中心。①耶稣会：圣方济各·沙勿略、利玛窦等耶稣会士以此为基地。②传教：向中国、日本、韩国、越南等地传教。③教育：圣保禄学院培养本地传教士。④出版：印刷中文、日文、拉丁文书籍。大三巴是东方天主教的重要发源地。</p>
+            <p class="text"><strong>文化交流：</strong>大三巴是东西方文化交流的桥梁。①学术：欧洲科学、哲学、艺术传入东方。②艺术：西方绘画、雕塑、建筑影响东方艺术。③语言：拉丁文、葡萄牙文、中文、日文在此交流。④技术：西方医学、天文学、数学传入东方。大三巴促进了东西方文明对话。</p>
+            <p class="text"><strong>艺术融合：</strong>大三巴体现了东西方艺术的融合。①建筑艺术：巴洛克风格与东方装饰结合。②雕刻艺术：欧洲宗教题材与东方技法结合。③文学艺术：基督教文学与东方文学交流。④音乐艺术：西方圣乐与东方音乐交融。艺术融合创造了独特风格。</p>
+            <p class="text"><strong>多元共存：</strong>大三巴周边体现澳门多元文化。①宗教多元：天主教大三巴与道教哪吒庙相邻。②民族多元：葡萄牙人、华人、日本人、非洲人共处。③语言多元：葡语、汉语、日语、拉丁语并用。④习俗多元：中西节日、礼仪、饮食共存。多元共存是澳门文化的特色。</p>
+            <p class="text"><strong>历史人物：</strong>与大三巴相关的历史人物众多。①利玛窦：意大利耶稣会士，曾在圣保禄学院学习中文。②徐光启：中国士大夫，与利玛窦合作翻译西方著作。③圣方济各·沙勿略：耶稣会创始人之一，遗物曾供奉于此。④吴渔山：中国画家，皈依天主教，作品受西方影响。人物见证文化交流。</p>
+            <p class="text"><strong>现代传承：</strong>大三巴文化在现代得到传承。①文化遗产：作为世界遗产得到保护。②文化活动：举办音乐会、展览、节庆。③教育研究：学者研究大三巴历史、艺术。④旅游体验：游客体验中西文化交融。大三巴是澳门文化认同的象征。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">澳门</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 世界遗产 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>世界遗产 · 人类瑰宝</h3>
+            <p class="text"><strong>历史价值：</strong>大三巴牌坊是澳门历史的见证。①殖民史：葡萄牙在远东殖民的见证。②宗教史：天主教在东方传播的实证。③教育史：西方教育在东方实施的范例。④建筑史：东西方建筑艺术融合的杰作。牌坊是历史的"石头史书"。</p>
+            <p class="text"><strong>艺术价值：</strong>大三巴牌坊是艺术的宝库。①建筑艺术：巴洛克风格在远东的典范。②雕刻艺术：石雕技艺精湛，题材丰富。③融合艺术：东西方艺术元素和谐统一。④象征艺术：宗教象征与艺术表现完美结合。牌坊是"石头的交响乐"。</p>
+            <p class="text"><strong>科学价值：</strong>大三巴牌坊蕴含科学技术。①建筑科学：石材结构、抗震设计。②材料科学：花岗岩特性、耐久性。③修复科学：文物修复技术、材料。④保护科学：文化遗产监测、保护技术。牌坊是科学技术的研究对象。</p>
+            <p class="text"><strong>文化价值：</strong>大三巴牌坊是文化交融的象征。①东西方文化：欧洲文化与亚洲文化的对话。②宗教文化：天主教与东方宗教的共存。③城市文化：澳门作为国际商埠的文化特征。④社区文化：澳门人文化认同的载体。牌坊是文化的"基因库"。</p>
+            <p class="text"><strong>社会价值：</strong>大三巴牌坊在社会中发挥重要作用。①身份认同：澳门人身份认同的象征。②旅游经济：澳门最重要的旅游景点。③城市形象：澳门的城市名片。④国际交流：中外文化交流的平台。牌坊是社会的"精神地标"。</p>
+            <p class="text"><strong>保护与传承：</strong>大三巴牌坊得到科学保护。①法律保护：2005年作为"澳门历史城区"一部分列入《世界遗产名录》。②规划保护：制定保护规划，控制周边建设。③工程保护：多次加固修复，确保结构安全。④监测保护：建立监测系统，防止自然破坏。⑤研究展示：开展考古研究，建立博物馆。⑥教育推广：举办展览、讲座、导览，传播文化遗产价值。⑦社区参与：社区居民参与保护，形成保护网络。大三巴的保护经验，为石质文物遗产保护提供了成功范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 大三巴牌坊澳门历史城区，巴洛克艺术诉说东西交融 | 五重维度·五种灵韵爱心，点赞评论共话世界遗产</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（大三巴牌坊独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('ruins_of_st_pauls_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('ruins_of_st_pauls_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('ruins_of_st_pauls_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('ruins_of_st_pauls_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对大三巴的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的大三巴感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "大三巴访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>三亚南山寺 · 四维解读 | 海上观音 · 南山佛国</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/三亚南山寺.jpg" title="三亚南山寺" alt="南山寺与海上观音">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 佛缘南山</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 寺院格局</div>
+        <div class="dim-tab" data-tab="culture">🎪 佛教文化</div>
+        <div class="dim-tab" data-tab="value">🌟 南海佛国</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>三亚南山寺 · 海上观音道场</h3>
+            <p class="text"><strong>传奇：</strong>三亚南山寺位于海南省三亚市崖州区南山文化旅游区内，坐落在南山（古称"鳌山"）脚下，面朝南海，是中国最南端的佛教寺院。寺院始建于1995年，1998年建成开光，是新中国成立后新建的最大佛教道场之一。南山寺占地400亩，建筑面积约4万平方米，依山就势，错落有致，气势恢宏。寺前海中矗立着108米高的"南山海上观音"圣像，是世界上最高的观音像，与南山寺共同构成"南山观音文化苑"，成为海南重要的佛教文化圣地和旅游胜地。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>南山海上观音：</strong>圣像高108米，屹立于直径120米的海上金刚洲（观音岛）上。像体为正观音的一体化三尊造型，三面分别手持经箧、莲花、念珠，象征智慧、慈悲、和平。圣像采用钛合金材料，外部为白色，在阳光下熠熠生辉。观音像内部是面积达15000平方米的圆通宝殿，供奉99999尊观音像。游客可乘电梯升至莲花宝座平台，俯瞰南海美景。</li>
+                <li><strong>寺院中轴线建筑：</strong>南山寺采用盛唐建筑风格，沿中轴线依次布局。①不二法门：寺院山门，高12米，宽20米，上书"不二"二字，寓意"不二法门"；②兜率内院：天王殿之后的主殿，供奉弥勒菩萨；③金堂：大雄宝殿，寺院核心建筑，供奉释迦牟尼佛、文殊菩萨、普贤菩萨；④光明讲堂：讲经说法场所；⑤观音殿：供奉观音菩萨。建筑群层层递进，庄严雄伟。</li>
+                <li><strong>不二法门广场：</strong>进入南山寺的第一道景观。广场中央是"南山"石刻，为赵朴初先生题写。广场两侧是长达280米的"吉祥经"石刻长廊，刻有《吉祥经》全文。广场正前方是汉白玉牌坊"不二法门"，高12米，四柱三门，雕刻精美，是南山寺的标志性建筑之一。</li>
+                <li><strong>三十三观音堂：</strong>位于南山寺东侧，是世界上规模最大的观音群像供奉道场。殿堂内供奉33尊观音应化法身像，每尊高1.9米，由香樟木雕刻而成，姿态各异，栩栩如生。观音堂采用唐代建筑风格，面积达3300平方米，是南山寺重要的朝拜场所。</li>
+                <li><strong>金玉观音阁：</strong>位于南山寺西侧，供奉着被誉为"镇岛之宝"的金玉观世音。圣像高3.8米，耗用黄金100多公斤、南非钻石120多克拉、翡翠100多公斤，以及红蓝宝石、祖母绿、珊瑚、松石、珍珠等奇珍异宝，价值约1.92亿元人民币。1998年载入吉尼斯世界纪录，是佛教造像艺术的珍品。</li>
+                <li><strong>南山树屋：</strong>位于南山寺后山，是独特的禅修住宿体验。树屋建在百年酸豆树上，离地约10米，用原木建造，内部设施齐全。住在树屋中，可听海涛、闻鸟鸣、观星空，体验"山居禅修"的意境。南山树屋是南山寺的特色体验项目。</li>
+                <li><strong>南山海上灯光秀：</strong>夜晚，海上观音和南山寺建筑群亮起灯光，璀璨夺目。每周五、六、日晚有"南山光影秀"，用灯光、音乐、水幕、激光等手段，演绎佛教故事和海南文化。灯光秀时长约30分钟，是南山寺夜游的亮点。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，最佳游览时间为11月至次年4月，气候凉爽。建议上午游览，避开午后炎热。农历二月十九（观音诞辰日）、六月十九（观音成道日）、九月十九（观音出家日）是重要佛教节日，有盛大法会。南山寺开放时间：8:00-17:30，夜间灯光秀19:30开始。</li>
+                <li><strong>游览顺序：</strong>不二法门广场→不二法门→兜率内院→金堂（大雄宝殿）→观音殿→三十三观音堂→金玉观音阁→南山树屋（远观）→海上观音（乘电瓶车前往）。建议安排4-6小时。</li>
+                <li><strong>深度体验：</strong>清晨参加早课，体验寺院生活；在观音殿前静坐冥想，感受佛教氛围；学习抄经，体验禅修；品尝南山素斋，体验佛教饮食文化；住南山树屋，体验山居禅修；参加放生活动，培养慈悲心；夜晚观看南山光影秀，感受佛教艺术；请法师开示，了解佛教教义。</li>
+                <li><strong>摄影建议：</strong>海上观音全景与日出/日落，南山寺建筑群中轴线，金玉观音特写，三十三观音堂内景，南山树屋与自然融合，佛教法会场景，南山光影秀夜景。建议使用广角镜头拍摄全景，长焦镜头捕捉建筑细节。清晨和傍晚光线柔和，适合拍摄。使用偏振镜可减少水面反光。</li>
+            </ul>
+            <p><strong>交通信息：</strong>南山寺位于三亚市崖州区南山文化旅游区。公交16路、25路、29路、55路、57路到"南山寺"站。从三亚市区乘出租车约1小时，车费约100元。从三亚凤凰国际机场乘出租车约50分钟，车费约80元。自驾可经G98海南环岛高速到南山出口。景区内有电瓶车接送。距三亚市区约40公里，车程1小时；距天涯海角约20公里，车程30分钟。建议与天涯海角、大小洞天、西岛组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">佛寺</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 南山印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 佛缘南山 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>佛缘南山 · 盛世兴建</h3>
+            <p class="text"><strong>历史渊源：</strong>南山与佛教有深厚渊源。据《崖州志》记载，南山古称"鳌山"，因形似巨鳌得名。唐代高僧鉴真和尚第五次东渡日本时遭遇台风，漂流至南山附近，在此居住一年有余，传播佛法。宋代，南山已有佛教活动。明代，南山建有"南山寺"（已毁）。清代，南山是海南重要的佛教圣地。民间有"福如东海，寿比南山"之说，南山被视为长寿的象征。</p>
+            <p class="text"><strong>建寺缘起：</strong>1993年，为弘扬佛教文化，发展海南旅游，海南省政府决定在南山兴建佛教文化苑。项目得到中国佛教协会和赵朴初先生的大力支持。赵朴初先生提出"南山海上观音"的构想，认为南海是观音菩萨的道场，应在南山建观音圣像。1995年，南山寺奠基。1998年，寺院建成开光。2005年，海上观音圣像建成开光。南山寺成为海南佛教文化的标志。</p>
+            <p class="text"><strong>规划设计：</strong>南山寺由中国佛教协会副会长、海南省佛教协会会长、南山寺方丈新成大和尚主持规划设计。寺院采用盛唐建筑风格，体现"盛世建寺"的理念。规划分为三大区域：①佛教文化区：以南山寺为核心；②观音文化区：以海上观音为核心；③生态休闲区：以南山树屋、热带园林为核心。整个规划体现了"天人合一"的思想。</p>
+            <p class="text"><strong>建设过程：</strong>南山寺建设历时10年。①一期工程（1995-1998年）：建设南山寺主体建筑；②二期工程（1999-2005年）：建设海上观音圣像及附属设施；③三期工程（2006-2010年）：完善配套设施，建设三十三观音堂、金玉观音阁等。建设过程中，得到海内外信众的大力捐助，体现了"十方来，十方去，十方共成十方事"的佛教精神。</p>
+            <p class="text"><strong>开光盛典：</strong>1998年4月12日，南山寺举行开光典礼。中国佛教协会会长赵朴初、副会长明旸、副会长兼秘书长净慧等佛教界高僧大德，以及海内外信众数万人参加。2005年4月24日，海上观音圣像开光。108位高僧主法，数万信众朝拜，盛况空前。开光后，南山寺成为南海地区重要的佛教活动中心。</p>
+            <p class="text"><strong>现代发展：</strong>南山寺建成后，迅速发展。①佛教活动：每年举办观音法会、禅修营、佛学讲座等活动；②文化交流：与东南亚、日韩等佛教国家开展交流；③旅游发展：年接待游客数百万人次，成为海南重要旅游景点；④慈善事业：开展扶贫、助学、赈灾等慈善活动。南山寺是新时代佛教中国化的成功实践。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">缘起</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 寺院格局 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>寺院格局 · 盛唐气象</h3>
+            <p class="text"><strong>总体布局：</strong>南山寺依山面海，坐北朝南。①中轴线：不二法门→兜率内院→金堂→光明讲堂→观音殿，层层升高，象征修行次第；②东轴线：僧寮、斋堂、客堂等生活区；③西轴线：禅堂、藏经楼、法物流通处等修行区。寺院背靠南山，面向南海，形成"背有靠山，面有明堂"的风水格局。建筑与自然和谐统一，体现"天人合一"的思想。</p>
+            <p class="text"><strong>建筑风格：</strong>南山寺采用盛唐建筑风格。①屋顶：庑殿顶、歇山顶为主，坡度平缓，出檐深远；②斗拱：用材硕大，结构严谨，既有承重功能，又起装饰作用；③色彩：以红、白、灰为主色调，朴素庄严；④装饰：简洁大气，少用繁复雕饰。盛唐风格体现了佛教的博大、包容、开放，也象征中华民族的盛世气象。</p>
+            <p class="text"><strong>金堂（大雄宝殿）：</strong>寺院核心建筑。①规模：面阔七间（36米），进深五间（24米），高23米；②结构：重檐庑殿顶，用钢筋混凝土仿木结构；③供奉：正中供奉释迦牟尼佛（高8.8米），左文殊菩萨，右普贤菩萨；④装饰：藻井绘有飞天、莲花图案，梁枋施以彩绘。金堂是寺院举行重大法会的场所。</p>
+            <p class="text"><strong>海上观音结构：</strong>观音圣像工程浩大。①基础：在海上填筑直径120米的人工岛（观音岛），打桩108根，象征108种烦恼；②像体：用钛合金板材拼接而成，外部喷涂白色氟碳漆，耐海水腐蚀；③内部：设电梯通达莲花宝座，宝座内为圆通宝殿；④三面：正面手持经箧，象征智慧；左面手持莲花，象征慈悲；右面手持念珠，象征和平。圣像设计科学，结构安全。</p>
+            <p class="text"><strong>三十三观音堂：</strong>世界最大的观音群像道场。①规模：建筑面积3300平方米，唐代风格；②布局：中央为千手观音，四周环绕33尊观音应化身；③工艺：观音像用香樟木雕刻，贴金彩绘，工艺精湛；④功能：用于朝拜、禅修、法会。三十三观音堂是南山寺的特色建筑。</p>
+            <p class="text"><strong>建筑材料：</strong>南山寺采用现代材料与传统工艺结合。①结构材料：钢筋混凝土，保证建筑安全；②装饰材料：汉白玉、花岗岩、木材、琉璃瓦；③佛像材料：铜、金、玉、香樟木；④环保材料：使用太阳能、雨水收集等环保技术。建筑材料既体现传统，又符合现代要求。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 佛教文化 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>佛教文化 · 南海道场</h3>
+            <p class="text"><strong>观音信仰：</strong>南山寺以观音文化为核心。①观音道场：南海是观音菩萨的应化道场，南山寺是南海观音的重要道场；②观音圣像：108米海上观音是世界最高的观音像，是观音信仰的象征；③观音法会：每年举办三次观音法会（诞辰、成道、出家），信众云集；④观音文化：开展观音文化研究、观音艺术创作、观音禅修等活动。南山寺是观音信仰的中心。</p>
+            <p class="text"><strong>佛教活动：</strong>南山寺佛教活动丰富。①日常功课：僧众早晚课诵、过堂用斋；②法会活动：佛诞、观音诞、孟兰盆会、水陆法会等；③禅修活动：举办禅七、佛七、精进禅修营；④讲经说法：高僧大德讲经，信众听经闻法；⑤佛教教育：举办佛学班、居士培训班。南山寺是南海地区佛教活动的重要场所。</p>
+            <p class="text"><strong>素食文化：</strong>南山寺素食独具特色。①南山素斋：采用海南本地食材，制作精美，色香味俱佳；②饮食理念：提倡"斋心为本，素食养生"，通过饮食修行；③素斋体验：游客可在寺院用斋，体验佛教饮食文化；④素食研究：研究素食与健康、环保的关系。南山素斋是海南特色素食品牌。</p>
+            <p class="text"><strong>禅修体验：</strong>南山寺提供多种禅修体验。①短期禅修：一日禅、周末禅、禅七等；②禅修项目：坐禅、行禅、茶禅、书法禅等；③禅修环境：南山树屋、海边禅堂、山林步道等禅修场所；④禅修指导：有法师指导，适合初学者。禅修体验帮助人们缓解压力，提升心灵。</p>
+            <p class="text"><strong>佛教艺术：</strong>南山寺是佛教艺术的宝库。①造像艺术：金玉观音、三十三观音、海上观音等，艺术价值高；②建筑艺术：盛唐风格建筑，宏伟庄严；③书画艺术：收藏佛教书画作品；④音乐艺术：佛教音乐、梵呗演唱。南山寺定期举办佛教艺术展览。</p>
+            <p class="text"><strong>文化交流：</strong>南山寺积极开展佛教文化交流。①国内交流：与大陆、港澳台佛教界交流；②国际交流：与东南亚、日韩、欧美佛教界交流；③学术交流：举办佛教文化研讨会；④旅游交流：通过旅游传播佛教文化。南山寺是佛教文化交流的窗口。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">佛韵</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 南海佛国 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>南海佛国 · 文化地标</h3>
+            <p class="text"><strong>宗教价值：</strong>南山寺是南海地区重要的佛教道场。①信仰中心：是海南及南海地区信众朝拜的中心；②修行道场：为僧众提供清净的修行环境；③教育中心：开展佛教教育，培养僧才；④文化交流：促进佛教文化交流。南山寺在佛教界具有重要地位。</p>
+            <p class="text"><strong>文化价值：</strong>南山寺是海南文化的重要载体。①佛教文化：传承中国佛教文化，特别是观音文化；②建筑文化：盛唐建筑风格，体现传统建筑艺术；③艺术文化：佛教造像、书画、音乐等艺术形式；④生态文化：建筑与自然和谐，体现生态理念。南山寺是海南文化的"金字招牌"。</p>
+            <p class="text"><strong>旅游价值：</strong>南山寺是海南最重要的旅游景点之一。①景观价值：海上观音、南山寺建筑、热带风光构成独特景观；②体验价值：佛教体验、禅修体验、素食体验等；③经济价值：年接待游客数百万人次，带动旅游经济发展；④品牌价值："南山观音"成为海南旅游的重要品牌。南山寺是海南旅游的"必游之地"。</p>
+            <p class="text"><strong>社会价值：</strong>南山寺在社会生活中发挥重要作用。①精神寄托：为信众提供精神家园；②道德教化：通过佛教教义教化人心，促进社会和谐；③慈善公益：开展扶贫、助学、赈灾等慈善活动；④社区服务：为当地社区提供文化、教育、卫生等服务。南山寺是社会的"稳定器"。</p>
+            <p class="text"><strong>生态价值：</strong>南山寺注重生态保护。①选址：依山就势，保护原有植被；②建筑：采用环保材料，减少污染；③能源：使用太阳能等清洁能源；④管理：实行垃圾分类，保护海洋环境。南山寺是"生态寺院"的典范。</p>
+            <p class="text"><strong>保护与传承：</strong>南山寺得到科学保护。①法律保护：作为宗教活动场所，受法律保护；②规划保护：编制保护规划，合理控制游客数量；③日常维护：定期检查维修，保持建筑安全；④文化传承：开展佛教教育，培养僧才，传承佛教文化；⑤合理利用：发展文化旅游，让佛教文化"活"起来；⑥社区参与：与当地社区合作，共同保护。南山寺的保护经验，为现代寺院建设提供了借鉴。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 三亚南山寺南海佛国，海上观音护佑平安 | 五重维度·五种灵韵爱心，点赞评论共话佛缘南山</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（三亚南山寺独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('sanya_nanshan_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('sanya_nanshan_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('sanya_nanshan_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('sanya_nanshan_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对南山寺的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的南山寺感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "南山访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

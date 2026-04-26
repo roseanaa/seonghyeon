@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>独乐寺 · 四维解读 | 辽代遗珍 · 千年古刹</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <div class="pic">
+        <img src="./image/独乐寺.jpg" title="独乐寺观音阁" alt="独乐寺观音阁与山门">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🕉️ 概览</div>
+        <div class="dim-tab" data-tab="history">📖 千年传奇</div>
+        <div class="dim-tab" data-tab="architecture">🏛️ 木构奇迹</div>
+        <div class="dim-tab" data-tab="sculpture">🪷 彩塑绝艺</div>
+        <div class="dim-tab" data-tab="value">🌟 遗产价值</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🕉️ 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🕉️ -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>独乐寺 · 辽代瑰宝</h3>
+            <p class="text"><strong>传奇：</strong>中国现存最古老的木结构楼阁，被誉为"中国古代木构建筑的活化石"。始建于唐，辽代重建，寺内观音阁、山门皆为辽统和二年（984年）原物，距今已逾千年。梁思成先生称其"上承唐代遗风，下启宋式营造"，是中国建筑史的重要坐标。</p>
+            <p><strong>寺名由来：</strong>关于"独乐"之名有三说：①安禄山起兵在此誓师，思独乐而不与民同乐；②因寺北有独乐水而得名；③佛家清心寡欲，恪守"独乐"之道。无论何说，都为此寺增添了神秘色彩。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul><li><strong>观音阁：</strong>寺内主体建筑，外观两层，内有三层，通高23米。阁内供奉16米高的十一面观音泥塑，是国内最大的泥塑佛像之一。</li><li><strong>山门：</strong>我国现存最早的庑殿顶山门，屋顶坡度平缓，出檐深远，典型的唐代风格。匾额"独乐寺"三字传为严嵩手书。</li><li><strong>辽代彩塑：</strong>观音阁内观音像及两侧肋侍菩萨，山门内金刚力士像，均为辽代原作，弥足珍贵。</li><li><strong>壁画遗迹：</strong>观音阁内壁原有元代壁画，主题为十六罗汉和明王像，现仅存局部，但风韵犹存。</li></ul>
+            <p><strong>参观攻略：</strong></p>
+            <ul><li><strong>最佳时间：</strong>春秋两季。避开节假日，独乐寺相对小众，平日游客不多，可静静品鉴。</li><li><strong>游览顺序：</strong>山门（细观斗拱、匾额、力士像）→观音阁（绕行三周，从不同角度仰望观音）→东西配殿→乾隆行宫（后建）。</li><li><strong>专业看点：</strong>注意观察观音阁的"侧脚"和"生起"（柱子向内倾斜，檐柱由中间向两侧逐渐升高）、斗拱的"偷心造"、屋顶的"推山"做法，都是唐宋建筑的典型特征。</li><li><strong>时间安排：</strong>细致游览需2-3小时。建议上午前往，光线较好，便于观察建筑细部。</li></ul>
+            <p><strong>交通信息：</strong>位于天津市蓟州区，从北京出发自驾约1.5小时，也可乘火车至蓟州站后打车前往。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🕉️</span><span class="like-count">0</span><span class="like-btn-text">古刹</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 独乐印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 千年传奇 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>千年传奇 · 岁月沧桑</h3>
+            <p class="text"><strong>创建年代：</strong>独乐寺创建年代无确切记载，但据文献推测，最晚不迟于唐初。寺内现存建筑为辽统和二年（984年）重建，此时距唐朝灭亡仅77年，建筑风格仍保留浓重的唐代特征。</p>
+            <p class="text"><strong>辽代重建：</strong>辽圣宗时期，蓟州（今蓟州区）为辽朝重要城镇，萧太后曾在此驻跸。统和二年，在辽朝皇室支持下，独乐寺得以大规模重建。观音阁内十一面观音像的塑造，可能与辽代皇室崇信密宗佛教有关。</p>
+            <p class="text"><strong>明清修缮：</strong>明代多次修缮，但主体结构未变。清代乾隆十八年（1753年），在寺前增建照壁，寺东侧建乾隆行宫，但观音阁、山门仍保持辽代原貌。乾隆皇帝曾多次巡幸独乐寺，并赋诗题匾。</p>
+            <p class="text"><strong>近代发现：</strong>1932年，中国营造学社梁思成、林徽因等学者考察独乐寺，首次科学地测绘记录了观音阁和山门，并撰写了详细的调查报告。梁思成在《蓟县独乐寺观音阁山门考》中高度评价其价值，使其闻名海内外。抗日战争、解放战争中，独乐寺幸免于战火，堪称奇迹。</p>
+            <p class="text"><strong>当代保护：</strong>1961年被列为首批全国重点文物保护单位。1976年唐山大地震，蓟州为震中，独乐寺距震中仅几十公里，观音阁木构架剧烈摇晃，但"晃而不散，摇而不倒"，再次证明了其卓越的抗震性能。1990年进行落架大修，2009年再次全面修缮。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">岁月</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 木构奇迹 爱心: 🏛️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>木构奇迹 · 唐风辽建</h3>
+            <p class="text"><strong>观音阁构造：</strong>外观两层，内有暗层，实为三层，通高23米。平面呈长方形，面阔五间（20.23米），进深四间（14.26米）。底层为礼佛空间，二层为平坐层，三层为腰檐层。这种"明二暗三"的结构既满足了功能需求，又使外观富有变化。</p>
+            <p class="text"><strong>斗拱体系：</strong>全阁共用斗拱24种，152朵，是中国古建中使用斗拱种类最多的建筑之一。外檐斗拱硕大，出檐深远（达3.3米），具有典型的唐代风格。斗拱不仅起装饰作用，更是重要的结构构件，将屋顶荷载均匀传递到柱子上。</p>
+            <p class="text"><strong>抗震设计：</strong>观音阁历经28次地震，其中3次8级以上强震，仍屹立不倒，其抗震秘密在于：①柱网采用"金箱斗底槽"布局，内外两圈柱子形成稳定框架；②柱子有"侧脚"（向内倾斜）和"生起"（由明间向梢间逐渐升高），增强整体性；③采用榫卯连接，有一定的柔韧性；④暗层实际上是一个刚性结构层，类似现代建筑的圈梁。</p>
+            <p class="text"><strong>山门特色：</strong>面阔三间，进深两间，单檐庑殿顶。是我国现存最早的庑殿顶山门。柱头斗拱为五铺作双抄偷心造，简洁有力。正脊两端的鸱吻为辽代原件，龙首鱼尾，造型古朴，是研究辽代建筑装饰的重要实物。</p>
+            <p class="text"><strong>唐代遗风：</strong>独乐寺建筑保留了大量唐代特征：屋顶坡度平缓（约1:2.5）、出檐深远、斗拱硕大、柱子有卷杀、阑额不出头等。这些特征在宋以后逐渐消失，使独乐寺成为研究唐代建筑的珍贵标本。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏛️</span><span class="like-count">0</span><span class="like-btn-text">构法</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 木构之美</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 彩塑绝艺 爱心: 🪷 -->
+    <div class="dim-content" id="sculpture-content" data-dim="sculpture">
+        <div class="word">
+            <h3>彩塑绝艺 · 泥塑巅峰</h3>
+            <p class="text"><strong>十一面观音像：</strong>观音阁核心，泥塑，通高16米，是国内最大的泥塑佛像之一。观音立于须弥座上，面目慈祥，体态丰腴，具有唐代"丰肌秀骨"的审美特征。头顶十个小观音头像，加上本面，共十一面，象征观音菩萨的十一种智慧和功德。像后悬塑五彩背光，祥云缭绕，飞天起舞。</p>
+            <p class="text"><strong>肋侍菩萨：</strong>观音两侧各有一尊肋侍菩萨，高约3.2米，均为辽代原作。左为胁持菩萨，右为供养菩萨。菩萨面如满月，体态端庄，衣纹流畅自然。虽历经千年，彩绘多有剥落，但神韵犹存。</p>
+            <p class="text"><strong>金刚力士像：</strong>山门内东西两侧各有一尊金刚力士（俗称"哼哈二将"），高4.5米，肌肉隆起，怒目圆睁，威猛雄壮。东侧力士闭嘴怒目，西侧力士张口叱咤，形成鲜明对比。塑像动态十足，衣带飘扬，富有张力。</p>
+            <p class="text"><strong>雕塑技艺：</strong>辽代彩塑继承了唐代写实风格，又融入契丹民族的审美特色。观音像比例准确，神态安详，体现了"慈悲"与"智慧"的完美统一。衣纹处理采用"曹衣出水"技法，轻薄贴体，流畅自然。色彩以红、绿、蓝为主，虽已斑驳，仍可想见当年的富丽堂皇。</p>
+            <p class="text"><strong>宗教内涵：</strong>十一面观音属于密宗造像系统，反映辽代佛教密宗盛行。观音的十一面各有寓意：前三面为慈相，左三面为怒相，右三面为利牙相，后一面为笑怒相，顶上一面为佛面。这种复杂的形象组合，表现了观音菩萨"随类应化"的救度功能。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="sculpture"><span class="like-icon">🪷</span><span class="like-count">0</span><span class="like-btn-text">泥韵</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="sculpture">💬 塑像艺术</button><div class="comment-list" id="comment-list-sculpture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 遗产价值 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>遗产价值 · 国宝之光</h3>
+            <p class="text"><strong>建筑史价值：</strong>独乐寺观音阁是中国现存最古老的木结构楼阁，比应县木塔早76年，比《营造法式》颁布早120年。其建筑形制、结构做法、斗拱样式，是研究唐宋建筑过渡的关键实物，被誉为"中国古代建筑的教科书"。</p>
+            <p class="text"><strong>结构科学价值：</strong>观音阁的抗震性能堪称奇迹。1976年唐山大地震，蓟州为极震区，许多现代建筑倒塌，而观音阁仅墙体部分开裂，木构架完好无损。其"柔性结构"设计理念，对现代抗震设计仍有借鉴意义。</p>
+            <p class="text"><strong>艺术史价值：</strong>寺内辽代彩塑代表了中国10世纪泥塑艺术的最高水平。观音像的庄严慈悲，力士像的威猛雄健，展现了辽代雕塑家高超的写实能力和艺术表现力。壁画虽残，但线描流畅，设色典雅，是研究元代佛教绘画的重要资料。</p>
+            <p class="text"><strong>文化史价值：</strong>独乐寺见证了蓟州千年的历史变迁，从唐代的边塞重镇，到辽代的佛教中心，再到明清的皇家寺院。寺内保存的碑刻、匾额、诗文，记录了历代文人墨客、帝王将相与此寺的因缘。</p>
+            <p class="text"><strong>世界意义：</strong>独乐寺是东亚木结构建筑技术的杰出代表。日本、韩国学者多次前来考察，将其与法隆寺、佛国寺等东亚早期木构建筑进行比较研究。其保护经验也为世界文化遗产的保护提供了宝贵借鉴。</p>
+            <p class="text"><strong>梁思成评价：</strong>"独乐寺观音阁及山门，在我国已发现之古木建筑中，固称最古，且其在建筑史上之地位，尤为重要。""观音阁之结构，精巧绝伦，为近代建筑物所罕见。"</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">国宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🕉️ 千年独乐，木构春秋 | 五重维度·五种灵韵爱心，点赞评论共话辽代遗珍</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（独乐寺独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        sculpture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        sculpture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('dule_si_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('dule_si_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('dule_si_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('dule_si_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对独乐寺的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的独乐寺感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "古寺访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

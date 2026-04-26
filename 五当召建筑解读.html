@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>五当召 · 四维解读 | 草原布达拉宫 · 藏传佛教圣地</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <div class="pic">
+        <img src="./image/五当召.jpg" title="五当召" alt="五当召全景">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🕌 概览</div>
+        <div class="dim-tab" data-tab="history">📖 历史沿革</div>
+        <div class="dim-tab" data-tab="architecture">🏯 建筑特色</div>
+        <div class="dim-tab" data-tab="religion">🕉️ 宗教文化</div>
+        <div class="dim-tab" data-tab="culture">🎪 召庙文化</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🕌 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🕌 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>五当召 · 草原布达拉宫</h3>
+            <p class="text"><strong>传奇：</strong>中国藏传佛教四大名寺之一，内蒙古现存规模最大、保存最完整的格鲁派（黄教）寺院，素有"草原布达拉宫"之美誉。位于内蒙古包头市石拐区吉忽伦图山南麓，始建于清康熙年间，乾隆二十一年（1756年）御赐"广觉寺"匾额。寺院依山而建，层层叠叠，气势恢宏，融合了藏、蒙、汉建筑艺术精华，是内蒙古藏传佛教的圣地。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul><li><strong>苏古沁独宫：</strong>全寺最大建筑，三层，占地1500平方米，可容纳千名喇嘛同时诵经。殿内供奉三世佛、宗喀巴师徒三尊，壁画精美。</li><li><strong>却依拉独宫：</strong>供奉内蒙古最大宗喀巴铜像，高9米，重约5吨，铜铸鎏金，庄严慈祥。</li><li><strong>洞阔尔独宫：</strong>时轮学部所在地，供奉时轮金刚，殿顶鎏金法轮在阳光下金光闪耀。</li><li><strong>阿会独宫：</strong>医学部所在地，供奉药师佛，曾是内蒙古藏医藏药的教学中心。</li><li><strong>当圪希德独宫：</strong>护法殿，供奉大威德金刚等护法神，壁画绘有地狱变相图。</li><li><strong>活佛府：</strong>三座活佛府（甘珠尔、章嘉、洞阔尔）为汉式四合院建筑，雕梁画栋，陈设豪华。</li><li><strong>喇弥仁独宫：</strong>菩提道次第殿，供奉宗喀巴师徒三尊，壁画绘《菩提道次第广论》。</li></ul>
+            <p><strong>参观攻略：</strong></p>
+            <ul><li><strong>最佳时间：</strong>6-9月，草原最美的季节。农历正月、四月、六月、十月有大型法会，最为热闹。</li><li><strong>游览顺序：</strong>山门→苏古沁独宫→却依拉独宫→洞阔尔独宫→阿会独宫→当圪希德独宫→活佛府→喇弥仁独宫。建议3-4小时。</li><li><strong>深度体验：</strong>参加法会，看喇嘛辩经，体验藏传佛教文化。清晨或傍晚拍摄寺院全景，光线最佳。</li><li><strong>专业看点：</strong>注意观察藏式建筑的平顶、厚墙、小窗，蒙式建筑的木构架、毛石墙，汉式建筑的歇山顶、琉璃瓦、斗拱。</li></ul>
+            <p><strong>交通信息：</strong>位于包头市石拐区，距市区约70公里。从包头东站乘7路公交至石拐，转乘景区专线。自驾从G6京藏高速包头西出口下，沿110国道向北。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🕌</span><span class="like-count">0</span><span class="like-btn-text">召庙</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 召庙印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 历史沿革 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>历史沿革 · 三百年香火</h3>
+            <p class="text"><strong>建寺传说：</strong>五当召建寺有"神鹰指地"传说。一世活佛阿旺曲日莫（罗卜桑扎拉森）云游至吉忽伦图山，见一白鹰口衔经卷落于山顶，视为吉祥征兆，遂在此建寺。另一传说为"白鹿指地"：一世活佛梦见佛祖指示"有白鹿卧处即为建寺之地"，次日见白鹿卧于柳林中，遂定寺址。</p>
+            <p class="text"><strong>康熙建寺：</strong>五当召始建于清康熙年间（1662-1722年），由鄂尔多斯左翼前旗（今伊金霍洛旗）王公创建，初为小庙。乾隆十四年（1749年），一世活佛阿旺曲日莫大规模扩建，形成现有格局。寺院原名"巴达嘎尔召"（蒙古语"白莲花寺"），藏语名"甘丹曲科林"（意为"兜率法轮洲"）。</p>
+            <p class="text"><strong>乾隆赐名：</strong>乾隆二十一年（1756年），清廷为加强对蒙古地区的统治，承认五当召的宗教地位，御赐"广觉寺"满、汉、蒙、藏四体文匾额。但民间仍习称"五当召"（"五当"为蒙古语"柳树"之意，"召"为藏语"寺院"）。</p>
+            <p class="text"><strong>鼎盛时期：</strong>清中叶至民国初年，五当召进入鼎盛时期。有喇嘛1200余人，管辖土地5万余亩，牧场20余万亩，属民数千户。寺院实行政教合一制度，设有法庭、监狱，活佛享有"札萨克"（旗长）待遇。是内蒙古西部地区政教合一的中心。</p>
+            <p class="text"><strong>近代变迁：</strong>清末民初，受战乱影响渐衰。抗日战争时期，五当召成为抗日根据地，喇嘛支持抗日。1949年后，寺院得到保护。1966-1976年，寺院遭破坏，喇嘛还俗，文物散失。1982年重新开放，恢复宗教活动。</p>
+            <p class="text"><strong>现代保护：</strong>1961年被列为内蒙古自治区重点文物保护单位。1996年被列为全国重点文物保护单位。2001年评为国家AAAA级旅游景区。2003-2010年进行大规模维修。2012年启动创建国家5A级旅游景区。2017年列入《中国世界文化遗产预备名单》。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑特色 爱心: 🏯 -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑特色 · 三族融合</h3>
+            <p class="text"><strong>总体布局：</strong>五当召依山势而建，坐北朝南，背靠吉忽伦图山，面临吉忽伦图河。建筑群沿山坡分层布置，高低错落，主次分明。六座大殿位于中轴线及两侧，三座活佛府、数百间喇嘛宿舍散布周围。建筑密度达60%，远望如白色城堡，气势恢宏，故有"草原布达拉宫"之称。</p>
+            <p class="text"><strong>藏式风格：</strong>主体建筑采用藏式风格：①平顶：适应少雨气候。②厚墙：墙厚1-2米，保温隔热。③小窗：窗小如斗，防风沙。④梯形窗套：窗上宽下窄，象征"天大地小"。⑤白墙红檐：外墙刷白色石灰，檐部饰红色带。⑥金顶：铜皮鎏金，饰法轮、金鹿、宝瓶。</p>
+            <p class="text"><strong>蒙式元素：</strong>融入蒙古族建筑元素：①木构架：采用蒙古包式的木构架体系。②毛石墙：基础用毛石砌筑，就地取材。③柳编墙：喇嘛宿舍用柳条编墙，抹草泥，适应草原环境。④坡屋顶：部分建筑采用坡屋顶，适应多雪气候。</p>
+            <p class="text"><strong>汉式装饰：</strong>活佛府采用汉式建筑：①歇山顶：青瓦歇山顶，飞檐翘角。②琉璃瓦：黄色、绿色琉璃瓦覆顶。③斗拱：梁枋用斗拱承托。④彩绘：梁枋绘和玺彩画、苏式彩画。⑤四合院：平面布局为四合院，中轴对称。</p>
+            <p class="text"><strong>建筑技术：</strong>采用传统技术：①墙体：毛石砌筑，外墙抹白灰，内墙绘壁画。②屋顶：木构架，椽望铺荆笆，抹草泥，刷红土浆。③金顶：铜皮鎏金，錾刻花纹。④彩绘：矿物颜料（石青、石绿、朱砂、金粉），色彩千年不变。</p>
+            <p class="text"><strong>六大宫殿：</strong>①苏古沁独宫：大经堂，全寺中心。②却依拉独宫：宗喀巴殿，供奉内蒙古最大宗喀巴像。③洞阔尔独宫：时轮殿，时轮学部。④当圪希德独宫：护法殿，供奉护法神。⑤阿会独宫：医学殿，医学部。⑥喇弥仁独宫：菩提道次第殿，显教学部。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">筑艺</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑之美</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 宗教文化 爱心: 🕉️ -->
+    <div class="dim-content" id="religion-content" data-dim="religion">
+        <div class="word">
+            <h3>宗教文化 · 黄教圣地</h3>
+            <p class="text"><strong>格鲁派传承：</strong>五当召属藏传佛教格鲁派（黄教），创始人宗喀巴（1357-1419年）。格鲁派强调戒律、显密兼修、先显后密。五当召严格遵循格鲁派教义，喇嘛须受比丘戒，穿黄色袈裟，戴黄色鸡冠帽。寺院与西藏布达拉宫、青海塔尔寺、甘肃拉卜楞寺并称中国藏传佛教四大名寺。</p>
+            <p class="text"><strong>四大学部：</strong>五当召是内蒙古藏传佛教最高学府，设四大学部：①时轮学部（洞阔尔扎仓）：学习数学、天文、历法、占卜。学制13级，需15年完成。②显教学部（却依拉扎仓）：学习佛教哲学（五部大论）。学制13级，需20年完成。③密教学部（阿会扎仓）：学习密宗修行。学制分四级，需10年完成。④医学部（曼巴扎仓）：学习藏医藏药（《四部医典》）。学制9级，需12年完成。</p>
+            <p class="text"><strong>活佛转世：</strong>五当召实行活佛转世制度，共传七世：一世阿旺曲日莫（建寺者）、二世罗卜桑图布丹佳拉森、三世罗卜桑图布丹扎拉森、四世罗卜桑图布丹却吉旺徐、五世罗卜桑图布丹却吉坚赞、六世罗卜桑图布丹却吉尼玛、七世罗卜桑图布丹却吉嘉措（1955年坐床，2000年圆寂）。活佛分三级：大活佛（呼图克图）、中等活佛（格根）、小活佛（呼毕勒罕）。</p>
+            <p class="text"><strong>宗教活动：</strong>①日常诵经：早晚各一次，喇嘛在大经堂集体诵经。②法会：正月祈愿大法会（农历正月初八至十五）、四月佛诞法会（农历四月初八至十五）、六月转法轮法会（农历六月初四至初八）、十月燃灯法会（农历十月二十五，宗喀巴圆寂日）。③辩经：喇嘛在广场辩经，立宗答问，检验学业。</p>
+            <p class="text"><strong>喇嘛教育：</strong>喇嘛6-8岁入寺，先学藏文、诵经，9岁受沙弥戒，20岁受比丘戒。学习程序：先显后密，显教完成五部大论，通过辩经考试，获"格西"学位，方可进入密宗学院。完成密宗修行，通过考核，获"堪布"学位，可担任寺院职务。</p>
+            <p class="text"><strong>政教合一：</strong>鼎盛时期，五当召实行政教合一制度。活佛不仅是宗教领袖，也是行政长官，管辖土地、牧场、属民。寺院设有：①行政机构：管理土地、赋税、司法。②经济机构：管理商业、手工业、畜牧业。③教育机构：四大学部培养喇嘛。④医疗机构：藏医诊所治病救人。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="religion"><span class="like-icon">🕉️</span><span class="like-count">0</span><span class="like-btn-text">佛光</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="religion">💬 宗教传承</button><div class="comment-list" id="comment-list-religion" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 召庙文化 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>召庙文化 · 艺术宝库</h3>
+            <p class="text"><strong>壁画艺术：</strong>五当召壁画总面积达1500平方米，题材丰富：①佛本生故事：释迦牟尼前世今生故事。②佛教史传：佛教传播历史。③诸佛菩萨：佛像、菩萨像、护法神像。④曼荼罗：坛城图案，象征宇宙。⑤风俗画：蒙古族生活场景。壁画采用矿物颜料，色彩鲜艳，保存完好，是研究清代藏传佛教绘画的珍贵资料。</p>
+            <p class="text"><strong>唐卡艺术：</strong>寺藏唐卡数百幅，分绘唐卡、织锦唐卡、刺绣唐卡、贴花唐卡。题材有：①佛像唐卡：释迦牟尼、宗喀巴等。②本尊唐卡：时轮金刚、大威德金刚等。③护法神唐卡：吉祥天母、玛哈嘎拉等。④历史唐卡：佛教传播历史。唐卡绘制精细，色彩绚丽，具有很高的艺术价值。</p>
+            <p class="text"><strong>雕塑艺术：</strong>寺藏雕塑千余尊，材质有铜、泥、木、石。最大为却依拉独宫宗喀巴铜像，高9米，重约5吨，铜铸鎏金。其他重要雕塑：①三世佛：释迦牟尼佛、药师佛、阿弥陀佛。②宗喀巴师徒三尊：宗喀巴、贾曹杰、克主杰。③时轮金刚：双身像，象征智慧与方便。雕塑技艺精湛，神态生动，体现清代内蒙古铸铜工艺的最高水平。</p>
+            <p class="text"><strong>法器文物：</strong>寺藏法器文物丰富：①经卷：藏文《甘珠尔》《丹珠尔》大藏经，金汁、银汁书写。②法器：金刚杵、金刚铃、曼荼罗、法轮、海螺。③供器：酥油灯、净水瓶、八宝供器。④服饰：活佛袈裟、喇嘛僧衣、法帽。这些文物制作精美，具有很高的历史价值和艺术价值。</p>
+            <p class="text"><strong>民俗活动：</strong>①祭敖包：农历五月十三，祭祀山神、水神，祈求风调雨顺。②那达慕：法会期间举办摔跤、赛马、射箭比赛。③转经：信众绕寺院转经，诵六字真言。④磕长头：信众五体投地磕头，表达虔诚。⑤献哈达：献蓝色或白色哈达，祈求平安。</p>
+            <p class="text"><strong>非物质文化遗产：</strong>五当召承载多项非物质文化遗产：①藏传佛教音乐：诵经调、法号、法鼓。②藏医藏药：诊脉、制药、疗法。③唐卡绘制：颜料制作、勾线、上色。④佛像铸造：失蜡法、鎏金工艺。⑤宗教舞蹈：羌姆（跳神），每年法会表演。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">召韵</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🕌 草原布达拉宫，塞外黄教圣地 | 五重维度·五种灵韵爱心，点赞评论共话召庙文化</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（五当召独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        religion: 0,
+        culture: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        religion: [],
+        culture: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('wudangzhao_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('wudangzhao_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('wudangzhao_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('wudangzhao_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对五当召的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的五当召感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "草原访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>泉州开元寺 · 四维解读 | 刺桐梵音 · 海丝佛国</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/泉州开元寺.jpg" title="泉州开元寺" alt="泉州开元寺与东西塔">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 桑莲法界</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 建筑奇观</div>
+        <div class="dim-tab" data-tab="culture">🎪 海丝佛国</div>
+        <div class="dim-tab" data-tab="value">🌟 世界遗产</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>泉州开元寺 · 刺桐梵音</h3>
+            <p class="text"><strong>传奇：</strong>泉州开元寺是中国东南沿海重要的文物古迹，也是福建省内规模最大的佛教寺院。始建于唐垂拱二年（686年），初名"莲花寺"，开元二十六年（738年）唐玄宗下令全国各州建一寺，以年号为名，遂改称"开元寺"。寺院坐落在泉州市鲤城区西街，占地面积7.8万平方米，是"泉州：宋元中国的世界海洋商贸中心"22处遗产点中的重要组成部分，2021年被列入《世界遗产名录》。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>东西双塔：</strong>镇国塔（东塔）和仁寿塔（西塔）是泉州的城市地标。东塔高48.27米，西塔高45.06米，均为五层八角仿木楼阁式石塔，始建于唐代，现存为南宋重建。双塔是中国现存最高的一对石塔，被誉为"石塔之王"。</li>
+                <li><strong>桑莲古迹：</strong>寺内有一株1300多年的古桑树，相传为建寺前桑园所遗。唐垂拱二年，园主黄守恭梦见桑树开出白莲，遂舍园为寺，故开元寺有"桑莲法界"之称。古桑历经千年，至今仍枝繁叶茂。</li>
+                <li><strong>大雄宝殿：</strong>又称"百柱殿"，面阔九间，进深九间，面积1338平方米。殿内采用减柱造，实际只有86根石柱。殿顶为重檐歇山式，铺黄色琉璃瓦。殿前月台须弥座有72幅狮身人面青石浮雕，为元代印度教寺庙遗物。</li>
+                <li><strong>甘露戒坛：</strong>中国现存三大戒坛之一，建于北宋天禧三年（1019年），历代重修。坛顶藻井结构复杂，斗拱层叠，有24尊"飞天乐伎"，人身鸟翼，手持各种乐器，为中国古建筑中罕见。</li>
+                <li><strong>弘一法师纪念馆：</strong>位于尊胜院内，纪念近代高僧弘一法师（李叔同）。1938-1942年，弘一法师曾驻锡开元寺，在此讲经弘法，整理律宗典籍。馆内陈列其生平事迹、书法作品及在泉州的弘法历程。</li>
+                <li><strong>藏经阁：</strong>位于戒坛后，建于明洪武三十一年（1398年），重檐歇山顶。原藏有宋版《大藏经》、元版《普宁藏》、明版《南藏》等珍贵经书，现存为1980年代重修。</li>
+                <li><strong>印度教遗物：</strong>大雄宝殿后檐有两根十六角形石柱，柱身浮雕印度教神话故事，为元代泉州印度教寺庙遗物。另有古基督教、伊斯兰教石刻，见证宋元泉州多元宗教文化交融。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，春秋最佳（3-5月，9-11月）。建议上午8:00-11:00参观，光线适宜，游客较少。农历二月十九、六月十九、九月十九观音诞，寺内有法会，香客众多。</li>
+                <li><strong>游览顺序：</strong>紫云屏→天王殿→拜庭（古桑、石塔）→大雄宝殿→甘露戒坛→藏经阁→弘一法师纪念馆→檀樾祠→准提禅院。建议安排2-3小时。</li>
+                <li><strong>深度体验：</strong>清晨听僧众早课诵经，感受千年古刹的晨钟暮鼓；细观大雄宝殿的"飞天乐伎"和狮身人面浮雕；登东西塔（如开放）俯瞰泉州古城；参观弘一法师纪念馆，了解一代高僧的生平；在寺内茶室品茗，静思禅意。</li>
+                <li><strong>摄影建议：</strong>东西双塔全景（从西街、开元寺前拍摄），大雄宝殿"百柱殿"内景，甘露戒坛藻井与飞天，古桑树特写，印度教石柱浮雕，弘一法师墨宝。建议使用广角镜头拍摄建筑全景，长焦镜头捕捉雕刻细节。</li>
+            </ul>
+            <p><strong>交通信息：</strong>开元寺位于泉州市鲤城区西街176号。公交2路、6路、14路、26路、40路等可达"开元寺"站。距泉州动车站8公里，车程20分钟；距晋江机场15公里，车程30分钟。周边有泉州西街、钟楼、清净寺、关岳庙等景点。建议与泉州海外交通史博物馆、清净寺、天后宫等组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">古刹</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 开元印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 桑莲法界 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>桑莲法界 · 千年沿革</h3>
+            <p class="text"><strong>建寺传说：</strong>唐垂拱二年（686年），泉州富商黄守恭梦见僧人索地建寺。僧云："欲得你地，待桑树生莲。"数日后，黄家园中桑树果然开出白莲。黄守恭感其灵异，问需地多少，僧答："一袈裟影足矣。"僧展袈裟，影遮园地。黄守恭遂舍园建寺，初名"莲花寺"。此即"桑莲献地"传说，开元寺故有"桑莲法界"之称。</p>
+            <p class="text"><strong>唐代建寺：</strong>莲花寺建成后，成为泉州重要佛寺。长寿元年（692年），升为"兴教寺"。神龙元年（705年），改称"龙兴寺"。开元二十六年（738年），唐玄宗诏令全国各州建一寺，以年号为名，遂改称"开元寺"。唐代宗时（763-779年），高僧匡护法师住持开元寺，香火日盛。</p>
+            <p class="text"><strong>五代扩建：</strong>五代时期，闽王王审知崇佛，增建开元寺，置田庄，铸金身。后唐同光三年（925年），王审知在寺内铸两尊铁佛，各高5.3米，重约5吨，为当时罕见。现一尊存福州开元寺，一尊存泉州开元寺。王审知还在寺内建木塔，即东西塔前身。</p>
+            <p class="text"><strong>宋代鼎盛：</strong>北宋元祐年间（1086-1094年），泉州知府陈偁重修开元寺，增建戒坛。南宋绍兴二十五年（1155年），僧守静建法堂。淳熙间（1174-1189年），僧了性重建大雄宝殿。宝庆三年（1227年），僧法殊重建戒坛。宋代开元寺规模宏大，僧众数百，为闽南佛教中心。</p>
+            <p class="text"><strong>元代扩建：</strong>元至元二十二年（1285年），寺主妙恩禅师奉旨合并泉州120所寺院，开元寺规模空前，僧众达千人。大德年间（1297-1307年），奉旨重修大雄宝殿，增建甘露戒坛、法堂、僧舍。元代泉州为国际大港，开元寺成为各国商人、海员祈福之地，寺内融入印度教、伊斯兰教、基督教等外来元素。</p>
+            <p class="text"><strong>明清至今：</strong>明洪武三十一年（1398年），僧正映奉旨重修，增建藏经阁。万历二十二年（1594年），泉州知府程朝京、同知李梦祥重修大雄宝殿。清代多次修葺。1924年，住持转道和尚募资重修大雄宝殿、戒坛。1938-1942年，弘一法师驻锡开元寺。1982年，列为全国重点文物保护单位。2021年，作为"泉州：宋元中国的世界海洋商贸中心"遗产点列入《世界遗产名录》。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑奇观 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑奇观 · 闽南瑰宝</h3>
+            <p class="text"><strong>东西双塔结构：</strong>镇国塔（东塔）建于南宋嘉熙二年至淳祐十年（1238-1250年），高48.27米。仁寿塔（西塔）建于南宋绍定元年至嘉熙元年（1228-1237年），高45.06米。两塔均为五层八角仿木楼阁式石塔，由外壁、回廊、塔心柱组成。塔心柱为实心石柱，贯通全塔，增强稳定性。各层设四门四龛，门龛两侧浮雕菩萨、罗汉、护法神将等。塔檐用石材仿木斗拱，出檐深远。</p>
+            <p class="text"><strong>大雄宝殿构造：</strong>大雄宝殿又称"百柱殿"，面阔九间（42.7米），进深九间（32.5米），面积1338平方米。殿内采用"减柱造"，原应有100根柱子，实际只有86根（其中16根为附柱），使殿内空间开阔。柱础为石雕莲花，柱身为花岗岩。梁架为穿斗式与抬梁式结合，用材粗大。屋顶为重檐歇山式，铺黄色琉璃瓦，正脊两端有鸱吻，脊中饰宝葫芦。</p>
+            <p class="text"><strong>飞天乐伎：</strong>大雄宝殿斗拱间附雕24尊"飞天乐伎"，又称"迦陵频伽"（妙音鸟）。人身鸟足，背生双翼，手持乐器（琵琶、洞箫、唢呐、拍板等）或供品（花果、文房四宝）。东侧12尊手持泉州南音乐器，西侧12尊手持文房四宝。飞天乐伎融合佛教飞天、印度教天使与闽南建筑装饰，为中国古建筑孤例。</p>
+            <p class="text"><strong>甘露戒坛：</strong>中国现存三大戒坛之一（北京戒台寺、杭州昭庆寺、泉州开元寺）。坛为八角攒尖顶，分五级，代表五分法身（戒、定、慧、解脱、解脱知见）。坛顶藻井结构复杂，斗拱层叠，不用一钉一铁，全为榫卯结构。藻井四周雕有24尊飞天，手持乐器，与戒坛24诸天相应。</p>
+            <p class="text"><strong>石雕艺术：</strong>开元寺石雕丰富。①狮身人面浮雕：大雄宝殿月台须弥座有72幅，为元代印度教寺庙遗物；②印度教石柱：大雄宝殿后檐两根十六角形石柱，浮雕印度教神话；③塔身浮雕：东西塔各层门龛两侧浮雕佛像、菩萨、罗汉、护法等，共160尊；④碑刻：寺内有唐、宋、元、明、清碑刻数十通，记录寺院历史。</p>
+            <p class="text"><strong>建筑特色：</strong>开元寺建筑体现闽南特色。①用材：石、木、砖结合，石柱、石塔、石雕为主；②结构：穿斗式与抬梁式结合，减柱造扩大空间；③装饰：木雕、石雕、砖雕、剪瓷雕并用，精美华丽；④色彩：红墙、黄瓦、白石，对比鲜明；⑤布局：中轴对称，主次分明，前塔后殿，殿坛结合。开元寺是闽南古建筑的杰出代表。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 海丝佛国 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>海丝佛国 · 多元交融</h3>
+            <p class="text"><strong>宋元泉州港：</strong>宋元时期，泉州为"东方第一大港"，海上丝绸之路的起点。开元寺位于泉州古城中心，是海商、船主、水手祈福的重要场所。寺内碑刻记载，许多海商捐资修建寺院，祈求海上平安。元代，泉州港与近百个国家有贸易往来，开元寺成为国际化的佛教寺院。</p>
+            <p class="text"><strong>印度教遗存：</strong>大雄宝殿后檐两根十六角形石柱，柱身分上下段。上段四面浮雕印度教神话故事：①象鳄互斗：大象与鳄鱼搏斗，表现印度教创世神话；②毗湿奴化身：毗湿奴化身为野猪、人狮、侏儒等；③克利希那戏耍：黑天神克利希那童年嬉戏场景；④湿婆舞王：湿婆跳创造与毁灭之舞。这些石柱原属元代泉州印度教寺庙，后移入开元寺。</p>
+            <p class="text"><strong>基督教遗物：</strong>寺内保存有古基督教（景教、也里可温）石刻。大雄宝殿后廊有"御赐佛像"碑，碑额刻十字架，碑文记载元代皇帝赐佛像事。另有景教墓碑，刻十字架、莲花、云纹等。这些遗物见证基督教在泉州的传播。</p>
+            <p class="text"><strong>伊斯兰教痕迹：</strong>寺内有阿拉伯文石刻，内容为《古兰经》经文。另有伊斯兰风格花纹的石构件。元代泉州有众多阿拉伯、波斯商人，他们在泉州建清真寺，也参与佛教寺院的修建。</p>
+            <p class="text"><strong>海商供养：</strong>开元寺碑刻记载了众多海商、船主的捐资记录。元代，泉州海商蒲寿庚家族曾捐资重修开元寺。明初，郑和第五次下西洋前，曾到开元寺祈求平安。清代，南洋华侨捐资修建檀樾祠、准提禅院。至今，东南亚华侨仍常回开元寺朝拜捐资。</p>
+            <p class="text"><strong>弘一法师与南洋：</strong>近代高僧弘一法师在开元寺弘法期间，与南洋华侨往来密切。1938年，菲律宾华侨捐资修建"弘一法师纪念室"。弘一法师的律学著作，经南洋华侨资助刊印，流传海外。开元寺成为连接闽南与南洋的佛教文化纽带。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">交融</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 世界遗产 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>世界遗产 · 人类瑰宝</h3>
+            <p class="text"><strong>世界遗产价值：</strong>2021年7月25日，"泉州：宋元中国的世界海洋商贸中心"列入《世界遗产名录》，开元寺作为22处遗产点之一，符合世界遗产标准：①见证宋元泉州作为全球海洋贸易中心的繁荣；②展现佛教、印度教、基督教、伊斯兰教等多元宗教文化的交融；③是古代石构建筑与雕塑艺术的杰出范例；④体现中国与东南亚、印度、阿拉伯等地的文化交流。世界遗产委员会评价："泉州曾是10-14世纪世界海洋贸易网络中高度繁荣的商贸中心之一，作为宋元中国与世界文明的对话窗口，展现了完备的制度体系、发达的经济水平、以及包容的文化态度。"</p>
+            <p class="text"><strong>历史价值：</strong>开元寺是泉州千年历史的见证。①建寺传说反映唐代泉州的社会状况；②历代修建记录泉州佛教发展；③宋元遗存见证泉州港的繁荣；④明清碑刻记录地方历史；⑤近代事迹反映佛教现代化。开元寺是研究泉州历史、宗教史、建筑史、海外交通史的重要实物资料。</p>
+            <p class="text"><strong>建筑价值：</strong>开元寺是中国古代建筑的瑰宝。①东西双塔是中国现存最高的仿木楼阁式石塔，代表宋代石构建筑的最高水平；②大雄宝殿的"减柱造"结构，体现古代工匠的智慧；③甘露戒坛的藻井结构，为木构建筑杰作；④各类石雕、木雕、砖雕，艺术价值极高。开元寺是闽南古建筑的典范。</p>
+            <p class="text"><strong>艺术价值：</strong>寺内保存大量艺术珍品。①雕塑：佛像、菩萨、罗汉、飞天等，造型优美，雕刻精细；②石刻：印度教神话浮雕、狮身人面像、碑刻等，内容丰富；③建筑装饰：斗拱、雀替、悬鱼、惹草等，工艺精湛；④书法：历代名家题匾、楹联、碑文等，书法艺术高超。开元寺是综合性的艺术宝库。</p>
+            <p class="text"><strong>社会价值：</strong>开元寺在当代社会具有多重价值。①宗教价值：是闽南重要的佛教活动场所，信众众多；②教育价值：作为爱国主义教育基地、传统文化教育基地，对青少年进行教育；③旅游价值：是泉州最重要的旅游景点，年接待游客数百万人次；④研究价值：是建筑学、宗教学、历史学、艺术学的研究对象；⑤城市价值：是泉州的城市象征，东西塔是泉州地标。</p>
+            <p class="text"><strong>保护与传承：</strong>开元寺得到有效保护。①法律保护：1982年列为全国重点文物保护单位；②规划保护：编制《泉州开元寺保护规划》，划定保护范围、建设控制地带；③工程保护：对古建筑进行抢险加固、维修保养，如1986-1990年重修大雄宝殿，2008-2012年全面修缮；④活态保护：保持宗教功能，僧众正常修行，信众正常朝拜；⑤研究展示：建立开元寺文化研究中心，举办学术研讨会，出版《泉州开元寺志》《开元寺研究》等著作；⑥旅游管理：控制游客数量，规范参观行为，实现保护与利用平衡。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 泉州开元寺千年古刹，海丝佛国多元交融 | 五重维度·五种灵韵爱心，点赞评论共话刺桐梵音</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（泉州开元寺独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('quanzhou_kaiyuan_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('quanzhou_kaiyuan_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('quanzhou_kaiyuan_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('quanzhou_kaiyuan_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对开元寺的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的开元寺感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "开元访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

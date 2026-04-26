@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>吉林文庙 · 四维解读 | 关东第一文庙 · 东北儒学圣地</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <div class="pic">
+        <img src="./image/吉林文庙.jpg" title="吉林文庙" alt="吉林文庙大成殿与雪景">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 百年沧桑</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 建筑艺术</div>
+        <div class="dim-tab" data-tab="culture">🎪 儒学传承</div>
+        <div class="dim-tab" data-tab="value">🌟 文庙价值</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>吉林文庙 · 关东第一文庙</h3>
+            <p class="text"><strong>传奇：</strong>吉林文庙是中国东北地区建筑等级最高、保存最完整的清代文庙建筑群，与南京夫子庙、曲阜孔庙、北京孔庙并称"中国四大文庙"。始建于清乾隆元年（1736年），由乾隆皇帝御批兴建，是清政府在东北地区建立的第一座国立高等学府。现存建筑为清光绪三十三年（1907年）重建，占地16354平方米，建筑面积约3000平方米。2006年被列为全国重点文物保护单位，被誉为"关东第一文庙"。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>大成殿：</strong>文庙主体建筑，重檐庑殿顶，面阔九间（36米），进深五间（25米），高19.64米，是东北地区最大的孔庙大殿。殿内供奉孔子木雕像，高3.35米，为国内现存最大的孔子木雕像。殿前有月台，汉白玉栏杆，中间为云龙御路。殿顶覆盖黄色琉璃瓦，体现皇家规格。</li>
+                <li><strong>棂星门：</strong>文庙第一道大门，四柱三间三楼式木牌坊，高10.5米，宽22米。明间额枋正面书"棂星门"，背面书"太和元气"。棂星门是文庙的标志性建筑，传说棂星为天上文星，寓意孔子为文星下凡。</li>
+                <li><strong>大成门：</strong>文庙第二道大门，单檐歇山顶，面阔五间，进深三间。门内悬挂清代康熙、雍正、乾隆、嘉庆、道光五位皇帝御书匾额复制品。大成门平时关闭，只有祭孔大典和重大活动时才开启。</li>
+                <li><strong>崇圣殿：</strong>供奉孔子五代先祖的殿堂，位于大成殿后，单檐歇山顶，面阔五间，进深三间。殿内供奉孔子五世祖木主（牌位），体现儒家"慎终追远"的思想。</li>
+                <li><strong>东西庑：</strong>大成殿前两侧的配殿，各18间，原供奉孔子弟子及历代先贤先儒木主。现为"孔子圣迹展"和"吉林科举展"陈列室，展示孔子生平事迹和吉林科举历史。</li>
+                <li><strong>泮池与状元桥：</strong>文庙前的水池和石桥，泮池呈半月形，源自周代"辟雍"制度。状元桥为三孔石拱桥，长12米，宽3米，桥栏雕有莲花、云龙等图案。古代士子考中秀才后，可绕泮池一周，称为"入泮"。</li>
+                <li><strong>万仞宫墙：</strong>文庙最南端的影壁，长32米，高5米，用青砖砌成。影壁正中镶嵌"万仞宫墙"琉璃字，出自《论语》"夫子之墙数仞"，比喻孔子学问高深。影壁东西两侧有"德配天地""道冠古今"牌楼。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，5-10月气候最佳。冬季（12-2月）雪景别具特色，大成殿在白雪映衬下更显庄严。建议上午9:00-11:00，下午14:00-16:00参观，光线适宜摄影。</li>
+                <li><strong>游览顺序：</strong>万仞宫墙→泮池状元桥→棂星门→大成门→东庑西庑→大成殿→崇圣殿→明伦堂→尊经阁。建议安排2-3小时。</li>
+                <li><strong>深度体验：</strong>参加每年9月28日的祭孔大典，体验传统礼仪；参观东西庑展览，了解孔子思想和吉林文脉；冬季拍摄雪中文庙，感受"关东雪韵"；登状元桥，祈求学业进步；欣赏建筑彩绘，品味清代官式建筑艺术。</li>
+                <li><strong>摄影建议：</strong>大成殿全景与黄琉璃瓦，棂星门牌坊，泮池与状元桥倒影，冬季雪景中的大成殿，建筑细节（斗拱、彩绘、石雕），祭孔大典仪式。建议使用广角镜头拍摄建筑全景，长焦镜头捕捉建筑细节。</li>
+            </ul>
+            <p><strong>交通信息：</strong>吉林文庙位于吉林省吉林市昌邑区文庙胡同2号，松花江畔。公交3路、30路、40路、130路等可达"文庙"站。距吉林火车站3公里，车程10分钟；距龙嘉机场85公里，车程1.5小时。周边有吉林市博物馆、世纪广场、天主教堂等景点。建议与松花湖、北山公园、雾凇岛组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">文庙</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 文庙印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 百年沧桑 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>百年沧桑 · 关东文脉</h3>
+            <p class="text"><strong>兴建背景：</strong>清雍正五年（1727年），清政府设永吉州，治所吉林乌拉（今吉林市）。为推行"尊孔崇儒"政策，教化边疆，乾隆元年（1736年），乾隆皇帝御批在吉林建文庙，设永吉州学。文庙由吉林将军常德主持修建，历时三年，于乾隆四年（1739年）建成。初建时规模较小，仅有大成殿、东西庑、棂星门等建筑，占地面积约5000平方米。</p>
+            <p class="text"><strong>乾隆时期：</strong>文庙建成后，成为吉林最高学府永吉州学的所在地。乾隆七年（1742年），增设崇圣祠。乾隆二十二年（1757年），增设明伦堂、尊经阁。乾隆四十四年（1779年），乾隆皇帝东巡吉林，亲临文庙祭孔，赐御书匾额"与天地参"，文庙地位进一步提高。这一时期，吉林文庙培养了大批边疆人才，促进了儒学在东北的传播。</p>
+            <p class="text"><strong>光绪重建：</strong>清光绪三十一年（1905年），日俄战争期间，俄军占领吉林，文庙遭严重破坏。光绪三十三年（1907年），吉林将军达桂奏请重建文庙，获光绪皇帝批准。重建工程由吉林分巡道顾肇熙主持，历时两年，于宣统元年（1909年）竣工。重建后的文庙规模扩大，建筑等级提高，大成殿由原面阔七间改为九间，用黄色琉璃瓦，形成今日格局。</p>
+            <p class="text"><strong>民国时期：</strong>民国元年（1912年），文庙改为吉林省立第一师范学校附属小学。民国二十一年（1932年），伪满洲国时期，文庙改为"国立吉林师范学校"。这一时期，文庙建筑基本保存完好，但祭孔活动减少。1946年，国民党政府将文庙改为"吉林省立吉林中学"。</p>
+            <p class="text"><strong>新中国成立后：</strong>1948年吉林解放，文庙由吉林市人民政府接管。1950年，改为吉林市第二中学。1966年"文革"期间，文庙遭受破坏，孔子像被毁，祭器、礼器散失。1984年，吉林市人民政府将文庙收回，成立吉林市文庙博物馆。1993年，对文庙进行全面维修，重塑孔子像，恢复祭孔活动。2006年，被列为全国重点文物保护单位。</p>
+            <p class="text"><strong>重要人物：</strong>①常德：首任吉林将军，主持初建文庙；②乾隆皇帝：御批建文庙，东巡时亲临祭孔；③达桂：吉林将军，奏请重建文庙；④顾肇熙：吉林分巡道，主持重建工程；⑤成多禄：清末民初吉林名士，曾任吉林省教育厅长，为文庙题写匾额；⑥徐鼐霖：民国吉林省长，保护文庙，倡导儒学。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑艺术 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑艺术 · 官式典范</h3>
+            <p class="text"><strong>总体布局：</strong>吉林文庙采用中轴对称、前庙后学的传统文庙布局。南北中轴线长260米，自南向北依次为：万仞宫墙→泮池状元桥→棂星门→大成门→大成殿→崇圣殿。东西两侧有礼门、义路、名宦祠、乡贤祠、东西庑、明伦堂、尊经阁等。文庙坐北朝南，背依松花江，前临街道，体现了"负阴抱阳"的风水理念。</p>
+            <p class="text"><strong>建筑等级：</strong>吉林文庙是东北地区建筑等级最高的文庙，体现了清代官式建筑的最高规格：①屋顶：大成殿为重檐庑殿顶，崇圣殿为单檐歇山顶，这是皇家建筑才能使用的屋顶形式；②开间：大成殿面阔九间，进深五间，符合"九五之尊"的帝王规制；③色彩：大成殿用黄色琉璃瓦，这是皇帝特许的规格，一般文庙只能用青瓦；④彩绘：采用和玺彩绘，这是清代最高等级的彩绘，用于皇家建筑和孔庙。</p>
+            <p class="text"><strong>大成殿建筑：</strong>大成殿是文庙的核心建筑，建筑特点：①柱网：采用"满堂柱"布局，内外两圈柱子，外圈28根檐柱，内圈12根金柱，形成宽敞的内部空间；②斗拱：外檐用七踩单翘重昂斗拱，内檐用五踩重翘斗拱，既承重又装饰；③藻井：殿内顶部有蟠龙藻井，直径4米，中间雕有蟠龙，周围饰以祥云、莲花；④月台：殿前有汉白玉月台，东西宽25米，南北深18米，高1.2米，是祭孔时行礼的场所。</p>
+            <p class="text"><strong>木结构技术：</strong>文庙建筑采用清代官式木结构技术：①柱：多为松木，柱径0.5-0.6米，有的柱高达9米；②梁：用抬梁式结构，大梁跨度达12米；③榫卯：全部采用榫卯连接，不用铁钉；④抗震：采用"侧脚"（柱子向内倾斜）、"升起"（檐柱从中间向两端逐渐升高）等技法，增强抗震性。建筑历经百年风雨和多次地震，仍基本完好。</p>
+            <p class="text"><strong>装饰艺术：</strong>文庙装饰精美：①彩绘：外檐彩绘以青、绿、红、金为主色，绘有龙、凤、云、草等图案；内檐彩绘以青、绿、白为主，较为素雅。彩绘采用"一麻五灰"传统工艺，先做地仗（基层），再绘画；②雕刻：石雕有云龙御路、莲花望柱、石狮等；木雕有雀替、花板、格扇等；砖雕有墀头、影壁等；③瓦作：黄色琉璃瓦，有板瓦、筒瓦、勾头、滴水，勾头有"龙纹"，滴水有"凤纹"。</p>
+            <p class="text"><strong>建筑材料：</strong>文庙建筑材料考究：①木材：主要用长白山红松，材质坚硬，耐腐蚀；②石料：用吉林本地花岗岩，用于柱础、台阶、栏杆；③砖瓦：青砖为当地烧制，琉璃瓦为河北唐山烧制；④颜料：彩绘用矿物颜料，如石青、石绿、朱砂、金粉，色彩持久不褪。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 儒学传承 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>儒学传承 · 东北文枢</h3>
+            <p class="text"><strong>祭孔大典：</strong>吉林文庙每年举办春秋两次祭孔大典。春祭在农历二月初四（孔子诞辰），秋祭在农历八月二十七（孔子忌日）。祭典程序：①迎神：奏《昭平之章》，主祭官就位；②初献：献帛、献爵，奏《宣平之章》；③亚献：献羹、献食，奏《秩平之章》；④终献：献果、献茶，奏《叙平之章》；⑤读祝：读祭文；⑥送神：奏《德平之章》；⑦望燎：焚烧祭品。祭典有乐舞生64人，表演八佾舞。</p>
+            <p class="text"><strong>儒学教育：</strong>文庙历史上是吉林最高学府。清乾隆年间设永吉州学，光绪年间设吉林府学。教学内容：①经学：《四书》《五经》；②史学：《史记》《汉书》等；③文学：诗赋、策论；④小学：文字、音韵、训诂。教学方法：①讲授：老师讲解经义；②自学：学生诵读、抄写；③会讲：师生讨论；④考课：每月考试。文庙培养了大批人才，如清末进士成多禄、徐鼐霖等。</p>
+            <p class="text"><strong>科举文化：</strong>吉林文庙是清代吉林科举考试的中心。童试（考秀才）在文庙举行，乡试（考举人）在奉天（今沈阳）举行，会试、殿试在北京举行。清代吉林共出进士32人，举人285人，秀才数千人。文庙设有"科举文物陈列室"，展示科举文物：①试卷：清代吉林士子的乡试、会试卷；②匾额："进士及第""文魁"等匾额；③文具：笔墨纸砚、考篮、号板；④服饰：秀才、举人、进士的服装。</p>
+            <p class="text"><strong>儒家礼仪：</strong>文庙传承儒家传统礼仪：①开笔礼：为学龄儿童举行的启蒙仪式，包括正衣冠、朱砂开智、击鼓明志、启蒙描红等；②成童礼：为14岁少年举行的成人仪式，包括告天、告祖、告父母、师长训诫等；③成人礼：为18岁青年举行的冠礼（男）笄礼（女）；④婚礼：按《朱子家礼》举行的传统婚礼。这些礼仪活动，传承了儒家文化。</p>
+            <p class="text"><strong>文化传播：</strong>文庙是吉林文化传播中心：①讲学：定期举办儒学讲座，邀请学者讲解《论语》《孟子》等经典；②展览：举办"孔子圣迹展""儒家文化展""吉林文脉展"等；③出版：编辑出版《吉林文庙》《孔子与吉林》等书籍；④交流：与曲阜孔庙、北京孔庙、南京夫子庙等开展文化交流；⑤研学：开展中小学生研学活动，学习传统文化。</p>
+            <p class="text"><strong>非物质文化遗产：</strong>吉林文庙传承多项非遗：①祭孔乐舞：清代宫廷祭祀音乐舞蹈，有乐曲六章，舞蹈八佾；②拓碑技艺：传承传统拓碑技术，拓印好太王碑、文庙碑刻等；③传统装裱：书画装裱修复技艺；④文庙雅乐：传承清代祭祀雅乐，有钟、磬、鼓、笙、箫等乐器。这些非遗项目，是中华优秀传统文化的重要组成部分。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">儒韵</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 文庙价值 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>文庙价值 · 关东瑰宝</h3>
+            <p class="text"><strong>历史价值：</strong>吉林文庙是清代在东北地区推行"尊孔崇儒"政策的历史见证。它记录了儒学在东北边疆的传播过程，反映了清政府对东北的文化治理策略。文庙的建筑变迁，见证了吉林从边疆军镇到文化名城的转变。作为吉林文脉的象征，文庙培养了大批人才，促进了东北文化教育事业的发展。</p>
+            <p class="text"><strong>建筑价值：</strong>吉林文庙是中国现存最完整的清代官式文庙建筑群之一，具有极高的建筑价值：①规制完整：具有完整的文庙建筑序列，从万仞宫墙到崇圣殿，体现了传统文庙的规制；②等级最高：大成殿面阔九间，重檐庑殿顶，用黄色琉璃瓦，是东北地区建筑等级最高的文庙；③工艺精湛：木结构、彩绘、雕刻、瓦作等工艺，代表了清代官式建筑的最高水平；④保存完好：主体建筑基本保持光绪年间重建时的原貌，是研究清代建筑的珍贵实物。</p>
+            <p class="text"><strong>文化价值：</strong>文庙是儒家文化在东北地区的重要载体。①祭祀功能：延续了近三百年的祭孔传统，传承了中华礼乐文明；②教育功能：曾是吉林最高学府，培养了无数人才；③文化传播：通过讲学、展览、出版等方式，传播儒家思想和中华优秀传统文化；④精神象征：是吉林的文化地标和精神家园，凝聚了城市文脉。</p>
+            <p class="text"><strong>艺术价值：</strong>文庙建筑具有极高的艺术价值：①建筑艺术：中轴对称的布局，巍峨壮观的殿堂，体现了中国古代建筑的审美理想；②装饰艺术：精美的彩绘、雕刻，色彩典雅，图案丰富，具有很高的艺术水准；③园林艺术：泮池、古柏、碑刻，营造出庄严肃穆而又宁静雅致的氛围；④陈设艺术：孔子像、匾额、楹联、祭器，具有很高的艺术价值。</p>
+            <p class="text"><strong>社会价值：</strong>文庙在当代社会具有多重价值：①教育价值：作为爱国主义教育基地和传统文化教育基地，对青少年进行传统文化教育；②旅游价值：是国家4A级旅游景区，年接待游客30万人次，促进了文化旅游发展；③研究价值：是研究清代建筑、儒学、科举、礼制的重要场所；④城市价值：是吉林市的文化名片，提升了城市文化品位。</p>
+            <p class="text"><strong>保护与传承：</strong>吉林文庙得到有效保护和传承：①法律保护：2006年被列为全国重点文物保护单位；②规划保护：编制《吉林文庙保护规划》，划定保护范围和建设控制地带；③工程保护：实施古建筑维修、彩绘修复、防雷、消防等工程；④活态保护：恢复祭孔大典，举办传统文化活动，让文物"活"起来；⑤研究展示：成立吉林文庙博物馆，开展学术研究，出版研究成果；⑥公众参与：开展志愿者服务，提高公众保护意识。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 吉林文庙三百年，关东儒学第一殿 | 五重维度·五种灵韵爱心，点赞评论共话东北文脉</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（吉林文庙独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('jilin_wenmiao_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('jilin_wenmiao_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('jilin_wenmiao_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('jilin_wenmiao_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对吉林文庙的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的文庙感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "文庙访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

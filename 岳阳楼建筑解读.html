@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>岳阳楼 · 四维解读 | 洞庭天下水，岳阳天下楼</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/岳阳楼.jpg" title="岳阳楼" alt="岳阳楼与洞庭湖">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 千年名楼</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 建筑奇观</div>
+        <div class="dim-tab" data-tab="culture">🎪 诗文天下</div>
+        <div class="dim-tab" data-tab="value">🌟 忧乐精神</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>岳阳楼 · 洞庭天下楼</h3>
+            <p class="text"><strong>传奇：</strong>岳阳楼位于湖南省岳阳市古城西门城墙之上，俯视洞庭，遥对君山，自古有"洞庭天下水，岳阳天下楼"之美誉，是江南三大名楼中唯一保持原址、原貌的古建筑。始建于东汉建安二十年（215年），为东吴将领鲁肃的"阅军楼"。唐开元四年（716年），中书令张说谪守岳州，扩建为楼阁，始称"岳阳楼"。北宋庆历四年（1044年），滕子京重修，请范仲淹作《岳阳楼记》，遂名满天下。1988年被列为全国重点文物保护单位，2001年评为国家4A级旅游景区。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>主楼：</strong>三层、四柱、飞檐、盔顶、纯木结构，高19.42米，为中国现存最大的盔顶建筑。楼中四根楠木金柱直贯楼顶，周围绕以廊、檐，屋顶为层叠相衬的"如意斗拱"托举而成的盔顶式，这种拱而复翘的古代将军头盔式的顶式结构在我国古代建筑史上是独一无二的。</li>
+                <li><strong>《岳阳楼记》雕屏：</strong>一层楼内悬挂清乾隆年间张照所书《岳阳楼记》雕屏，高3.15米，宽4.135米，由12块巨大紫檀木拼成，文章、书法、刻工、木料皆为珍品，人称"四绝"。二楼也悬挂有同样的雕屏，为一楼雕屏的复制品。</li>
+                <li><strong>三醉亭：</strong>位于岳阳楼北侧，为纪念吕洞宾"三醉岳阳楼"而建。亭为二层方形，高9米，纯木结构，四周有回廊。亭内供吕洞宾塑像，墙壁有"吕洞宾三醉岳阳楼"壁画。相传吕洞宾曾三醉岳阳楼，题诗云："朝游北海暮苍梧，袖里青蛇胆气粗。三醉岳阳人不识，朗吟飞过洞庭湖。"</li>
+                <li><strong>仙梅亭：</strong>位于岳阳楼南侧，为二层六角形小亭，高9米。相传明崇祯年间维修岳阳楼时，在湖滩沙碛中得一石板，上有枯梅纹样，时人以为仙迹，建亭纪念。亭内石碑刻有"仙梅"二字及梅花图案。</li>
+                <li><strong>怀甫亭：</strong>位于岳阳楼西侧，为纪念唐代大诗人杜甫而建。杜甫晚年流落湖湘，曾在岳阳楼留下《登岳阳楼》诗："昔闻洞庭水，今上岳阳楼。吴楚东南坼，乾坤日夜浮。亲朋无一字，老病有孤舟。戎马关山北，凭轩涕泗流。"亭内立有杜甫雕像。</li>
+                <li><strong>小乔墓：</strong>位于岳阳楼北侧，为三国时期东吴名将周瑜之妻小乔的墓地。墓冢为圆形封土堆，墓前立有"小乔之墓"石碑。周围有碑廊，刻有历代文人题咏。</li>
+                <li><strong>洞庭湖风光：</strong>登楼远眺，洞庭湖"衔远山，吞长江，浩浩汤汤，横无际涯"。春夏之际，湖面烟波浩渺；秋冬时节，候鸟翔集。天气晴好时，可望见君山岛如浮水面，"遥望洞庭山水翠，白银盘里一青螺"。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，春秋最佳（3-5月，9-11月）。建议上午参观，光线适宜。农历五月十三日（传说鲁肃阅军日）、九月十五日（滕子京重修岳阳楼纪念日）有纪念活动。洞庭湖观鸟最佳时间为11月至次年3月。</li>
+                <li><strong>游览顺序：</strong>岳阳门→五朝楼观（模型）→双公祠→碑廊→岳阳楼主楼→三醉亭→仙梅亭→怀甫亭→小乔墓→洞庭湖岸。建议安排2-3小时。</li>
+                <li><strong>深度体验：</strong>清晨登楼观日出，看朝霞映照洞庭湖；细读《岳阳楼记》雕屏，感悟"先忧后乐"精神；在三醉亭品茶，遥想吕洞宾仙迹；在怀甫亭静思，感受杜甫忧国忧民情怀；乘船游洞庭湖，登君山岛；品尝洞庭湖鲜（银鱼、藕尖、巴陵全鱼席）；晚上观看《岳阳楼记》实景演出。</li>
+                <li><strong>摄影建议：</strong>岳阳楼全景与盔顶特写，主楼与洞庭湖同框，三醉亭、仙梅亭建筑细节，《岳阳楼记》雕屏，碑廊石刻，小乔墓，洞庭湖日出日落，候鸟飞翔。建议使用广角镜头拍摄建筑与湖景融合，长焦镜头捕捉建筑细节。偏振镜可减少水面反光，增强色彩饱和度。</li>
+            </ul>
+            <p><strong>交通信息：</strong>岳阳楼位于湖南省岳阳市岳阳楼区洞庭北路。从岳阳东站（高铁站）乘游1路、55路公交直达"岳阳楼"站，车程30分钟。从岳阳火车站乘10路、15路、19路、22路、游1路公交可达。距三荷机场20公里，车程30分钟。自驾可经京港澳高速、许广高速到岳阳出口。景区紧邻洞庭湖，可步行至巴陵广场、汴河街。建议与君山岛、洞庭湖、张谷英村组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">名楼</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 岳阳楼印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 千年名楼 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>千年名楼 · 屡毁屡建</h3>
+            <p class="text"><strong>三国创建：</strong>东汉建安二十年（215年），东吴孙权派鲁肃率万人屯巴丘（今岳阳），在洞庭湖入长江的险要处筑巴丘城，并在城西门建阅军楼，用于训练和检阅水军。此即岳阳楼前身。鲁肃（172-217年），字子敬，临淮东城人，东吴名将，接替周瑜为都督，联刘抗曹，奠定了三国鼎立的基础。</p>
+            <p class="text"><strong>唐代扩建：</strong>唐开元四年（716年），中书令张说谪守岳州，将阅军楼扩建为楼阁，因其在天岳山之南，命名"岳阳楼"。张说（667-730年），字道济，洛阳人，唐代政治家、文学家，三任宰相，擅长文辞，时称"大手笔"。他在岳阳期间，常与文人登楼赋诗，岳阳楼始成为文人雅集之地。李白、杜甫、白居易、韩愈、刘禹锡等均曾登临。</p>
+            <p class="text"><strong>宋代鼎盛：</strong>北宋庆历四年（1044年），滕子京谪守巴陵郡（今岳阳），重修岳阳楼，并请好友范仲淹作记。滕子京（990-1047年），名宗谅，河南洛阳人，与范仲淹同榜进士。在岳州任上，他兴学校，修水利，政绩卓著。重修岳阳楼时，"增其旧制，刻唐贤今人诗赋于其上"。范仲淹《岳阳楼记》成，岳阳楼遂名扬天下。</p>
+            <p class="text"><strong>元明时期：</strong>元代，岳阳楼多次重修。元至正七年（1347年），岳州路总管重修。明代，岳阳楼毁建频繁。明洪武年间（1368-1398年）重建。成化七年（1471年）毁于火，成化九年（1473年）重建。万历十六年（1588年）毁于火，万历十九年（1591年）重建。崇祯十二年（1639年）毁于火，旋即重建。</p>
+            <p class="text"><strong>清代至今：</strong>清代，岳阳楼重建6次。顺治七年（1650年）重建。康熙二十二年（1683年）毁于火，康熙二十六年（1687年）重建。乾隆五年（1740年）毁于火，乾隆八年（1743年）重建。道光十九年（1839年）重建。同治六年（1867年）重建。光绪六年（1880年）重建，为清代最后一次重建，形成现存基本格局。民国时期，岳阳楼得到保护。1961年，被列为湖南省文物保护单位。1983年，大修。1988年，列为全国重点文物保护单位。</p>
+            <p class="text"><strong>现存建筑：</strong>现存岳阳楼为清光绪六年（1880年）重建。①形制：三层、四柱、飞檐、盔顶、纯木结构；②结构：主体为抬梁式，四根楠木金柱直贯三楼；③屋顶：盔顶式，为中国古建筑孤例；④装饰：如意斗拱、龙凤陶塑、琉璃瓦等。虽经多次维修，但主体结构、建筑材料、建筑工艺均为清代原物，是研究清代建筑的重要实例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑奇观 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑奇观 · 盔顶孤例</h3>
+            <p class="text"><strong>总体布局：</strong>岳阳楼建筑群占地3.2万平方米，沿洞庭湖岸东西展开。主楼居中，北有三醉亭，南有仙梅亭，西有怀甫亭，形成"品"字形布局。楼前有平台、石阶，可直达洞庭湖岸。整个建筑群与城墙、洞庭湖融为一体，体现了"楼以湖存，湖以楼名"的意境。</p>
+            <p class="text"><strong>盔顶结构：</strong>岳阳楼最独特的建筑特色是其盔顶式屋顶。①形制：屋顶曲线流畅，形似古代将军的头盔，故称"盔顶"；②结构：采用层叠相衬的"如意斗拱"托举而成，不用一钉一铆，全为榫卯结构；③功能：盔顶坡度陡峭，利于排水，适应南方多雨气候；④象征：盔顶象征武将，寓意岳阳楼起源于军事建筑。这种屋顶形式在中国现存古建筑中为孤例。</p>
+            <p class="text"><strong>木结构体系：</strong>岳阳楼为纯木结构，高19.42米。①柱网：四根楠木金柱（直径0.5米）从地面直贯三楼，为承重主柱；②梁架：用抬梁式结构，梁、枋、檩、椽等构件用榫卯连接；③斗拱：大量使用斗拱，既承重又装饰，有"如意斗拱""偷心造"等多种形式；④墙面：为维护结构，不承重，用木板、格扇。整个木结构体系科学合理，抗震性强。</p>
+            <p class="text"><strong>建筑装饰：</strong>岳阳楼装饰古朴典雅。①屋顶：铺黄色琉璃瓦，正脊有双龙戏珠陶塑，垂脊有仙人走兽；②斗拱：用红、黄、蓝、绿等色彩绘，图案有云纹、莲花、如意等；③门窗：格扇门、槛窗，雕刻有梅、兰、竹、菊等图案；④匾额：有"岳阳楼""洞庭天下水""岳阳天下楼"等匾额；⑤楹联：有"四面湖山归眼底，万家忧乐到心头"等名联。装饰既美观又有文化内涵。</p>
+            <p class="text"><strong>三亭拱卫：</strong>三醉亭、仙梅亭、怀甫亭与主楼形成有机整体。①三醉亭：方形，二层，纪念吕洞宾，体现道教文化；②仙梅亭：六角形，二层，纪念"仙梅"传说，体现神秘文化；③怀甫亭：方形，单层，纪念杜甫，体现儒家文化。三亭风格各异，与主楼相得益彰。</p>
+            <p class="text"><strong>科学价值：</strong>岳阳楼蕴含丰富的建筑科学。①结构科学：纯木结构，榫卯连接，抗震性能强；②材料科学：选用优质楠木、柏木，耐腐防虫；③环境科学：依山临湖，通风采光良好；④声学设计：楼内声音传播有特殊效果。岳阳楼是研究中国古代木结构建筑的重要实物。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 诗文天下 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>诗文天下 · 千古绝唱</h3>
+            <p class="text"><strong>范仲淹《岳阳楼记》：</strong>北宋庆历六年（1046年），范仲淹应好友滕子京之请，作《岳阳楼记》。全文368字，分为五段：①作记缘由；②洞庭湖"朝晖夕阴"景象；③"迁客骚人"的"悲""喜"之情；④提出"不以物喜，不以己悲"的胸怀；⑤抒发"先天下之忧而忧，后天下之乐而乐"的政治抱负。文章骈散结合，情景交融，议论精辟，成为千古名篇。《岳阳楼记》使岳阳楼从风景名胜升华为精神圣地。</p>
+            <p class="text"><strong>杜甫《登岳阳楼》：</strong>唐代宗大历三年（768年），杜甫漂泊至岳阳，登楼赋诗："昔闻洞庭水，今上岳阳楼。吴楚东南坼，乾坤日夜浮。亲朋无一字，老病有孤舟。戎马关山北，凭轩涕泗流。"诗的前四句写洞庭湖的壮阔，后四句抒个人身世和国家之忧。全诗气象宏阔，情感深沉，被仇兆鳌《杜诗详注》评为"杜集七言律诗第一"。</p>
+            <p class="text"><strong>李白与岳阳楼：</strong>李白多次游历岳阳，留下多首诗篇。《与夏十二登岳阳楼》："楼观岳阳尽，川迥洞庭开。雁引愁心去，山衔好月来。云间连下榻，天上接行杯。醉后凉风起，吹人舞袖回。"诗风豪放飘逸，充满浪漫色彩。另有《陪族叔刑部侍郎晔及中书贾舍人至游洞庭五首》《秋登巴陵望洞庭》等。</p>
+            <p class="text"><strong>吕洞宾传说：</strong>吕洞宾，名岩，号纯阳子，唐代道士，被尊为"八仙"之一。传说他曾三醉岳阳楼，题诗于壁，点化世人。岳阳楼有三醉亭，供奉吕洞宾像。民间流传"吕洞宾三醉岳阳楼"的故事，被元人马致远改编为杂剧《吕洞宾三醉岳阳楼》。</p>
+            <p class="text"><strong>历代题咏：</strong>自唐以降，历代文人登岳阳楼，留下大量诗文。唐代有孟浩然、白居易、韩愈、刘禹锡、李商隐等；宋代有欧阳修、王安石、黄庭坚、陆游、杨万里等；元代有虞集、萨都刺等；明代有李东阳、袁宏道、钟惺等；清代有王夫之、袁枚、魏源、曾国藩等。据统计，历代题咏岳阳楼的诗词超过1000首，文章、楹联不计其数。</p>
+            <p class="text"><strong>碑刻艺术：</strong>岳阳楼碑廊保存历代碑刻100余通。①《岳阳楼记》碑：有宋刻、明刻、清刻多种版本；②诗词碑：刻有李白、杜甫、白居易、欧阳修等名家诗作；③书法碑：有颜真卿、米芾、赵孟頫、董其昌等名家书法；④记事碑：记录岳阳楼修建历史。这些碑刻是研究历史、文学、书法、石刻艺术的珍贵资料。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">诗文</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 忧乐精神 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>忧乐精神 · 文化地标</h3>
+            <p class="text"><strong>先忧后乐精神：</strong>《岳阳楼记》提出的"先天下之忧而忧，后天下之乐而乐"的思想，成为中华民族的精神财富。①政治价值：体现了儒家"以天下为己任"的政治理想；②道德价值：倡导"不以物喜，不以己悲"的崇高境界；③教育价值：成为爱国主义、集体主义教育的重要内容；④当代价值：在新时代仍具有重要的现实意义。岳阳楼是"先忧后乐"精神的物质载体和文化象征。</p>
+            <p class="text"><strong>历史价值：</strong>岳阳楼是1800年历史的见证。①建筑史：从三国阅军楼到唐宋楼阁再到明清名楼，记录了中国古建筑的发展；②文学史：《岳阳楼记》等诗文，是中国文学史的瑰宝；③军事史：起源于军事建筑，反映了长江中游的战略地位；④社会史：历代修建、题咏，反映了不同时期的社会文化。岳阳楼是研究中国历史、文化、建筑、军事的重要实物。</p>
+            <p class="text"><strong>建筑价值：</strong>岳阳楼是中国古建筑的杰出代表。①独特性：盔顶式建筑，为中国古建筑孤例；②科学性：纯木结构，榫卯连接，抗震性强；③艺术性：建筑造型优美，装饰古朴典雅；④完整性：保持原址、原貌，是真正的"古建筑"。岳阳楼是研究中国古代木结构建筑的活教材。</p>
+            <p class="text"><strong>文学价值：</strong>岳阳楼是"诗文名楼"。范仲淹《岳阳楼记》被誉为"千古第一记"，杜甫《登岳阳楼》被评为"杜集七律第一"，李白、白居易、欧阳修等大家的作品，使岳阳楼成为"诗楼""文楼"。这些诗文不仅艺术价值高，而且蕴含丰富的哲学、美学、伦理思想。</p>
+            <p class="text"><strong>社会价值：</strong>岳阳楼在当代社会具有多重价值。①旅游价值：是国家4A级景区，年接待游客数百万；②教育价值：是爱国主义教育基地、传统文化教育基地；③文化价值：是湖湘文化的重要标志，岳阳市的文化名片；④精神价值："先忧后乐"精神，激励人们积极进取。岳阳楼是中华民族的文化瑰宝。</p>
+            <p class="text"><strong>保护与传承：</strong>岳阳楼得到科学保护。①法律保护：1961年列为湖南省文物保护单位，1988年列为全国重点文物保护单位；②规划保护：编制《岳阳楼保护规划》，划定保护区、建设控制地带；③工程保护：定期维修，如1983年大修，2011年保养性维修；④研究展示：成立岳阳楼文化研究所，举办学术研讨会，出版《岳阳楼志》《岳阳楼诗文》等著作；⑤活态传承：开展"岳阳楼记"诵读、诗词大赛、文化讲座等活动；⑥环境治理：治理洞庭湖水质，保护周边环境。岳阳楼的保护经验，为历史名楼保护提供了借鉴。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 岳阳楼千古名楼，先忧后乐精神永存 | 五重维度·五种灵韵爱心，点赞评论共话洞庭天下</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（岳阳楼独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('yueyanglou_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('yueyanglou_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('yueyanglou_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('yueyanglou_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对岳阳楼的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的岳阳楼感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "岳阳楼访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

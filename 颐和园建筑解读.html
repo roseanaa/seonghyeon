@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>颐和园 · 四维解读 | 皇家园林 · 山水画卷</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <div class="pic">
+        <img src="./image/颐和园.jpg" title="颐和园" alt="颐和园山水园林">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📜 历史沿革</div>
+        <div class="dim-tab" data-tab="layout">🏞️ 山水布局</div>
+        <div class="dim-tab" data-tab="architecture">🏰 建筑荟萃</div>
+        <div class="dim-tab" data-tab="culture">🎨 文化意境</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>颐和园 · 皇家园林</h3>
+            <p class="text"><strong>传奇：</strong>中国现存规模最大、保存最完整的皇家园林，被誉为"皇家园林博物馆"。原是乾隆皇帝为孝敬其母孝圣宪皇后而建的清漪园，后经光绪重建。园林以昆明湖、万寿山为基址，以杭州西湖为蓝本，汲取江南园林设计手法，是"虽由人作，宛自天开"的典范。</p>
+            <p><strong>核心景区：</strong></p>
+            <ul><li><strong>前山前湖区：</strong>园林精华所在。万寿山为屏，佛香阁为心，昆明湖为镜，长廊为链，构成一幅完美的山水画卷。</li><li><strong>宫廷区：</strong>包括仁寿殿、玉澜堂、宜芸馆、乐寿堂等，是慈禧、光绪处理政务和居住的地方，建筑庄重，布局严谨。</li><li><strong>后山后湖区：</strong>幽静深邃，富有山林野趣。苏州街重现江南水乡市井，谐趣园被称为"园中园"。</li><li><strong>西堤六桥：</strong>仿杭州苏堤而建，六座桥形态各异，春季桃红柳绿，是拍照绝佳地点。</li></ul>
+            <p><strong>参观秘籍：</strong></p>
+            <ul><li><strong>最佳时间：</strong>春末夏初（4-5月）牡丹、芍药盛开；秋季（9-10月）天高气爽，昆明湖水碧如洗。</li><li><strong>游览路线：</strong>东宫门进→仁寿殿→德和园→玉澜堂→宜芸馆→乐寿堂→长廊→排云殿→佛香阁→石舫→乘船至南湖岛→十七孔桥→新建宫门出（经典路线约4-5小时）。</li><li><strong>深度体验：</strong>清晨在知春亭看日出昆明湖；傍晚在西堤看万寿山倒影；乘船游湖体验"舟行碧波上，人在画中游"。</li></ul>
+            <p><strong>行程安排：</strong>上午：宫廷区+长廊+佛香阁。中午：石舫附近用餐休息。下午：乘船游湖→南湖岛→十七孔桥→西堤漫步→谐趣园。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">园林</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 颐和园印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 历史沿革 爱心: 📜 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>历史沿革 · 三建两毁</h3>
+            <p class="text"><strong>清漪园时期（1750-1860）：</strong>乾隆十五年（1750年），乾隆皇帝为庆祝其母六十大寿，在北京西北郊原有的"瓮山"和"西湖"基础上兴建清漪园，命名寓意为"水波平静"。工程历时15年，耗银448万两，是著名的"三山五园"之一。园林设计融合了南北造园艺术精华，达到清代皇家园林的顶峰。</p>
+            <p class="text"><strong>浩劫与重建（1860-1900）：</strong>咸丰十年（1860年），英法联军火烧圆明园，清漪园也未能幸免，大部分建筑被毁。光绪十二年（1886年），慈禧太后以"操练水师"为名，挪用海军经费重修，并改名"颐和园"，取"颐养冲和"之意。光绪二十六年（1900年），八国联军入侵，颐和园再次遭劫。</p>
+            <p class="text"><strong>现代保护（1900至今）：</strong>清末、民国时期，颐和园逐渐荒废。新中国成立后，政府多次拨款修缮，1961年被列为第一批全国重点文物保护单位，1998年被联合国教科文组织列入《世界遗产名录》，成为全人类共同的文化遗产。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📜</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史记忆</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 山水布局 爱心: 🏞️ -->
+    <div class="dim-content" id="layout-content" data-dim="layout">
+        <div class="word">
+            <h3>山水布局 · 巧于因借</h3>
+            <p class="text"><strong>山水骨架：</strong>以"一山（万寿山）一水（昆明湖）"为基本框架。万寿山东西长约1000米，主峰海拔109米；昆明湖水域面积约220公顷，占全园面积的四分之三。山水比例恰到好处，形成了"山为屏，水为镜，建筑为点缀"的经典格局。</p>
+            <p class="text"><strong>轴线与对景：</strong>园林有明确的中轴线——从东宫门经仁寿殿、排云殿至佛香阁，再延伸到湖中的南湖岛。重要建筑如佛香阁、排云殿、智慧海等均位于轴线上，形成庄严的序列。同时，巧妙运用"对景"手法，如佛香阁与南湖岛、十七孔桥与玉带桥、知春亭与藕香榭，处处成景，步移景异。</p>
+            <p class="text"><strong>空间序列：</strong>从规整森严的宫廷区，到富丽堂皇的前山区，再到开阔疏朗的湖区，最后是幽深静谧的后山区，空间由"人工"向"自然"过渡，由"动"向"静"转化。这种"起、承、转、合"的空间序列，是中国古典园林空间艺术的巅峰之作。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="layout"><span class="like-icon">🏞️</span><span class="like-count">0</span><span class="like-btn-text">布局</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="layout">💬 造园艺术</button><div class="comment-list" id="comment-list-layout" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑荟萃 爱心: 🏰 -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑荟萃 · 集锦南北</h3>
+            <p class="text"><strong>佛香阁：</strong>颐和园的标志，八面三层四重檐，高41米，是全园的构图中心和制高点。阁内供奉接引佛，登阁可俯瞰昆明湖全景。建筑宏伟，用材考究，是中国古代木结构建筑的精品。</p>
+            <p class="text"><strong>长廊：</strong>世界上最长的画廊，全长728米，共273间。枋梁上绘有14000余幅苏式彩画，内容包括山水风景、花鸟鱼虫、历史故事、神话传说等，被誉为"画廊无字书"。漫步长廊，可晴不晒日，雨不湿鞋。</p>
+            <p class="text"><strong>石舫：</strong>又名清晏舫，长36米，用巨石雕砌而成。船体用汉白玉，舱楼为木结构，但油饰成大理石纹样。舫上二层为西式舱楼，装有彩色玻璃窗。是园中唯一带有西洋风格的建筑，象征"水能载舟，亦能覆舟"的治国理念。</p>
+            <p class="text"><strong>十七孔桥：</strong>连接东堤与南湖岛，长150米，宽8米，因有17个券洞而得名。桥上石雕极为精美，有544只形态各异的石狮。桥栏望柱上雕有神态各异的石狮，比卢沟桥还多，是清代石桥中的杰作。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏰</span><span class="like-count">0</span><span class="like-btn-text">精粹</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑之美</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 文化意境 爱心: 🎨 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>文化意境 · 诗画园林</h3>
+            <p class="text"><strong>文学意境：</strong>颐和园处处体现"诗情画意"。建筑题名多取自诗词典故，如"知春亭"（源于苏轼"春江水暖鸭先知"）、"藕香榭"（取自《红楼梦》）、"画中游"等。乾隆皇帝曾为清漪园题写大量诗词，现仍有不少楹联匾额留存。</p>
+            <p class="text"><strong>哲学内涵：</strong>园林体现了中国传统"天人合一"的哲学思想。建筑顺应自然地势，植物配置讲究四季变化，水系设计模拟江河湖海。特别是"一池三山"（昆明湖中的南湖岛、治镜阁、藻鉴堂，象征蓬莱、方丈、瀛洲三仙山）的布局，寄托了古人对长生不老、神仙境界的向往。</p>
+            <p class="text"><strong>政治象征：</strong>作为晚清政治中心，颐和园见证了诸多历史事件。仁寿殿是慈禧、光绪处理朝政之处；玉澜堂是光绪的寝宫，也是他被囚禁的地方；德和园大戏楼是慈禧看戏的场所。园林不仅是游乐之地，更是权力运作的空间。</p>
+            <p class="text"><strong>艺术价值：</strong>颐和园集中国古典造园艺术之大成，融建筑、山水、花木、诗词、绘画、雕塑于一体，是中国园林艺术的"百科全书"。其设计理念和建造技艺对后世影响深远，成为东方园林的经典范本。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎨</span><span class="like-count">0</span><span class="like-btn-text">意境</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 诗画人生</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 何处燕山最畅情，无双风月属昆明 | 五重维度·五种灵韵爱心，点赞评论共话皇家园林</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（颐和园独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        layout: 0,
+        architecture: 0,
+        culture: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        layout: [],
+        architecture: [],
+        culture: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('summer_palace_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('summer_palace_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('summer_palace_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('summer_palace_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对颐和园的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的颐和园感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "颐和访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

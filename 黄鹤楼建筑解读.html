@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>黄鹤楼 · 四维解读 | 天下江山第一楼</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/黄鹤楼.jpg" title="黄鹤楼" alt="黄鹤楼与长江大桥">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 千古兴废</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 建筑奇观</div>
+        <div class="dim-tab" data-tab="culture">🎪 诗词名楼</div>
+        <div class="dim-tab" data-tab="value">🌟 江城地标</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>黄鹤楼 · 天下江山第一楼</h3>
+            <p class="text"><strong>传奇：</strong>黄鹤楼位于湖北省武汉市武昌区蛇山之巅，濒临万里长江，是"江南三大名楼"之一（另两座为湖南岳阳楼、江西滕王阁），自古享有"天下江山第一楼""天下绝景"之美誉。始建于三国吴黄武二年（223年），为军事瞭望楼。唐代起逐渐演变为著名的名胜景点，历代文人墨客在此留下了大量不朽诗篇。现存建筑为1981年重建，1985年竣工开放，是武汉的城市象征和文化地标。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>主楼：</strong>钢筋混凝土仿木结构，高51.4米，底层边长30米，顶层边长18米。外观五层，内部实为十层（含夹层），隐含"九五之尊"之意。屋顶为攒尖顶，四望如一，飞檐翘角，72根圆柱拔地而起，60个翘角凌空舒展，屋面用10多万块黄色琉璃瓦覆盖。整座楼形如黄鹤，展翅欲飞。</li>
+                <li><strong>《黄鹤楼》诗碑：</strong>一层大厅正面墙壁有巨幅陶瓷壁画《白云黄鹤图》，高9米，宽6米。两侧立柱挂"爽气西来，云雾扫开天地撼；大江东去，波涛洗净古今愁"楹联。二层有历代黄鹤楼模型陈列，展示唐、宋、元、明、清及现代黄鹤楼的不同形制。</li>
+                <li><strong>诗词文化：</strong>三层有《人文荟萃》系列壁画，再现历代文人登临黄鹤楼吟诗作赋的情景。崔颢《黄鹤楼》、李白《黄鹤楼送孟浩然之广陵》、岳飞《满江红·登黄鹤楼有感》等名篇均有展示。四层有当代书画家作品，轮流展出。</li>
+                <li><strong>江天极目：</strong>五层为观景层，四周有回廊，可360度俯瞰武汉三镇。东望武昌城区，南观蛇山蜿蜒，西眺长江大桥与汉阳，北览汉口繁华。天气晴好时，可远眺龟山电视塔、晴川阁、武汉长江二桥等标志性建筑。</li>
+                <li><strong>铜雕《黄鹤归来》：</strong>位于主楼前，青铜铸造，高5.1米，重3.8吨。两只黄鹤立于龟、蛇之上，寓意吉祥。龟、蛇是武汉龟山、蛇山的象征，也代表玄武（北方之神），与黄鹤楼的朱雀（南方之神）相应。</li>
+                <li><strong>胜像宝塔：</strong>位于黄鹤楼前，元代至正三年（1343年）建，为威顺王世子墓塔。塔高9.36米，座宽5.68米，采用外石内砖结构，是武汉现存最古老的建筑之一，原在蛇山西端，1955年迁建现址。</li>
+                <li><strong>白云阁：</strong>位于黄鹤楼东侧，高41.7米，外观四层，是观赏黄鹤楼、蛇山、长江的绝佳位置。阁名取自"白云千载空悠悠"诗句。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，春秋最佳（3-5月，9-11月）。建议下午登楼，既可欣赏白天的江景，又可观看日落和夜景。夏季傍晚可避暑，冬季雪景别有韵味。夜晚有灯光秀，黄鹤楼灯火辉煌。</li>
+                <li><strong>游览顺序：</strong>西门→胜像宝塔→三楚一楼牌坊→黄鹤归来铜雕→主楼一层（白云黄鹤图）→二层（历代模型）→三层（人文荟萃）→四层（当代书画）→五层（观景）→白云阁→诗碑廊→搁笔亭。建议安排2-3小时。</li>
+                <li><strong>深度体验：</strong>清晨登楼观日出，看朝霞映照长江；傍晚赏落日，感受"孤帆远影碧空尽"的意境；夜晚看灯光秀，体验现代科技与古建结合；参加"黄鹤楼诗会"，吟诵经典诗词；参观黄鹤楼美术馆，欣赏书画艺术；在茶社品茶，静观江景。</li>
+                <li><strong>摄影建议：</strong>黄鹤楼全景（从长江大桥、龟山、汉阳江滩拍摄），主楼建筑细节，铜雕《黄鹤归来》特写，五层观景台俯瞰武汉三镇，夜景灯光秀，四季不同景致。建议使用广角镜头拍摄全景，长焦镜头捕捉建筑细节。长江大桥与黄鹤楼同框是经典构图。</li>
+            </ul>
+            <p><strong>交通信息：</strong>黄鹤楼位于武汉市武昌区蛇山西坡特1号。公交10路、61路、401路、402路、411路、413路等可达"黄鹤楼"站。地铁4号线"首义路"站或"复兴路"站，步行10-15分钟。距武昌火车站3公里，车程10分钟；距武汉站15公里，车程30分钟；距天河机场30公里，车程50分钟。周边有长江大桥、户部巷、辛亥革命武昌起义纪念馆、昙华林等景点。建议与武汉长江大桥、户部巷、湖北省博物馆组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">名楼</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 黄鹤楼印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 千古兴废 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>千古兴废 · 屡毁屡建</h3>
+            <p class="text"><strong>三国创建：</strong>黄鹤楼始建于三国吴黄武二年（223年）。东吴为防御蜀汉刘备，在夏口（今武昌）建城，于城西南角黄鹄矶（今蛇山）建军事瞭望楼，名"戍楼"。因矶石色黄，形如黄鹤，故名"黄鹤楼"。也有传说仙人王子安或费祎乘黄鹤过此，因以为名。</p>
+            <p class="text"><strong>唐宋时期：</strong>唐代，黄鹤楼逐渐从军事楼演变为观赏楼。唐永泰元年（765年），鄂州刺史穆宁重建，始成"游必于是，宴必于是"的名楼。唐代诗人崔颢、李白、王维、孟浩然、贾岛、白居易等均曾登临赋诗。崔颢《黄鹤楼》被严羽《沧浪诗话》评为"唐人七律第一"。宋代，黄鹤楼多次重建，形制从唐代的"二层四檐"发展为"三层二檐"。苏轼、陆游、岳飞等曾登楼。</p>
+            <p class="text"><strong>元明时期：</strong>元代，黄鹤楼重建多次。元至正三年（1343年），威顺王在楼前建胜像宝塔。明洪武年间（1368-1398年），楚王朱桢重建。嘉靖四十五年（1566年），毁于雷火，旋即重建。万历十七年（1589年），再次毁于雷火。天启四年（1624年）重建。明代黄鹤楼规模宏大，"三层三檐"，有"天下绝景"之称。</p>
+            <p class="text"><strong>清代：</strong>清代，黄鹤楼重建4次。顺治十三年（1656年），总督张长庚重建。康熙三年（1664年）毁于火，康熙四十一年（1702年）重建。乾隆元年（1736年）毁于火，乾隆四十五年（1780年）重建。咸丰六年（1856年），太平天国战火中焚毁。同治七年（1868年）重建，为清代最后一次重建，光绪十年（1884年）毁于火灾，此后百年未建。</p>
+            <p class="text"><strong>民国至今：</strong>民国时期，黄鹤楼遗址仅存铜顶（清代遗物，现陈列于楼前）。1957年武汉长江大桥建设，原址被占用。1981年，武汉市政府决定重建黄鹤楼，选址在蛇山西端高观山西坡。由建筑学家向欣然设计，采用现代材料仿古形式。1985年6月11日主楼竣工开放。重建工程历时4年，投资1200万元。此为历代规模最大、最为壮观的一次重建。</p>
+            <p class="text"><strong>重建特点：</strong>第11次重建的黄鹤楼有三大特点：①规模最大：主楼高51.4米，建筑面积4000平方米，为历代之最；②位置最高：建于蛇山制高点，海拔61.7米，视野开阔；③功能最全：集游览、展览、商业、文化于一体，成为综合性景区。重建后的黄鹤楼被评为"新武汉十景"之首。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑奇观 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑奇观 · 仿木结构</h3>
+            <p class="text"><strong>总体布局：</strong>黄鹤楼公园占地16.6公顷，沿蛇山东西走向展开。主楼位于中心，西有胜像宝塔、三楚一楼牌坊，东有白云阁、诗碑廊，南有铜雕《黄鹤归来》、搁笔亭，北有山门、轩廊。整个建筑群依山就势，高低错落，形成"众星拱月"的布局。从长江大桥望去，黄鹤楼巍然耸立，与大桥、长江构成壮丽画卷。</p>
+            <p class="text"><strong>主楼结构：</strong>主楼为钢筋混凝土框架结构，仿木形式。①外观五层：寓意"五行"（金木水火土）；②内部十层：包含五个明层、五个暗层，象征"十全十美"；③72根圆柱：代表道教72地煞；④60个翘角：代表天干地支60甲子；⑤屋顶：攒尖顶，宝顶高5米，用1024块琉璃瓦拼成。这种设计既保持古建风貌，又满足现代抗震、防火要求。</p>
+            <p class="text"><strong>建筑特色：</strong>黄鹤楼建筑体现楚文化特色。①屋顶：攒尖顶如黄鹤展翅，翘角如鹤翼高扬；②色彩：以黄、红为主色，黄色琉璃瓦象征黄鹤，红色柱梁象征楚人尚赤；③装饰：斗拱、雀替、挂落、花格等，采用楚式纹样；④材料：用混凝土仿木，表面做旧处理，呈现木质感。整座楼既雄伟又灵秀，既古朴又新颖。</p>
+            <p class="text"><strong>室内设计：</strong>各层主题鲜明。①一层：主题"神话"，有《白云黄鹤图》壁画；②二层：主题"历史"，陈列历代黄鹤楼模型；③三层：主题"人文"，有《人文荟萃》系列壁画；④四层：主题"当代"，展出书画作品；⑤五层：主题"江天"，为观景层。各层有楹联、匾额、诗词，营造浓郁的文化氛围。</p>
+            <p class="text"><strong>铜雕艺术：</strong>《黄鹤归来》铜雕由雕塑家刘政德、李正文创作。两只黄鹤一只抬头远望，一只低头觅食，神态生动。龟、蛇造型取自武汉龟山、蛇山，也象征玄武。龟背刻八卦，蛇身绕龟体，体现道教文化。铜雕用青铜铸造，表面做旧，呈现古铜色。</p>
+            <p class="text"><strong>设计理念：</strong>设计师向欣然提出"源于古人，优于古人"的理念。①形制：参考清代黄鹤楼样式，加以创新；②比例：严格按古代建筑法式，但适当放大；③色彩：采用皇家建筑规格的黄瓦红柱；④环境：与长江大桥、蛇山地形协调。重建的黄鹤楼既传承历史，又体现时代精神。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 诗词名楼 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>诗词名楼 · 千古绝唱</h3>
+            <p class="text"><strong>崔颢《黄鹤楼》：</strong>唐开元年间，诗人崔颢游历武昌，登黄鹤楼，作《黄鹤楼》："昔人已乘黄鹤去，此地空余黄鹤楼。黄鹤一去不复返，白云千载空悠悠。晴川历历汉阳树，芳草萋萋鹦鹉洲。日暮乡关何处是？烟波江上使人愁。"此诗将神话传说与眼前景物融为一体，抒发思乡之情。严羽《沧浪诗话》评："唐人七言律诗，当以崔颢《黄鹤楼》为第一。"</p>
+            <p class="text"><strong>李白搁笔：</strong>传说李白登黄鹤楼，本欲赋诗，见崔颢题诗，叹服不已，说："眼前有景道不得，崔颢题诗在上头。"遂搁笔而去。后作《登金陵凤凰台》，欲与崔颢争胜。黄鹤楼公园内有"搁笔亭"，纪念此事。李白虽未在黄鹤楼题诗，但有《黄鹤楼送孟浩然之广陵》："故人西辞黄鹤楼，烟花三月下扬州。孤帆远影碧空尽，唯见长江天际流。"成为千古绝唱。</p>
+            <p class="text"><strong>历代题咏：</strong>自唐以降，历代文人登临黄鹤楼，留下大量诗篇。唐代有王维、孟浩然、贾岛、白居易、杜牧等；宋代有苏轼、陆游、岳飞、范成大等；元代有萨都刺、揭傒斯等；明代有杨基、李东阳、袁宏道等；清代有王士禛、袁枚、张之洞等。据统计，历代题咏黄鹤楼的诗词超过1000首，文章、楹联不计其数。</p>
+            <p class="text"><strong>岳飞《满江红》：</strong>南宋绍兴四年（1134年），岳飞驻军鄂州（今武昌），登黄鹤楼，作《满江红·登黄鹤楼有感》："遥望中原，荒烟外，许多城郭。想当年，花遮柳护，凤楼龙阁。万岁山前珠翠绕，蓬壶殿里笙歌作。到而今，铁骑满郊畿，风尘恶。兵安在？膏锋锷。民安在？填沟壑。叹江山如故，千村寥落。何日请缨提锐旅，一鞭直渡清河洛。却归来，再续汉阳游，骑黄鹤。"表达收复失地的壮志。</p>
+            <p class="text"><strong>毛泽东诗词：</strong>1927年春，毛泽东登黄鹤楼，作《菩萨蛮·黄鹤楼》："茫茫九派流中国，沉沉一线穿南北。烟雨莽苍苍，龟蛇锁大江。黄鹤知何去？剩有游人处。把酒酹滔滔，心潮逐浪高！"抒发革命豪情。1956年，毛泽东视察武汉，畅游长江，作《水调歌头·游泳》："才饮长沙水，又食武昌鱼。万里长江横渡，极目楚天舒。不管风吹浪打，胜似闲庭信步，今日得宽余。子在川上曰：逝者如斯夫！"提及"一桥飞架南北，天堑变通途"，指武汉长江大桥。</p>
+            <p class="text"><strong>现代传播：</strong>黄鹤楼在现代文化中影响深远。①教育：《黄鹤楼》诗入选中小学语文教材；②影视：在《黄鹤楼》《长江图》等影视剧中出现；③邮票：1990年中国邮政发行"黄鹤楼"特种邮票；④音乐：有歌曲《黄鹤楼》《又见黄鹤楼》等；⑤网络：是文学、游戏、动漫的热门题材。黄鹤楼从历史走进现代，成为中华文化的符号。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">诗韵</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 江城地标 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>江城地标 · 武汉象征</h3>
+            <p class="text"><strong>城市象征：</strong>黄鹤楼是武汉的城市地标和精神象征。①地理标志：屹立蛇山之巅，俯瞰三镇，是武汉城市的制高点；②文化标志：承载1800年历史，是武汉文脉的象征；③精神标志："敢为人先，追求卓越"的武汉精神的体现；④旅游标志：是武汉旅游的第一名片，年接待游客数百万人次。黄鹤楼与武汉长江大桥、龟山电视塔构成武汉的城市天际线。</p>
+            <p class="text"><strong>历史价值：</strong>黄鹤楼是1800年历史的见证。①建筑史：11次重建，记录了中国木构楼阁的兴衰演变；②文学史：千余首诗词，是中国文学史的瑰宝；③城市史：反映了武汉从军事要塞到现代都市的变迁；④社会史：历代修建记录，折射了不同时期的社会状况。黄鹤楼是研究中国历史、文化、建筑、城市发展的重要实物。</p>
+            <p class="text"><strong>建筑价值：</strong>重建的黄鹤楼是中国仿古建筑的杰作。①技术价值：用现代材料、技术仿古，为仿古建筑提供了范例；②艺术价值：建筑造型优美，装饰华丽，体现了楚地建筑特色；③科学价值：结构合理，功能完善，抗震防火；④创新价值："外五内十"的设计，既保持传统风貌，又满足现代功能。黄鹤楼重建工程获多项建筑奖项。</p>
+            <p class="text"><strong>文学价值：</strong>黄鹤楼是中国诗词的重要题材。崔颢《黄鹤楼》被誉为"唐人七律第一"，李白、岳飞、毛泽东等大家的作品，使黄鹤楼成为"诗楼"。这些诗词不仅艺术价值高，而且蕴含丰富的历史、哲学、美学思想，是中华文化的瑰宝。</p>
+            <p class="text"><strong>社会价值：</strong>黄鹤楼在当代社会具有多重价值。①旅游经济：年接待游客数百万，带动了旅游业及相关产业发展；②教育功能：是爱国主义教育基地、传统文化教育基地；③文化交流：是国内外文化交流的重要平台，许多外国政要、友人参观黄鹤楼；④精神家园：是市民休闲、娱乐、学习的场所，丰富了文化生活；⑤城市营销：是武汉城市形象的重要载体。</p>
+            <p class="text"><strong>保护与传承：</strong>黄鹤楼得到有效保护和传承。①法律保护：黄鹤楼公园是国家级风景名胜区；②规划保护：编制《黄鹤楼保护规划》，划定保护范围；③日常维护：建立专业维护团队，定期检查、维修；④研究展示：成立黄鹤楼文化研究会，举办学术研讨会，出版《黄鹤楼志》《黄鹤楼诗词》等著作；⑤活态传承：开展"黄鹤楼诗会""中秋赏月"等文化活动；⑥数字保护：建立数字档案，利用VR、AR技术进行数字化展示。黄鹤楼的保护经验，为历史名楼的保护利用提供了借鉴。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 黄鹤楼千古名楼，江城武汉地标象征 | 五重维度·五种灵韵爱心，点赞评论共话天下江山</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（黄鹤楼独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('huanghelou_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('huanghelou_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('huanghelou_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('huanghelou_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对黄鹤楼的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的黄鹤楼感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "黄鹤楼访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

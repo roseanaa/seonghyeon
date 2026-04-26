@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>成吉思汗陵 · 四维解读 | 一代天骄 · 草原圣地</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <div class="pic">
+        <img src="./image/成吉思汗陵.jpg" title="成吉思汗陵" alt="成吉思汗陵全景">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🐎 概览</div>
+        <div class="dim-tab" data-tab="history">📖 历史迷雾</div>
+        <div class="dim-tab" data-tab="architecture">🏛️ 陵园建筑</div>
+        <div class="dim-tab" data-tab="culture">🎪 蒙古文化</div>
+        <div class="dim-tab" data-tab="ritual">🕯️ 祭祀传承</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🐎 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🐎 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>成吉思汗陵 · 一代天骄</h3>
+            <p class="text"><strong>传奇：</strong>成吉思汗陵是蒙古族"一代天骄"成吉思汗的衣冠冢和象征性陵寝，蒙古语称"伊金霍洛"，意为"圣主的陵园"。位于内蒙古鄂尔多斯市伊金霍洛旗草原，距东胜区65公里。陵园始建于1954年，1956年建成，是蒙古民族祭祀成吉思汗的圣地，也是世界上唯一保存成吉思汗祭祀文化最完整的地方。这里不埋葬成吉思汗的遗骸，而是供奉象征其灵魂的"八白室"（八座白色蒙古包）和遗物。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul><li><strong>陵宫大殿：</strong>陵园主体建筑，蒙古包式宫殿，高26米，穹庐顶，蓝黄琉璃瓦，具有鲜明的蒙古族特色。大殿内供奉成吉思汗汉白玉坐像，高5米，重80吨，威严庄重。</li><li><strong>苏勒德祭坛：</strong>祭祀成吉思汗军旗"苏勒德"的场所。苏勒德是成吉思汗的战神象征，蒙古语意为"徽旗"，由一柄长矛和缨穗组成，被视为蒙古族的保护神。</li><li><strong>八白室：</strong>八座白色蒙古包，供奉成吉思汗与夫人孛儿帖的灵柩、弓箭、马鞍等遗物。是成吉思汗祭祀的核心，由达尔扈特人世代守护。</li><li><strong>成吉思汗博物馆：</strong>展示成吉思汗生平、蒙古帝国历史、蒙古族文化的专题博物馆。馆藏文物丰富，包括元代文物、蒙古族服饰、生活用品、历史文献等。</li><li><strong>敖尔敦（金顶大帐）：</strong>大型蒙古包式建筑，直径36米，可容纳千人，是举行大型祭祀和庆典的场所。</li><li><strong>铁马金帐群雕：</strong>再现成吉思汗出征场景的大型雕塑群，包括385尊雕像，5座金帐，战车、骆驼、战马等，气势恢宏。</li><li><strong>亚欧版图广场：</strong>地面镶嵌蒙古帝国鼎盛时期（13世纪）的疆域图，面积达10000平方米，展现"从太平洋到地中海"的辽阔版图。</li></ul>
+            <p><strong>参观攻略：</strong></p>
+            <ul><li><strong>最佳时间：</strong>5-10月，草原最美的季节。农历三月二十一的查干苏鲁克大祭、五月十五的淖尔大祭、九月十二的禁奶祭、十月初三的皮条祭是四大祭祀，最为隆重。</li><li><strong>游览顺序：</strong>气壮山河门景→铁马金帐群雕→亚欧版图广场→蒙古历史文化博物馆→陵宫大殿→苏勒德祭坛→八白室→祭祀文化展览馆。建议3-4小时。</li><li><strong>深度体验：</strong>参加祭祀仪式，了解达尔扈特人守陵传统，体验蒙古族那达慕（摔跤、赛马、射箭），住蒙古包，品尝手把肉、奶茶。</li><li><strong>摄影建议：</strong>清晨陵宫大殿全景，日落时草原与陵园，祭祀仪式的人文场景，那达慕大会的竞技场面，草原星空下的蒙古包。</li></ul>
+            <p><strong>行程安排：</strong>建议1-2天。可结合响沙湾、鄂尔多斯草原、康巴什新区组成鄂尔多斯深度游。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🐎</span><span class="like-count">0</span><span class="like-btn-text">圣陵</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 陵园印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 历史迷雾 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>历史迷雾 · 秘葬之谜</h3>
+            <p class="text"><strong>成吉思汗之死：</strong>1227年8月18日，成吉思汗在征伐西夏途中病逝于六盘山清水县（今宁夏境内），享年66岁。临终前留下遗嘱：秘不发丧，待西夏投降后屠城，遗体运回蒙古草原秘密安葬。据《蒙古秘史》记载，成吉思汗曾指定不儿罕山（今蒙古国肯特山）为葬地。</p>
+            <p class="text"><strong>秘葬习俗：</strong>蒙古族有"深葬不坟"的传统习俗。贵族去世后，秘密下葬，不起坟头，不立墓碑，以万马踏平，待来年春草生长，痕迹全无。同时，在葬地当着母驼的面杀死驼羔，来年祭祀时，母驼会在驼羔被杀处哀鸣，指示墓地。成吉思汗陵墓的具体位置成为千古之谜。</p>
+            <p class="text"><strong>八白室起源：</strong>成吉思汗去世后，蒙古人为寄托哀思，建立了祭祀宫帐"八白室"，供奉成吉思汗遗物。最初设在哈拉和林，后随蒙古政治中心迁移。元朝建立后，八白室迁至元大都（今北京）。元亡后，迁回鄂尔多斯草原，由成吉思汗亲军后卫"达尔扈特"人世代守护。</p>
+            <p class="text"><strong>陵园变迁：</strong>清初，八白室固定在伊金霍洛。抗日战争时期，为保护成吉思汗灵柩免遭日军破坏，国民政府于1939年将灵柩西迁，经延安、西安、兴隆山，1949年迁至青海塔尔寺。1954年迎回伊金霍洛，1956年建成现陵园。2006年进行大规模扩建，形成今日规模。</p>
+            <p class="text"><strong>陵墓探寻：</strong>七百多年来，成吉思汗陵墓的具体位置一直是世界考古学的未解之谜。主要推测地点有：①蒙古国肯特山。②中国内蒙古鄂尔多斯。③宁夏六盘山。④新疆阿尔泰山。日本、美国、蒙古等国多次组织考察，但均无确证。中国政府明令禁止主动发掘，认为保护比发现更重要。</p>
+            <p class="text"><strong>历史意义：</strong>成吉思汗陵不是真正的陵墓，而是蒙古民族的精神象征。它承载着蒙古族的历史记忆、文化认同和民族情感。作为世界上延续时间最长的祭祀文化，成吉思汗祭祀已被列入国家级非物质文化遗产。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">秘史</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 陵园建筑 爱心: 🏛️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>陵园建筑 · 蒙古风格</h3>
+            <p class="text"><strong>总体布局：</strong>陵园占地5.5万平方米，坐北朝南，中轴对称。从南到北依次为：广场、牌坊、陵道、陵宫。陵宫由三座蒙古包式大殿和廊房组成，平面呈"山"字形，象征成吉思汗开创的江山永固。建筑风格融合了蒙古族、汉族、藏族的艺术特色。</p>
+            <p class="text"><strong>陵宫大殿：</strong>蒙古包式穹庐顶宫殿，高26米，正殿八角形，东西殿为长方形。殿顶覆盖蓝黄琉璃瓦，蓝色象征蓝天，黄色象征大地，体现"长生天"崇拜。屋檐镶嵌藏蓝色琉璃瓦，绘有云纹图案。殿身白色，象征纯洁。大殿不用一钉一铆，全部为木结构，体现了蒙古包的建筑智慧。</p>
+            <p class="text"><strong>苏勒德祭坛：</strong>位于陵宫西侧，高15米，圆形三层石砌祭坛。坛中心立苏勒德（成吉思汗军旗），高13米，矛头指向苍穹，缨穗象征千军万马。祭坛四周有99盏长明灯，象征成吉思汗享年。苏勒德祭坛是蒙古族祭祀战神、祈求胜利的圣地。</p>
+            <p class="text"><strong>八白室：</strong>八座白色蒙古包，直径9米，高5米。按特定方位排列：成吉思汗与夫人孛儿帖灵帐居中，其他灵帐供奉弓箭、马鞍、奶桶、史册等遗物。蒙古包为木架结构，覆盖白色毛毡，顶部有天窗。内部陈设按照13世纪蒙古宫廷样式布置。</p>
+            <p class="text"><strong>装饰艺术：</strong>建筑装饰体现蒙古族特色：①彩绘：梁枋、藻井绘有蒙古族传统图案，如盘长纹、云纹、卷草纹。②雕刻：木雕、石雕、砖雕精美，题材有狮子、龙凤、八宝等。③金属装饰：铜制门环、铺首、风铃，鎏金工艺。④唐卡壁画：殿内悬挂藏传佛教唐卡，描绘成吉思汗生平。</p>
+            <p class="text"><strong>现代设施：</strong>2006年扩建后，新增：①成吉思汗博物馆：现代化展馆，用声光电技术展示蒙古历史。②铁马金帐群雕：写实雕塑，再现历史场景。③亚欧版图广场：大型地雕，直观展示帝国疆域。④游客中心：提供讲解、休息、购物等服务。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏛️</span><span class="like-count">0</span><span class="like-btn-text">蒙筑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 蒙古文化 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>蒙古文化 · 草原文明</h3>
+            <p class="text"><strong>成吉思汗精神：</strong>成吉思汗不仅是一位军事家，更是一位政治家、改革家。他统一蒙古各部，建立大蒙古国，颁布《大札撒》（法典），创制蒙古文字，促进东西方文化交流。成吉思汗精神的核心是：团结、勇敢、智慧、开放。他提出的"让蓝天之下皆成蒙古人之牧场"的豪言，体现了游牧民族的广阔胸怀。</p>
+            <p class="text"><strong>蒙古帝国遗产：</strong>成吉思汗及其子孙建立的蒙古帝国，疆域东起日本海，西抵地中海，北跨西伯利亚，南至波斯湾，是人类历史上陆地连续疆域最广的帝国。帝国的建立促进了：①东西方交流：丝绸之路空前繁荣。②宗教宽容：各宗教平等共存。③法律统一：《大札撒》适用于整个帝国。④技术传播：火药、印刷术、指南针西传。</p>
+            <p class="text"><strong>游牧文化：</strong>成吉思汗陵是游牧文化的集中体现：①蒙古包：适应游牧生活的移动住所。②那达慕：蒙古族传统体育盛会，包括摔跤、赛马、射箭"男儿三艺"。③马文化：马是蒙古族的伙伴，马头琴、马奶酒、马术是蒙古文化的重要组成。④敖包祭祀：祭祀山神、路神，祈求平安。</p>
+            <p class="text"><strong>语言文字：</strong>成吉思汗命畏兀儿人塔塔统阿创制蒙古文字（回鹘式蒙古文），结束了蒙古族没有文字的历史。现存最早蒙古文文献是《蒙古秘史》（1240年），是研究蒙古历史的第一手资料。现代蒙古文在回鹘式蒙古文基础上发展而来。</p>
+            <p class="text"><strong>艺术成就：</strong>蒙古族艺术独具特色：①音乐：长调、呼麦、马头琴被列入人类非物质文化遗产。长调高亢悠远，呼麦一人同时唱出多个声部。②舞蹈：盅碗舞、筷子舞、安代舞。③工艺：蒙古刀、马鞍、蒙古袍制作精美。④文学：《江格尔》《格斯尔》史诗。</p>
+            <p class="text"><strong>饮食服饰：</strong>①饮食：手把肉、烤全羊、奶茶、奶豆腐、炒米。奶茶是"宁可一日无食，不可一日无茶"。②服饰：蒙古袍、腰带、靴子、首饰。蒙古袍右衽，腰带束腰，靴子防寒防蛇。妇女头饰华丽，体现身份地位。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">蒙韵</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 祭祀传承 爱心: 🕯️ -->
+    <div class="dim-content" id="ritual-content" data-dim="ritual">
+        <div class="word">
+            <h3>祭祀传承 · 达尔扈特</h3>
+            <p class="text"><strong>达尔扈特人：</strong>专门守护和祭祀成吉思汗陵的部落，蒙古语意为"神圣的人"。他们是成吉思汗亲军"怯薛军"的后代，元世祖忽必烈赐予"不服兵役、不纳赋税"的特权，专职守陵祭祀。达尔扈特人分大、小两部分，大达尔扈特守护八白室，小达尔扈特守护苏勒德。世代口传心授祭祀仪轨，形成世界上独一无二的守陵制度。</p>
+            <p class="text"><strong>四大祭祀：</strong>①查干苏鲁克大祭（农历三月二十一）：春季大祭，祭祀长生天，祈求风调雨顺。仪式包括献哈达、敬酒、诵祭文、绕敖包。②淖尔大祭（农历五月十五）：夏季大祭，祭祀圣湖，感谢水草丰美。③禁奶祭（农历九月十二）：秋季大祭，停止挤奶，感谢牲畜繁衍。④皮条祭（农历十月初三）：冬季大祭，祭祀皮革，准备过冬。</p>
+            <p class="text"><strong>日常祭祀：</strong>每天早晚各一次，由达尔扈特人主持。早晨祭太阳，晚上祭月亮。每月初一、十五举行月祭。祭祀程序严格：净手、燃香、献祭品（全羊、奶酒、哈达）、诵祭文、行礼。祭文用古蒙古语吟诵，内容为赞颂成吉思汗功德，祈求国泰民安。</p>
+            <p class="text"><strong>祭祀物品：</strong>①全羊：祭品中最重要，选用肥壮绵羊，按特定方法宰杀、煮熟。②奶酒：用马奶或牛奶发酵制成，象征纯洁。③哈达：蓝色或白色丝绢，蓝色象征蓝天，白色象征白云。④香：柏树叶、杜松枝等植物制成。⑤灯：酥油灯，长明不熄。</p>
+            <p class="text"><strong>非物质文化遗产：</strong>2006年，成吉思汗祭祀被列入第一批国家级非物质文化遗产。其价值在于：①历史价值：延续780多年的活态传承。②文化价值：完整保存蒙古族原始萨满教与藏传佛教融合的祭祀仪轨。③社会价值：增强蒙古族民族认同和文化自信。④学术价值：研究蒙古历史、宗教、民俗的活化石。</p>
+            <p class="text"><strong>现代传承：</strong>随着时代发展，成吉思汗祭祀也在传承中创新：①建立传承人制度，培养年轻达尔扈特。②整理祭祀文献，出版《成吉思汗祭祀全书》。③利用现代媒体记录传播祭祀文化。④开展学术研究，举办国际研讨会。⑤发展文化旅游，让更多人了解蒙古文化。</p>
+            <p class="text"><strong>世界影响：</strong>成吉思汗是世界级历史人物，美国《华盛顿邮报》评为"千年风云第一人"。成吉思汗陵不仅是中国的文化遗产，也是世界的文化遗产。每年有大量国际游客和学者前来参观研究，成吉思汗精神中的团结、开放、智慧，对当今世界仍有启示意义。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="ritual"><span class="like-icon">🕯️</span><span class="like-count">0</span><span class="like-btn-text">祭礼</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="ritual">💬 祭祀文化</button><div class="comment-list" id="comment-list-ritual" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🐎 一代天骄成吉思汗，只识弯弓射大雕 | 五重维度·五种灵韵爱心，点赞评论共话草原圣陵</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（成吉思汗陵独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        ritual: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        ritual: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('genghis_khan_mausoleum_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('genghis_khan_mausoleum_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('genghis_khan_mausoleum_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('genghis_khan_mausoleum_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对成吉思汗陵的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的成吉思汗陵感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "草原访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

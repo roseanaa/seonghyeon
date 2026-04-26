@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>嵩山少林寺 · 四维解读 | 禅宗祖庭 · 功夫圣地</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/少林寺.jpg" title="嵩山少林寺" alt="嵩山少林寺山门与塔林">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 千年古刹</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 建筑奇观</div>
+        <div class="dim-tab" data-tab="culture">🎪 禅武医艺</div>
+        <div class="dim-tab" data-tab="value">🌟 世界遗产</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>嵩山少林寺 · 禅宗祖庭</h3>
+            <p class="text"><strong>传奇：</strong>嵩山少林寺位于河南省登封市嵩山少室山五乳峰下，建于北魏太和十九年（495年），是孝文帝为安顿印度高僧跋陀尊者而建。因坐落于少室山密林之中，故名"少林寺"。是中国佛教禅宗祖庭和中国功夫的发源地，有"天下第一名刹"之誉。2010年8月1日，包含少林寺在内的"天地之中"历史建筑群被联合国教科文组织列入《世界遗产名录》。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>常住院：</strong>少林寺的主体建筑群，沿中轴线有七进院落。①山门：清雍正十三年（1735年）建，面阔三间，进深三间，单檐歇山顶。"少林寺"匾额为康熙御笔。②天王殿：内有四大天王像。③大雄宝殿：寺内核心建筑，1986年重建，面阔五间，进深四间，重檐歇山顶，供奉释迦牟尼、药师佛、阿弥陀佛。④藏经阁：明代建筑，存放《大藏经》等佛教典籍。⑤方丈室：方丈起居、理事之所。⑥立雪亭：禅宗二祖慧可断臂求法处。⑦千佛殿：明代建筑，殿内有明代大型壁画《五百罗汉朝毗卢》。</li>
+                <li><strong>塔林：</strong>位于寺西300米，是历代高僧的墓塔群。现存唐、宋、金、元、明、清各代砖石墓塔231座，是中国现存规模最大、数量最多的古塔建筑群。塔的形制多样，有四角、六角、柱体、锥体、瓶体、圆形等，是研究古代砖石建筑、雕刻艺术、佛教传承的宝库。</li>
+                <li><strong>初祖庵：</strong>位于寺西北2公里的五乳峰下，为纪念禅宗初祖达摩而建。北宋宣和七年（1125年）建，是河南省现存最古老的木结构建筑。大殿的石柱、石础雕刻精美，有宋代《营造法式》的建筑特征。</li>
+                <li><strong>达摩洞：</strong>位于五乳峰中峰上部，为达摩面壁九年的山洞。洞深约7米，宽3米，内有达摩及其弟子的石像四尊。洞前有明代石坊，额题"默玄处"。</li>
+                <li><strong>少林寺武术馆：</strong>位于山门东侧，是国内最大的少林功夫表演、培训基地。每天有多场武术表演，包括拳术、器械、硬气功、对练等，展示少林功夫的独特魅力。</li>
+                <li><strong>《禅宗少林·音乐大典》：</strong>大型实景演出，由谭盾、梅帅元、释永信等创作。以嵩山为背景，以少林功夫、禅宗文化为主题，融合音乐、舞蹈、灯光、水景，每晚在待仙沟上演。</li>
+                <li><strong>少林药局：</strong>始建于金代，是中国最早的医疗机构之一。传承"少林医宗"，有独特的诊疗方法和秘方，如"少林膏药""少林跌打酒"等。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，春秋最佳（4-5月，9-10月）。建议上午参观，可观看武僧晨练和武术表演。夏季注意防晒，冬季注意保暖。农历四月初八佛诞日、腊月初八佛成道日有法会。</li>
+                <li><strong>游览顺序：</strong>山门→碑林→天王殿→大雄宝殿→藏经阁→方丈室→立雪亭→千佛殿→塔林→初祖庵→达摩洞。建议安排3-4小时。</li>
+                <li><strong>深度体验：</strong>观看武僧晨练（6:00-7:00），感受少林功夫的晨韵；参观少林寺武术馆表演（每天多场）；体验少林素斋，品味禅意饮食；登达摩洞，寻访禅宗源头；参观少林药局，了解少林医学；晚上观看《禅宗少林·音乐大典》；参加禅修体验课程，学习坐禅、行禅。</li>
+                <li><strong>摄影建议：</strong>少林寺山门全景，塔林不同角度的构图，千佛殿明代壁画细节，武僧练功的动感瞬间，达摩洞与远山背景，初祖庵宋代建筑结构。建议使用广角镜头拍摄建筑全景，长焦镜头捕捉人物和细节。清晨和傍晚光线最佳。</li>
+            </ul>
+            <p><strong>交通信息：</strong>少林寺位于河南省登封市嵩山。从郑州出发：①汽车：郑州中心站、客运总站有直达少林寺的旅游专线车，车程1.5小时；②火车：到登封站，转乘8路公交到少林寺；③自驾：经郑少洛高速到登封西出口，按路标行驶。从洛阳出发：汽车约1小时。景区内有电瓶车，可到塔林、初祖庵、达摩洞。周边有嵩阳书院、中岳庙、观星台等"天地之中"遗产点，建议组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">名刹</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 少林印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 千年古刹 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>千年古刹 · 禅宗源流</h3>
+            <p class="text"><strong>建寺缘起：</strong>北魏太和十九年（495年），孝文帝为安顿印度高僧跋陀（佛陀扇多，又称"跋陀罗"）尊者，在少室山建寺，取名"少林寺"。跋陀在寺内翻译佛经，传授小乘佛教。北魏正光元年（520年），印度高僧菩提达摩渡海来到广州，后至南京，因与梁武帝话不投机，一苇渡江，北上少林寺，在五乳峰山洞里面壁九年，创立中国禅宗，被尊为禅宗初祖。</p>
+            <p class="text"><strong>隋唐时期：</strong>隋文帝开皇年间（581-600年），赐少林寺柏谷坞庄田一百顷，寺院经济壮大。唐初，少林寺僧助唐太宗平定王世充有功，受朝廷嘉奖，获赐田地，特许养僧兵五百。自此少林寺以武功闻名天下。唐代，少林寺成为禅宗重要道场，有"禅宗祖庭"之誉。唐高宗、武则天多次驾临，拨款修寺。</p>
+            <p class="text"><strong>宋金元时期：</strong>宋代，少林寺禅宗兴盛。北宋元祐年间（1086-1094年），曹洞宗传入少林寺。金代，少林寺有僧众两千余人。元初，世祖忽必烈命福裕和尚住持少林寺，统辖嵩岳诸寺。福裕主持大修寺院，创建钟楼、鼓楼，增建殿宇，形成"五派同流，千僧聚会"的盛况。</p>
+            <p class="text"><strong>明代：</strong>明代是少林寺的鼎盛时期。朝廷多次拨款修寺，增建殿堂。嘉靖年间（1522-1566年），少林寺僧参加抗倭战争，屡立战功。万历年间（1573-1620年），朝廷颁《大藏经》给少林寺。明代少林寺有僧兵三千，习武成风，形成系统的少林功夫体系。明末农民起义，少林寺遭兵火，损失惨重。</p>
+            <p class="text"><strong>清代民国：</strong>清初，朝廷限制佛教，少林寺衰落。康熙四十三年（1704年），康熙皇帝为少林寺题写匾额。雍正十三年（1735年），雍正帝拨款重修少林寺，形成现存基本格局。民国时期，战乱频仍，少林寺进一步衰落。1928年，军阀石友三火烧少林寺，大雄宝殿、藏经阁等重要建筑被焚，大量文物、经书被毁。</p>
+            <p class="text"><strong>新中国成立后：</strong>新中国成立后，政府拨款修复少林寺。1979年，作为宗教活动场所重新开放。1982年，电影《少林寺》上映，引发全球"少林热"。1983年，少林寺被列为全国重点佛教寺院。1995年，释永信方丈发起"少林寺1500周年庆典"，少林寺走向复兴。2010年，少林寺作为"天地之中"历史建筑群的一部分列入《世界遗产名录》。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑奇观 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑奇观 · 古塔林立</h3>
+            <p class="text"><strong>总体布局：</strong>少林寺常住院坐北朝南，依山而建，沿中轴线有七进院落，总面积约3万平方米。从山门到千佛殿，地势渐高，形成"步步高升"的格局。寺前有溪水（少溪）流过，寺后有五乳峰为靠，符合"背山面水"的风水理念。整个建筑群红墙灰瓦，古朴庄严。</p>
+            <p class="text"><strong>山门建筑：</strong>山门建于清雍正十三年（1735年），面阔三间，进深三间，单檐歇山顶，铺绿色琉璃瓦。正门上方悬挂康熙御笔"少林寺"黑底金字匾额，上有"康熙御笔之宝"印。门前有明代石狮一对。山门殿内供弥勒佛、韦驮菩萨，两侧有清代"十三棍僧救唐王""紧那罗王御红巾"壁画。</p>
+            <p class="text"><strong>千佛殿：</strong>又称毗卢阁，明代建筑，面阔七间，进深三间，硬山顶。殿内最珍贵的是明代大型壁画《五百罗汉朝毗卢》。壁画高7.5米，长42米，面积约315平方米，绘于明万历年间（1573-1620年）。画面分三层，上层为山林，中层为云海，下层为水浪，五百罗汉姿态各异，栩栩如生。殿内地面有48个脚窝，是武僧练功所留。</p>
+            <p class="text"><strong>塔林建筑：</strong>塔林是中国古塔的博物馆。①唐塔：现存2座，为方形单层单檐式，是塔林中最早的塔；②宋塔：现存3座，多为六角形；③金塔：现存10座，形制多样；④元塔：现存48座，多为喇嘛塔式；⑤明塔：现存148座，数量最多，形制最丰富；⑥清塔：现存20座。塔的高低、大小、层级、形制，根据僧人生前佛学造诣、僧阶高低、功德大小而定。</p>
+            <p class="text"><strong>初祖庵：</strong>河南省现存最古老的木结构建筑。建于北宋宣和七年（1125年），面阔三间，进深三间，单檐歇山顶。大殿的柱、础、枋、斗拱、藻井等，严格按《营造法式》建造。石柱雕刻精美，有海石榴、卷草、飞禽、伎乐等图案。殿内石供桌下有"一苇渡江"等浮雕。初祖庵是研究宋代建筑的珍贵实例。</p>
+            <p class="text"><strong>建筑特色：</strong>少林寺建筑体现中原地区特色。①材料：砖、木、石并用，就地取材；②结构：木构架为主，抬梁式与穿斗式结合；③屋顶：多为硬山、悬山、歇山顶，坡度平缓；④装饰：彩绘、雕刻朴素，不尚奢华；⑤色彩：红墙灰瓦，与青山绿树相协调。少林寺建筑融佛教寺院与中原民居风格于一体。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 禅武医艺 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>禅武医艺 · 少林四绝</h3>
+            <p class="text"><strong>禅宗祖庭：</strong>少林寺是中国禅宗的发源地。①达摩创禅：达摩在少林寺面壁九年，提出"理入""行入"的修行方法，著有《二入四行论》；②慧可断臂：二祖慧可为求法，在立雪亭前断臂明志，得达摩传法；③禅宗传承：从达摩到慧可、僧璨、道信、弘忍、慧能，一花开五叶，形成临济、曹洞、沩仰、云门、法眼五宗。少林寺以曹洞宗为主，倡导"默照禅"。</p>
+            <p class="text"><strong>少林功夫：</strong>少林功夫是中国武术的瑰宝。①起源：为强身健体、保护寺院而创；②体系：包括拳术、器械、对练、内功、硬气功等，有套路700余种；③特点：禅武合一，内外兼修，刚柔相济；④代表拳术：罗汉拳、少林拳、少林棍、易筋经、洗髓经等；⑤传承：有严格的师承制度，注重武德培养。少林功夫被列为国家级非物质文化遗产。</p>
+            <p class="text"><strong>少林医学：</strong>少林寺在长期习武、行医中形成独特的医学体系。①起源：僧人为治伤而研习医术；②理论：以禅学为指导，注重整体调理；③特色：擅长骨伤科、针灸、推拿，有独特的秘方、膏药；④典籍：《少林寺伤科秘方》《少林真传伤科秘方》等；⑤药局：少林药局创建于金代，是中国最早的医疗机构之一。少林医学是中华传统医学的重要组成部分。</p>
+            <p class="text"><strong>少林艺术：</strong>少林寺在建筑、雕塑、绘画、书法等方面成就卓著。①建筑：寺塔、殿堂、亭台等，体现古代建筑艺术；②雕塑：佛像、石狮、石塔雕刻，工艺精湛；③绘画：《五百罗汉朝毗卢》壁画，是明代壁画珍品；④书法：寺内碑刻众多，有唐太宗、苏轼、米芾、赵孟頫等名家作品；⑤音乐：佛教音乐、禅乐，有《少林寺钟谱》等。少林艺术是佛教艺术与中原艺术的融合。</p>
+            <p class="text"><strong>禅修体验：</strong>少林寺开展多种禅修活动。①短期禅修：面向游客的"一日禅""三日禅"体验课程；②禅七：每年冬季举办"禅七"，连续七天坐禅；③禅武夏令营：面向青少年的禅武文化体验；④国际禅修：接待外国友人，传播禅文化。禅修内容包括坐禅、行禅、茶禅、农禅等。</p>
+            <p class="text"><strong>文化交流：</strong>少林寺积极开展国际文化交流。①海外中心：在美、德、英、澳等国建立少林文化中心；②演出交流：少林功夫表演团出访100多个国家和地区；③学术研究：举办国际禅宗研讨会、少林学研讨会；④影视传播：电影《少林寺》等影视作品，让少林文化走向世界。少林寺成为中华文化的重要名片。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">禅武</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 世界遗产 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>世界遗产 · 天地之中</h3>
+            <p class="text"><strong>世界遗产价值：</strong>2010年8月1日，"天地之中"历史建筑群（包括少林寺、塔林、初祖庵、嵩阳书院、中岳庙、观星台等8处11项）被联合国教科文组织列入《世界遗产名录》。世界遗产委员会评价："这些建筑群以不同的方式表达了'天地之中'的概念，并展示了在近2000年的时间里，中国在建筑和技术领域所取得的成就。其中，少林寺建筑群是佛教禅宗在中国的发源地，对佛教在中国的传播和发展产生了深远影响。"</p>
+            <p class="text"><strong>历史价值：</strong>少林寺是1500多年佛教史的见证。①佛教史：从跋陀译经到达摩创禅，从禅宗祖庭到佛教圣地，记录了佛教在中国的传播、发展、演变；②建筑史：从北魏到明清，历代建筑遗存，是研究古代建筑发展史的实物资料；③社会史：反映了佛教与政治、经济、社会的关系，如僧兵制度、寺院经济等；④文化交流史：体现了中印、中日、中韩等佛教文化交流。</p>
+            <p class="text"><strong>建筑价值：</strong>少林寺建筑群是中国古代建筑的杰出代表。①塔林：中国现存规模最大、数量最多的古塔群，是古塔建筑的博物馆；②初祖庵：宋代木结构建筑的珍贵实例，是研究《营造法式》的实物；③千佛殿：明代大型壁画，艺术价值极高；④整体布局：依山就势，中轴对称，体现中国传统建筑理念。少林寺建筑是建筑、结构、艺术的完美结合。</p>
+            <p class="text"><strong>文化价值：</strong>少林寺是禅宗文化、武术文化、医学文化、艺术文化的综合体。①禅宗文化：禅宗祖庭，对中国哲学、文学、艺术产生深远影响；②武术文化：少林功夫发源地，是中国武术的重要流派；③医学文化：少林医学，是中华医学的组成部分；④艺术文化：建筑、雕塑、绘画、书法等，艺术成就卓著。少林文化是中华文化的重要代表。</p>
+            <p class="text"><strong>科学价值：</strong>少林寺蕴含丰富的科学智慧。①建筑科学：木结构技术、砖石技术、抗震技术等；②医学科学：骨伤科诊疗技术、中药学等；③人体科学：功夫训练方法、气功养生等；④环境科学：寺院选址、布局与自然环境的和谐。现代科学可从少林文化中汲取营养，如运动医学、康复医学、心理学等。</p>
+            <p class="text"><strong>保护与传承：</strong>少林寺得到有效保护和传承。①法律保护：1963年被列为河南省文物保护单位，1996年列为全国重点文物保护单位；②规划保护：编制《少林寺保护规划》，划定保护区、缓冲区；③工程保护：对古建筑进行维修加固，如1980年代重修大雄宝殿，1990年代维修塔林；④活态保护：保持宗教功能，僧众正常修行，传承禅武医文化；⑤研究展示：成立少林文化研究所，出版《少林学》等著作；⑥国际交流：开展国际文化交流，传播少林文化。少林寺的保护经验，为宗教文化遗产保护提供了借鉴。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 嵩山少林寺禅武双修，千年古刹名扬四海 | 五重维度·五种灵韵爱心，点赞评论共话禅宗祖庭</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（嵩山少林寺独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('songshan_shaolin_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('songshan_shaolin_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('songshan_shaolin_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('songshan_shaolin_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对少林寺的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的少林寺感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "少林访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

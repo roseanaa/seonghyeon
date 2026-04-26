@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>豫园 · 四维解读 | 江南名园 · 沪上古典明珠</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <div class="pic">
+        <img src="./image/豫园.jpg" title="豫园" alt="豫园全景与九曲桥风光">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 历史脉络</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 园林营造</div>
+        <div class="dim-tab" data-tab="culture">🎪 沪上雅韵</div>
+        <div class="dim-tab" data-tab="value">🌟 园林价值</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>豫园 · 东南名园</h3>
+            <p class="text"><strong>传奇：</strong>豫园是上海现存最大的古典园林，被誉为"东南名园之冠"。始建于明嘉靖三十八年（1559年），为时任四川布政使潘允端所建，取名"豫园"，取"豫悦老亲"之意。园林占地三十余亩，是江南园林艺术的杰出代表，融合了明清两代造园精华，体现了"虽由人作，宛自天开"的造园理念。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>三穗堂：</strong>豫园主厅，清代建筑，面阔五间，曾是园主会客宴饮之所。堂内高悬"三穗堂"匾额，寓意丰收吉祥。</li>
+                <li><strong>仰山堂与大假山：</strong>大假山是豫园镇园之宝，高约12米，用约2000吨武康黄石堆砌而成，为明代叠山名家张南阳唯一传世作品。山势奇崛，洞壑幽深，登临可俯瞰全园。</li>
+                <li><strong>点春堂：</strong>清代建筑，因宋代文豪苏东坡"翠点春妍"得名。1853年小刀会起义时曾作为指挥部，现为小刀会历史陈列馆。</li>
+                <li><strong>玉玲珑：</strong>江南三大名石之一，太湖石精品。石高约3米，上有72孔，遇水则百孔泉涌，遇风则万窍齐鸣，相传为宋徽宗花石纲遗物。</li>
+                <li><strong>九曲桥与湖心亭：</strong>豫园标志性景观，九曲桥蜿蜒曲折，寓意曲折通幽。湖心亭建于清乾隆四十九年（1784年），原为豫园一部分，现为著名茶楼。</li>
+                <li><strong>内园：</strong>豫园中的园中园，始建于清康熙四十八年（1709年），面积仅2亩，但布局精巧，被誉为"园中之园"。</li>
+                <li><strong>得月楼与绮藻堂：</strong>得月楼临水而建，取"近水楼台先得月"之意。绮藻堂为藏书楼，曾是文人雅集之地。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>春秋两季最佳（4-5月，9-11月），园内花木繁盛，气候宜人。避开节假日高峰期。</li>
+                <li><strong>游览顺序：</strong>三穗堂→仰山堂与大假山→万花楼→点春堂→会景楼→玉华堂→玉玲珑→内园→九曲桥→湖心亭。建议2-3小时。</li>
+                <li><strong>深度体验：</strong>清晨入园可享清静，登大假山俯瞰全景，在玉玲珑前赏石，于湖心亭品茶，感受江南园林的诗情画意。</li>
+                <li><strong>摄影建议：</strong>九曲桥与湖心亭倒影，大假山叠石奇观，玉玲珑玲珑剔透，得月楼临水倩影，四季花木变化。</li>
+            </ul>
+            <p><strong>交通信息：</strong>位于上海市黄浦区福佑路168号，地铁10号线豫园站直达。周边有城隍庙、豫园商城，可一并游览。建议与上海老街、外滩组成经典旅游线路。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">名园</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 园林印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 历史脉络 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>历史脉络 · 四百年沧桑</h3>
+            <p class="text"><strong>兴建背景：</strong>明嘉靖三十八年（1559年），四川布政使潘允端为让其父潘恩安享晚年，在上海县城内购地七十余亩，始建豫园。园名"豫"取《周易》"豫卦"，有"豫悦老亲"之意。潘允端亲自设计，历时十八年，于万历五年（1577年）初步建成，被誉为"东南名园之冠"。</p>
+            <p class="text"><strong>明代鼎盛：</strong>豫园建成后，潘家时常在此宴请宾客，举办诗会雅集。园林布局精巧，建筑华丽，有厅堂楼阁三十余处，奇峰异石数十座，成为上海文人雅士的聚集地。潘允端在《豫园记》中详细记载了园林的建造过程与景致。</p>
+            <p class="text"><strong>清代变迁：</strong>明末潘家衰落，园林日渐荒废。清康熙四年（1665年），地方士绅集资购买豫园部分区域，划归城隍庙，成为庙园。乾隆二十五年（1760年），富商集资重建，历时二十余年，园林重获新生。乾隆四十九年（1784年）建湖心亭、九曲桥，形成今日格局。</p>
+            <p class="text"><strong>小刀会风云：</strong>咸丰三年（1853年），上海小刀会起义，占据上海县城。起义军以豫园点春堂为指挥部，坚持斗争十八个月。清军攻破县城后，豫园遭受严重破坏，点春堂成为重要历史遗址。</p>
+            <p class="text"><strong>近代命运：</strong>鸦片战争后，上海开埠，豫园周边逐渐成为商业区。清光绪年间，园内设商铺、茶楼，园林功能发生变化。1926年，内园成立钱业公所，成为上海金融业的活动中心。1956年起，上海市人民政府对豫园进行全面修复，历时五年，于1961年重新开放。</p>
+            <p class="text"><strong>保护复兴：</strong>1982年，豫园被列为全国重点文物保护单位。20世纪80年代起，进行多次大规模修复，恢复明代园林风貌。如今豫园与城隍庙、豫园商城共同构成上海最具代表性的传统文化旅游区，每年接待游客数百万。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 园林营造 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>园林营造 · 咫尺山林</h3>
+            <p class="text"><strong>总体布局：</strong>豫园采用江南私家园林典型的"山水园林"布局，以水为中心，建筑环水而建。全园可分五个景区：仰山堂大假山区、万花楼点春堂区、玉玲珑玉华堂区、内园区、九曲桥湖心亭区。园内"移步换景，步移景异"，体现了"以小见大"的造园艺术。</p>
+            <p class="text"><strong>叠山艺术：</strong>大假山是豫园的精华所在，由明代叠山大师张南阳设计建造。山体用约2000吨武康黄石堆叠而成，主峰高12米，是江南现存最大、最精美的黄石假山。山中有蹊径、洞穴、瀑布，登顶可俯瞰全园，远眺城隍庙，体现"城市山林"意境。</p>
+            <p class="text"><strong>理水艺术：</strong>豫园水体面积约占全园五分之一，以聚为主，以分为辅。主要水面"荷花池"位于园中心，周围建筑皆面向水面。池水通过小溪、水口与各小池相连，形成完整水系。九曲桥蜿蜒池上，既分隔水面，又增加了游览趣味。</p>
+            <p class="text"><strong>建筑艺术：</strong>豫园建筑形式多样，厅、堂、楼、阁、轩、榭、亭、廊一应俱全。建筑多采用江南民居风格，白墙灰瓦，栗色门窗，与山石花木相映成趣。建筑布局疏密有致，或临水，或依山，或隐于林木之中，体现了"虽由人作，宛自天开"的境界。</p>
+            <p class="text"><strong>花木配置：</strong>豫园植物配置讲究四季有景：春有玉兰、海棠；夏有荷花、紫藤；秋有桂花、菊花；冬有梅花、山茶。古树名木众多，有四百余年古银杏、三百余年广玉兰等。花木与建筑、山石、水体巧妙结合，营造出"花影移墙，峰峦当窗"的意境。</p>
+            <p class="text"><strong>空间处理：</strong>豫园运用多种手法扩大空间感：①借景：登大假山可借景城隍庙；②对景：三穗堂与仰山堂隔水相望；③框景：通过门窗洞框取景致；④障景：用山石、建筑分隔空间；⑤漏景：通过花窗、漏窗隐约透景。这些手法使有限空间产生无限意趣。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 园林艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 沪上雅韵 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>沪上雅韵 · 文人风骨</h3>
+            <p class="text"><strong>园林文化：</strong>豫园是明代江南文人园林的典范，体现了"诗情画意"的造园理念。园中建筑命名多取自诗文典故：得月楼（取自"近水楼台先得月"）、绮藻堂（取自"绮藻繁缛"）、玉华堂（取自"玉润华滋"）。匾额楹联皆为名家手笔，充满文人气息。</p>
+            <p class="text"><strong>书画艺术：</strong>豫园曾是上海书画艺术的中心。明代董其昌、陈继儒等文人常在此雅集。清代"海上画派"画家任伯年、虚谷、吴昌硕等也常在豫园活动。园内保存大量明清时期的匾额、楹联、碑刻，是研究明清书法艺术的宝库。</p>
+            <p class="text"><strong>戏曲传承：</strong>豫园与昆曲、京剧渊源深厚。点春堂曾是戏曲演出场所，清末民初，京剧名角常在此演出。内园古戏台建于清光绪十四年（1888年），是上海现存最完整的古戏台之一，至今仍时有演出。</p>
+            <p class="text"><strong>节庆活动：</strong>①豫园灯会：始于清光绪年间，每年元宵节举办，是上海规模最大的传统灯会。②重阳登高：重阳节登大假山，寓意"步步高升"。③中秋赏月：在得月楼、湖心亭赏月品茶。④豫园茶文化节：展示江南茶道，传承茶文化。</p>
+            <p class="text"><strong>美食文化：</strong>豫园周边汇聚上海传统小吃：①南翔小笼：皮薄馅大，汤汁鲜美。②宁波汤圆：糯滑香甜，馅料多样。③五香豆：老城隍庙特产，香脆可口。④梨膏糖：传统药食同源糖果。⑤海棠糕：形似海棠，甜而不腻。湖心亭茶楼是上海最老的茶楼，可品茶观景。</p>
+            <p class="text"><strong>商业文化：</strong>豫园商城是上海传统商业中心，有"小商品王国"之称。老饭店、绿波廊、南翔馒头店等百年老店汇聚于此。这里既有传统手工艺品（剪纸、面塑、灯彩），也有现代文创产品，是传统与现代交融的商业街区。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">雅韵</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 园林价值 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>园林价值 · 城市瑰宝</h3>
+            <p class="text"><strong>历史价值：</strong>豫园是上海城市发展的历史见证，记录了从明代私家园林到清代庙园，再到近代公共园林的演变过程。它是上海城市文脉的重要载体，反映了上海从江南县城到国际大都市的历史变迁。点春堂的小刀会起义遗址，更赋予园林革命历史价值。</p>
+            <p class="text"><strong>艺术价值：</strong>豫园是江南古典园林艺术的杰出代表。大假山是张南阳叠山艺术的唯一遗存，具有极高艺术价值。玉玲珑是太湖石中的极品，"皱、漏、瘦、透"四美俱全。园林建筑、花木、山水有机结合，体现了"诗情画意"的审美境界。</p>
+            <p class="text"><strong>科学价值：</strong>豫园的营造技术体现了古代工匠的智慧。大假山的堆叠技术，解决了黄石假山易塌陷的难题。园林的理水系统，通过暗沟、明渠结合，保证了水体流动与自净。建筑木结构的榫卯工艺，历经数百年依然牢固。</p>
+            <p class="text"><strong>社会价值：</strong>豫园是上海市民的文化记忆与精神家园。它不仅是旅游景点，更是上海传统文化的重要象征。园内定期举办的文化活动，成为市民文化生活的重要组成部分。豫园灯会、庙会等民俗活动，传承了上海的地方文化。</p>
+            <p class="text"><strong>旅游价值：</strong>豫园是上海最著名的文化旅游地标之一，年接待游客超千万人次。它与外滩、南京路共同构成上海经典旅游线路。豫园商城的小商品、特色小吃，满足了游客购物、美食需求。作为城市中心的古典园林，豫园为现代都市提供了"诗意栖居"的空间。</p>
+            <p class="text"><strong>保护与传承：</strong>1961年，豫园被列为上海市文物保护单位；1982年，升为全国重点文物保护单位。上海市政府多次拨款修复，恢复园林历史风貌。建立豫园管理处，负责日常维护与管理。开展学术研究，出版《豫园志》《豫园建筑艺术》等专著。利用现代技术进行数字化保护，建立豫园数字博物馆。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 豫园四百年沧桑，江南园林冠沪上 | 五重维度·五种灵韵爱心，点赞评论共话园林雅趣</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（豫园独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('yuyuan_garden_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('yuyuan_garden_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('yuyuan_garden_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('yuyuan_garden_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对豫园的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的豫园感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "园林访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

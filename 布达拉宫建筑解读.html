@@ -1,0 +1,650 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>布达拉宫 · 四维解读 | 高原圣殿 · 互动品鉴</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <div class="pic">
+        <img src="./image/布达拉宫.jpg" title="布达拉宫" alt="布达拉宫红山圣殿">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏔️ 概览</div>
+        <div class="dim-tab" data-tab="region">🌄 地域风华</div>
+        <div class="dim-tab" data-tab="craft">🔨 匠心营造</div>
+        <div class="dim-tab" data-tab="material">🪨 木石春秋</div>
+        <div class="dim-tab" data-tab="function">🕊️ 功用流芳</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏔️ 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏔️ -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>布达拉宫 · 世界屋脊明珠</h3>
+            <p class="text"><strong>传奇：</strong>整座宫殿依红山而建，主楼高达117米，由白宫（政务与生活区）和红宫（宗教灵塔与佛殿）组成，融合了藏、汉等多民族建筑精华，宫内珍藏着8座达赖喇嘛金质灵塔及数万件佛像、唐卡、典籍等文物，是各民族交往交流交融的历史见证，被誉为"世界屋脊上的明珠"。</p>
+            <p><strong>攻略：</strong></p>
+            <p class="text"><strong>门票预约：</strong>旺季（5-10月）门票200元/人，淡季100元/人。务必提前10天在"布达拉宫票务预订"微信小程序实名抢票，景区不售当日票。</p>
+            <p class="text"><strong>游览线路：</strong>统一从南门（正门）进入。推荐路线：雪城 → 无字碑 → 白宫 → 红宫 → 西大殿，最后从北门下山。</p>
+            <p class="text"><strong>核心看点：</strong>五世达赖喇嘛灵塔、法王洞（松赞干布修行地）、圣观音殿（镇宫之宝）。药王山观景台可拍50元人民币同款画面，宗角禄康公园可拍倒影。</p>
+            <p class="text"><strong>注意事项：</strong>宫内严禁拍照、录像、戴帽和墨镜；需穿长裤长裙；建议提前在拉萨适应1-2天防高反，楼梯陡峭请放缓脚步。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏔️</span><span class="like-count">0</span><span class="like-btn-text">圣洁</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 朝圣心语</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 地域风华 爱心: 🌄 -->
+    <div class="dim-content" id="region-content" data-dim="region">
+        <div class="word">
+            <h3>地域风华 · 高原圣殿</h3>
+            <p class="text"><strong>高原明珠：</strong>位于"世界屋脊"青藏高原腹地，西藏自治区拉萨市红山之巅，海拔约3700米。是青藏高原地理与文化双重地标。</p>
+            <p class="text"><strong>选址智慧：</strong>依山而建，顺应山势。红山本身构成宫殿的巨大天然基座，既体现了对神山的崇拜，也利用山体稳固结构，抵御高原强风。</p>
+            <p class="text"><strong>气候适应：</strong>建筑形制直接应对高原独特环境。厚重的墙体（最厚处达5米）用于白天储热、夜间保温；狭窄的窗口（外小内大）在保证采光的同时，有效减少寒风侵入和热量流失。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="region"><span class="like-icon">🌄</span><span class="like-count">0</span><span class="like-btn-text">天界</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="region">💬 红山气象</button><div class="comment-list" id="comment-list-region" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 匠心营造 爱心: 🔨 -->
+    <div class="dim-content" id="craft-content" data-dim="craft">
+        <div class="word">
+            <h3>匠心营造 · 碉楼巅峰</h3>
+            <p class="text"><strong>藏式营造法：</strong>是藏式平顶碉楼建筑的巅峰之作。整体呈现"下大上小、收分明显"的梯形轮廓，形成极强的稳定感与向上的视觉动势。</p>
+            <p class="text"><strong>木构体系：</strong>内部采用木构架与土木、石墙结合的"墙柱混合承重"体系。独特的"边玛墙"（用西藏特有的灌木"边玛"捆扎染色砌成）是等级与技艺的象征。</p>
+            <p class="text"><strong>装饰艺术：</strong>融合藏、汉、尼泊尔工艺。金顶、鎏金宝瓶、法轮、经幢在阳光下金光闪耀。内墙布满绚丽壁画与精美唐卡，题材涵盖宗教、历史、民俗。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="craft"><span class="like-icon">🔨</span><span class="like-count">0</span><span class="like-btn-text">天工</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="craft">💬 营造法式</button><div class="comment-list" id="comment-list-craft" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 木石春秋 爱心: 🪨 -->
+    <div class="dim-content" id="material-content" data-dim="material">
+        <div class="word">
+            <h3>木石春秋 · 材美工坚</h3>
+            <p class="text"><strong>石材主体：</strong>主体结构大量采用高原盛产的花岗岩，就地取材，墙体为"内石外土"的复合结构，坚固耐久，体现了极高的石作工艺。</p>
+            <p class="text"><strong>土木核心：</strong>内部填充大量夯土和阿嘎土，具有良好的保温隔湿性能。阿嘎土经反复捶打、涂抹、抛光，形成光滑坚硬、可防水的室内地面与屋顶。</p>
+            <p class="text"><strong>珍稀装饰材料：</strong>大量使用黄金、珠宝、绸缎。金顶、灵塔、佛像耗费巨量黄金包裹镶嵌，并点缀绿松石、红珊瑚、天珠、珍珠等，极尽华美，彰显宗教的崇高与神圣。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="material"><span class="like-icon">🪨</span><span class="like-count">0</span><span class="like-btn-text">不朽</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="material">💬 石语金辉</button><div class="comment-list" id="comment-list-material" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 功用流芳 爱心: 🕊️ -->
+    <div class="dim-content" id="function-content" data-dim="function">
+        <div class="word">
+            <h3>功用流芳 · 政教丰碑</h3>
+            <p class="text"><strong>政教合一中心：</strong>其核心功能是作为历史上西藏地方政教合一统治的中心。白宫是达赖喇嘛处理政务与生活起居之所，红宫则是举行宗教仪式与供奉历代达赖灵塔的圣域。</p>
+            <p class="text"><strong>神圣宗教殿堂：</strong>是藏传佛教（格鲁派）的至高圣殿。宫内收藏有大量珍贵经书、佛像、法器，是信徒朝圣、僧人修行的终极目的地，承载着藏民族的集体信仰与精神寄托。</p>
+            <p class="text"><strong>民族交融丰碑：</strong>建筑风格融合了藏族碉楼、汉族殿宇、印度尼泊尔装饰等多元文化元素，是历史上汉、藏、蒙、满等多民族文化交流、融合与团结的实物见证。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="function"><span class="like-icon">🕊️</span><span class="like-count">0</span><span class="like-btn-text">和合</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="function">💬 圣光照耀</button><div class="comment-list" id="comment-list-function" style="display:none;"></div></div>
+        </div>
+    </div>
+    <footer>🏔️ 红山之上，圣殿千年 | 五重维度·五种灵韵爱心，点赞评论共仰雪域智慧</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（布达拉宫独立存储）----------
+    let likesData = {
+        overview: 0,
+        region: 0,
+        craft: 0,
+        material: 0,
+        function: 0
+    };
+    let commentsData = {
+        overview: [],
+        region: [],
+        craft: [],
+        material: [],
+        function: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('potala_likes_v2');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('potala_comments_v2');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('potala_likes_v2', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('potala_comments_v2', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对布达拉宫的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的雪域感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "朝圣旅人";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>
+```

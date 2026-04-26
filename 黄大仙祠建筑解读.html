@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>黄大仙祠 · 四维解读 | 香港第一洞天</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/黄大仙祠.jpg" title="黄大仙祠" alt="黄大仙祠主殿与香火">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 仙迹南来</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 祠宇建筑</div>
+        <div class="dim-tab" data-tab="culture">🎪 信仰习俗</div>
+        <div class="dim-tab" data-tab="value">🌟 香港地标</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>黄大仙祠 · 香港第一洞天</h3>
+            <p class="text"><strong>传奇：</strong>黄大仙祠位于香港九龙黄大仙区竹园村，是香港最著名、香火最鼎盛的道教宫观之一，也是香港旅游的重要地标。祠庙主祀道教仙人黄大仙（黄初平），相传黄大仙是晋代浙江金华人，15岁得道成仙，有"叱石成羊"的神通。黄大仙祠始建于1921年，由广东西樵山普庆祖坛的道长梁仁庵等人创立，最初在湾仔设坛，1925年迁至现址。经过百年发展，黄大仙祠已成为占地18000平方米的大型宗教建筑群，融道教、佛教、儒家于一体，每年吸引数百万信众和游客前来参拜。祠庙以"有求必应"闻名，是香港最具代表性的民间信仰中心，也是香港唯一可以举行道教婚礼的庙宇。2010年，黄大仙祠被列为香港法定古迹。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>主殿（赤松黄仙祠）：</strong>黄大仙祠的核心建筑，供奉黄大仙神像。主殿为重檐歇山顶建筑，面阔五间，进深三间，金碧辉煌，庄严肃穆。殿内供奉黄大仙金身神像，高约2米，头戴道冠，手持拂尘，慈眉善目。主殿前有巨大的香炉，信众在此上香祈福。主殿的梁枋、斗拱、藻井装饰精美，有龙凤、花鸟、人物等彩绘。殿内悬挂多块古匾，最著名的是"赤松黄仙祠"匾，为1925年所立。主殿是信众祈福的主要场所。</li>
+                <li><strong>三圣堂：</strong>位于主殿东侧，供奉儒释道三教圣人。中为孔子（儒家），左为释迦牟尼佛（佛教），右为太上老君（道教）。三圣堂体现了黄大仙祠"三教融合"的特色，是香港少有三教合一的殿堂。堂内对联"儒释道同源，忠孝仁为本"道出了三教的核心价值观。三圣堂的建筑为硬山顶，面阔三间，进深二间，装饰朴素典雅。三圣堂反映了香港多元宗教文化的特点。</li>
+                <li><strong>孟香亭：</strong>位于主殿前左侧，是供奉黄大仙的老师孟香的亭阁。孟香亭为八角攒尖顶建筑，四面开敞，小巧精致。亭内供奉孟香神像，手持书卷，仙风道骨。孟香亭是黄大仙祠的特色建筑之一，体现了尊师重道的传统。亭前的石狮子雕刻精美，是清代石雕艺术品。孟香亭前常有信众在此静坐、读书。</li>
+                <li><strong>九龙壁：</strong>位于主殿前广场，是黄大仙祠的标志性景观。九龙壁长12米，高5米，用琉璃瓦砌成，九条龙形态各异，栩栩如生。九龙壁前有水池，池中有莲花、锦鲤。九龙壁象征吉祥如意，是游客拍照的热点。九龙壁的建造工艺精湛，展现了香港传统工艺的水平。</li>
+                <li><strong>从心苑：</strong>黄大仙祠的园林景区，位于祠庙的东南部。从心苑是典型的中国古典园林，有亭台楼阁、小桥流水、假山池塘。苑内有"从心所欲"石、"知足常乐"石等景石。从心苑是信众祈福后休憩、静思的场所，环境清幽，闹中取静。园林设计精巧，移步换景，体现了"天人合一"的道家思想。</li>
+                <li><strong>月老及佳偶天成神像：</strong>位于主殿前广场，是黄大仙祠的特色景观。月老神像慈眉善目，手持红线，专司人间姻缘。佳偶天成神像是一对情侣雕像，象征美满姻缘。这里是年轻人祈求姻缘的热门地点，许多情侣在此许愿，祈求爱情美满、婚姻幸福。月老前常有信众供奉红线、糖果。</li>
+                <li><strong>解签档：</strong>黄大仙祠有近百个解签档，是香港最大的解签中心。信众在祠内求签后，可到解签档解签。解签师傅精通周易、风水、命理，为信众解答疑惑，指点迷津。解签档是香港民俗文化的缩影，也是黄大仙祠的特色服务。许多解签师傅已有数十年经验，在本地和海外都很有名。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>全年皆宜，但最佳游览时间为春秋两季（3-5月、9-11月），此时气候宜人。黄大仙宝诞（农历八月廿三日）是黄大仙祠最重要的节日，有盛大的祭祀、巡游、演戏等活动，人潮最多。春节（正月初一至十五）是上香高峰期，信众前来"抢头香"、祈福。每月农历初一、十五也是上香的好日子。建议避开假日人潮，选择平日游览。</li>
+                <li><strong>参拜顺序：</strong>入口牌坊→主殿上香祈福→三圣堂参拜→孟香亭参拜→月老及佳偶天成神像祈愿→从心苑游览→九龙壁拍照→解签档解签（可选）→返回。建议安排1.5-2小时。参拜时应衣冠整洁，不可穿短裤、背心、拖鞋。进殿应先拜天公，再拜主神。上香一般为三支，代表敬天、敬地、敬人。求签前需静心诚意，默念所求之事。</li>
+                <li><strong>深度体验：</strong>清晨参加祠内的早课，感受道教氛围；上午跟随导游参观建筑，了解三教融合特色；中午在祠内素食馆品尝斋菜；下午在从心苑静坐，体会道家清静；傍晚观看道士诵经，感受宗教仪式；体验求签解签，了解香港民俗；学习道教礼仪，了解上香、叩拜、祈福的规矩；参加道教法会，感受宗教氛围；住附近酒店，体验香港都市与庙宇的融合；第二天前往啬色园道教文化中心、南莲园池、志莲净苑等周边景点游览。</li>
+                <li><strong>摄影建议：</strong>主殿全景，九龙壁特写，三圣堂三教神像，从心苑园林景观，月老及佳偶天成神像，解签档民俗场景，香客虔诚上香，法会仪式，建筑装饰细节，夜景灯光。建议使用广角镜头拍摄建筑全景，长焦镜头拍摄雕刻细节。清晨和傍晚光线最佳，适合拍摄。使用偏光镜可减少反光，增强色彩饱和度。注意尊重宗教场所，拍摄前最好征得同意，不要对着神像直拍。</li>
+            </ul>
+            <p><strong>交通信息：</strong>黄大仙祠位于九龙黄大仙竹园村2号。地铁：观塘线黄大仙站B2或B3出口，步行约3分钟。巴士：多条巴士路线经黄大仙中心，包括1、2F、3C、11、61X、62X、74A、75X、84M、85C、85M、89、89B、211等。小巴：有多条绿色小巴路线可达。开放时间：每日7:00-17:30（从心苑8:00-16:30）。免费参观，但进入从心苑需捐款（约港币2元）。周边景点有啬色园道教文化中心（毗邻）、南莲园池（1公里）、志莲净苑（1公里）、钻石山荷里活广场（1.5公里）、九龙寨城公园（3公里）。距香港国际机场35公里，车程约40分钟；距九龙站5公里，车程15分钟。建议与啬色园道教文化中心、南莲园池、志莲净苑组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">祠庙</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 黄大仙祠印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 仙迹南来 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>仙迹南来 · 百年香火</h3>
+            <p class="text"><strong>黄大仙传说：</strong>黄大仙，原名黄初平，晋代浙江金华人。相传他15岁时在金华山中牧羊，遇道士葛洪，授以道术，得道成仙，有"叱石成羊"的神通。其兄黄初起寻找他40年，后在金华山中相遇，问羊何在，初平叱石成羊。兄弟二人一同修炼，双双成仙。黄大仙信仰在浙江金华一带流传，后随移民传到广东、香港。</p>
+            <p class="text"><strong>啬色园创立：</strong>1915年，广东南海西樵山普庆祖坛的道长梁仁庵等人，奉黄大仙像到香港，最初在湾仔设坛。1921年，梁仁庵、梁钧转、王泽生等人创立"啬色园"，取"啬"为珍惜物力，"色"为形形式式，意为珍惜世间万物。啬色园是黄大仙祠的管理机构，也是香港著名的慈善团体。</p>
+            <p class="text"><strong>祠庙发展：</strong>①1925年：黄大仙祠从湾仔迁至竹园现址，初建简陋；②1956年：开始大规模扩建，建成主殿、三圣堂等；③1973年：建成从心苑，增添园林景观；④1999年：建成月老及佳偶天成神像；⑤2010年：被列为香港法定古迹。百年间，黄大仙祠从简陋道坛发展为大型宗教建筑群。</p>
+            <p class="text"><strong>三教融合：</strong>黄大仙祠的特色是儒释道三教融合。①道教：主祀黄大仙，供奉太上老君、吕祖等；②佛教：供奉释迦牟尼佛、观音菩萨等；③儒家：供奉孔子，提倡忠孝仁义。三教融合体现了香港多元宗教文化的包容性，也符合黄大仙"普济劝善"的教义。</p>
+            <p class="text"><strong>慈善事业：</strong>啬色园秉承"普济劝善"宗旨，开展多项慈善事业。①医疗：创办黄大仙医院、啬色园医院等；②教育：创办啬色园主办可誉中学、可正小学等学校；③安老：创办安老院、护理院等；④赈灾：参与内地及海外赈灾。慈善事业使黄大仙祠不仅是宗教场所，也是慈善机构。</p>
+            <p class="text"><strong>现代转型：</strong>黄大仙祠在现代社会中不断创新。①管理：采用现代化管理，提高服务水平；②文化：举办道教文化节、讲座、展览等；③旅游：开发旅游产品，吸引游客；④科技：建立网站、APP，提供线上服务。黄大仙祠与时俱进，保持活力。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 祠宇建筑 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>祠宇建筑 · 岭南风格</h3>
+            <p class="text"><strong>总体布局：</strong>黄大仙祠为典型的岭南庙宇布局。①轴线：南北中轴线，入口牌坊-主殿-三圣堂；②院落：多进院落，主殿前有广场，后有园林；③园林：从心苑为附属园林，有亭台水榭；④功能分区：宗教区、园林区、服务区。布局严谨，功能分明。</p>
+            <p class="text"><strong>建筑形式：</strong>黄大仙祠建筑形式多样。①主殿：重檐歇山顶，五开间；②三圣堂：硬山顶，三开间；③孟香亭：八角攒尖顶；④牌坊：三间四柱冲天式；⑤九龙壁：琉璃照壁。形式丰富，主次分明。</p>
+            <p class="text"><strong>装饰艺术：</strong>黄大仙祠装饰丰富多彩。①彩绘：梁枋、斗拱、藻井有精美彩绘；②木雕：门窗、雀替、挂落有精细木雕；③石雕：石狮、石柱、石栏杆有浮雕、圆雕；④琉璃：九龙壁用琉璃瓦砌成，色彩鲜艳。装饰体现了岭南艺术的特色。</p>
+            <p class="text"><strong>园林艺术：</strong>从心苑是黄大仙祠的园林精华。①理水：有池塘、溪流、瀑布；②叠山：有假山、石景；③建筑：有亭、台、楼、阁、桥；④植物：有松、竹、梅、莲等。园林体现了"虽由人作，宛自天开"的理念。</p>
+            <p class="text"><strong>建筑材料：</strong>黄大仙祠用材讲究。①木材：用杉木、樟木等；②石材：用花岗岩、大理石等；③砖瓦：用青砖、琉璃瓦；④灰塑：用石灰、糯米、红糖等调制。材料保证建筑的耐久性。</p>
+            <p class="text"><strong>建筑特色：</strong>黄大仙祠的建筑特色鲜明。①三教融合：儒释道三教建筑共存；②岭南风格：镬耳山墙、彩色玻璃、灰塑等；③现代元素：融入现代建筑材料和技术；④园林结合：宗教建筑与古典园林结合。特色体现了香港文化的多元性。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 信仰习俗 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>信仰习俗 · 有求必应</h3>
+            <p class="text"><strong>黄大仙信仰：</strong>黄大仙是道教仙人，也是民间信仰的神祇。①神通：有"叱石成羊"、"治病救人"、"预知祸福"等神通；②职能：主管医药、财运、姻缘、学业等；③形象：头戴道冠，手持拂尘，慈眉善目；④信仰圈：信徒遍布香港、广东、东南亚乃至海外。黄大仙以"有求必应"闻名。</p>
+            <p class="text"><strong>祭祀活动：</strong>黄大仙祠有丰富的祭祀活动。①日常祭拜：信众上香、供果、叩拜；②法会：有诞辰法会、祈福法会、超度法会等；③诞辰：黄大仙宝诞（农历八月廿三）最隆重；④节日：春节、端午、中秋等传统节日有祭祀。祭祀是信仰活动的主要形式。</p>
+            <p class="text"><strong>求签解签：</strong>求签是黄大仙祠的特色。①求签：在签筒摇出签支，每支签有编号；②签文：签文为诗句，有吉凶寓意；③解签：解签师傅根据签文解答疑惑；④灵签：黄大仙灵签共100支，分上上、上吉、中吉、中平、下下等。求签是香港重要的民俗活动。</p>
+            <p class="text"><strong>祈福仪式：</strong>信众在黄大仙祠有多种祈福方式。①上香：一般上三支香，代表敬天、敬地、敬人；②供品：供奉水果、鲜花、糕点等；③祈福带：书写愿望挂在祈福架上；④点灯：在灯亭点平安灯、智慧灯等。祈福表达了信众的愿望。</p>
+            <p class="text"><strong>民俗活动：</strong>黄大仙祠是民俗活动中心。①抢头香：春节子时，信众争上"头炷香"；②转运：正月期间，信众"摄太岁"、"拜太岁"；③姻缘：年轻人在月老前祈求姻缘；④求学：学生在文昌帝君前祈求学业进步。民俗活动丰富多彩。</p>
+            <p class="text"><strong>社会功能：</strong>黄大仙祠在社会中发挥重要作用。①心理慰藉：为信众提供精神寄托；②社区凝聚：凝聚信众，形成社区；③文化传承：传承道教文化、民俗文化；④慈善公益：开展医疗、教育、安老等慈善事业。寺庙是社会的稳定器。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">信仰</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 香港地标 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>香港地标 · 文化符号</h3>
+            <p class="text"><strong>宗教价值：</strong>黄大仙祠是香港最重要的宗教场所。①道教中心：香港最大的道教宫观；②三教融合：儒释道三教共处的典范；③信仰中心：数百万信众的精神寄托；④宗教活动：举办法会、祭祀、婚礼等。黄大仙祠是香港宗教文化的代表。</p>
+            <p class="text"><strong>文化价值：</strong>黄大仙祠是香港文化的象征。①民俗文化：求签、解签、祈福等民俗的载体；②建筑文化：岭南建筑艺术的代表；③园林文化：古典园林艺术的体现；④慈善文化："普济劝善"精神的实践。黄大仙祠是香港文化的"活化石"。</p>
+            <p class="text"><strong>艺术价值：</strong>黄大仙祠是艺术的宝库。①建筑艺术：布局严谨，形式优美；②雕塑艺术：木雕、石雕、灰塑技艺精湛；③绘画艺术：彩绘色彩鲜艳，构图巧妙；④园林艺术：从心苑设计精巧，意境深远。黄大仙祠是"艺术的博物馆"。</p>
+            <p class="text"><strong>社会价值：</strong>黄大仙祠在社会中发挥重要作用。①慈善事业：创办医院、学校、安老院等；②社区服务：为社区提供各种服务；③心理辅导：为信众提供心理慰藉；④旅游经济：吸引游客，促进经济。黄大仙祠是社会的稳定器。</p>
+            <p class="text"><strong>旅游价值：</strong>黄大仙祠是香港重要的旅游景点。①地标景点：香港旅游的必到之处；②文化体验：体验香港民俗文化；③宗教旅游：了解道教文化和三教融合；④摄影热点：建筑、园林、民俗活动适合摄影。黄大仙祠每年吸引数百万游客。</p>
+            <p class="text"><strong>保护与传承：</strong>黄大仙祠得到科学保护。①法律保护：2010年列为香港法定古迹；②规划保护：编制保护计划，定期维护；③管理保护：啬色园专业管理，保持庙宇整洁；④研究展示：开展研究，出版刊物，举办展览；⑤教育推广：举办讲座、导览，传播道教文化；⑥社区参与：社区居民参与保护，形成保护网络。黄大仙祠的保护经验，为都市庙宇保护提供了成功范例。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 黄大仙祠香港第一洞天，有求必应香火鼎盛百年 | 五重维度·五种灵韵爱心，点赞评论共话香港地标</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（黄大仙祠独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('wong_tai_sin_temple_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('wong_tai_sin_temple_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('wong_tai_sin_temple_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('wong_tai_sin_temple_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对黄大仙祠的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的黄大仙祠感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "黄大仙祠访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

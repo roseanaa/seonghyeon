@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>瑷珲古城 · 四维解读 | 北疆锁钥 · 国耻警示地</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <div class="pic">
+        <img src="./image/瑷珲古城.jpg" title="瑷珲古城" alt="瑷珲古城与黑龙江风光">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 历史风云</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 古城格局</div>
+        <div class="dim-tab" data-tab="culture">🎪 边城文化</div>
+        <div class="dim-tab" data-tab="value">🌟 警示价值</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>瑷珲古城 · 北疆锁钥</h3>
+            <p class="text"><strong>传奇：</strong>中国最北的清代古城之一，清代黑龙江将军驻地，雅克萨之战的前线指挥中心，《瑷珲条约》签订地。位于黑龙江省黑河市爱辉区，隔黑龙江与俄罗斯布拉戈维申斯克（海兰泡）相望。瑷珲古城始建于清康熙二十二年（1683年），是清代在黑龙江流域建立的第一个军事行政中心，被誉为"东国屏藩、北门锁钥"。这里是清代北疆开发的起点，也是中国近代史上领土主权遭受严重破坏的痛史见证。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul><li><strong>瑷珲新城遗址：</strong>全国重点文物保护单位，清代黑龙江将军驻地。现存城墙遗址、城门遗址、街道遗址。城墙为"排木城"结构，内植松木，中实以土，适应北疆冻土环境。</li><li><strong>魁星阁：</strong>古城唯一完整保存的清代建筑，1900年建。砖木结构，方形塔式楼阁，高16米。庚子俄难中全城被焚，唯此阁幸存，被视为瑷珲"魂"之所在。</li><li><strong>瑷珲历史陈列馆：</strong>中国第一个以不平等条约为主题的专题陈列馆，馆名由胡耀邦题写。馆内陈列《瑷珲条约》签订场景复原、历史文物、图片资料，是爱国主义教育基地。</li><li><strong>见证松：</strong>古城内一株百年古松，见证了瑷珲的兴衰荣辱，被称为"国耻的见证者"。</li><li><strong>黑龙江将军衙门遗址：</strong>清代黑龙江最高军政机构遗址，现存地基、柱础。康熙、乾隆时期，萨布素、奕山等将军在此办公。</li><li><strong>拱宸街遗址：</strong>清代瑷珲南北商业大街，长1.5公里，两侧店铺林立，被誉为"一条街，半部瑷珲史"。</li><li><strong>萨布素将军塑像：</strong>首任黑龙江将军萨布素雕像，纪念他在雅克萨之战中的功绩。</li></ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul><li><strong>最佳时间：</strong>6-9月，夏季凉爽，冬季可看雪景。建议避开冬季极寒天气（-30°C以下）。</li><li><strong>游览顺序：</strong>瑷珲历史陈列馆→魁星阁→瑷珲新城遗址→黑龙江将军衙门遗址→拱宸街遗址→见证松→萨布素将军塑像。建议3-4小时。</li><li><strong>深度体验：</strong>参观陈列馆了解《瑷珲条约》历史，登魁星阁俯瞰黑龙江，走拱宸街感受清代边贸繁荣，谒见证松反思国耻。</li><li><strong>摄影建议：</strong>魁星阁与黑龙江同框，陈列馆《瑷珲条约》签订场景，城墙遗址沧桑感，冬季雪后古城银装素裹，江对岸俄罗斯布拉戈维申斯克市景。</li></ul>
+            <p><strong>交通信息：</strong>位于黑河市爱辉区瑷珲镇，距黑河市区32公里。从黑河客运站乘班车到瑷珲镇，车程40分钟。自驾从黑河市区沿S311省道向北。建议与黑河市区、五大连池组成旅游线路。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">锁钥</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 古城印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 历史风云 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>历史风云 · 龙江首府</h3>
+            <p class="text"><strong>建城背景：</strong>清康熙二十二年（1683年），为抗击沙俄东侵，解决雅克萨问题，康熙帝设黑龙江将军，任命萨布素为首任将军。初在黑龙江左岸（今俄罗斯境内）建瑷珲旧城，康熙二十三年（1684年）迁至右岸建瑷珲新城。瑷珲成为清代黑龙江流域最高军政中心，黑龙江第一个"省会"。</p>
+            <p class="text"><strong>雅克萨之战：</strong>康熙二十四年（1685年）、二十五年（1686年），清军两次围攻雅克萨（今俄罗斯阿尔巴津诺）。瑷珲是前线指挥基地，萨布素在此统率水陆官兵，最终迫使沙俄签订《尼布楚条约》，确立中俄东段边界。此战是清朝对外战争的重要胜利，维护了东北边疆安全。</p>
+            <p class="text"><strong>《瑷珲条约》：</strong>咸丰八年（1858年）五月二十八日，黑龙江将军奕山在沙俄武力胁迫下，于瑷珲城签订不平等《瑷珲条约》。条约规定：黑龙江以北约60万平方公里领土割让俄国，乌苏里江以东划为中俄共管。这是近代中国丧失领土最多的条约之一，瑷珲从此成为国耻象征。</p>
+            <p class="text"><strong>庚子俄难：</strong>光绪二十六年（1900年），沙俄趁八国联军侵华之机，出兵东北。七月，俄军制造"海兰泡惨案"和"江东六十四屯惨案"，屠杀中国居民7000余人，并焚毁瑷珲古城。魁星阁因俄军用作指挥所而幸免。此事件史称"庚子俄难"。</p>
+            <p class="text"><strong>近代变迁：</strong>清末，黑龙江将军驻地迁至齐齐哈尔，瑷珲地位下降。民国时期，设瑷珲县。1945年，苏联红军进驻。1956年，改设爱辉县。1983年，撤县设黑河市爱辉区。2001年，瑷珲新城遗址被列为全国重点文物保护单位。</p>
+            <p class="text"><strong>历史人物：</strong>①萨布素（1629-1701年）：首任黑龙江将军，雅克萨之战统帅。②奕山（1790-1878年）：签订《瑷珲条约》的黑龙江将军。③寿山（1860-1900年）：庚子俄难中殉国的黑龙江将军。④凤翔（？-1900年）：瑷珲副都统，庚子俄难中战死。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 古城格局 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>古城格局 · 木城雄关</h3>
+            <p class="text"><strong>总体布局：</strong>瑷珲新城分内外两城。内城为军政区，周长1030步（约1.7公里），设四门：东"迎恩门"、西"镇安门"、南"定边门"、北"威远门"。外城为商民区，周长十里（约5公里），设五门。城市呈方形，坐北朝南，东临黑龙江。这种"内政外商"的布局，体现了清代边疆城市的军事行政功能。</p>
+            <p class="text"><strong>城墙结构：</strong>瑷珲城墙采用独特的"排木城"结构：先立松木为桩，桩间填土夯实，桩顶横木连接，形成"木骨土墙"。墙高1丈8尺（约5.8米），底宽1丈（约3.2米），顶宽6尺（约1.9米）。这种结构适应北疆冻土环境，施工快捷，防御性强。是中国古代木构防御工程的典范。</p>
+            <p class="text"><strong>官署建筑：</strong>内城中心为黑龙江将军衙门，五进院落，有大堂、二堂、内宅、库房、监狱等。大堂为将军办公、议事处，面阔五间，进深三间，悬山顶。衙门前有旗杆、石狮，体现官署威严。衙门东侧有副都统衙门、协领衙门，西侧有银库、粮仓。</p>
+            <p class="text"><strong>魁星阁：</strong>古城唯一完整保存的清代建筑，1900年建。砖木结构，方形三层塔式楼阁，高16米，底边长8米。一层为砖石基座，二三层为木构，歇山顶，绿色琉璃瓦。阁内原供魁星像，祈求文运昌盛。庚子俄难中，俄军用作指挥所，得以幸存。</p>
+            <p class="text"><strong>庙宇体系：</strong>清代瑷珲"庙宇林立"，有关帝庙、城隍庙、龙王庙、文庙、大佛寺、清真寺等。关帝庙最大，位于内城，祭祀关羽，体现戍边将士的忠义精神。龙王庙临江而建，祭祀黑龙江神，保佑航行平安。文庙祭祀孔子，体现儒家文化传播。</p>
+            <p class="text"><strong>拱宸街：</strong>贯穿内外城的南北商业大街，长1.5公里，宽8米。清代"居民四万，商贾三千"，街道两侧店铺林立，有粮店、布庄、药铺、酒坊、客栈等。店铺悬挂满汉文招牌，夜间挂灯照明，热闹非凡。现为遗址展示区。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">筑防</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑智慧</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 边城文化 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>边城文化 · 多族共融</h3>
+            <p class="text"><strong>民族构成：</strong>清代瑷珲是多民族聚居地：①满族：驻防八旗官兵及家属，是统治阶层。②汉族：流人、商人、农民，带来中原文化。③达斡尔族：瑷珲世居民族，擅长渔猎。④鄂伦春族：山林狩猎民族。⑤蒙古族、回族等。形成"满语为官话，汉语为商语，达斡尔语为民间语"的多语环境。</p>
+            <p class="text"><strong>戍边文化：</strong>①流人文化：清初大量流放文人（如方式济、吴兆骞）带来中原文化，办学授徒，促进文化传播。②站人文化：驿站兵（站丁）世代戍守，形成独特的"站人"民俗，如"站话"（混合方言）、"站人婚俗"。③屯垦文化：旗人、汉人开垦土地，发展农业。</p>
+            <p class="text"><strong>信仰习俗：</strong>①萨满信仰：满族、达斡尔族保留祭天、祭山、祭江仪式，萨满（巫师）沟通人神。②关公崇拜：戍边将士奉关公为"武圣"，祈求保境安民，每年五月十三有关帝庙会。③江神信仰：渔民、水师祭祀黑龙江神（龙王），祈求航行平安。④祖先崇拜：各族祭祀祖先，满族"祭索罗杆"。</p>
+            <p class="text"><strong>节庆活动：</strong>①上元节"滚冰"：正月十五，到黑龙江冰面打滚，寓意滚去疾病。②端午节"踏青"：江边采艾草，挂葫芦，祈福辟邪。③中俄"双子城"文化交流：与对岸布拉戈维申斯克举办文艺演出、体育比赛。④瑷珲上元节：国家级非物质文化遗产，有灯会、秧歌、冰雕。</p>
+            <p class="text"><strong>饮食特色：</strong>融合东北、俄罗斯、少数民族风味：①杀猪菜：东北传统菜肴，体现农耕文化。②大列巴：俄式面包，体现中俄交流。③江鱼宴：黑龙江野鱼（鲟鱼、鳇鱼、大马哈鱼）。④苏耗子：满族黏食，用苏子叶包裹。⑤酸菜白肉：满族传统菜肴。⑥奶茶：蒙古族、达斡尔族饮品。</p>
+            <p class="text"><strong>文学艺术：</strong>①流人文学：清代文人留下《龙沙纪略》《宁古塔纪略》《瑷珲竹枝词》等作品，记录边地风物。②民间艺术：瑷珲玛虎戏（满族面具舞）、二人转、东北大鼓。③现代创作：电影《傲蕾·一兰》（反映达斡尔抗俄）、电视剧《黑龙江三部曲》等。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">边韵</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 警示价值 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>警示价值 · 国耻记忆</h3>
+            <p class="text"><strong>历史价值：</strong>瑷珲是清代北疆治理的实物见证，记录了从雅克萨抗俄到《瑷珲条约》国耻的全过程。它是研究清代边疆史、中俄关系史、近代屈辱史不可替代的"活化石"。古城遗址、文物、文献，是还原历史真相的重要依据。</p>
+            <p class="text"><strong>建筑价值：</strong>"排木城"结构是中国古代边疆防御城市的独特类型，体现了古代工匠在冻土环境下的建筑智慧。魁星阁是东北地区少有的清代砖木阁楼建筑，具有重要的建筑史价值。古城布局、官署、庙宇、民居，构成完整的边疆城市标本。</p>
+            <p class="text"><strong>政治价值：</strong>瑷珲是"勿忘国耻、振兴中华"的爱国主义教育基地。《瑷珲条约》签订地遗址警示后人"落后就要挨打"、"弱国无外交"，强化国家主权与领土意识。每年有大量学生、军人、游客前来接受爱国主义教育。</p>
+            <p class="text"><strong>民族价值：</strong>瑷珲是多民族共同开发、保卫边疆的缩影。满、汉、达斡尔、鄂伦春等民族在此聚居，共同抗击沙俄，发展经济，形成了"多元一体"的中华民族格局。是民族团结教育的典型案例。</p>
+            <p class="text"><strong>旅游价值：</strong>依托"一江（黑龙江）一城（瑷珲）一馆（陈列馆）"，打造"北疆风情—历史反思—中俄跨境"特色旅游线路。游客在此可了解边疆历史，感受多民族文化，眺望对岸俄罗斯，体验边境风情。是黑河市核心文化旅游目的地。</p>
+            <p class="text"><strong>保护与传承：</strong>2001年列为全国重点文物保护单位。实施遗址保护、魁星阁修缮、历史街区风貌恢复工程。瑷珲历史陈列馆通过文物、场景复原、数字技术，系统展示瑷珲历史。开展学术研究，出版《瑷珲县志》《瑷珲历史文集》。举办"瑷珲上元节"等非遗活动，传承边城文化。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 北疆锁钥瑷珲城，国耻警示警钟鸣 | 五重维度·五种灵韵爱心，点赞评论共话边城风云</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（瑷珲古城独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('aihui_gucheng_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('aihui_gucheng_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('aihui_gucheng_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('aihui_gucheng_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对瑷珲古城的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的瑷珲感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "边城访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

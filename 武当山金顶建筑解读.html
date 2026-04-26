@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>武当山金顶 · 四维解读 | 太岳仙山 · 道教圣地</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/武当山金顶.jpg" title="武当山金顶" alt="武当山金顶与云海">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 千年道场</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 建筑奇观</div>
+        <div class="dim-tab" data-tab="culture">🎪 道教文化</div>
+        <div class="dim-tab" data-tab="value">🌟 世界遗产</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>武当山金顶 · 太岳之巅</h3>
+            <p class="text"><strong>传奇：</strong>武当山，古称"太岳""玄岳"，位于湖北省十堰市丹江口市境内，是中国著名的道教圣地，被誉为"亘古无双胜境，天下第一仙山"。主峰天柱峰海拔1612米，其巅即为"金顶"，又称"金殿"。金殿建于明永乐十四年（1416年），是中国现存等级最高、规模最大、保存最完好的铜铸鎏金宫殿式建筑。1994年，武当山古建筑群被联合国教科文组织列入《世界遗产名录》，金顶是其核心和象征。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>金殿：</strong>位于天柱峰顶端，为铜铸仿木结构宫殿式建筑。面阔进深各三间，高5.54米，宽4.4米，深3.15米。全殿用铜件榫卯拼焊而成，外鎏赤金，重檐庑殿顶，九脊，仙人走兽，殿内供真武大帝鎏金铜像，重达10吨。历经600年风雨雷电，至今仍金光夺目，被誉为"国之瑰宝"。</li>
+                <li><strong"金顶"铜碑：</strong>金殿前有铜碑两通，一为明永乐十四年（1416年）敕建碑，一为明嘉靖三十一年（1552年）重修碑。碑体铜铸，碑文记载金殿建造始末，是研究明代建筑史的重要资料。</li>
+                <li><strong>紫金城：</strong>环绕天柱峰顶的城墙，建于明永乐十七年（1419年）。城墙长344.43米，高数米不等，用每块重达千斤的长方形花岗岩砌成。城墙依山就势，蜿蜒起伏，设东、西、南、北四座天门，南天门为正门，是登金顶的必经之路。</li>
+                <li><strong>转运殿：</strong>位于金殿西南侧，原名"元天洞"，为明代建筑。殿内有一铜铸小殿，与金殿形制相同，传说绕小殿转一圈可"时来运转"。殿内有明代"雷火炼殿"时烧熔的铜渣，见证了金殿的神奇。</li>
+                <li><strong>太和宫：</strong>位于紫金城南天门外，是金顶建筑群的重要组成部分。建于明永乐十四年（1416年），包括朝拜殿、钟鼓楼、戏楼等建筑。宫前有"一柱擎天"石刻，为明代遗物。</li>
+                <li><strong>朝天宫：</strong>位于天柱峰山腰，是登山朝拜的休息处。明代建筑，供奉道教神祇。从此处开始，登山道路分为"明道"和"神道"，分别供皇帝和百姓行走。</li>
+                <li><strong>金顶云海：</strong>武当山常年云雾缭绕，尤以金顶云海最为壮观。清晨或雨后，云海翻腾，金殿在云雾中若隐若现，如天上宫阙。冬季常有"金顶雪霁"，银装素裹，分外妖娆。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，各有特色。春季（4-5月）山花烂漫；夏季（6-8月）云雾缭绕，避暑胜地；秋季（9-11月）天高云淡，视野开阔；冬季（12-2月）雪景迷人。建议清晨登山，可观日出、云海。农历三月初三真武诞辰、九月初九真武得道日有法会。</li>
+                <li><strong>登山路线：</strong>①经典路线：游客中心→太子坡→紫霄宫→南岩宫→朝天宫→金顶（全程约4-5小时）；②索道路线：游客中心→琼台索道→金顶（约2小时）；③徒步路线：乌鸦岭→南岩→榔梅祠→黄龙洞→朝天宫→一天门→二天门→三天门→朝圣门→金顶（约3-4小时）。</li>
+                <li><strong>深度体验：</strong>清晨登金顶观日出、云海；绕金殿转三圈，祈求平安；参观转运殿，体验"时来运转"；在太和宫听道教音乐，感受仙山韵律；品尝武当道教素斋；学习武当太极拳、养生功；夜宿金顶附近，观星空、夜景。</li>
+                <li><strong>摄影建议：</strong>金殿全景与特写（早晚光线最佳），紫金城墙与山势结合，金顶云海与日出，太和宫建筑群，登山古神道，冬季雪景。建议使用广角镜头拍摄建筑与自然融合，长焦镜头捕捉建筑细节。偏振镜可减少金属反光，增强色彩饱和度。</li>
+            </ul>
+            <p><strong>交通信息：</strong>武当山位于湖北省十堰市丹江口市。从十堰出发：①汽车：十堰客运站有直达武当山的旅游专线车，车程1小时；②火车：到武当山站，转乘公交或出租车到景区；③自驾：经福银高速到武当山出口。景区内有环保车、索道。索道下站在琼台，上站在金顶附近。距武当山机场15公里，车程20分钟；距十堰东站30公里，车程40分钟。建议游览2-3天，可住宿山上或山下。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">仙山</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 金顶印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 千年道场 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>千年道场 · 皇家敕建</h3>
+            <p class="text"><strong>唐代发端：</strong>唐贞观年间（627-649年），唐太宗李世民敕建五龙祠，为武当山有记载的第一座皇家庙宇。唐乾宁年间（894-898年），杜光庭《洞天福地岳渎名山记》将武当山列为道教"七十二福地"之一。唐代，武当山开始有道士隐居修行。</p>
+            <p class="text"><strong>宋代发展：</strong>宋代，武当山道教逐渐兴盛。宋真宗天禧二年（1018年），敕封真武为"镇天真武灵应佑圣真君"。宋徽宗宣和年间（1119-1125年），在五龙顶建"真武殿"，奉祀真武大帝。南宋时期，武当山成为道教重要道场。</p>
+            <p class="text"><strong>元代鼎盛：</strong>元代，武当山成为全国道教中心。元世祖至元二十二年（1285年），敕建"大五龙灵应万寿宫"。元成宗大德八年（1304年），敕封真武为"元圣仁威玄天上帝"。元仁宗延祐元年（1314年），在展旗峰建"大顶铜殿"，为金殿前身。元代，武当山宫观达100余处。</p>
+            <p class="text"><strong>明代巅峰：</strong>明代是武当山发展的黄金时期。明成祖朱棣发动"靖难之役"后，为报真武"显灵相助"，于永乐十年（1412年）下旨"北建故宫，南修武当"，命隆平侯张信、驸马都尉沐昕等率30万军民工匠，历时12年，建成9宫、8观、36庵堂、72岩庙、39桥、12亭的庞大道教建筑群。永乐十四年（1416年），在天柱峰顶建金殿。永乐十七年（1419年），建紫金城。明代，武当山有"皇室家庙"之称。</p>
+            <p class="text"><strong>清代至今：</strong>清代，朝廷仍重视武当山，多次拨款维修。康熙四十二年（1703年），康熙帝为金殿题"金光妙相"匾额。乾隆、嘉庆年间均有修葺。民国时期，战乱频仍，武当山宫观多有损毁。新中国成立后，政府拨款修复。1961年，金殿被列为全国重点文物保护单位。1994年，武当山古建筑群列入《世界遗产名录》。2006年，成为国家5A级旅游景区。</p>
+            <p class="text"><strong>金殿建造：</strong>金殿建于明永乐十四年（1416年）。建造过程：①设计：由工部设计，仿木结构宫殿式样；②铸造：在湖北均州（今丹江口）分件铸造，用失蜡法工艺；③运输：用人力、畜力将铜件运至山顶；④组装：在天柱峰顶现场拼装，全殿用榫卯连接，不用一钉；⑤鎏金：表面鎏赤金，共用黄金300余两。金殿建成后，永乐帝赐名"大岳太和宫"。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑奇观 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑奇观 · 铜铸鎏金</h3>
+            <p class="text"><strong>金殿结构：</strong>金殿为铜铸仿木结构，重檐庑殿顶。①基座：花岗岩须弥座，高1.52米，雕刻云龙、海浪图案；②柱网：12根圆柱，直径0.28米，高3.15米；③梁架：用抬梁式结构，梁、枋、斗拱、椽、瓦等均为铜铸；④屋顶：重檐，上檐用七踩斗拱，下檐用五踩斗拱，正脊两端有鸱吻，垂脊、戗脊有仙人走兽；⑤门窗：隔扇门4扇，窗8扇，可开启。全殿用铜件约20吨，用榫卯拼焊，不用一钉。</p>
+            <p class="text"><strong>铸造工艺：</strong>金殿采用"失蜡法"铸造。①制模：用蜡制成构件模型；②制范：在蜡模外敷泥料，形成铸范；③化蜡：加热使蜡熔化流出，形成空腔；④浇铸：将铜液（铜占90%，其他为锡、铅、锌等）注入空腔；⑤修整：铸件冷却后，打碎外范，进行打磨、修整。这种方法可铸造复杂构件，精度高。金殿构件在北京铸造，经水路、陆路运至武当山。</p>
+            <p class="text"><strong>鎏金技术：</strong>金殿表面采用"火镀金"法鎏金。①制金泥：将黄金剪碎，与水银混合，加热成金汞齐（金泥）；②抹金：将金泥均匀涂抹在铜件表面；③烘烤：加热使水银蒸发，黄金附着在铜表面；④压光：用玛瑙或玉石压子反复压磨，使金光亮。共用黄金300余两，金层厚0.3-0.5毫米，历经600年仍光亮如新。</p>
+            <p class="text"><strong>紫金城：</strong>环绕天柱峰顶的石砌城墙。①城墙：长344.43米，平均高4.15米，底宽2.4米，顶宽1.26米，用每块重达千斤的花岗岩砌成，不用灰浆，干砌而成；②城门：东、西、南、北四座天门，南天门为正门，有"一柱擎天"石坊；③功能：保护金殿，划分神圣空间。紫金城依山就势，蜿蜒起伏，如一条巨龙盘绕山顶。</p>
+            <p class="text"><strong>建筑特色：</strong>金顶建筑群体现了"天人合一"的道教思想。①选址：天柱峰为武当山最高峰，象征"天柱"；②布局：金殿居中，紫金城环绕，形成"天圆地方"格局；③材料：用铜、石等耐久材料，象征永恒；④装饰：云龙、海浪等图案，体现道教对自然的崇拜。金顶建筑是自然与人工的完美结合。</p>
+            <p class="text"><strong>科学价值：</strong>金殿蕴含丰富的科学技术。①结构科学：铜铸仿木结构，抗震性能强，历经多次地震而不倒；②铸造科学：失蜡法铸造大型复杂构件，代表明代最高铸造水平；③防腐科学：鎏金层保护铜件，防止氧化腐蚀；④声学效应：殿内会产生"雷鸣"现象，是建筑声学的奇迹。金殿是中国古代科学技术的结晶。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 道教文化 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>道教文化 · 真武道场</h3>
+            <p class="text"><strong>真武信仰：</strong>真武大帝，又称玄天上帝、佑圣真君，是道教尊奉的北方之神，主水、主兵。传说真武在武当山修炼42年，得道飞升。宋代开始，真武信仰在武当山兴盛。明代，因朱棣以"真武显灵"为名发动靖难之役，登基后大力推崇，使武当山成为全国真武信仰中心。金殿供奉的真武鎏金铜像，高1.86米，重达10吨，披发跣足，着袍衬铠，体态丰腴，神情庄严。</p>
+            <p class="text"><strong>道教音乐：</strong>武当山道教音乐是中国道教音乐的重要组成部分。①种类：有韵腔（声乐）、曲牌（器乐）两大类；②乐器：以钟、磬、鼓、木鱼等打击乐为主，辅以管、笛、笙、箫等吹奏乐；③特点：古朴典雅，庄严肃穆，有"仙乐"之称；④功能：用于斋醮科仪、早晚功课、法事活动。武当山道教音乐被列为国家级非物质文化遗产。</p>
+            <p class="text"><strong>武当武术：</strong>武当武术是中国武术的重要流派，与少林武术齐名。①创始人：相传为宋代道士张三丰所创；②特点：以柔克刚，以静制动，后发先至；③拳种：太极拳、形意拳、八卦掌等内家拳；④功法：注重内功修炼，养气为本；⑤传承：有严格的师承制度。金顶是武当武术的重要发源地，道士在金顶修炼武功，吸收天地灵气。</p>
+            <p class="text"><strong>道教医药：</strong>武当山道教医药是中国传统医药的组成部分。①理论：以道教养生思想为指导，注重预防；②特色：擅长针灸、推拿、草药，有独特的秘方；③典籍：《武当医药秘方》《武当伤科》等；④传承：道士在修炼中研习医术，治病救人。武当山盛产中药材，有"天然药库"之称。</p>
+            <p class="text"><strong>朝山进香：</strong>武当山是重要的朝圣之地。①时间：农历三月初三真武诞辰、九月初九真武得道日，是朝山高峰期；②路线：从山脚玉虚宫开始，经太子坡、紫霄宫、南岩宫，最后到金顶；③仪式：烧香、叩拜、许愿、还愿；④信众：来自全国各地，每年达数十万人。朝山进香体现了民间信仰的活力。</p>
+            <p class="text"><strong>道教礼仪：</strong>金顶是道教重要礼仪场所。①日常功课：道士早晚在金殿前做功课，诵经礼忏；②斋醮科仪：为信众祈福禳灾，超度亡灵；③传戒授箓：传授戒律、法箓，培养道士；④节日法会：在道教节日举行盛大法会。这些礼仪传承了道教文化，维系了道脉。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">道韵</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 世界遗产 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>世界遗产 · 人类瑰宝</h3>
+            <p class="text"><strong>世界遗产价值：</strong>1994年12月，武当山古建筑群被联合国教科文组织列入《世界遗产名录》。世界遗产委员会评价："武当山古建筑中的宫阙庙宇集中体现了中国元、明、清三代世俗和宗教建筑的建筑学和艺术成就。古建筑群坐落在沟壑纵横、风景如画的湖北省武当山麓，在明代期间逐渐形成规模，其中的道教建筑可以追溯到公元7世纪，这些建筑代表了近千年的中国艺术和建筑的最高水平。"</p>
+            <p class="text"><strong>历史价值：</strong>金顶是武当山1500年道教史的见证。①宗教史：从唐代五龙祠到明代金殿，反映了道教在武当山的发展历程；②建筑史：金殿代表了明代铜铸建筑的最高水平；③政治史：明成祖"北建故宫，南修武当"，体现了政治与宗教的关系；④社会史：朝山进香、庙会等活动，反映了民间信仰生活。金顶是研究中国历史、宗教、建筑、社会的重要实物。</p>
+            <p class="text"><strong>建筑价值：</strong>金顶建筑群是中国古代建筑的杰出代表。①金殿：中国现存最高等级、最大规模的铜铸鎏金宫殿；②紫金城：独特的山地防御性城墙建筑；③太和宫：明代官式建筑的典范；④整体规划：依山就势，天人合一，体现了高超的建筑设计思想。金顶建筑是建筑艺术、铸造艺术、装饰艺术的完美结合。</p>
+            <p class="text"><strong>科学价值：</strong>金殿蕴含丰富的科学技术。①铸造技术：失蜡法铸造大型复杂构件，代表明代最高铸造水平；②鎏金技术：火镀金工艺，使金层600年不褪色；③结构技术：榫卯连接，抗震性强；④声学技术：产生"雷鸣"效应的声学设计；⑤防腐技术：铜铸鎏金，耐腐蚀。金殿是中国古代科学技术的活化石。</p>
+            <p class="text"><strong>文化价值：</strong>金顶是道教文化的重要象征。①道教圣地：真武道场，道教信仰中心；②武术发源：武当武术发源地，内家拳祖庭；③音乐传承：武当道教音乐，国家级非遗；④医药宝库：道教医药，传统医学组成部分；⑤艺术宝库：建筑、雕塑、绘画、书法等艺术荟萃。金顶是中华文化的重要代表。</p>
+            <p class="text"><strong>保护与传承：</strong>金顶得到科学保护。①法律保护：1961年，金殿被列为全国重点文物保护单位；②规划保护：编制《武当山古建筑群保护规划》，划定保护区、缓冲区；③工程保护：对金殿、紫金城等进行维修加固，安装避雷设施；④监测研究：建立金殿监测系统，开展材料、结构、环境研究；⑤展示利用：合理开放参观，控制游客数量；⑥传承发展：保护道教文化，传承武当武术、道教音乐等非遗。金顶的保护经验，为世界文化遗产保护提供了借鉴。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 武当山金顶太岳之巅，铜铸鎏金道教圣地 | 五重维度·五种灵韵爱心，点赞评论共话仙山道韵</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（武当山金顶独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('wudangshan_jinding_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('wudangshan_jinding_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('wudangshan_jinding_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('wudangshan_jinding_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对武当山金顶的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的金顶感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "金顶访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

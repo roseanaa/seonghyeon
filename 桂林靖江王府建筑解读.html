@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>桂林靖江王府 · 四维解读 | 独秀峰下六百年王城</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 - 已添加 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <!-- 图片容器 -->
+    <div class="pic">
+        <img src="./image/桂林靖江王府.jpg" title="桂林靖江王府" alt="靖江王府与独秀峰">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 王府兴衰</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 建筑规制</div>
+        <div class="dim-tab" data-tab="culture">🎪 文教圣地</div>
+        <div class="dim-tab" data-tab="value">🌟 桂林地标</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>桂林靖江王府 · 独秀峰下六百年王城</h3>
+            <p class="text"><strong>传奇：</strong>靖江王府位于广西桂林市中心独秀峰下，始建于明洪武五年（1372年），是明太祖朱元璋其侄孙朱守谦被封为靖江王时修造的王城。它是我国现存最完整的明代藩王府邸，比北京故宫早建34年，是"阅尽王城知桂林"的桂林历史文化缩影。从建成到清代改为贡院的近500年间，这里一直是广西政治、文化中心。2010年被列为国家考古遗址公园，2013年成为全国重点文物保护单位。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>承运殿：</strong>王府主殿，面阔五间，进深三间，重檐歇山顶，是靖江王处理政务、举行大典的地方。现存台基、柱础、石栏杆等遗迹，可见明代王府建筑规制。殿前有云阶玉陛，雕刻精美，体现了明代藩王府的建筑规格。</li>
+                <li><strong>独秀峰：</strong>位于王府后苑，海拔216米，相对高度66米，是桂林"众山之王"。山体陡峭，四壁如削，古人赞其"孤峰不与众山俦，直上青云势未休"。山上摩崖石刻多达136件，包括"桂林山水甲天下"出处石刻。</li>
+                <li><strong>"桂林山水甲天下"石刻：</strong>位于独秀峰东壁，为南宋王正功于嘉泰元年（1201年）所作。全诗为"桂林山水甲天下，玉碧罗青意可参。士气未饶军气振，文场端似战场酣。九关虎豹看劲敌，万里鲲鹏伫剧谈。老眼摩挲顿增爽，诸君端是斗之南。"这是"桂林山水甲天下"最早出处。</li>
+                <li><strong>月牙池：</strong>位于独秀峰北麓，因形似弯月而得名，是桂林四大名池之一（另为白龙池、圣母池、春涛池）。原为王府御苑水池，池畔有亭台水榭，是明代王府园林的精华。池水清澈，倒映独秀峰，形成"山光水色"的景观。</li>
+                <li><strong>广西贡院：</strong>清代在王府旧址上建立的科举考场。现存贡院碑廊，保存了清代科举考试的珍贵史料。贡院规模宏大，有考舍5000余间，广西历史上的最后一位状元、三元及第者陈继昌曾在此应试。</li>
+                <li><strong>承运门：</strong>王府正门，面阔五间，进深二间，单檐歇山顶。门前有石狮一对，威武雄壮。门额原悬"靖江王府"匾额，现存建筑为清代重建，但仍保持明代风格。</li>
+                <li><strong>玉陛云阶：</strong>承运殿前的石雕御道，长22米，宽4.5米，用整块花岗岩雕刻而成。御道中央雕刻祥云、蟠龙、海水江崖等图案，是明代石雕艺术的精品，也是藩王府中唯一保存完好的云阶玉陛。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，春秋最佳（3-5月，9-11月）。建议上午参观，避开旅游团高峰。每年农历三月初三、九月初九有传统祭祀活动。夏季注意防暑，冬季较为温暖。</li>
+                <li><strong>游览顺序：</strong>承运门→承运殿→玉陛云阶→独秀峰（登山）→"桂林山水甲天下"石刻→月牙池→贡院遗址→碑廊→广西师范大学校史馆。建议安排3-4小时。</li>
+                <li><strong>深度体验：</strong>清晨登独秀峰观桂林城全景；在"桂林山水甲天下"石刻前诵读全诗；体验清代科举考试场景（贡院有模拟考试）；品尝王府秘制"王府宴"；观看《靖江王府》实景演出；夜游靖江王府，欣赏灯光秀；参加拓碑体验，亲手拓印独秀峰石刻。</li>
+                <li><strong>摄影建议：</strong>独秀峰全景与桂林城构图，月牙池倒影，承运殿建筑细节，玉陛云阶石雕特写，"桂林山水甲天下"石刻，贡院考舍场景，王府城墙与古树。建议使用广角镜头拍摄建筑与山峰融合，长焦镜头捕捉石刻细节。清晨和傍晚光线最佳，可拍摄金色阳光洒在独秀峰上的美景。</li>
+            </ul>
+            <p><strong>交通信息：</strong>靖江王府位于桂林市秀峰区王城路1号。公交1路、2路、10路、11路、14路、18路、22路、24路、30路、91路、99路、100路等到"靖江王城"站。距桂林站3公里，车程10分钟；距桂林北站8公里，车程20分钟；距桂林两江国际机场28公里，车程40分钟。周边有象鼻山、两江四湖、正阳步行街、东西巷等景点。建议与象鼻山、芦笛岩、漓江组合游览。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">王城</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 王府印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 王府兴衰 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>王府兴衰 · 靖江十四王</h3>
+            <p class="text"><strong>建府背景：</strong>明洪武三年（1370年），朱元璋封其侄孙朱守谦为靖江王，藩国桂林。洪武五年（1372年），开始修建王府，历时20余年建成。王府选址独秀峰下，因独秀峰"孤峰独秀"，象征王权至高无上。王府建设动用数万军民，耗费巨大，规制仅次于南京故宫。</p>
+            <p class="text"><strong>明代藩府：</strong>靖江王传十一世十四王，历时280年（1370-1650年）。第一代靖江王朱守谦，朱元璋长兄朱兴隆之孙。历代靖江王中，以第三代朱佐敬、第六代朱约麒、第十一代朱履焘较为著名。朱佐敬在位58年，修建独秀峰石刻；朱约麒好文，建宝善堂藏书；朱履焘年幼袭封，被清军杀害。靖江王府是明代存在时间最长的藩王府之一。</p>
+            <p class="text"><strong>南明时期：</strong>清顺治七年（1650年），清定南王孔有德攻陷桂林。末代靖江王朱亨歅（第十一世朱履焘之侄）拒绝投降，在王府自焚殉国（一说被孔有德杀害）。孔有德占据王府，改为定南王府。顺治九年（1652年），李定国攻桂林，孔有德自焚，王府大部被毁。</p>
+            <p class="text"><strong>清代贡院：</strong>康熙二十年（1681年），广西巡抚郝浴在王府旧址建立广西贡院。贡院规模宏大，有考舍5000余间，成为广西科举考试中心。清代广西共出状元4名，其中陈继昌（三元及第）、龙启瑞、张建勋、刘福姚均曾在广西贡院应试。贡院一直使用到光绪三十一年（1905年）科举废除。</p>
+            <p class="text"><strong>近代变迁：</strong>光绪三十四年（1908年），贡院改为广西优级师范学堂。民国时期，先后为广西省立第二师范学校、广西省政府。1921年，孙中山北伐时曾在此设立大本营。1937年，改为广西省政府。1949年后，为广西师范学院（今广西师范大学）校址。</p>
+            <p class="text"><strong>保护修复：</strong>1996年，靖江王府及王陵被列为全国重点文物保护单位。2000年，启动大规模考古发掘和修复工程。2010年，建成靖江王府考古遗址公园。2013年，完成承运殿、玉陛云阶等主要建筑的复原展示。现为桂林最重要的历史文化景区之一。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑规制 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑规制 · 明代藩王府典范</h3>
+            <p class="text"><strong>总体布局：</strong>靖江王府严格按照明代藩王府规制建造。①轴线：南北中轴线，前朝后寝；②规制：承运门（前朝）→承运殿（正殿）→存心殿（寝宫）→御苑（独秀峰、月牙池）；③附属：左祖右社，东有宗庙，西有社稷坛；④城墙：周长约1.5公里，高8米，底宽5.5米，顶宽3米，用方形青石砌筑，设四门。整座王府占地19.78公顷，是明代规模最大的藩王府之一。</p>
+            <p class="text"><strong>承运殿：</strong>王府主殿，面阔五间（31米），进深三间（18米），高16米，重檐歇山顶，覆黄色琉璃瓦。殿前有月台，设云阶玉陛。殿内用金砖铺地，梁柱用楠木，斗拱用五彩。现存台基、柱础、石栏杆、云阶玉陛等。台基高2米，面积558平方米，可见当时规模。</p>
+            <p class="text"><strong>玉陛云阶：</strong>承运殿前的石雕御道，用整块花岗岩雕成。①长度：22米，宽4.5米；②图案：中央雕蟠龙，两侧雕祥云、海水江崖；③工艺：采用高浮雕、浅浮雕相结合，立体感强；④等级：只有王府正殿前才能用云阶玉陛，体现藩王"一人之下，万人之上"的地位。这是全国藩王府中唯一保存完好的云阶玉陛。</p>
+            <p class="text"><strong>独秀峰建筑：</strong>独秀峰是王府的天然屏风。①登山道：有306级石阶直达山顶；②亭台：有中山纪念塔、独秀亭、观音堂等；③石刻：136件摩崖石刻，跨越唐宋至民国；④洞府：有太平岩、雪洞、读书岩等洞穴。独秀峰与王府建筑有机结合，体现了"天人合一"的设计思想。</p>
+            <p class="text"><strong>月牙池园林：</strong>月牙池是王府的御苑。①形状：形如弯月，长60米，宽20米；②建筑：池中有方壶亭、瀛洲亭，以曲桥相连；③植物：池畔植柳、桃、桂等花木；④功能：用于游赏、宴饮、读书。月牙池与独秀峰构成"山得水而活，水得山而媚"的园林意境。</p>
+            <p class="text"><strong>建筑特色：</strong>靖江王府建筑体现广西地方特色。①材料：用本地青石、石灰岩；②工艺：融合汉族与壮族建筑技术；③装饰：简朴实用，不尚奢华；④防御：城墙坚固，有瓮城、敌楼。王府建筑是中原文化与岭南文化融合的产物。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 文教圣地 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>文教圣地 · 桂林文化中心</h3>
+            <p class="text"><strong>王府教育：</strong>靖江王府设有宗学，教育王府子弟。①师资：聘请名儒为师；②课程：学习经史、诗文、书法；③目的：培养治国理政人才。历代靖江王多好文，第三代朱佐敬著有《桂林八景诗》，第六代朱约麒建宝善堂藏书万卷。王府还刻印书籍，传播文化。</p>
+            <p class="text"><strong>贡院科举：</strong>清代广西贡院是西南科举重地。①规模：考舍5000余间，可容5000考生；②管理：有严格的管理制度，如搜身、锁院、誊录、对读等；③成就：清代广西4名状元均出于此，陈继昌是清代两个"三元及第"之一（乡试、会试、殿试均第一）；④影响：推动了广西文教发展，桂林成为"状元之乡"。</p>
+            <p class="text"><strong>独秀峰石刻：</strong>独秀峰有摩崖石刻136件，是桂林石刻的精华。①年代：从唐代到民国，跨越1200年；②内容：有诗词、题记、榜书、画像等；③名家：有郑叔齐、王正功、吕愿忠、黄国材、张祥河等；④价值：是研究桂林历史、文学、书法、绘画的珍贵资料。"桂林山水甲天下"石刻是桂林的文化标志。</p>
+            <p class="text"><strong>现代教育：</strong>靖江王府是广西现代教育的发源地。①广西优级师范学堂：1908年创办，是广西第一所高等师范学校；②广西师范大学：1953年成立，王城校区设在王府内，延续了文教传统；③名人：梁漱溟、陈望道、陈寅恪、薛暮桥等曾在此任教或讲学。王府-贡院-大学的文脉传承，在全国罕见。</p>
+            <p class="text"><strong>文化研究：</strong>靖江王府是学术研究的重要对象。①考古：发现了大量明代建筑遗址、文物；②历史：研究明代藩封制度、桂林地方史；③建筑：研究明代王府建筑规制；④文化：研究桂林文化发展。出版有《靖江王府》《桂林石刻》等著作。</p>
+            <p class="text"><strong>文化活动：</strong>靖江王府举办多种文化活动。①祭祀：恢复明代王府祭祀仪式；②科举：模拟清代科举考试；③研学：开展中小学生研学活动；④展览：举办历史文化展览；⑤演出：实景演出《靖江王府》。这些活动让历史文化"活"起来。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">文教</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 桂林地标 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>桂林地标 · 文化遗产</h3>
+            <p class="text"><strong>历史价值：</strong>靖江王府是桂林600年历史的见证。①政治史：明代藩王府，清代贡院，近代政府、学校，反映桂林政治变迁；②建筑史：明代藩王府建筑实物，研究中国古代建筑的重要资料；③教育史：从王府宗学、清代贡院到现代大学，体现教育连续性；④文化史："桂林山水甲天下"出处，桂林文化的象征。靖江王府是桂林的"历史教科书"。</p>
+            <p class="text"><strong>建筑价值：</strong>靖江王府是中国古代建筑的杰出代表。①规制价值：完整的明代藩王府布局，体现礼制思想；②艺术价值：建筑与自然结合，独秀峰、月牙池构成优美景观；③技术价值：石雕、木构、砌筑等技术精湛；④科学价值：选址、排水、防御等设计科学。靖江王府是"建筑是凝固的音乐"的典范。</p>
+            <p class="text"><strong>文化价值：</strong>靖江王府是桂林文化的核心。①山水文化："桂林山水甲天下"的精神源头；②科举文化：广西科举的见证，状元文化的载体；③教育文化：广西现代教育的发祥地；④旅游文化：桂林旅游的名片，年接待游客百万人次。靖江王府是桂林的文化地标和精神家园。</p>
+            <p class="text"><strong>科学价值：</strong>靖江王府蕴含丰富的科学技术。①地质科学：独秀峰是典型的喀斯特孤峰，研究喀斯特地貌的样本；②材料科学：青石、石灰岩等地方材料的应用；③保护科学：石质文物、木构建筑的保护技术；④环境科学：建筑与自然环境的和谐共生。靖江王府是研究传统科学技术的宝贵实例。</p>
+            <p class="text"><strong>旅游价值：</strong>靖江王府是桂林最重要的旅游景点之一。①景观价值：独秀峰、月牙池、古建筑构成独特景观；②体验价值：科举体验、登山观景、文化体验丰富；③经济价值：带动旅游及相关产业发展；④品牌价值："阅尽王城知桂林"成为桂林旅游口号。靖江王府是桂林旅游的黄金品牌。</p>
+            <p class="text"><strong>保护与利用：</strong>靖江王府得到科学保护。①法律保护：1996年列为全国重点文物保护单位；②规划保护：编制《靖江王府保护规划》，划定保护区、建设控制地带；③工程保护：对古建筑进行维修加固，如承运殿台基保护、玉陛云阶修复；④研究展示：建立靖江王府博物馆，举办展览、出版著作；⑤合理利用：发展文化旅游，让文物"活"起来；⑥环境整治：整治周边环境，保护山水景观。靖江王府的保护经验，为大型遗址保护提供了借鉴。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 桂林靖江王府独秀峰下，六百年王城阅尽桂林 | 五重维度·五种灵韵爱心，点赞评论共话山水甲天下</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（桂林靖江王府独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('guilin_jiangnan_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('guilin_jiangnan_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('guilin_jiangnan_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('guilin_jiangnan_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对靖江王府的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的靖江王府感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "靖江王府访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

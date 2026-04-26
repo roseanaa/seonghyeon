@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>沈阳故宫 · 四维解读 | 关外紫禁城 · 清初皇宫</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <div class="pic">
+        <img src="./image/沈阳故宫.jpg" title="沈阳故宫" alt="沈阳故宫全景">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 历史风云</div>
+        <div class="dim-tab" data-tab="architecture">🏰 建筑特色</div>
+        <div class="dim-tab" data-tab="culture">🎎 宫廷文化</div>
+        <div class="dim-tab" data-tab="value">🌟 遗产价值</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>沈阳故宫 · 关外紫禁城</h3>
+            <p class="text"><strong>传奇：</strong>沈阳故宫是中国现存最完整的两大古代宫殿建筑群之一，与北京故宫并称"明清皇宫"。始建于后金天命十年（1625年），是清太祖努尔哈赤、清太宗皇太极两代皇帝的皇宫。清朝入关后，成为陪都宫殿。沈阳故宫是满族政权入主中原前的政治中心，是清王朝的"龙兴之地"，2004年被列入《世界遗产名录》。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul><li><strong>大政殿：</strong>沈阳故宫标志性建筑，八角重檐攒尖顶，黄琉璃瓦绿剪边。努尔哈赤、皇太极在此举行重大典礼，是早期"八旗共治"制度的体现。殿前"十王亭"是八旗和亲王办公场所。</li><li><strong>崇政殿：</strong>皇宫正殿，皇太极日常理政之地。单檐硬山顶，黄琉璃瓦绿剪边。殿内"正大光明"匾为乾隆御笔。崇政殿是清初政治活动的中心。</li><li><strong>凤凰楼：</strong>后宫门楼，高三层，歇山顶，曾是沈阳最高建筑。"凤楼晓日"为盛京八景之一。楼上曾藏《四库全书》。</li><li><strong>清宁宫：</strong>皇太极与皇后哲哲的寝宫，满族"口袋房"格局。宫内设萨满祭祀神堂，保留满族传统信仰。宫后有"索伦杆"，祭祀天神。</li><li><strong>文溯阁：</strong>皇家藏书楼，仿宁波天一阁而建，专为收藏《四库全书》而建。黑琉璃瓦绿剪边，寓意"以水克火"。曾藏《四库全书》《古今图书集成》。</li><li><strong>迪光殿、保极宫：</strong>乾隆东巡时的行宫，建筑精巧，陈设豪华，体现乾隆时期的审美。</li><li><strong>銮驾库、奏乐亭：</strong>存放皇帝仪仗、乐器，展示清代宫廷礼仪。</li></ul>
+            <p><strong>参观攻略：</strong></p>
+            <ul><li><strong>最佳时间：</strong>4-10月，春秋最佳。建议上午前往，避开周末高峰。冬季雪后故宫别有韵味。</li><li><strong>游览顺序：</strong>大清门→崇政殿→凤凰楼→清宁宫→关雎宫→麟趾宫→衍庆宫→永福宫→文溯阁→大政殿→十王亭→銮驾库。建议3-4小时。</li><li><strong>深度体验：</strong>听导游讲解清初历史，看皇家礼仪表演（旺季），参观《清代宫廷生活展》《清代宫廷艺术品展》。</li><li><strong>摄影建议：</strong>大政殿正面全景，崇政殿"正大光明"匾，凤凰楼登高俯瞰，文溯阁黑瓦绿檐，雪后故宫银装素裹。</li></ul>
+            <p><strong>交通信息：</strong>位于沈阳市沈河区沈阳路171号。地铁1号线中街站C口出，步行5分钟。多条公交可达。建议与张氏帅府、沈阳中街组成"一宫两陵"（沈阳故宫、福陵、昭陵）深度游。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">宫城</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 故宫印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 历史风云 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>历史风云 · 清初龙兴</h3>
+            <p class="text"><strong>后金建都：</strong>后金天命十年（1625年），清太祖努尔哈赤从辽阳迁都沈阳，开始修建皇宫。初建时规模不大，主要建筑为大政殿、十王亭，体现"君臣合署办公"的八旗制度。努尔哈赤于1626年去世，未能见到故宫建成。</p>
+            <p class="text"><strong>皇太极扩建：</strong>天聪元年（1627年），皇太极继位，大规模扩建故宫，增建大清门、崇政殿、凤凰楼、清宁宫等，形成"前朝后寝"格局。天聪十年（1636年），皇太极在崇政殿登基称帝，改国号"大清"，改元"崇德"，沈阳故宫正式成为皇宫。</p>
+            <p class="text"><strong>顺治入关：</strong>崇德八年（1643年），皇太极暴卒，顺治帝福临继位。顺治元年（1644年），清军入关，定都北京。沈阳故宫成为陪都宫殿，称"盛京皇宫"。顺治、康熙、雍正、乾隆、嘉庆、道光六帝先后十一次东巡祭祖，驻跸故宫。</p>
+            <p class="text"><strong>乾隆增建：</strong>乾隆八年（1743年）、十九年（1754年）、四十三年（1778年），乾隆帝三次东巡，大规模增建行宫，包括文溯阁、迪光殿、保极宫、继思斋等。文溯阁专为收藏《四库全书》而建，使沈阳故宫成为"四库七阁"之一。</p>
+            <p class="text"><strong>近代变迁：</strong>清末，故宫逐渐荒废。1914年，辟为"沈阳古物陈列所"。1926年，成立"东三省博物馆"。1931年"九一八"事变后，伪满当局将故宫改为"奉天故宫博物馆"。1949年后，故宫得到保护。1961年，被列为第一批全国重点文物保护单位。1986年，改名"沈阳故宫博物院"。</p>
+            <p class="text"><strong>世界遗产：</strong>2004年，沈阳故宫作为明清皇宫的扩展项目，与北京故宫一起被列入《世界遗产名录》。联合国教科文组织评价："沈阳故宫是中国最后一个封建王朝的发祥地，是清王朝统一中国前的政治中心，具有极高的历史、艺术和科学价值。"</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑特色 爱心: 🏰 -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑特色 · 满汉融合</h3>
+            <p class="text"><strong>总体布局：</strong>沈阳故宫占地6万平方米，建筑114座，房屋500余间。分三路：东路以大政殿、十王亭为中心，体现"君臣合署"的八旗制度；中路以崇政殿、凤凰楼、清宁宫为中轴线，体现"前朝后寝"的宫殿制度；西路以文溯阁、戏台、嘉荫堂为中心，为乾隆东巡行宫。布局既模仿北京故宫，又保留满族特色。</p>
+            <p class="text"><strong>满族特色：</strong>①口袋房：清宁宫等寝宫为"口袋房"（一明两暗），外间设灶，里间为卧室，适应东北寒冷气候。②万字炕：寝室内设"万字炕"（南、西、北三面相连的火炕），西炕为尊，供神位。③索伦杆：清宁宫后立索伦杆（神杆），祭祀天神。④高台建筑：寝宫建于3.8米高台上，防潮防寒。</p>
+            <p class="text"><strong>汉式风格：</strong>①中轴对称：中路建筑严格中轴对称。②等级森严：屋顶形式分重檐、单檐，瓦色分黄、绿，体现等级。③斗拱彩绘：梁枋用斗拱，绘和玺彩画、旋子彩画。④琉璃装饰：黄琉璃瓦绿剪边，脊兽、吻兽齐全。</p>
+            <p class="text"><strong>建筑色彩：</strong>沈阳故宫用色独特：①黄瓦绿边：主体建筑用黄琉璃瓦绿剪边，象征"以土制水"。②红墙青砖：墙体红色，台基青砖。③金漆彩绘：梁枋施金漆彩绘，富丽堂皇。④黑瓦绿边：文溯阁用黑琉璃瓦绿剪边，寓意"以水克火"。</p>
+            <p class="text"><strong>大政殿：</strong>八角重檐攒尖顶，直径20米，高19米。殿身八面，象征八旗。殿内藻井为梵文"曼荼罗"，体现藏传佛教影响。殿前月台，是举行大典之地。大政殿是清初"君臣合署"政治的体现，皇帝居中，八旗分列。</p>
+            <p class="text"><strong>文溯阁：</strong>仿宁波天一阁，面阔六间，进深五间，硬山顶。外观两层，实为三层，中间暗层藏书。黑琉璃瓦绿剪边，寓意"以水克火"。阁前有水池，可防火。曾藏《四库全书》《古今图书集成》，是"四库七阁"中唯一在皇宫内的藏书楼。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏰</span><span class="like-count">0</span><span class="like-btn-text">筑艺</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑之美</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 宫廷文化 爱心: 🎎 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>宫廷文化 · 关外宫廷</h3>
+            <p class="text"><strong>政治制度：</strong>清初实行"八旗共治"与"君主专制"结合的制度。大政殿前的"十王亭"（左翼王亭、右翼王亭、八旗亭）是八旗贝勒、大臣办公处，皇帝在大政殿理政，体现"君臣合署"。皇太极时期加强皇权，崇政殿成为专权象征。入关后，八旗制度逐渐虚化，君主专制强化。</p>
+            <p class="text"><strong>萨满祭祀：</strong>清宁宫是萨满祭祀中心，保留完整的萨满祭祀陈设：①神堂：西墙供神位，有佛像、神像、祖先牌位。②神杆：宫后索伦杆，祭祀时置斗，盛米、肉喂乌鸦。③神案：供祭品，猪、酒、糕。萨满是满族原始信仰，入关后与藏传佛教融合，但故宫仍保留原始形态。</p>
+            <p class="text"><strong>后宫生活：</strong>清宁宫是皇太极与皇后哲哲的寝宫，关雎宫是宸妃海兰珠居所，麟趾宫是贵妃娜木钟居所，衍庆宫是淑妃巴特玛·璪居所，永福宫是庄妃布木布泰（孝庄文皇后）居所。后宫等级森严，但相对简朴，体现清初"躬行节俭"的国策。</p>
+            <p class="text"><strong>东巡制度：</strong>康熙、乾隆等皇帝十一次东巡盛京，仪式隆重：①祭祖：祭福陵（努尔哈赤）、昭陵（皇太极）。②阅兵：检阅八旗军队。③谒宫：拜谒故宫，在崇政殿受贺。④驻跸：住迪光殿、保极宫。⑤赋诗：题诗留念，故宫现存御制诗碑百余通。</p>
+            <p class="text"><strong>宫廷艺术：</strong>故宫收藏大量宫廷艺术品：①书画：历代名家书画，乾隆收藏最丰。②陶瓷：明清官窑瓷器，以青花、粉彩为主。③玉器：和田玉、翡翠雕件，工艺精湛。④珐琅：铜胎画珐琅、掐丝珐琅，色彩绚丽。⑤织绣：龙袍、朝服、刺绣，工艺精细。</p>
+            <p class="text"><strong>饮食服饰：</strong>①饮食：满族传统，喜食猪肉、黏食、奶制品。祭祀用"全猪宴"，日常有"火锅""白肉血肠"。②服饰：皇帝穿龙袍，皇后穿朝服。满族特色：箭袖（马蹄袖）、披领、朝珠。冬季穿貂皮、狐皮裘衣。③发式：男子剃发留辫，女子"两把头"。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎎</span><span class="like-count">0</span><span class="like-btn-text">宫韵</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 遗产价值 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>遗产价值 · 世界瑰宝</h3>
+            <p class="text"><strong>历史价值：</strong>沈阳故宫是清王朝的"龙兴之地"，见证了后金（清）从地方政权到统一全国的历史进程。在这里，努尔哈赤建立后金，皇太极改国号"大清"，顺治入主中原。故宫是研究清初历史、满族社会、八旗制度的珍贵实物资料，是中华民族统一多民族国家形成的历史见证。</p>
+            <p class="text"><strong>建筑价值：</strong>沈阳故宫是中国古代宫殿建筑的杰出代表，融合了满、汉、蒙、藏多民族建筑艺术。其"宫高殿低"的布局（寝宫建于高台，正殿建于平地），"口袋房""万字炕"的形制，黄瓦绿边的用色，都是满族建筑的独创。大政殿的八角形制，文溯阁的防火设计，体现了古代工匠的智慧。</p>
+            <p class="text"><strong>艺术价值：</strong>故宫收藏文物十万余件，包括书画、陶瓷、玉器、珐琅、织绣、家具、典籍。其中，清初御用文物、萨满祭祀法器、乾隆御笔书画尤为珍贵。故宫建筑本身的木雕、石雕、砖雕、彩绘、琉璃，都是艺术精品。</p>
+            <p class="text"><strong>文化价值：</strong>沈阳故宫承载了丰富的文化内涵：①政治文化：八旗制度、君臣合署、君主专制。②宗教文化：萨满教、藏传佛教、汉传佛教。③礼仪文化：朝会、祭祀、东巡、庆典。④生活文化：衣食住行、婚丧嫁娶。⑤艺术文化：建筑、绘画、书法、工艺。</p>
+            <p class="text"><strong>世界遗产价值：</strong>2004年，联合国教科文组织将沈阳故宫列入《世界遗产名录》，认为："沈阳故宫是清朝在征服中国之前建立的宫殿，它继承了已经消失的满族文化传统，是这一文化传统的独特见证。故宫的建筑布局和建筑装饰反映了满族文化和中国其他民族文化之间的融合。"</p>
+            <p class="text"><strong>保护与传承：</strong>故宫保护采取"修旧如旧"原则，已完成大政殿、崇政殿、清宁宫、文溯阁等主要建筑的维修。开展文物修复、学术研究、展览展示、教育推广。利用数字技术，建设"数字故宫"，让文物"活"起来。故宫不仅是旅游景点，更是文化教育基地，每年接待游客200万人次，是传播中华文明的重要窗口。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 盛京故宫，龙兴之地；关外紫禁，清初皇都 | 五重维度·五种灵韵爱心，点赞评论共话清宫文化</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（沈阳故宫独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('shenyang_gugong_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('shenyang_gugong_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('shenyang_gugong_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('shenyang_gugong_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对沈阳故宫的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的沈阳故宫感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "故宫访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

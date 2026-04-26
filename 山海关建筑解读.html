@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>山海关 · 四维解读 | 天下第一关 · 长城起点</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <div class="pic">
+        <img src="./image/山海关.jpg" title="山海关天下第一关" alt="山海关城楼与长城">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 历史风云</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 关城构造</div>
+        <div class="dim-tab" data-tab="battle">⚔️ 战争记忆</div>
+        <div class="dim-tab" data-tab="culture">🎭 关城文化</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>山海关 · 天下第一关</h3>
+            <p class="text"><strong>传奇：</strong>万里长城东起第一关，素有"两京锁钥无双地，万里长城第一关"之称。位于河北省秦皇岛市东北15公里，北依燕山，南临渤海，地势险要，是连接华北与东北的咽喉要道。关城始建于明洪武十四年（1381年），由大将军徐达主持修建，历经明清两代多次扩建加固，形成完整的军事防御体系。</p>
+            <p><strong>核心景点：</strong></p>
+            <ul><li><strong>天下第一关城楼：</strong>关城东门，两层重檐歇山顶，高13.7米，上层悬挂明代书法家萧显所书"天下第一关"巨匾，每字高1.6米，笔力雄浑。</li><li><strong>靖边楼：</strong>关城东南角楼，又称"角山楼"，是观察敌情、指挥作战的制高点。</li><li><strong>牧营楼：</strong>关城东北角楼，与靖边楼遥相呼应，形成犄角之势。</li><li><strong>临闾楼：</strong>关城西门城楼，面向关内，是守军后勤保障的重要节点。</li><li><strong>老龙头：</strong>长城入海处，明万历年间戚继光修建，建有入海石城、靖卤台、南海口关等，是万里长城唯一入海的地段。</li><li><strong>孟姜女庙：</strong>位于关城东6公里望夫石村，纪念孟姜女哭长城的故事，内有108级台阶，象征人生108种烦恼。</li></ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul><li><strong>最佳时间：</strong>5-10月，夏季避暑，秋季天高气爽。避开7-8月旅游高峰期。</li><li><strong>游览路线：</strong>天下第一关城楼（登楼观景）→靖边楼→牧营楼→长城博物馆→老龙头（看长城入海）→孟姜女庙（可选）。需4-6小时。</li><li><strong>深度体验：</strong>清晨登城楼看日出，傍晚在老龙头看"长城落日"，夜晚看"天下第一关"灯光秀。</li><li><strong>摄影建议：</strong>城楼正面全景，老龙头长城入海，角山长城蜿蜒，天下第一关夜景。</li></ul>
+            <p><strong>交通信息：</strong>从秦皇岛火车站乘33路公交直达，从北戴河乘25路转33路。自驾从京哈高速山海关出口下。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">雄关</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 关城印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 历史风云 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>历史风云 · 六百年沧桑</h3>
+            <p class="text"><strong>明代创建：</strong>明洪武十四年（1381年），大将军徐达在隋唐临榆关旧址上修建山海关，因其北倚燕山，南连渤海，故名"山海关"。初期为土筑砖包，永乐、成化、嘉靖年间多次增建，万历年间戚继光增建入海石城（老龙头），形成完整防御体系。</p>
+            <p class="text"><strong>明清战事：</strong>明末，山海关成为明军抵御清军的前沿阵地。崇祯十七年（1644年），李自成攻占北京，明将吴三桂"冲冠一怒为红颜"，引清军入关，在山海关一片石大战李自成军，清军由此入主中原，开启清朝268年统治。</p>
+            <p class="text"><strong>清代地位：</strong>清朝定鼎中原后，山海关军事地位下降，但仍是东北与华北的交通要道和税关。康熙、乾隆、嘉庆、道光等皇帝多次东巡经此，并题诗留字。康熙题"天下第一关"匾额（现悬挂的为民国仿制）。</p>
+            <p class="text"><strong>近代屈辱：</strong>第二次鸦片战争期间，1858年英法联军攻占山海关，炮击老龙头。1900年八国联军入侵，俄、日、英、法等国军队在山海关登陆，占领炮台，拆毁部分长城。1901年《辛丑条约》签订，山海关被划为外国驻军地。</p>
+            <p class="text"><strong>现代保护：</strong>民国时期开始修缮，1952年列为全国重点文物保护单位。1987年，山海关作为万里长城的一部分被列入世界文化遗产。2003年启动大规模修复工程，2006年被评为国家5A级旅游景区。</p>
+            <p class="text"><strong>历史人物：</strong>①徐达：创建者。②戚继光：增建老龙头，完善防御。③吴三桂：明末守将，开关降清。④萧显：题写"天下第一关"匾额的明代书法家。⑤孙承宗：明末兵部尚书，曾镇守山海关。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 关城构造 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>关城构造 · 军事要塞</h3>
+            <p class="text"><strong>总体布局：</strong>山海关关城周长约4公里，城墙高14米，厚7米，外部包砖，内部夯土。设四门：东门"镇东门"（天下第一关）、西门"迎恩门"、南门"望洋门"、北门"威远门"。四门均建城楼，四角建角楼，城外有护城河，形成完整的防御体系。</p>
+            <p class="text"><strong>天下第一关城楼：</strong>两层重檐歇山顶，面阔三间，进深两间，高13.7米。下层为砖石结构，辟拱券门洞；上层为木结构，四周设箭窗68个。城楼内陈列古代兵器、盔甲，登楼可东望辽东，西眺燕山，南观渤海。</p>
+            <p class="text"><strong>防御体系：</strong>关城与长城相连，构成"关-城-台-堡"多层次防御。关城外有罗城、翼城、瓮城；城上有敌台、战台、烽火台；城外有壕沟、陷马坑、绊马索。戚继光创建的空心敌台，可驻兵、储粮、作战，是长城防御工程的重大创新。</p>
+            <p class="text"><strong>老龙头：</strong>长城入海处，由入海石城、靖卤台、南海口关、澄海楼组成。入海石城长23米，宽8米，高9米，以巨型花岗岩条石砌筑，石间用铁水浇铸的"银锭扣"连接，坚固异常。澄海楼为观海胜地，康熙、乾隆曾登楼赋诗。</p>
+            <p class="text"><strong>建筑材料：</strong>城墙基础为花岗岩条石，墙体为青砖包砌，内填三合土（石灰、黏土、砂）。城砖多为明代烧制，印有"万历X年XX营造"等字样。粘合剂为糯米汁、石灰、桐油混合的"明代水泥"，强度极高。</p>
+            <p class="text"><strong>军事设施：</strong>①箭楼：设箭窗，可射击。②马道：斜坡道，供兵马上下。③瓮城：城门外的半圆形小城，可诱敌深入，关门打狗。④吊桥：横跨护城河，战时收起。⑤藏兵洞：城墙内部暗室，可藏兵突袭。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">筑防</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑智慧</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 战争记忆 爱心: ⚔️ -->
+    <div class="dim-content" id="battle-content" data-dim="battle">
+        <div class="word">
+            <h3>战争记忆 · 兵家必争</h3>
+            <p class="text"><strong>一片石之战（1644年）：</strong>明末决定中国命运的关键战役。李自成攻占北京后，吴三桂拒降，退守山海关。李自成亲率20万大军东征，吴三桂向清军求援。四月二十一日，李自成与吴三桂激战于一片石（今九门口），清军突然从侧翼杀出，大顺军溃败，清军由此入关，开启清朝统治。</p>
+            <p class="text"><strong>明清拉锯战：</strong>1629-1644年，清军（后金）六次破关入塞，但始终未能占领山海关。1638年，皇太极亲率大军攻山海关，明将洪承畴坚守，清军久攻不下。山海关成为明朝在辽东的最后屏障，被誉为"天下第一关"。</p>
+            <p class="text"><strong>甲午战争：</strong>1894年，日军占领旅顺、大连后，企图进攻山海关。清军在山海关至秦皇岛一线布防，修筑炮台，日军未敢强攻。1895年《马关条约》签订后，日军从山海关撤军。</p>
+            <p class="text"><strong>八国联军入侵：</strong>1900年，俄、日、英、法、德、意、奥、美八国联军2.5万人在山海关登陆，占领老龙头、姜女庙等要地，拆毁部分长城，修筑兵营、铁路。1901年《辛丑条约》规定，山海关等12处由外国驻军，直至1945年日本投降。</p>
+            <p class="text"><strong>长城抗战：</strong>1933年1月，日军进攻山海关，中国守军何柱国部第626团奋起抵抗，打响长城抗战第一枪。激战三昼夜，626团几乎全部殉国，山海关失守。此役激发了全国抗日救亡运动。</p>
+            <p class="text"><strong>解放战争：</strong>1945年8月，苏联红军出兵东北，八路军冀热辽军区配合苏军，收复山海关。11月，国民党军进攻山海关，解放军进行山海关保卫战，迟滞国民党军进军东北，为建立东北根据地赢得时间。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="battle"><span class="like-icon">⚔️</span><span class="like-count">0</span><span class="like-btn-text">战史</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="battle">💬 战争记忆</button><div class="comment-list" id="comment-list-battle" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 关城文化 爱心: 🎭 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>关城文化 · 雄关诗韵</h3>
+            <p class="text"><strong>匾额文化：</strong>"天下第一关"匾额是山海关的灵魂。现存匾额为民国九年（1920年）仿制，原匾已失。传说明代书法家萧显题字时，故意将"第"字写成"竹"字头，寓意"节节高升"；"关"字外"门"内"关"，寓意"关中有关，固若金汤"。匾额每字高1.6米，笔力雄健，结构严谨，是中国书法艺术的瑰宝。</p>
+            <p class="text"><strong>诗词题咏：</strong>历代文人墨客登临山海关，留下大量诗词。康熙《山海关》："长城尽处海山奇，守险无劳百万师。寰宇苍生归历数，当年指顾定鸿基。"乾隆《澄海楼》："我有一勺水，泻为东沧溟。无今亦无古，不减亦不盈。"还有戚继光、顾炎武、康有为等名家诗作。</p>
+            <p class="text"><strong>孟姜女传说：</strong>山海关是孟姜女哭长城故事的重要发生地。孟姜女庙建于宋代以前，明代重修。庙前108级台阶，象征人生108种烦恼，每登一级，烦恼即消。庙内有"望夫石"、"振衣亭"、"乾隆御题碑"等。孟姜女故事被列入国家级非物质文化遗产。</p>
+            <p class="text"><strong>军事文化：</strong>山海关长城博物馆是国内最大的长城专题博物馆，展示长城历史、建筑、军事、文化。馆藏文物包括：明代铁炮、火铳、盔甲、兵器、城砖、石刻等。通过沙盘、模型、影像，再现古代战争场面和守关将士生活。</p>
+            <p class="text"><strong>民俗活动：</strong>①关城庙会：农历四月十八，纪念戚继光诞辰，有武术表演、戏曲、杂耍。②长城节：每年9月，举办长城学术研讨、文化旅游活动。③老龙头祭海：渔民传统，祈求海上平安。④角山登高：重阳节登角山，赏长城秋色。</p>
+            <p class="text"><strong>饮食文化：</strong>①回记绿豆糕：清真老字号，用当地绿豆制作，酥软香甜。②长城饽椤饼：用饽椤树叶包制，馅料多样。③四条包子：百年老店，皮薄馅大。④山海关汽水：老字号饮料，有柠檬、橘子等口味。⑤海鲜：渤海湾特产，对虾、螃蟹、皮皮虾等。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎭</span><span class="like-count">0</span><span class="like-btn-text">文韵</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 两京锁钥无双地，万里长城第一关 | 五重维度·五种灵韵爱心，点赞评论共话天下雄关</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（山海关独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        battle: 0,
+        culture: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        battle: [],
+        culture: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('shanhaiguan_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('shanhaiguan_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('shanhaiguan_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('shanhaiguan_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对山海关的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的山海关感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "关城游客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>

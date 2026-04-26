@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>南京夫子庙 · 四维解读 | 六朝文枢 · 金陵第一胜地</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+            padding: 20px;
+        }
+
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 返回链接 */
+        .back-link {
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .back-link a {
+            color: #b5672e;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250,245,235,0.7);
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: all 0.2s;
+        }
+        .back-link a:hover {
+            color: #7a481f;
+            background: rgba(230,210,180,0.8);
+        }
+
+        /* 图片容器 */
+        .pic {
+            text-align: center;
+            margin: 0 auto 30px;
+            border-radius: 32px;
+        }
+        .pic img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border: 2px solid rgba(230,210,180,0.5);
+        }
+        .pic img:hover {
+            transform: scale(1.01);
+        }
+
+        /* 四维标签导航栏 */
+        .dimension-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 0 auto 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .dim-tab {
+            padding: 12px 28px;
+            background: rgba(255,250,240,0.8);
+            border: 1px solid #e0cfb8;
+            border-radius: 48px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #6b4c3a;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+            backdrop-filter: blur(2px);
+        }
+        .dim-tab:hover {
+            border-color: #c28752;
+            color: #c28752;
+            transform: translateY(-3px);
+            background: rgba(255,252,240,0.95);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+        .dim-tab.active {
+            background: #e6d9c4;
+            border-color: #b5672e;
+            color: #9b5e2c;
+        }
+
+        /* 当前维度指示器 */
+        .tab-indicator {
+            text-align: center;
+            margin: 10px auto 30px;
+            color: #8b694a;
+            font-size: 15px;
+            max-width: 1000px;
+            padding: 0 20px;
+        }
+        .tab-indicator span {
+            background: rgba(240,230,210,0.7);
+            padding: 6px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* 内容卡片 */
+        .dim-content {
+            display: none;
+            background: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            padding: 32px 36px;
+            margin: 0 auto 40px;
+            max-width: 1000px;
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            transition: all 0.3s;
+        }
+        .dim-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dim-content:hover {
+            background: rgba(255, 252, 240, 0.88);
+            border-color: #e2c9aa;
+        }
+
+        /* 文本样式 */
+        .dim-content h3 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2cfb0;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .dim-content p.text {
+            text-indent: 2em;
+            margin: 16px 0;
+            line-height: 1.75;
+            color: #4a3a28;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .dim-content strong {
+            color: #b5672e;
+        }
+        .dim-content ul {
+            margin: 18px 0;
+            padding-left: 20px;
+        }
+        .dim-content ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            line-height: 1.7;
+            position: relative;
+            color: #4a3a28;
+        }
+        .dim-content ul li:hover {
+            border-left-color: #c28752;
+            padding-left: 24px;
+            background: rgba(194,135,82,0.08);
+        }
+        .dim-content ul li:before {
+            content: "✦";
+            color: #c28752;
+            position: absolute;
+            left: 0;
+            font-size: 14px;
+        }
+
+        /* 点赞评论栏 */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 20px 28px 20px 28px;
+            border-top: 1px solid rgba(200, 175, 140, 0.5);
+            background: rgba(250, 242, 228, 0.5);
+            flex-wrap: wrap;
+            margin-top: 24px;
+            border-radius: 0 0 40px 40px;
+            margin: 20px -36px -32px -36px;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.8);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.3);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.9);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+            flex-wrap: wrap;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .dim-content { padding: 24px 20px; margin-bottom: 24px; }
+            .interaction-bar { margin: 20px -20px -24px -20px; padding: 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            .dim-tab { padding: 8px 18px; font-size: 0.85rem; }
+            .dim-content h3 { font-size: 1.6rem; }
+        }
+        @media (max-width: 480px) {
+            .dim-content { padding: 18px 14px; }
+            .interaction-bar { margin: 16px -14px -18px -14px; }
+            .dim-tab { padding: 6px 14px; font-size: 0.75rem; }
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #aa8866;
+            padding-bottom: 20px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="page-container">
+    <div class="back-link">
+        <a href="./index.html">← 返回四维解读首页</a>
+    </div>
+    
+    <div class="pic">
+        <img src="./image/南京夫子庙.jpg" title="南京夫子庙" alt="南京夫子庙与秦淮河风光">
+    </div>
+    
+    <div class="dimension-tabs">
+        <div class="dim-tab active" data-tab="overview">🏯 概览</div>
+        <div class="dim-tab" data-tab="history">📖 千年文枢</div>
+        <div class="dim-tab" data-tab="architecture">🏗️ 建筑群韵</div>
+        <div class="dim-tab" data-tab="culture">🎪 金陵民俗</div>
+        <div class="dim-tab" data-tab="value">🌟 秦淮价值</div>
+    </div>
+    
+    <div class="tab-indicator">
+        <span id="current-tab-indicator">当前查看：🏯 概览</span>
+    </div>
+    
+    <!-- 概览 爱心: 🏯 -->
+    <div class="dim-content active" id="overview-content" data-dim="overview">
+        <div class="word">
+            <h3>南京夫子庙 · 六朝文枢</h3>
+            <p class="text"><strong>传奇：</strong>南京夫子庙是中国四大文庙之一，位于秦淮河北岸的贡院街旁，是供奉和祭祀孔子的庙宇，也是中国古代文化枢纽之地。始建于东晋咸康三年（337年），原为学宫，北宋景祐元年（1034年）改建为孔庙。夫子庙与江南贡院、秦淮河共同构成了"庙市街景"合一的独特格局，素有"六朝金粉地，十里秦淮河"之美誉。</p>
+            <p><strong>核心看点：</strong></p>
+            <ul>
+                <li><strong>大成殿：</strong>夫子庙主殿，重檐歇山顶，面阔七间，进深五间，高18米。殿内供奉孔子青铜像，高4.18米，为中国最大的孔子青铜像。四壁镶嵌《孔子圣迹图》玉石浮雕，记录孔子生平。</li>
+                <li><strong>江南贡院：</strong>中国古代最大的科举考场，鼎盛时期占地30万平方米，有号舍20644间。现为南京中国科举博物馆，展示中国1300年科举制度历史。</li>
+                <li><strong>明远楼：</strong>江南贡院标志性建筑，始建于明嘉靖十三年（1534年），三层木结构，是贡院考试期间监临、巡察的场所。登楼可俯瞰整个贡院。</li>
+                <li><strong>乌衣巷：</strong>东晋时期王导、谢安两大家族居住地，因士兵穿乌衣而得名。唐代刘禹锡《乌衣巷》"旧时王谢堂前燕，飞入寻常百姓家"使其名扬天下。</li>
+                <li><strong>秦淮河：</strong>南京的母亲河，夫子庙段被誉为"十里秦淮"。夜晚画舫游船，两岸灯火璀璨，再现"桨声灯影里的秦淮河"意境。</li>
+                <li><strong>夫子庙照壁：</strong>全国照壁之最，建于明万历三年（1575年），长110米，高10米，用特制青色方砖砌成，壁面雕刻"二龙戏珠"图案。</li>
+                <li><strong>文德桥：</strong>始建于明万历年间，位于秦淮河上，因"文德以分"得名。农历十一月十五，站在桥上可见桥左右各半边月亮，称"文德分月"奇观。</li>
+            </ul>
+            <p><strong>游览攻略：</strong></p>
+            <ul>
+                <li><strong>最佳时间：</strong>四季皆宜，春秋最佳。建议傍晚前往，欣赏白天与夜晚两种风情。农历正月有秦淮灯会，最为热闹。</li>
+                <li><strong>游览顺序：</strong>夫子庙照壁→天下文枢坊→棂星门→大成门→大成殿→江南贡院→明远楼→乌衣巷→李香君故居→秦淮画舫。建议3-4小时。</li>
+                <li><strong>深度体验：</strong>白天参观夫子庙、江南贡院，了解科举文化；傍晚品尝秦淮小吃；夜晚乘坐画舫，欣赏"十里秦淮"夜景；参观科举博物馆，体验科举考试场景。</li>
+                <li><strong>摄影建议：</strong>夫子庙夜景与秦淮河倒影，大成殿孔子像，明远楼全景，乌衣巷古巷，文德桥"分月"奇观，秦淮灯会彩灯。</li>
+            </ul>
+            <p><strong>交通信息：</strong>位于南京市秦淮区贡院街，地铁1号线三山街站、3号线夫子庙站直达。周边有瞻园、老门东、中华门城堡等景点。建议与中山陵、总统府、南京博物院组成经典旅游线路。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="overview"><span class="like-icon">🏯</span><span class="like-count">0</span><span class="like-btn-text">文枢</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="overview">💬 夫子庙印象</button><div class="comment-list" id="comment-list-overview" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 千年文枢 爱心: 📖 -->
+    <div class="dim-content" id="history-content" data-dim="history">
+        <div class="word">
+            <h3>千年文枢 · 科举圣地</h3>
+            <p class="text"><strong>起源与发展：</strong>东晋咸康三年（337年），丞相王导提议"治国以培育人才为重"，在秦淮河北岸建学宫，是为夫子庙前身。北宋景祐元年（1034年），文宣王庙（孔庙）迁至今址，称建康府学。南宋建炎年间毁于战火，绍兴九年（1139年）重建，形成左庙右学格局。明初为国子监，清代为江宁府学，一直是江南文化教育中心。</p>
+            <p class="text"><strong>江南贡院：</strong>南宋乾道四年（1168年）建建康贡院，明初迁至夫子庙旁，清同治年间扩建至20644间号舍，成为全国最大科举考场。明清时期，江南贡院共产生状元58名，占全国状元总数一半以上。唐伯虎、郑板桥、吴敬梓、翁同龢、张謇等皆出于此。光绪三十一年（1905年）科举废除，贡院结束历史使命。</p>
+            <p class="text"><strong>明清鼎盛：</strong>明清两代，夫子庙地区达到鼎盛。秦淮河两岸酒楼茶馆、青楼画舫林立，成为江南文化和娱乐中心。"秦淮八艳"（柳如是、李香君、董小宛等）的故事流传至今。每逢乡试，数万考生云集，带动了书肆、文房、客栈、餐饮业的繁荣，形成独特的科举经济。</p>
+            <p class="text"><strong>近代变迁：</strong>太平天国时期，夫子庙遭严重破坏。清同治年间重建。1937年日军占领南京，夫子庙再遭破坏，大成殿被焚。1984年起，南京市人民政府按明清形制复建夫子庙，恢复古建筑群。1985年建成夫子庙美食街，1986年恢复秦淮灯会，1991年大成殿重建开放。</p>
+            <p class="text"><strong>历史人物：</strong>①王导（276-339）：东晋丞相，提议建学宫。②王安石（1021-1086）：曾任江宁知府，重视教育。③朱元璋（1328-1398）：明太祖，定都南京，重视科举。④李香君（1624-1654）："秦淮八艳"之一，故居在夫子庙。⑤吴敬梓（1701-1754）：著《儒林外史》，讽刺科举制度，曾居住秦淮河畔。</p>
+            <p class="text"><strong>文化传承：</strong>1984年，夫子庙秦淮风光带开始大规模修复。1991年，夫子庙古建筑群基本恢复明清风貌。2006年，江南贡院遗址建南京中国科举博物馆。2010年，夫子庙秦淮风光带被评为国家5A级旅游景区。夫子庙成为展示南京历史文化、民俗风情的重要窗口。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="history"><span class="like-icon">📖</span><span class="like-count">0</span><span class="like-btn-text">沧桑</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="history">💬 历史回响</button><div class="comment-list" id="comment-list-history" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 建筑群韵 爱心: 🏗️ -->
+    <div class="dim-content" id="architecture-content" data-dim="architecture">
+        <div class="word">
+            <h3>建筑群韵 · 庙市合一</h3>
+            <p class="text"><strong>总体布局：</strong>夫子庙建筑群采用"前庙后学、左庙右市"的独特格局。中轴线自南向北依次为：照壁→泮池→天下文枢坊→棂星门→大成门→甬道→大成殿→明德堂→尊经阁→卫山。东侧为江南贡院，西侧为市井商业区。这种布局体现了儒家"庙学合一"的思想，也适应了科举经济的需要。</p>
+            <p class="text"><strong>建筑特色：</strong>夫子庙建筑为明清江南官式建筑风格，主要特点：①色彩：青瓦红柱，白墙灰砖，色彩素雅；②屋顶：重檐歇山顶为主，大成殿为黄色琉璃瓦，体现孔庙规格；③装饰：木雕、砖雕、石雕精美，题材多为儒家典故、吉祥图案；④布局：中轴对称，主次分明，层次丰富。</p>
+            <p class="text"><strong>大成殿建筑群：</strong>大成殿是夫子庙核心建筑，面阔七间（26.1米），进深五间（13.85米），高18米。殿前有月台，汉白玉栏杆，中间为云龙御路。殿内藻井彩绘鹤鹿同春、蟠桃灵芝等图案。孔子像高4.18米，重2.5吨，为国内最大孔子青铜像。四配（颜回、曾参、孔伋、孟轲）及十二哲像分列两侧。</p>
+            <p class="text"><strong>江南贡院建筑：</strong>贡院建筑体现科举考场特色：①明远楼：三层木结构，高13米，是贡院最高建筑，用于监考巡察；②号舍：砖木结构，高2米，深1.3米，宽1米，仅容一人考试；③至公堂：主考官办公处；④衡鉴堂：阅卷处。现存明远楼、飞虹桥及部分号舍遗址。</p>
+            <p class="text"><strong>秦淮河景观带：</strong>夫子庙与秦淮河融为一体，形成独特的水乡景观：①画舫：仿明清风格，有龙凤舫、秦淮舫等，夜晚亮灯游览；②桥梁：文德桥、文源桥、平江桥等，各具特色；③河房：临水而建的明清建筑，前门临街，后窗临河；④码头：东西码头，供画舫停靠。</p>
+            <p class="text"><strong>街巷格局：</strong>夫子庙地区保留明清街巷格局：①贡院街：主商业街，店铺林立；②乌衣巷：狭窄古巷，青石板路，两侧为仿古建筑；③琵琶巷：因形似琵琶得名；④金陵路：美食街，汇集南京老字号。街巷宽度2-4米，两侧建筑多为两层，白墙灰瓦，马头墙。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="architecture"><span class="like-icon">🏗️</span><span class="like-count">0</span><span class="like-btn-text">营造</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="architecture">💬 建筑艺术</button><div class="comment-list" id="comment-list-architecture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 金陵民俗 爱心: 🎪 -->
+    <div class="dim-content" id="culture-content" data-dim="culture">
+        <div class="word">
+            <h3>金陵民俗 · 十里秦淮</h3>
+            <p class="text"><strong>科举文化：</strong>夫子庙是科举文化的活化石。每年农历八月乡试期间，江南贡院举行盛大的"科举模拟考试"活动，游客可体验搜身、进号舍、答题、交卷全过程。南京中国科举博物馆通过文物、场景复原、多媒体技术，展示1300年科举制度史。科举文化节期间，举办状元巡游、金榜题名仪式等活动。</p>
+            <p class="text"><strong>秦淮灯会：</strong>国家级非物质文化遗产，始于六朝，盛于明清。每年农历正月初一至十八举办，是中国规模最大的民俗灯会。灯会主题每年不同，有"秦淮情怀""金陵春韵""盛世华章"等。灯组题材包括历史故事、神话传说、生肖动物、现代科技等。正月十五元宵节达到高潮，有"秦淮灯彩甲天下"之美誉。</p>
+            <p class="text"><strong>传统节庆：</strong>①祭孔大典：每年9月28日孔子诞辰，举行释奠礼，表演八佾舞；②端午龙舟：秦淮河上赛龙舟，纪念屈原；③中秋拜月：文德桥赏月，体验"文德分月"；④重阳登高：登明远楼，望远祈福；⑤腊八施粥：寺庙施腊八粥，祈福平安。这些节庆活动传承了南京地方民俗。</p>
+            <p class="text"><strong>秦淮美食：</strong>夫子庙是南京小吃发源地，金陵风味集中地：①秦淮八绝：永和园的黄桥烧饼和开洋干丝，蒋有记的牛肉汤和牛肉锅贴，六凤居的豆腐涝和葱油饼，奇芳阁的鸭油酥烧饼和什锦菜包，莲湖糕团店的桂花夹心小元宵和五色小糕，瞻园面馆的熏鱼银丝面和薄皮包饺，魁光阁的五香豆和五香蛋；②南京盐水鸭：皮白肉嫩，肥而不腻；③鸭血粉丝汤：南京特色小吃；④状元豆：寓意"连中三元"。</p>
+            <p class="text"><strong>民间艺术：</strong>夫子庙是南京民间艺术的展示窗口：①南京云锦：世界非物质文化遗产，古代皇家御用锦缎；②金陵剪纸：线条流畅，造型生动；③秦淮彩灯：传统手工扎制，造型多样；④南京白话：地方曲艺，幽默诙谐；⑤古琴艺术：金陵琴派，清微淡远。夫子庙民间艺术大观园集中展示这些非遗项目。</p>
+            <p class="text"><strong>市井生活：</strong>夫子庙保留着老南京的市井生活气息：①茶馆听书：奇芳阁、魁光阁等老茶馆，可听南京评话、白局；②古玩市场：东市、西市经营古玩、字画、文房四宝；③花鸟鱼虫：夫子庙花鸟市场是南京最大的花鸟市场；④传统手艺：现场制作糖画、面人、剪纸等。这些市井生活场景，让游客感受老南京的生活节奏。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="culture"><span class="like-icon">🎪</span><span class="like-count">0</span><span class="like-btn-text">民俗</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="culture">💬 文化传承</button><div class="comment-list" id="comment-list-culture" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <!-- 秦淮价值 爱心: 🌟 -->
+    <div class="dim-content" id="value-content" data-dim="value">
+        <div class="word">
+            <h3>秦淮价值 · 城市名片</h3>
+            <p class="text"><strong>历史文化价值：</strong>夫子庙秦淮风光带是南京历史文化的重要载体，集中体现了六朝文化、明清文化、科举文化、民俗文化。它是中国唯一一个将祭祀建筑（孔庙）、教育机构（学宫）、科举考场（贡院）、商业街区、自然景观（秦淮河）完美融合的历史文化街区，见证了南京1700多年的城市发展史。</p>
+            <p class="text"><strong>建筑艺术价值：</strong>夫子庙建筑群是明清江南官式建筑的典范，大成殿、明远楼、魁光阁等建筑体现了古代工匠的高超技艺。建筑群布局严谨，中轴对称，主次分明，是中国古代礼制建筑的杰出代表。秦淮河畔的河房、画舫、桥梁，形成了独特的水乡建筑景观，是研究江南水乡建筑的重要实例。</p>
+            <p class="text"><strong>教育文化价值：</strong>作为中国古代最大的科举考场，夫子庙江南贡院是中国1300年科举制度的实物见证。南京中国科举博物馆系统展示了科举制度的产生、发展、消亡过程，是研究中国教育史、人才选拔制度的重要基地。夫子庙每年举办的祭孔大典、科举文化节等活动，传承了尊师重教的传统。</p>
+            <p class="text"><strong>民俗文化价值：</strong>夫子庙是南京民俗文化的活态博物馆。秦淮灯会、端午龙舟、中秋拜月等传统节庆活动，传承了地方民俗。南京云锦、金陵剪纸、秦淮彩灯等非物质文化遗产在此展示、传承。夫子庙小吃集中了南京传统美食，是南京饮食文化的重要代表。这些民俗文化活动，丰富了市民文化生活，增强了文化认同感。</p>
+            <p class="text"><strong>旅游经济价值：</strong>夫子庙秦淮风光带是国家5A级旅游景区，年接待游客超3000万人次，是南京旅游的金字招牌。旅游带动了商业、餐饮、住宿、交通等相关产业发展，创造了大量就业岗位。夫子庙商圈是南京重要的商业中心，老字号店铺、特色商品、文创产品琳琅满目，形成了完整的旅游产业链。</p>
+            <p class="text"><strong>保护与传承：</strong>1984年，南京市制定《夫子庙秦淮风光带保护规划》，按照"修旧如旧"原则修复古建筑。2002年，夫子庙古建筑群被列为全国重点文物保护单位。建立夫子庙秦淮风光带管理委员会，统一管理保护。开展非遗传承人培养，举办秦淮灯会、科举文化节等品牌活动。利用现代科技，建设智慧景区，提升游客体验。夫子庙的保护模式，为历史文化街区的保护利用提供了成功经验。</p>
+        </div>
+        <div class="interaction-bar">
+            <div class="like-area" data-like-key="value"><span class="like-icon">🌟</span><span class="like-count">0</span><span class="like-btn-text">瑰宝</span></div>
+            <div class="comment-area"><button class="comment-toggle" data-comment-target="value">💬 保护传承</button><div class="comment-list" id="comment-list-value" style="display:none;"></div></div>
+        </div>
+    </div>
+    
+    <footer>🏯 夫子庙千年文枢，秦淮河十里风华 | 五重维度·五种灵韵爱心，点赞评论共话金陵胜景</footer>
+</div>
+
+<script>
+    // ---------- 点赞 + 评论 持久化（南京夫子庙独立存储）----------
+    let likesData = {
+        overview: 0,
+        history: 0,
+        architecture: 0,
+        culture: 0,
+        value: 0
+    };
+    let commentsData = {
+        overview: [],
+        history: [],
+        architecture: [],
+        culture: [],
+        value: []
+    };
+
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('nanjing_fuzimiao_likes_v1');
+        if (storedLikes) {
+            try { likesData = { ...likesData, ...JSON.parse(storedLikes) }; } catch(e) {}
+        }
+        const storedComments = localStorage.getItem('nanjing_fuzimiao_comments_v1');
+        if (storedComments) {
+            try { commentsData = { ...commentsData, ...JSON.parse(storedComments) }; } catch(e) {}
+        }
+        Object.keys(commentsData).forEach(k => { if (!commentsData[k]) commentsData[k] = []; });
+        Object.keys(likesData).forEach(k => { if (likesData[k] === undefined) likesData[k] = 0; });
+    }
+
+    function saveLikes() { localStorage.setItem('nanjing_fuzimiao_likes_v1', JSON.stringify(likesData)); }
+    function saveComments() { localStorage.setItem('nanjing_fuzimiao_comments_v1', JSON.stringify(commentsData)); }
+
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]||m));
+    }
+
+    function renderComments(sectionId) {
+        const container = document.getElementById(`comment-list-${sectionId}`);
+        if (!container) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            container.innerHTML = `<div class="empty-comment">✨ 暂未留痕，分享您对南京夫子庙的感悟 ✨</div>`;
+        } else {
+            container.innerHTML = comments.map(c => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(c.name)}</strong>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${c.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `<input type="text" class="comment-input" placeholder="您的雅号" maxlength="20" style="flex:1;"><input type="text" class="comment-input" placeholder="分享您的夫子庙感悟" maxlength="120" style="flex:2.5;"><button class="comment-submit">发表</button>`;
+        const oldForm = container.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        container.appendChild(formDiv);
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            let name = inputs[0].value.trim();
+            let text = inputs[1].value.trim();
+            if (name === "") name = "秦淮访客";
+            if (text === "") { alert("请留下您的见解～"); return; }
+            if (text.length > 120) { alert("不超过120字"); return; }
+            const newC = { name: name.slice(0,20), text: text, time: new Date().toLocaleString() };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newC);
+            saveComments();
+            renderComments(sectionId);
+            inputs[0].value = ""; inputs[1].value = "";
+        });
+    }
+
+    function toggleComments(sectionId, btnElem) {
+        const listDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!listDiv) return;
+        const visible = listDiv.style.display !== 'none';
+        if (!visible) {
+            renderComments(sectionId);
+            listDiv.style.display = 'block';
+            btnElem.innerHTML = '🔽 收起评论';
+        } else {
+            listDiv.style.display = 'none';
+            btnElem.innerHTML = '💬 留下感悟';
+        }
+    }
+
+    function bindEvents() {
+        document.querySelectorAll('.like-area').forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key]++;
+                    saveLikes();
+                    updateLikeUI();
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) { icon.style.transform = 'scale(1.25)'; setTimeout(() => icon.style.transform = '', 200); }
+                }
+            });
+        });
+        updateLikeUI();
+        document.querySelectorAll('.comment-toggle').forEach(btn => {
+            const target = btn.getAttribute('data-comment-target');
+            if (!target) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(target, newBtn);
+            });
+        });
+    }
+
+    function initCommentsDefault() {
+        const ids = Object.keys(commentsData);
+        ids.forEach(id => {
+            const listDiv = document.getElementById(`comment-list-${id}`);
+            if (listDiv) { listDiv.style.display = 'none'; listDiv.innerHTML = `<div class="empty-comment">✨ 点击查看评论 ✨</div>`; }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${id}"]`);
+            if (btn && listDiv && listDiv.style.display === 'none') btn.innerHTML = '💬 留下感悟';
+        });
+    }
+
+    // tabs 切换逻辑
+    const tabs = document.querySelectorAll('.dim-tab');
+    const contents = document.querySelectorAll('.dim-content');
+    const indicatorSpan = document.getElementById('current-tab-indicator');
+
+    function switchToTab(tabId, tabName) {
+        contents.forEach(c => c.classList.remove('active'));
+        const targetContent = document.getElementById(`${tabId}-content`);
+        if (targetContent) targetContent.classList.add('active');
+        tabs.forEach(t => t.classList.remove('active'));
+        const activeTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabId);
+        if (activeTab) activeTab.classList.add('active');
+        indicatorSpan.innerText = `当前查看：${tabName}`;
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.getAttribute('data-tab');
+            const tabText = tab.innerText;
+            switchToTab(tabId, tabText);
+            setTimeout(() => {
+                const activeContent = document.querySelector('.dim-content.active');
+                if (activeContent) activeContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+    });
+
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefault();
+        bindEvents();
+    }
+    init();
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const matchedTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === hash);
+            if (matchedTab) matchedTab.click();
+        }
+    });
+</script>
+</body>
+</html>
