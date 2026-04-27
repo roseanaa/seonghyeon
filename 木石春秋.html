@@ -1,0 +1,764 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>木石春秋 - 古建图鉴 | 材质风华 · 互动品鉴</title>
+<style>
+  /* ----- 重置 & 基础 / 与系列页面风格完全统一 ----- */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', serif;
+    color: #2c2b28;
+    scroll-behavior: smooth;
+  }
+
+  /* 页面主容器 */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px 60px;
+  }
+
+  /* 标题区 */
+  .page-header {
+    text-align: center;
+    margin: 40px 0 20px 0;
+  }
+  .page-title {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, #b47c44 0%, #5a3e2a 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 12px;
+  }
+  .page-subtitle {
+    font-size: 18px;
+    color: #6b4c3a;
+    border-top: 1px solid #d9c7ae;
+    border-bottom: 1px solid #d9c7ae;
+    display: inline-block;
+    padding: 8px 28px;
+    backdrop-filter: blur(2px);
+    background: rgba(250, 245, 235, 0.5);
+    border-radius: 60px;
+    font-weight: 400;
+    letter-spacing: 1px;
+  }
+
+  /* 导航栏 (毛玻璃效果) + 返回首页按钮 */
+  nav {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: rgba(250, 245, 235, 0.94);
+    backdrop-filter: blur(12px);
+    padding: 12px 20px;
+    z-index: 1000;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px 28px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid #e2d4c2;
+  }
+  nav a {
+    font-size: 1.05rem;
+    font-weight: 550;
+    text-decoration: none;
+    color: #4f3a28;
+    padding: 6px 0;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    letter-spacing: 1px;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+  }
+  nav a:hover {
+    color: #b5672e;
+    border-bottom-color: #c67b44;
+    transform: translateY(-1px);
+  }
+  /* 返回首页按钮专属样式 */
+  .back-home-btn {
+    background: #e7d6c0;
+    border-radius: 40px;
+    padding: 6px 20px !important;
+    margin-left: 8px;
+    border: 1px solid #cfb991;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  .back-home-btn:hover {
+    background: #dac19b;
+    border-color: #b48b54;
+    color: #3e2a1a !important;
+    transform: translateY(-2px);
+  }
+
+  /* 双列布局容器 */
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    margin-bottom: 48px;
+  }
+
+  /* 卡片需要被锚点定位，添加相对定位以及锚点偏移补偿 */
+  .card-wrapper {
+    flex: 1;
+    min-width: 380px;
+    max-width: 550px;
+    background-color: rgba(255, 250, 240, 0.72);
+    backdrop-filter: blur(3px);
+    border-radius: 40px;
+    transition: all 0.35s cubic-bezier(0.2, 0, 0, 1);
+    box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(230, 210, 180, 0.6);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    scroll-margin-top: 90px;
+  }
+  .card-wrapper:hover {
+    transform: translateY(-6px);
+    background-color: rgba(255, 252, 240, 0.88);
+    box-shadow: 0 22px 32px -12px rgba(60, 40, 20, 0.25);
+    border-color: #e2c9aa;
+  }
+
+  /* 卡片内部 */
+  .card-inner {
+    padding: 28px 28px 12px 28px;
+  }
+
+  .card-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: center;
+    background: linear-gradient(120deg, #ad6b3a, #754c2a);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .card-sub {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #8b694a;
+    margin-bottom: 24px;
+    border-bottom: 1px dashed #e2c9aa;
+    display: inline-block;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 6px;
+  }
+
+  /* 内部双项布局 */
+  .feature-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+  .feature-item:last-child {
+    margin-bottom: 0;
+  }
+  .feature-img {
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+  }
+  .feature-img img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 24px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  .card-wrapper:hover .feature-img img {
+    transform: scale(1.02);
+  }
+  .feature-text {
+    flex: 1;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #4a3a28;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    text-align: justify;
+    padding: 6px;
+  }
+
+  /* 点赞评论栏 */
+  .interaction-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 12px 28px 20px 28px;
+    border-top: 1px solid rgba(200, 175, 140, 0.5);
+    background: rgba(250, 242, 228, 0.5);
+    flex-wrap: wrap;
+    margin-top: auto;
+  }
+  .like-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,245,230,0.8);
+    padding: 5px 16px;
+    border-radius: 60px;
+    transition: all 0.2s;
+    cursor: pointer;
+    user-select: none;
+  }
+  .like-area:hover {
+    background: #f5e5cf;
+    transform: scale(0.96);
+  }
+  .like-icon {
+    font-size: 1.6rem;
+    transition: transform 0.2s;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+  }
+  .like-count {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #b45f2b;
+    font-family: monospace;
+  }
+  .like-btn-text {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #634e36;
+  }
+  .comment-area {
+    flex: 1;
+    min-width: 160px;
+  }
+  .comment-toggle {
+    background: none;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #8b694a;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 12px;
+    border-radius: 40px;
+    background: rgba(220,195,160,0.3);
+    transition: 0.2s;
+  }
+  .comment-toggle:hover {
+    background: #e7d6c0;
+    color: #6a3e1e;
+  }
+  .comment-list {
+    margin-top: 12px;
+    background: rgba(255, 252, 245, 0.9);
+    border-radius: 24px;
+    padding: 12px 14px;
+    backdrop-filter: blur(4px);
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  .comment-item {
+    border-bottom: 1px dashed #e6cfb0;
+    padding: 8px 0;
+    font-size: 0.8rem;
+    color: #4a3828;
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+  .comment-item strong {
+    color: #b35f2b;
+    font-weight: 600;
+    min-width: 65px;
+  }
+  .comment-item .comment-text {
+    flex: 1;
+    word-break: break-word;
+  }
+  .comment-form {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .comment-input {
+    flex: 2;
+    padding: 8px 12px;
+    border-radius: 48px;
+    border: 1px solid #ddc8ae;
+    background: #fffef7;
+    font-family: inherit;
+    outline: none;
+    font-size: 0.8rem;
+  }
+  .comment-input:focus {
+    border-color: #c28752;
+    box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+  }
+  .comment-submit {
+    background: #c88a54;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 60px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 0.75rem;
+  }
+  .comment-submit:hover {
+    background: #a56c3e;
+  }
+  .empty-comment {
+    color: #b78f66;
+    font-style: italic;
+    padding: 6px 0;
+    text-align: center;
+    font-size: 0.75rem;
+  }
+
+  /* 响应式 */
+  @media screen and (max-width: 900px) {
+    .card-wrapper { min-width: 100%; max-width: 100%; }
+    .feature-item { flex-direction: column; text-align: center; }
+    .feature-text { text-align: center; }
+    .interaction-bar { flex-direction: column; align-items: stretch; }
+    .like-area { justify-content: center; }
+  }
+  @media screen and (max-width: 768px) {
+    .container { padding: 20px 16px 48px; }
+    .page-title { font-size: 36px; }
+    .card-inner { padding: 20px 18px 12px; }
+    .card-wrapper { scroll-margin-top: 100px; }
+    nav { gap: 12px 16px; }
+    .back-home-btn { padding: 4px 14px !important; font-size: 0.9rem; }
+  }
+  @media screen and (max-width: 480px) {
+    .card-title { font-size: 1.5rem; }
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 13px;
+    color: #aa8866;
+    border-top: 1px dashed #decbac;
+    padding-top: 28px;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+    background: #f1e7da;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #bc8f66;
+    border-radius: 8px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a onclick="scrollToCard('liangzhu')">🏛️ 梁柱·骨相</a>
+  <a onclick="scrollToCard('qiangyuan')">🧱 墙垣·肌理</a>
+  <a onclick="scrollToCard('linglong')">🎨 玲珑·意匠</a>
+  <a onclick="scrollToCard('jiaoqi')">🩵 胶漆·岁月</a>
+  <!-- 返回首页按钮：实现从“木石春秋”界面跳转回首页的功能 -->
+  <a class="back-home-btn" id="backToHomeBtn" style="cursor:pointer;">🏠 返回首页</a>
+</nav>
+
+<div class="page-header">
+  <div class="page-title">木石春秋</div>
+  <div class="page-subtitle">一木一石，一砖一瓦，书写千年营造史 · 四种材质，四般灵韵爱心</div>
+</div>
+
+<div class="container">
+  <!-- 第一行：梁柱·骨相 + 墙垣·肌理 -->
+  <div class="row">
+    <!-- 梁柱·骨相 卡片 爱心: 🌳 -->
+    <div class="card-wrapper" id="card-liangzhu" data-id="liangzhu">
+      <div class="card-inner">
+        <div class="card-title">🏛️ 梁柱·骨相</div>
+        <div class="card-sub">梁柱为骨，斗拱为魂，撑起千年气象</div>
+        <div class="feature-item">
+          <div class="feature-img"><img src="./image/梁柱1.jpg" alt="梁柱" title="梁柱"></div>
+          <div class="feature-text">建筑之骨干，以木材构架空间，承载屋顶之重，成就殿堂格局。木柱承天，大梁横陈，构架之间尽显营造法度。</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-img"><img src="./image/斗拱.jpg" alt="斗拱" title="斗拱"></div>
+          <div class="feature-text">木构之灵魂，层层出挑，悬托深远屋檐，是力学与美学的交融。斗栱层叠如云，将屋顶的重量化作轻盈的韵律。</div>
+        </div>
+      </div>
+      <div class="interaction-bar">
+        <div class="like-area" data-like-key="liangzhu"><span class="like-icon">🌳</span><span class="like-count">0</span><span class="like-btn-text">栋梁</span></div>
+        <div class="comment-area"><button class="comment-toggle" data-comment-target="liangzhu">💬 品评骨相</button><div class="comment-list" id="comment-list-liangzhu" style="display:none;"></div></div>
+      </div>
+    </div>
+
+    <!-- 墙垣·肌理 卡片 -->
+    <div class="card-wrapper" id="card-qiangyuan" data-id="qiangyuan">
+      <div class="card-inner">
+        <div class="card-title">🧱 墙垣·肌理</div>
+        <div class="card-sub">砖瓦叠涩，石雕传神，构筑不朽躯干</div>
+        <div class="feature-item">
+          <div class="feature-img"><img src="./image/砖瓦.jpg" alt="砖瓦" title="砖瓦"></div>
+          <div class="feature-text">叠砌为墙，覆瓦为顶，以黏土经火淬炼，构筑建筑的坚实外壳。青砖黛瓦，层层叠涩，守护一方安宁。</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-img"><img src="./image/石雕1.jpg" alt="石雕" title="石雕"></div>
+          <div class="feature-text">在碑础、栏板上镌刻纹样，刚中见柔，讲述着信仰与祥瑞的故事。石上生花，岁月不侵，每一凿皆为匠心。</div>
+        </div>
+      </div>
+      <div class="interaction-bar">
+        <div class="like-area" data-like-key="qiangyuan"><span class="like-icon">🧱</span><span class="like-count">0</span><span class="like-btn-text">坚朴</span></div>
+        <div class="comment-area"><button class="comment-toggle" data-comment-target="qiangyuan">💬 肌理之语</button><div class="comment-list" id="comment-list-qiangyuan" style="display:none;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 第二行：玲珑·意匠 + 胶漆·岁月 -->
+  <div class="row">
+    <!-- 玲珑·意匠 卡片 -->
+    <div class="card-wrapper" id="card-linglong" data-id="linglong">
+      <div class="card-inner">
+        <div class="card-title">🎨 玲珑·意匠</div>
+        <div class="card-sub">彩画流丹，雕琢万象，着华服以载道</div>
+        <div class="feature-item">
+          <div class="feature-img"><img src="./image/彩画.jpg" alt="彩画" title="彩画"></div>
+          <div class="feature-text">以矿物颜料绘于梁枋，色谱森严，纹样瑰丽，是礼制与艺术的画卷。旋子彩绘、和玺彩画，每一笔皆有章法。</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-img"><img src="./image/雕琢.jpg" alt="雕琢" title="雕琢"></div>
+          <div class="feature-text">在木、石、砖上施以刻刀，纹饰万千，赋予建筑生动的细节与温度。透雕、浮雕、圆雕，方寸之间展大千世界。</div>
+        </div>
+      </div>
+      <div class="interaction-bar">
+        <div class="like-area" data-like-key="linglong"><span class="like-icon">🎐</span><span class="like-count">0</span><span class="like-btn-text">精微</span></div>
+        <div class="comment-area"><button class="comment-toggle" data-comment-target="linglong">💬 意匠之巧</button><div class="comment-list" id="comment-list-linglong" style="display:none;"></div></div>
+      </div>
+    </div>
+
+    <!-- 胶漆·岁月 卡片 -->
+    <div class="card-wrapper" id="card-jiaoqi" data-id="jiaoqi">
+      <div class="card-inner">
+        <div class="card-title">🩵 胶漆·岁月</div>
+        <div class="card-sub">灰浆桐油，岁月胶漆，以无形固有形</div>
+        <div class="feature-item">
+          <div class="feature-img"><img src="./image/灰浆桐胶.jpg" alt="灰浆桐油" title="灰浆桐油"></div>
+          <div class="feature-text">以石灰、糯米、桐油调和，黏合砖石，密封木构，是岁月静好的守护。千年灰浆，仍坚如初，凝结古人智慧。</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-img"><img src="./image/胶漆.jpg" alt="胶漆" title="胶漆"></div>
+          <div class="feature-text">大漆为衣，胶矾作底，保护木面，光泽千年，是时间凝固的光华。髹漆饰面，耐腐防水，让木纹永葆温润。</div>
+        </div>
+      </div>
+      <div class="interaction-bar">
+        <div class="like-area" data-like-key="jiaoqi"><span class="like-icon">🩵</span><span class="like-count">0</span><span class="like-btn-text">凝晖</span></div>
+        <div class="comment-area"><button class="comment-toggle" data-comment-target="jiaoqi">💬 胶漆余韵</button><div class="comment-list" id="comment-list-jiaoqi" style="display:none;"></div></div>
+      </div>
+    </div>
+  </div>
+  <footer>🪨 木石铭刻春秋 | 四般材质 · 四种灵韵爱心，点赞评论共话营造之魂</footer>
+</div>
+
+<script>
+  // ---------- 点赞 + 评论 持久化（木石春秋独立存储）----------
+  let likesData = {
+    liangzhu: 0,
+    qiangyuan: 0,
+    linglong: 0,
+    jiaoqi: 0
+  };
+  let commentsData = {
+    liangzhu: [],
+    qiangyuan: [],
+    linglong: [],
+    jiaoqi: []
+  };
+
+  function loadStorageData() {
+    const storedLikes = localStorage.getItem('mushi_likes_v2');
+    if (storedLikes) {
+      try {
+        const parsed = JSON.parse(storedLikes);
+        likesData = { ...likesData, ...parsed };
+      } catch(e) { console.warn(e); }
+    }
+    const storedComments = localStorage.getItem('mushi_comments_v2');
+    if (storedComments) {
+      try {
+        const parsedComm = JSON.parse(storedComments);
+        commentsData = { ...commentsData, ...parsedComm };
+      } catch(e) { console.warn(e); }
+    }
+    const keys = ['liangzhu', 'qiangyuan', 'linglong', 'jiaoqi'];
+    keys.forEach(k => {
+      if (!commentsData[k]) commentsData[k] = [];
+      if (likesData[k] === undefined) likesData[k] = 0;
+    });
+  }
+
+  function saveLikes() {
+    localStorage.setItem('mushi_likes_v2', JSON.stringify(likesData));
+  }
+  function saveComments() {
+    localStorage.setItem('mushi_comments_v2', JSON.stringify(commentsData));
+  }
+
+  function updateLikeUI() {
+    for (let key in likesData) {
+      const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+      if (likeArea) {
+        const countSpan = likeArea.querySelector('.like-count');
+        if (countSpan) countSpan.innerText = likesData[key];
+      }
+    }
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  function renderComments(sectionId) {
+    const commentContainer = document.getElementById(`comment-list-${sectionId}`);
+    if (!commentContainer) return;
+    const comments = commentsData[sectionId] || [];
+    if (comments.length === 0) {
+      commentContainer.innerHTML = `<div class="empty-comment">✨ 暂未留痕，做第一个分享感悟的人 ✨</div>`;
+    } else {
+      commentContainer.innerHTML = comments.map(comment => `
+        <div class="comment-item">
+          <strong>${escapeHtml(comment.name)}</strong>
+          <span class="comment-text">${escapeHtml(comment.text)}</span>
+          <span style="font-size:0.7rem; color:#aa7e58;">${comment.time || ''}</span>
+        </div>
+      `).join('');
+    }
+    const formDiv = document.createElement('div');
+    formDiv.className = 'comment-form';
+    formDiv.innerHTML = `
+      <input type="text" class="comment-input" placeholder="留下您的雅号..." maxlength="20" style="flex:1;">
+      <input type="text" class="comment-input" placeholder="分享您的木石感悟" maxlength="120" style="flex:2.5;">
+      <button class="comment-submit">发表</button>
+    `;
+    const oldForm = commentContainer.querySelector('.comment-form');
+    if (oldForm) oldForm.remove();
+    commentContainer.appendChild(formDiv);
+    const submitBtn = formDiv.querySelector('.comment-submit');
+    const inputs = formDiv.querySelectorAll('input');
+    submitBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      let userName = inputs[0].value.trim();
+      let commentText = inputs[1].value.trim();
+      if (userName === "") userName = "木石知音";
+      if (commentText === "") {
+        alert("请留下您的见解～");
+        return;
+      }
+      if (commentText.length > 120) {
+        alert("评论字数不超过120字");
+        return;
+      }
+      const newComment = {
+        name: userName.slice(0, 20),
+        text: commentText,
+        time: new Date().toLocaleString()
+      };
+      if (!commentsData[sectionId]) commentsData[sectionId] = [];
+      commentsData[sectionId].push(newComment);
+      saveComments();
+      renderComments(sectionId);
+      inputs[0].value = "";
+      inputs[1].value = "";
+    });
+  }
+
+  function toggleComments(sectionId, buttonElem) {
+    const commentListDiv = document.getElementById(`comment-list-${sectionId}`);
+    if (!commentListDiv) return;
+    const isVisible = commentListDiv.style.display !== 'none';
+    if (!isVisible) {
+      renderComments(sectionId);
+      commentListDiv.style.display = 'block';
+      buttonElem.innerHTML = '🔽 收起评论';
+    } else {
+      commentListDiv.style.display = 'none';
+      buttonElem.innerHTML = '💬 查看评论 · 留下足迹';
+    }
+  }
+
+  function bindEvents() {
+    // 点赞绑定
+    const likeAreas = document.querySelectorAll('.like-area');
+    likeAreas.forEach(area => {
+      const key = area.getAttribute('data-like-key');
+      if (!key) return;
+      const newArea = area.cloneNode(true);
+      area.parentNode.replaceChild(newArea, area);
+      newArea.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (likesData[key] !== undefined) {
+          likesData[key] += 1;
+          saveLikes();
+          updateLikeUI();
+          const icon = newArea.querySelector('.like-icon');
+          if (icon) {
+            icon.style.transform = 'scale(1.25)';
+            setTimeout(() => { if(icon) icon.style.transform = ''; }, 200);
+          }
+        }
+      });
+    });
+    updateLikeUI();
+
+    // 评论按钮绑定
+    const commentToggles = document.querySelectorAll('.comment-toggle');
+    commentToggles.forEach(btn => {
+      const targetId = btn.getAttribute('data-comment-target');
+      if (!targetId) return;
+      const newBtn = btn.cloneNode(true);
+      btn.parentNode.replaceChild(newBtn, btn);
+      newBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleComments(targetId, newBtn);
+      });
+    });
+  }
+
+  function initCommentsDefaultState() {
+    const sections = ['liangzhu', 'qiangyuan', 'linglong', 'jiaoqi'];
+    sections.forEach(sec => {
+      const commentList = document.getElementById(`comment-list-${sec}`);
+      if (commentList) {
+        commentList.style.display = 'none';
+        commentList.innerHTML = `<div class="empty-comment">✨ 点击「查看评论」交流感悟 ✨</div>`;
+      }
+      const btn = document.querySelector(`.comment-toggle[data-comment-target="${sec}"]`);
+      if (btn && commentList && commentList.style.display === 'none') {
+        btn.innerHTML = '💬 查看评论 · 留下足迹';
+      }
+    });
+  }
+
+  // 滚动到指定卡片
+  function scrollToCard(cardId) {
+    const targetCard = document.getElementById(`card-${cardId}`);
+    if (targetCard) {
+      const navHeight = document.querySelector('nav')?.offsetHeight || 70;
+      const elementPosition = targetCard.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - navHeight - 18;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+      // 高亮闪烁效果
+      targetCard.style.transition = 'box-shadow 0.2s';
+      targetCard.style.boxShadow = '0 0 0 3px #c28752, 0 12px 24px -12px rgba(0,0,0,0.2)';
+      setTimeout(() => {
+        if (targetCard) targetCard.style.boxShadow = '';
+      }, 800);
+    } else {
+      console.warn('未找到卡片:', cardId);
+    }
+  }
+
+  // 返回首页逻辑 (与其他页面保持一致)
+  function goToHomePage() {
+    const defaultHomeUrl = './index.html';   // 首页地址，请根据实际项目调整
+    if (document.referrer && document.referrer.indexOf(window.location.origin) === 0) {
+      window.history.back();
+    } else {
+      window.location.href = defaultHomeUrl;
+    }
+  }
+
+  // 暴露全局函数
+  window.scrollToCard = scrollToCard;
+
+  // 页面加载时处理 URL Hash 锚点
+  function handleHashOnLoad() {
+    if (window.location.hash && window.location.hash.length > 1) {
+      const hash = window.location.hash.substring(1);
+      if (hash === 'top') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+      const validIds = ['liangzhu', 'qiangyuan', 'linglong', 'jiaoqi'];
+      if (validIds.includes(hash)) {
+        setTimeout(() => {
+          scrollToCard(hash);
+        }, 100);
+      }
+    }
+  }
+
+  function init() {
+    loadStorageData();
+    updateLikeUI();
+    initCommentsDefaultState();
+    bindEvents();
+    handleHashOnLoad();
+    
+    // 绑定返回首页按钮事件
+    const backBtn = document.getElementById('backToHomeBtn');
+    if (backBtn) {
+      const newBackBtn = backBtn.cloneNode(true);
+      backBtn.parentNode.replaceChild(newBackBtn, backBtn);
+      newBackBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        goToHomePage();
+      });
+    }
+  }
+  init();
+
+  // 监听 hashchange 事件，实现浏览器前进后退锚点跳转
+  window.addEventListener('hashchange', function() {
+    const hash = window.location.hash.substring(1);
+    if (hash === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (['liangzhu', 'qiangyuan', 'linglong', 'jiaoqi'].includes(hash)) {
+      scrollToCard(hash);
+    }
+  });
+</script>
+</body>
+</html>
+```

@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>功用流芳 - 古建图鉴 | 互动品鉴 · 专属灵韵爱心</title>
+<style>
+  /* ----- 重置 & 基础 / 与“地域风华”点赞版风格一致 ----- */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)), url('./image/首页背景图.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', serif;
+    color: #2c2b28;
+    scroll-behavior: smooth;
+  }
+
+  /* 页面主容器 */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 24px 60px;
+  }
+
+  /* 标题区 (与地域风华一致) */
+  .page-header {
+    text-align: center;
+    margin: 40px 0 20px 0;
+  }
+  .page-title {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, #b47c44 0%, #5a3e2a 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    margin-bottom: 12px;
+  }
+  .page-subtitle {
+    font-size: 18px;
+    color: #6b4c3a;
+    border-top: 1px solid #d9c7ae;
+    border-bottom: 1px solid #d9c7ae;
+    display: inline-block;
+    padding: 8px 28px;
+    backdrop-filter: blur(2px);
+    background: rgba(250, 245, 235, 0.5);
+    border-radius: 60px;
+    font-weight: 400;
+    letter-spacing: 1px;
+  }
+
+  /* 导航栏 (毛玻璃 + sticky) + 返回首页按钮风格 */
+  nav {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: rgba(250, 245, 235, 0.94);
+    backdrop-filter: blur(12px);
+    padding: 12px 20px;
+    z-index: 1000;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px 28px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid #e2d4c2;
+  }
+  nav a {
+    font-size: 1.05rem;
+    font-weight: 550;
+    text-decoration: none;
+    color: #4f3a28;
+    padding: 6px 0;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    letter-spacing: 1px;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+  }
+  nav a:hover {
+    color: #b5672e;
+    border-bottom-color: #c67b44;
+    transform: translateY(-1px);
+  }
+  /* 返回首页按钮专属样式 */
+  .back-home-btn {
+    background: #e7d6c0;
+    border-radius: 40px;
+    padding: 6px 20px !important;
+    margin-left: 8px;
+    border: 1px solid #cfb991;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  .back-home-btn:hover {
+    background: #dac19b;
+    border-color: #b48b54;
+    color: #3e2a1a !important;
+    transform: translateY(-2px);
+  }
+
+  /* 卡片样式 (沿用地域风华卡片质感) */
+  section {
+    margin-bottom: 48px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .card-wrapper {
+    background-color: rgba(255, 250, 240, 0.72);
+    backdrop-filter: blur(3px);
+    border-radius: 40px;
+    transition: all 0.35s cubic-bezier(0.2, 0, 0, 1);
+    box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(230, 210, 180, 0.6);
+    overflow: hidden;
+  }
+  .card-wrapper:hover {
+    transform: translateY(-6px);
+    background-color: rgba(255, 252, 240, 0.88);
+    box-shadow: 0 22px 32px -12px rgba(60, 40, 20, 0.25);
+    border-color: #e2c9aa;
+  }
+
+  /* 卡片内部结构 (图片在上 文字在下 保留国风韵味) */
+  .card-inner {
+    display: flex;
+    flex-direction: column;
+    padding: 28px 28px 12px 28px;
+    gap: 20px;
+  }
+  .img-top {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(245, 240, 225, 0.5);
+    border-radius: 32px;
+    padding: 20px 12px 12px 12px;
+  }
+  .img-top img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 28px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    object-fit: cover;
+    max-height: 280px;
+    width: auto;
+  }
+  .card-wrapper:hover .img-top img {
+    transform: scale(1.01);
+  }
+  .func-title {
+    font-size: 1.9rem;
+    font-weight: 700;
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: linear-gradient(120deg, #ad6b3a, #754c2a);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-align: center;
+    letter-spacing: 2px;
+    margin-top: 6px;
+  }
+  .text-bottom {
+    background: rgba(250, 248, 240, 0.7);
+    border-radius: 28px;
+    padding: 20px 24px;
+    font-family: 'Georgia', 'Times New Roman', '宋体', 'KaiTi', serif;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #3a2c1f;
+    text-align: justify;
+    letter-spacing: 0.3px;
+    text-indent: 2em;
+  }
+
+  /* ----- 点赞 & 评论区域 (爱心图标独立、各具特色) ----- */
+  .interaction-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 28px;
+    padding: 8px 28px 20px 28px;
+    border-top: 1px solid rgba(200, 175, 140, 0.4);
+    background: rgba(250, 242, 228, 0.4);
+    flex-wrap: wrap;
+  }
+  .like-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,245,230,0.7);
+    padding: 6px 18px;
+    border-radius: 80px;
+    transition: all 0.2s;
+    cursor: pointer;
+    user-select: none;
+  }
+  .like-area:hover {
+    background: #f5e5cf;
+    transform: scale(0.97);
+  }
+  .like-icon {
+    font-size: 1.8rem;
+    transition: transform 0.2s;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+  }
+  .like-count {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #b45f2b;
+    font-family: monospace;
+  }
+  .like-btn-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #634e36;
+  }
+  .comment-area {
+    flex: 1;
+    min-width: 200px;
+  }
+  .comment-toggle {
+    background: none;
+    border: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #8b694a;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 40px;
+    background: rgba(220,195,160,0.25);
+    transition: 0.2s;
+  }
+  .comment-toggle:hover {
+    background: #e7d6c0;
+    color: #6a3e1e;
+  }
+  .comment-list {
+    margin-top: 12px;
+    background: rgba(255, 252, 245, 0.8);
+    border-radius: 28px;
+    padding: 14px 18px;
+    backdrop-filter: blur(4px);
+    max-height: 220px;
+    overflow-y: auto;
+  }
+  .comment-item {
+    border-bottom: 1px dashed #e6cfb0;
+    padding: 10px 0;
+    font-size: 0.85rem;
+    color: #4a3828;
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+  .comment-item strong {
+    color: #b35f2b;
+    font-weight: 600;
+    min-width: 70px;
+  }
+  .comment-item .comment-text {
+    flex: 1;
+    word-break: break-word;
+  }
+  .comment-form {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .comment-input {
+    flex: 2;
+    padding: 10px 14px;
+    border-radius: 48px;
+    border: 1px solid #ddc8ae;
+    background: #fffef7;
+    font-family: inherit;
+    outline: none;
+    transition: 0.2s;
+    font-size: 0.85rem;
+  }
+  .comment-input:focus {
+    border-color: #c28752;
+    box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+  }
+  .comment-submit {
+    background: #c88a54;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 60px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 0.8rem;
+  }
+  .comment-submit:hover {
+    background: #a56c3e;
+  }
+  .empty-comment {
+    color: #b78f66;
+    font-style: italic;
+    padding: 8px 0;
+    text-align: center;
+    font-size: 0.8rem;
+  }
+
+  /* 响应式 */
+  @media screen and (max-width: 768px) {
+    .container { padding: 20px 16px 48px; }
+    .page-title { font-size: 36px; }
+    .card-inner { padding: 20px 18px 8px 18px; }
+    .text-bottom { padding: 16px 18px; font-size: 0.95rem; }
+    .func-title { font-size: 1.6rem; }
+    .interaction-bar { padding: 8px 18px 18px 18px; flex-direction: column; align-items: stretch; }
+    .like-area { justify-content: center; }
+    nav { gap: 12px 16px; }
+    .back-home-btn { padding: 4px 14px !important; font-size: 0.9rem; }
+  }
+  @media screen and (max-width: 480px) {
+    .card-inner { padding: 16px 14px 6px 14px; }
+    .text-bottom { padding: 14px 14px; font-size: 0.9rem; }
+    .interaction-bar { padding: 6px 14px 16px; }
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 13px;
+    color: #aa8866;
+    border-top: 1px dashed #decbac;
+    padding-top: 24px;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+    background: #f1e7da;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #bc8f66;
+    border-radius: 8px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a onclick="scrollToSection('top')">🏛️ 功用流芳</a>
+  <a onclick="scrollToSection('n')">🙏 礼制与信仰</a>
+  <a onclick="scrollToSection('s')">🏠 安居与统治</a>
+  <a onclick="scrollToSection('ws')">🌉 通行与守卫</a>
+  <a onclick="scrollToSection('w')">🎋 游赏与寄情</a>
+  <!-- 返回首页按钮：实现从“功用流芳”界面跳转回首页的功能 -->
+  <a class="back-home-btn" id="backToHomeBtn" style="cursor:pointer;">🏠 返回首页</a>
+</nav>
+
+<div class="page-header">
+  <div class="page-title">功用流芳</div>
+  <div class="page-subtitle">建筑的终极意义，在于为人所用 · 四重功用，四种灵韵爱心</div>
+</div>
+
+<div class="container">
+  <!-- 礼制与信仰 · 天坛 爱心: 🙏 虔心之印 -->
+  <section id="n">
+    <div class="card-wrapper" data-id="tiantan">
+      <div class="card-inner">
+        <div class="img-top">
+          <img src="./image/天坛.jpg" alt="天坛祈年殿" title="天坛 · 皇家祭天圣地">
+        </div>
+        <div class="func-title">🙏 礼制与信仰 · 天坛</div>
+        <div class="text-bottom">
+          在中国古代，皇帝自称“天子”，意思是天的儿子。既然是天的儿子，就必须定期向“老天爷”汇报工作、表达感恩，并祈求风调雨顺、国泰民安。这项活动叫做 “祭天大典”，是国家最高规格的典礼。天坛，就是明清两朝皇帝专门用来举行这项典礼的“神圣空间”。它建于1420年（与故宫同时期），比紫禁城还大四倍。天坛的建筑处处蕴含与天对话的密码，祈年殿、圜丘坛、回音壁，凝聚着古人对苍穹的敬畏与虔诚。
+        </div>
+      </div>
+      <div class="interaction-bar">
+        <div class="like-area" data-like-key="tiantan">
+          <span class="like-icon">🙏</span>
+          <span class="like-count">0</span>
+          <span class="like-btn-text">虔敬</span>
+        </div>
+        <div class="comment-area">
+          <button class="comment-toggle" data-comment-target="tiantan">💬 查看评论 · 礼天心语</button>
+          <div class="comment-list" id="comment-list-tiantan" style="display: none;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 安居与统治 · 窑洞 爱心: 🏺 黄土厚情 -->
+  <section id="s">
+    <div class="card-wrapper" data-id="yaodong">
+      <div class="card-inner">
+        <div class="img-top">
+          <img src="./image/窑洞.jpg" alt="黄土高原窑洞" title="窑洞 · 大地的居所">
+        </div>
+        <div class="func-title">🏠 安居与统治 · 窑洞</div>
+        <div class="text-bottom">
+          在黄土高原，古人没钱盖房，便向大地“借”洞而居。窑洞冬暖夏凉，厚土墙挡住风沙，土炕连着灶台，烧火做饭顺便暖了被窝。这里没有金碧辉煌，只有最朴素的生存智慧。几代人挤在一盘炕上吃饭、睡觉、聊天，接地气也接人气。窑洞不是简单的住所，而是老百姓与土地最深的依恋。从靠崖窑到地坑院，每一孔窑洞都凝聚着黄土儿女与自然共生的生活哲学。
+        </div>
+      </div>
+      <div class="interaction-bar">
+        <div class="like-area" data-like-key="yaodong">
+          <span class="like-icon">🏺</span>
+          <span class="like-count">0</span>
+          <span class="like-btn-text">厚土</span>
+        </div>
+        <div class="comment-area">
+          <button class="comment-toggle" data-comment-target="yaodong">💬 查看评论 · 大地之居</button>
+          <div class="comment-list" id="comment-list-yaodong" style="display: none;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 通行与守卫 · 赵州桥 爱心: 🌊 长虹卧波 -->
+  <section id="ws">
+    <div class="card-wrapper" data-id="zhaozhouqiao">
+      <div class="card-inner">
+        <div class="img-top">
+          <img src="./image/赵州桥.jpg" alt="赵州桥" title="赵州桥 · 千年石拱">
+        </div>
+        <div class="func-title">🌉 通行与守卫 · 赵州桥</div>
+        <div class="text-bottom">
+          在河北赵县洨河上，隋代匠人李春用一块块巨石，砌出了一座没有桥墩的单孔弧桥——赵州桥。它首创“敞肩拱”，两边各开两个小拱，既减轻桥身重量，又利于泄洪。一千四百年来，洪水冲不垮，地震摇不倒，至今稳稳横跨河上。赵州桥不只是桥，更是中国古代力学与美学的完美结合，是石头写成的传奇。它见证了桥梁技术与实用功能的至高融合，至今仍被世界桥梁界奉为经典。
+        </div>
+      </div>
+      <div class="interaction-bar">
+        <div class="like-area" data-like-key="zhaozhouqiao">
+          <span class="like-icon">🌊</span>
+          <span class="like-count">0</span>
+          <span class="like-btn-text">长虹</span>
+        </div>
+        <div class="comment-area">
+          <button class="comment-toggle" data-comment-target="zhaozhouqiao">💬 查看评论 · 千年智慧</button>
+          <div class="comment-list" id="comment-list-zhaozhouqiao" style="display: none;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 游赏与寄情 · 苏州园林 爱心: 🍃 游园惊梦 -->
+  <section id="w">
+    <div class="card-wrapper" data-id="suzhou">
+      <div class="card-inner">
+        <div class="img-top">
+          <img src="./image/苏州园林.jpg" alt="苏州园林" title="苏州园林 · 文人山水梦">
+        </div>
+        <div class="func-title">🎋 游赏与寄情 · 苏州园林</div>
+        <div class="text-bottom">
+          在苏州，造园者把山水、花木、亭台塞进一方小院，造出一个可居、可游、可赏的梦。拙政园、留园等名园，不求宏大，只讲究“虽由人作，宛自天开”。一步一景，曲径通幽，借远处的塔、叠假山的洞，让人感觉空间无穷无尽。园主多是失意文人，他们把官场烦恼关在门外，躲进这小小天地，吟诗作画，寄情山水。苏州园林，是中国文人的精神后花园，也是东方生活美学的极致体现。
+        </div>
+      </div>
+      <div class="interaction-bar">
+        <div class="like-area" data-like-key="suzhou">
+          <span class="like-icon">🍃</span>
+          <span class="like-count">0</span>
+          <span class="like-btn-text">游心</span>
+        </div>
+        <div class="comment-area">
+          <button class="comment-toggle" data-comment-target="suzhou">💬 查看评论 · 游园惊梦</button>
+          <div class="comment-list" id="comment-list-suzhou" style="display: none;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer>🏯 一砖一瓦皆功绩 | 四重功用 · 四种灵韵爱心，点赞评论让古建智慧在此传颂</footer>
+</div>
+
+<script>
+  // ---------- 点赞 + 评论 持久化（功用流芳独立存储，爱心独立）----------
+  let likesData = {
+    tiantan: 0,
+    yaodong: 0,
+    zhaozhouqiao: 0,
+    suzhou: 0
+  };
+  let commentsData = {
+    tiantan: [],
+    yaodong: [],
+    zhaozhouqiao: [],
+    suzhou: []
+  };
+
+  function loadStorageData() {
+    const storedLikes = localStorage.getItem('gongyong_likes_v2');
+    if (storedLikes) {
+      try {
+        const parsed = JSON.parse(storedLikes);
+        likesData = { ...likesData, ...parsed };
+      } catch(e) { console.warn(e); }
+    }
+    const storedComments = localStorage.getItem('gongyong_comments_v2');
+    if (storedComments) {
+      try {
+        const parsedComm = JSON.parse(storedComments);
+        commentsData = { ...commentsData, ...parsedComm };
+      } catch(e) { console.warn(e); }
+    }
+    const keys = ['tiantan', 'yaodong', 'zhaozhouqiao', 'suzhou'];
+    keys.forEach(k => {
+      if (!commentsData[k]) commentsData[k] = [];
+      if (likesData[k] === undefined) likesData[k] = 0;
+    });
+  }
+
+  function saveLikes() {
+    localStorage.setItem('gongyong_likes_v2', JSON.stringify(likesData));
+  }
+  function saveComments() {
+    localStorage.setItem('gongyong_comments_v2', JSON.stringify(commentsData));
+  }
+
+  function updateLikeUI() {
+    for (let key in likesData) {
+      const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+      if (likeArea) {
+        const countSpan = likeArea.querySelector('.like-count');
+        if (countSpan) countSpan.innerText = likesData[key];
+      }
+    }
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  function renderComments(sectionId) {
+    const commentContainer = document.getElementById(`comment-list-${sectionId}`);
+    if (!commentContainer) return;
+    const comments = commentsData[sectionId] || [];
+    if (comments.length === 0) {
+      commentContainer.innerHTML = `<div class="empty-comment">✨ 暂未留痕，做第一个分享感悟的人 ✨</div>`;
+    } else {
+      commentContainer.innerHTML = comments.map(comment => `
+        <div class="comment-item">
+          <strong>${escapeHtml(comment.name)}</strong>
+          <span class="comment-text">${escapeHtml(comment.text)}</span>
+          <span style="font-size:0.7rem; color:#aa7e58;">${comment.time || ''}</span>
+        </div>
+      `).join('');
+    }
+    // 添加评论表单
+    const formDiv = document.createElement('div');
+    formDiv.className = 'comment-form';
+    formDiv.innerHTML = `
+      <input type="text" class="comment-input" placeholder="留下您的雅号..." maxlength="20" style="flex:1;">
+      <input type="text" class="comment-input" placeholder="分享您的古建感悟" maxlength="120" style="flex:2.5;">
+      <button class="comment-submit">发表</button>
+    `;
+    const oldForm = commentContainer.querySelector('.comment-form');
+    if (oldForm) oldForm.remove();
+    commentContainer.appendChild(formDiv);
+    const submitBtn = formDiv.querySelector('.comment-submit');
+    const inputs = formDiv.querySelectorAll('input');
+    submitBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      let userName = inputs[0].value.trim();
+      let commentText = inputs[1].value.trim();
+      if (userName === "") userName = "古建知音";
+      if (commentText === "") {
+        alert("请留下您的见解～");
+        return;
+      }
+      if (commentText.length > 120) {
+        alert("评论字数不超过120字");
+        return;
+      }
+      const newComment = {
+        name: userName.slice(0, 20),
+        text: commentText,
+        time: new Date().toLocaleString()
+      };
+      if (!commentsData[sectionId]) commentsData[sectionId] = [];
+      commentsData[sectionId].push(newComment);
+      saveComments();
+      renderComments(sectionId);
+      inputs[0].value = "";
+      inputs[1].value = "";
+    });
+  }
+
+  function toggleComments(sectionId, buttonElem) {
+    const commentListDiv = document.getElementById(`comment-list-${sectionId}`);
+    if (!commentListDiv) return;
+    const isVisible = commentListDiv.style.display !== 'none';
+    if (!isVisible) {
+      renderComments(sectionId);
+      commentListDiv.style.display = 'block';
+      buttonElem.innerHTML = '🔽 收起评论';
+    } else {
+      commentListDiv.style.display = 'none';
+      buttonElem.innerHTML = '💬 查看评论 · 留下足迹';
+    }
+  }
+
+  function bindEvents() {
+    // 点赞绑定 (保留独立爱心图标)
+    const likeAreas = document.querySelectorAll('.like-area');
+    likeAreas.forEach(area => {
+      const key = area.getAttribute('data-like-key');
+      if (!key) return;
+      const newArea = area.cloneNode(true);
+      area.parentNode.replaceChild(newArea, area);
+      newArea.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (likesData[key] !== undefined) {
+          likesData[key] += 1;
+          saveLikes();
+          updateLikeUI();
+          const icon = newArea.querySelector('.like-icon');
+          if (icon) {
+            icon.style.transform = 'scale(1.3)';
+            setTimeout(() => { if(icon) icon.style.transform = ''; }, 200);
+          }
+        }
+      });
+    });
+    updateLikeUI();
+
+    // 评论按钮绑定
+    const commentToggles = document.querySelectorAll('.comment-toggle');
+    commentToggles.forEach(btn => {
+      const targetId = btn.getAttribute('data-comment-target');
+      if (!targetId) return;
+      const newBtn = btn.cloneNode(true);
+      btn.parentNode.replaceChild(newBtn, btn);
+      newBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleComments(targetId, newBtn);
+      });
+    });
+  }
+
+  function initCommentsDefaultState() {
+    const sections = ['tiantan', 'yaodong', 'zhaozhouqiao', 'suzhou'];
+    sections.forEach(sec => {
+      const commentList = document.getElementById(`comment-list-${sec}`);
+      if (commentList) {
+        commentList.style.display = 'none';
+        commentList.innerHTML = `<div class="empty-comment">✨ 点击「查看评论」交流感悟 ✨</div>`;
+      }
+      const btn = document.querySelector(`.comment-toggle[data-comment-target="${sec}"]`);
+      if (btn && commentList && commentList.style.display === 'none') {
+        btn.innerHTML = '💬 查看评论 · 留下足迹';
+      }
+    });
+  }
+
+  function scrollToSection(sectionId) {
+    let element = null;
+    if (sectionId === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    } else {
+      element = document.getElementById(sectionId);
+    }
+    if (!element) return;
+    const navHeight = document.querySelector('nav')?.offsetHeight || 70;
+    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+    const offsetPosition = elementPosition - navHeight - 15;
+    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+  }
+  window.scrollToSection = scrollToSection;
+
+  // 返回首页逻辑 (与地域风华保持一致)
+  function goToHomePage() {
+    const defaultHomeUrl = './index.html';   // 首页地址，请根据实际项目调整
+    if (document.referrer && document.referrer.indexOf(window.location.origin) === 0) {
+      window.history.back();
+    } else {
+      window.location.href = defaultHomeUrl;
+    }
+  }
+
+  function init() {
+    loadStorageData();
+    updateLikeUI();
+    initCommentsDefaultState();
+    bindEvents();
+    // 绑定返回首页按钮事件 (避免重复绑定)
+    const backBtn = document.getElementById('backToHomeBtn');
+    if (backBtn) {
+      const newBackBtn = backBtn.cloneNode(true);
+      backBtn.parentNode.replaceChild(newBackBtn, backBtn);
+      newBackBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        goToHomePage();
+      });
+    }
+  }
+  init();
+
+  window.addEventListener('DOMContentLoaded', () => {
+    if (window.location.hash) {
+      const id = window.location.hash.substring(1);
+      if (id === 'top') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const target = document.getElementById(id);
+        if (target) {
+          setTimeout(() => {
+            const navHeight = document.querySelector('nav')?.offsetHeight || 70;
+            const pos = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 10;
+            window.scrollTo({ top: pos, behavior: 'smooth' });
+          }, 100);
+        }
+      }
+    }
+  });
+</script>
+</body>
+</html>
