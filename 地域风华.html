@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>地域风华 · 古建图鉴 | 点赞评论互动</title>
+    <style>
+        /* ---------- RESET & 全局风格 ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: linear-gradient(rgba(255, 248, 235, 0.88), rgba(255, 248, 235, 0.88)),
+                              url('./image/首页背景图.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans CJK SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', serif;
+            color: #2c2b28;
+            scroll-behavior: smooth;
+        }
+
+        /* 页面主容器 */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 24px 60px;
+        }
+
+        /* ===== 标题区 ===== */
+        .page-header {
+            text-align: center;
+            margin: 40px 0 20px 0;
+        }
+        .page-title {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #b47c44 0%, #5a3e2a 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 12px;
+        }
+        .page-subtitle {
+            font-size: 18px;
+            color: #6b4c3a;
+            border-top: 1px solid #d9c7ae;
+            border-bottom: 1px solid #d9c7ae;
+            display: inline-block;
+            padding: 8px 28px;
+            backdrop-filter: blur(2px);
+            background: rgba(250, 245, 235, 0.5);
+            border-radius: 60px;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        /* ---------- 导航栏 (含返回首页按钮) ---------- */
+        nav {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background: rgba(250, 245, 235, 0.94);
+            backdrop-filter: blur(12px);
+            padding: 12px 20px;
+            z-index: 1000;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 12px 28px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid #e2d4c2;
+        }
+        nav a {
+            font-size: 1.1rem;
+            font-weight: 550;
+            text-decoration: none;
+            color: #4f3a28;
+            padding: 6px 0;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            letter-spacing: 1px;
+            border-bottom: 2px solid transparent;
+        }
+        nav a:hover {
+            color: #b5672e;
+            border-bottom-color: #c67b44;
+            transform: translateY(-1px);
+        }
+        /* 专属返回首页按钮风格 */
+        .back-home-btn {
+            background: #e7d6c0;
+            border-radius: 40px;
+            padding: 6px 20px !important;
+            margin-left: 8px;
+            border: 1px solid #cfb991;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .back-home-btn:hover {
+            background: #dac19b;
+            border-color: #b48b54;
+            color: #3e2a1a !important;
+            transform: translateY(-2px);
+        }
+
+        /* 卡片区 */
+        section {
+            margin-bottom: 48px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .card-wrapper {
+            background-color: rgba(255, 250, 240, 0.72);
+            backdrop-filter: blur(3px);
+            border-radius: 40px;
+            transition: all 0.35s cubic-bezier(0.2, 0, 0, 1);
+            box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(230, 210, 180, 0.6);
+            overflow: hidden;
+        }
+        .card-wrapper:hover {
+            transform: translateY(-6px);
+            background-color: rgba(255, 252, 240, 0.88);
+            box-shadow: 0 22px 32px -12px rgba(60, 40, 20, 0.25);
+            border-color: #e2c9aa;
+        }
+
+        /* 双栏布局 */
+        .card-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
+            padding: 30px 36px 20px 36px;
+        }
+
+        .word-block {
+            flex: 1.2;
+            min-width: 240px;
+            font-size: 17px;
+            line-height: 1.7;
+            font-family: 'Georgia', 'Times New Roman', '宋体', 'KaiTi', serif;
+            color: #3a2c1f;
+            letter-spacing: 0.3px;
+        }
+        .word-block strong {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #ad6b3a, #754c2a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            border-left: 5px solid #cd8b5a;
+            padding-left: 16px;
+        }
+        .desc-text {
+            margin-top: 8px;
+            font-weight: 450;
+        }
+
+        .img-block {
+            flex: 0.9;
+            min-width: 240px;
+            text-align: center;
+        }
+        .img-block img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 28px;
+            box-shadow: 0 16px 28px -8px rgba(0, 0, 0, 0.25);
+            transition: transform 0.3s ease;
+            border: 2px solid #f7eddb;
+            background: #fff9ef;
+            object-fit: cover;
+        }
+        .card-wrapper:hover .img-block img {
+            transform: scale(1.01);
+        }
+
+        /* ---------- 点赞&评论区 (全新风格统一) ---------- */
+        .interaction-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            padding: 8px 36px 12px 36px;
+            border-top: 1px solid rgba(200, 175, 140, 0.4);
+            background: rgba(250, 242, 228, 0.4);
+            flex-wrap: wrap;
+        }
+        .like-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,245,230,0.7);
+            padding: 6px 18px;
+            border-radius: 80px;
+            transition: all 0.2s;
+            cursor: pointer;
+            user-select: none;
+        }
+        .like-area:hover {
+            background: #f5e5cf;
+            transform: scale(0.97);
+        }
+        .like-icon {
+            font-size: 1.8rem;
+            transition: transform 0.2s;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+        }
+        .like-count {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b45f2b;
+            font-family: monospace;
+        }
+        .like-btn-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #634e36;
+        }
+
+        .comment-area {
+            flex: 1;
+            min-width: 200px;
+        }
+        .comment-toggle {
+            background: none;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #8b694a;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 40px;
+            background: rgba(220,195,160,0.25);
+            transition: 0.2s;
+        }
+        .comment-toggle:hover {
+            background: #e7d6c0;
+            color: #6a3e1e;
+        }
+        .comment-list {
+            margin-top: 12px;
+            background: rgba(255, 252, 245, 0.7);
+            border-radius: 28px;
+            padding: 14px 18px;
+            backdrop-filter: blur(4px);
+            max-height: 220px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            border-bottom: 1px dashed #e6cfb0;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            color: #4a3828;
+            display: flex;
+            gap: 8px;
+            align-items: baseline;
+        }
+        .comment-item strong {
+            color: #b35f2b;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .comment-item .comment-text {
+            flex: 1;
+            word-break: break-word;
+        }
+        .comment-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .comment-input {
+            flex: 2;
+            padding: 10px 14px;
+            border-radius: 48px;
+            border: 1px solid #ddc8ae;
+            background: #fffef7;
+            font-family: inherit;
+            outline: none;
+            transition: 0.2s;
+            font-size: 0.85rem;
+        }
+        .comment-input:focus {
+            border-color: #c28752;
+            box-shadow: 0 0 0 2px rgba(194,135,82,0.2);
+        }
+        .comment-submit {
+            background: #c88a54;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+        .comment-submit:hover {
+            background: #a56c3e;
+        }
+        .empty-comment {
+            color: #b78f66;
+            font-style: italic;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        /* 响应式 */
+        @media screen and (max-width: 768px) {
+            .container { padding: 20px 16px 48px; }
+            .page-title { font-size: 36px; }
+            .card-inner { padding: 24px 20px 16px 20px; flex-direction: column; text-align: center; }
+            .word-block strong { border-left: none; border-bottom: 3px solid #cd8b5a; padding-left: 0; padding-bottom: 6px; }
+            .interaction-bar { padding: 8px 20px 12px 20px; flex-direction: column; align-items: stretch; }
+            .like-area { justify-content: center; }
+            nav { gap: 12px 16px; }
+            .back-home-btn { padding: 4px 14px !important; font-size: 0.9rem; }
+        }
+        @media screen and (max-width: 480px) {
+            .card-inner { padding: 20px 16px; }
+            .interaction-bar { padding: 6px 16px 12px; }
+            .comment-input { width: 100%; }
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 13px;
+            color: #aa8866;
+            border-top: 1px dashed #decbac;
+            padding-top: 24px;
+        }
+        ::-webkit-scrollbar { width: 8px; background: #f1e7da; }
+        ::-webkit-scrollbar-thumb { background: #bc8f66; border-radius: 8px; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a onclick="scrollToSection('beidi')">🏛️ 北地雄浑</a>
+    <a onclick="scrollToSection('jiangnan')">🍃 江南隽秀</a>
+    <a onclick="scrollToSection('xinan')">⛰️ 西南奇崛</a>
+    <a onclick="scrollToSection('xiyu')">🏜️ 西域异彩</a>
+    <!-- 返回首页按钮：实现从“地域风华”界面跳转回首页的功能 -->
+    <a class="back-home-btn" id="backToHomeBtn" style="cursor:pointer;">🏠 返回首页</a>
+</nav>
+
+<div class="page-header">
+    <div class="page-title">地域风华</div>
+    <div class="page-subtitle">一方水土养一方建筑 · 留下你的足迹与心声</div>
+</div>
+
+<div class="container">
+    <!-- 北地雄浑 故宫 -->
+    <section id="beidi">
+        <div class="card-wrapper" data-id="beidi">
+            <div class="card-inner">
+                <div class="word-block">
+                    <strong>北地雄浑 · 北京故宫</strong>
+                    <div class="desc-text">
+                        大地的筋骨，皇权的具象。北方建筑以严整的轴线、厚重的体量，彰显礼制威严与磅礴力量。<br><br>
+                        红墙金瓦，殿宇千重，紫禁城将对称美学与等级秩序推向巅峰。
+                    </div>
+                </div>
+                <div class="img-block">
+                    <img src="./image/北京故宫.jpg" alt="北京故宫" title="北京故宫 · 紫禁风华">
+                </div>
+            </div>
+            <div class="interaction-bar">
+                <div class="like-area" data-like-key="beidi">
+                    <span class="like-icon">❤️</span>
+                    <span class="like-count">0</span>
+                    <span class="like-btn-text">点赞</span>
+                </div>
+                <div class="comment-area">
+                    <button class="comment-toggle" data-comment-target="beidi">💬 查看评论 · 写下感悟</button>
+                    <div class="comment-list" id="comment-list-beidi" style="display: none;">
+                        <!-- 动态渲染评论区 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 江南隽秀 徽州 -->
+    <section id="jiangnan">
+        <div class="card-wrapper" data-id="jiangnan">
+            <div class="card-inner">
+                <div class="img-block">
+                    <img src="./image/徽州.jpg" alt="徽州古建" title="徽州 · 马头墙影">
+                </div>
+                <div class="word-block">
+                    <strong>江南隽秀 · 徽州古建</strong>
+                    <div class="desc-text">
+                        水润的诗篇，文人画的立体呈现。粉墙黛瓦，错落烟雨之中，建筑是心灵的栖所与自然的延伸。<br><br>
+                        白墙斑驳，四水归堂，徽派建筑蕴藏深邃儒雅。
+                    </div>
+                </div>
+            </div>
+            <div class="interaction-bar">
+                <div class="like-area" data-like-key="jiangnan">
+                    <span class="like-icon">❤️</span>
+                    <span class="like-count">0</span>
+                    <span class="like-btn-text">点赞</span>
+                </div>
+                <div class="comment-area">
+                    <button class="comment-toggle" data-comment-target="jiangnan">💬 查看评论 · 留下印记</button>
+                    <div class="comment-list" id="comment-list-jiangnan" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 西南奇崛 布达拉宫 -->
+    <section id="xinan">
+        <div class="card-wrapper" data-id="xinan">
+            <div class="card-inner">
+                <div class="word-block">
+                    <strong>西南奇崛 · 布达拉宫</strong>
+                    <div class="desc-text">
+                        山与林的合奏，生存智慧的绝地绽放。西南建筑依山而建，雄浑神秘，充满民族文化力量。<br><br>
+                        横空出世，世界屋脊上的信仰堡垒，鎏金宝顶直指苍穹。
+                    </div>
+                </div>
+                <div class="img-block">
+                    <img src="./image/布达拉宫.jpg" alt="布达拉宫" title="布达拉宫 · 圣域之光">
+                </div>
+            </div>
+            <div class="interaction-bar">
+                <div class="like-area" data-like-key="xinan">
+                    <span class="like-icon">❤️</span>
+                    <span class="like-count">0</span>
+                    <span class="like-btn-text">点赞</span>
+                </div>
+                <div class="comment-area">
+                    <button class="comment-toggle" data-comment-target="xinan">💬 查看评论 · 分享感受</button>
+                    <div class="comment-list" id="comment-list-xinan" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 西域异彩 玉门关 -->
+    <section id="xiyu">
+        <div class="card-wrapper" data-id="xiyu">
+            <div class="card-inner">
+                <div class="img-block">
+                    <img src="./image/玉门关.jpg" alt="玉门关" title="玉门关 · 大漠遗韵">
+                </div>
+                <div class="word-block">
+                    <strong>西域异彩 · 玉门关</strong>
+                    <div class="desc-text">
+                        丝路上的关隘传奇，西域建筑融合风沙与文明，以夯土筑城，守疆卫土，见证千年往来。<br><br>
+                        羌笛何须怨杨柳，春风不度玉门关。黄土版筑，苍凉壮阔。
+                    </div>
+                </div>
+            </div>
+            <div class="interaction-bar">
+                <div class="like-area" data-like-key="xiyu">
+                    <span class="like-icon">❤️</span>
+                    <span class="like-count">0</span>
+                    <span class="like-btn-text">点赞</span>
+                </div>
+                <div class="comment-area">
+                    <button class="comment-toggle" data-comment-target="xiyu">💬 查看评论 · 对话千年</button>
+                    <div class="comment-list" id="comment-list-xiyu" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>🏯 一砖一瓦皆风骨 | 点赞评论 · 共话华夏古建之美</footer>
+</div>
+
+<script>
+    // ------------------- 数据存储（localStorage 持久化）-------------------
+    // 数据结构: likes { beidi: 12, jiangnan: 5 ... } , comments { beidi: [{name, text, time}], ... }
+    let likesData = {
+        beidi: 0,
+        jiangnan: 0,
+        xinan: 0,
+        xiyu: 0
+    };
+    let commentsData = {
+        beidi: [],
+        jiangnan: [],
+        xinan: [],
+        xiyu: []
+    };
+
+    // 加载本地存储数据
+    function loadStorageData() {
+        const storedLikes = localStorage.getItem('gujian_likes');
+        if (storedLikes) {
+            try {
+                const parsed = JSON.parse(storedLikes);
+                likesData = { ...likesData, ...parsed };
+            } catch(e) { console.warn(e); }
+        }
+        const storedComments = localStorage.getItem('gujian_comments');
+        if (storedComments) {
+            try {
+                const parsedComm = JSON.parse(storedComments);
+                commentsData = { ...commentsData, ...parsedComm };
+            } catch(e) { console.warn(e); }
+        }
+        // 保证每个建筑都有评论数组
+        const keys = ['beidi', 'jiangnan', 'xinan', 'xiyu'];
+        keys.forEach(k => {
+            if (!commentsData[k]) commentsData[k] = [];
+            if (likesData[k] === undefined) likesData[k] = 0;
+        });
+    }
+
+    // 保存点赞数据
+    function saveLikes() {
+        localStorage.setItem('gujian_likes', JSON.stringify(likesData));
+    }
+    function saveComments() {
+        localStorage.setItem('gujian_comments', JSON.stringify(commentsData));
+    }
+
+    // 更新UI显示点赞数
+    function updateLikeUI() {
+        for (let key in likesData) {
+            const likeArea = document.querySelector(`.like-area[data-like-key="${key}"]`);
+            if (likeArea) {
+                const countSpan = likeArea.querySelector('.like-count');
+                if (countSpan) countSpan.innerText = likesData[key];
+            }
+        }
+    }
+
+    // 渲染某个区域的评论区
+    function renderComments(sectionId) {
+        const commentContainer = document.getElementById(`comment-list-${sectionId}`);
+        if (!commentContainer) return;
+        const comments = commentsData[sectionId] || [];
+        if (comments.length === 0) {
+            commentContainer.innerHTML = `<div class="empty-comment">✨ 暂无留言，做第一个分享感悟的人吧 ✨</div>`;
+        } else {
+            commentContainer.innerHTML = comments.map(comment => `
+                <div class="comment-item">
+                    <strong>${escapeHtml(comment.name)}</strong>
+                    <span class="comment-text">${escapeHtml(comment.text)}</span>
+                    <span style="font-size:0.7rem; color:#aa7e58;">${comment.time || ''}</span>
+                </div>
+            `).join('');
+        }
+        // 在评论区底部添加输入表单 (每个评论区独立)
+        const formDiv = document.createElement('div');
+        formDiv.className = 'comment-form';
+        formDiv.innerHTML = `
+            <input type="text" class="comment-input" placeholder="留下你的昵称..." maxlength="20" style="flex:1;">
+            <input type="text" class="comment-input" placeholder="分享你的古建感悟" maxlength="120" style="flex:2.5;">
+            <button class="comment-submit">发表</button>
+        `;
+        // 避免重复添加表单
+        const oldForm = commentContainer.querySelector('.comment-form');
+        if (oldForm) oldForm.remove();
+        commentContainer.appendChild(formDiv);
+        
+        const submitBtn = formDiv.querySelector('.comment-submit');
+        const inputs = formDiv.querySelectorAll('input');
+        submitBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const nameInput = inputs[0];
+            const textInput = inputs[1];
+            let userName = nameInput.value.trim();
+            let commentText = textInput.value.trim();
+            if (userName === "") userName = "古建旅人";
+            if (commentText === "") {
+                alert("请写下你的感悟~");
+                return;
+            }
+            if (commentText.length > 120) {
+                alert("评论字数不超过120字");
+                return;
+            }
+            const newComment = {
+                name: userName.slice(0, 20),
+                text: commentText,
+                time: new Date().toLocaleString()
+            };
+            if (!commentsData[sectionId]) commentsData[sectionId] = [];
+            commentsData[sectionId].push(newComment);
+            saveComments();
+            renderComments(sectionId);  // 重新渲染
+            // 清空输入框
+            nameInput.value = "";
+            textInput.value = "";
+        });
+    }
+
+    // 简单防XSS
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
+
+    // 切换评论显示/隐藏，并且未加载时渲染内容
+    function toggleComments(sectionId, buttonElem) {
+        const commentListDiv = document.getElementById(`comment-list-${sectionId}`);
+        if (!commentListDiv) return;
+        const isVisible = commentListDiv.style.display !== 'none';
+        if (!isVisible) {
+            // 显示前确保渲染内容  (保证最新数据)
+            renderComments(sectionId);
+            commentListDiv.style.display = 'block';
+            buttonElem.innerHTML = '🔽 收起评论';
+        } else {
+            commentListDiv.style.display = 'none';
+            // 根据不同建筑可以自定义文案
+            let defaultText = '💬 查看评论 · 写下感悟';
+            if (sectionId === 'jiangnan') defaultText = '💬 查看评论 · 留下印记';
+            if (sectionId === 'xinan') defaultText = '💬 查看评论 · 分享感受';
+            if (sectionId === 'xiyu') defaultText = '💬 查看评论 · 对话千年';
+            buttonElem.innerHTML = defaultText;
+        }
+    }
+
+    // 绑定所有点赞与评论事件
+    function bindEvents() {
+        // 点赞逻辑 (重新绑定，避免clone丢失)
+        const likeAreas = document.querySelectorAll('.like-area');
+        likeAreas.forEach(area => {
+            const key = area.getAttribute('data-like-key');
+            if (!key) return;
+            // 移除旧监听，采用全新克隆重新绑定，保证只有一个事件
+            const newArea = area.cloneNode(true);
+            area.parentNode.replaceChild(newArea, area);
+            newArea.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (likesData[key] !== undefined) {
+                    likesData[key] += 1;
+                    saveLikes();
+                    updateLikeUI();
+                    // 动画反馈
+                    const icon = newArea.querySelector('.like-icon');
+                    if (icon) {
+                        icon.style.transform = 'scale(1.3)';
+                        setTimeout(() => { if(icon) icon.style.transform = ''; }, 200);
+                    }
+                }
+            });
+        });
+        // 刷新点赞显示
+        updateLikeUI();
+
+        // 评论按钮事件
+        const commentToggles = document.querySelectorAll('.comment-toggle');
+        commentToggles.forEach(btn => {
+            const targetId = btn.getAttribute('data-comment-target');
+            if (!targetId) return;
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            newBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleComments(targetId, newBtn);
+            });
+        });
+    }
+
+    // 初始化评论默认隐藏并预设占位内容
+    function initCommentsDefaultState() {
+        const sections = ['beidi', 'jiangnan', 'xinan', 'xiyu'];
+        sections.forEach(sec => {
+            const commentList = document.getElementById(`comment-list-${sec}`);
+            if (commentList) {
+                commentList.style.display = 'none';
+                commentList.innerHTML = `<div class="empty-comment">✨ 点击「查看评论」一起交流 ✨</div>`;
+            }
+            const btn = document.querySelector(`.comment-toggle[data-comment-target="${sec}"]`);
+            if (btn && commentList && commentList.style.display === 'none') {
+                let defaultText = '💬 查看评论 · 写下感悟';
+                if (sec === 'jiangnan') defaultText = '💬 查看评论 · 留下印记';
+                if (sec === 'xinan') defaultText = '💬 查看评论 · 分享感受';
+                if (sec === 'xiyu') defaultText = '💬 查看评论 · 对话千年';
+                btn.innerHTML = defaultText;
+            }
+        });
+    }
+
+    // 外部平滑滚动函数
+    function scrollToSection(sectionId) {
+        const targetElement = document.getElementById(sectionId);
+        if (targetElement) {
+            const navHeight = document.querySelector('nav')?.offsetHeight || 70;
+            const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementPosition - navHeight - 15;
+            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+        }
+    }
+    window.scrollToSection = scrollToSection;
+
+    // ================= 新增：返回首页的功能 =================
+    // 方案：由于首页是独立的页面，使用 document.referrer 或者指定的首页地址。
+    // 增强体验: 判断如果是从“首页”跳转过来有历史记录且属于同源，则返回上一页，否则跳转到预设首页。
+    // 为了演示通用性，默认返回 “index.html” (可自行修改为首页url)。同时如果存在历史记录且上一页不为当前页，则使用history.back。
+    function goToHomePage() {
+    window.location.href = './index.html';
+}
+
+    // 初始化整体
+    function init() {
+        loadStorageData();
+        updateLikeUI();
+        initCommentsDefaultState();
+        bindEvents();
+        // 绑定返回首页按钮事件
+        const backBtn = document.getElementById('backToHomeBtn');
+        if (backBtn) {
+            // 移除可能重复的监听再添加
+            const newBackBtn = backBtn.cloneNode(true);
+            backBtn.parentNode.replaceChild(newBackBtn, backBtn);
+            newBackBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                goToHomePage();
+            });
+        }
+    }
+    init();
+
+    // 处理hash滚动及额外DOM加载优化
+    window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) {
+            setTimeout(() => {
+                const hash = window.location.hash.substring(1);
+                const el = document.getElementById(hash);
+                if (el) {
+                    const navHeight = document.querySelector('nav')?.offsetHeight || 70;
+                    const y = el.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                }
+            }, 200);
+        }
+    });
+</script>
+</body>
+</html>
